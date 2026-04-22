@@ -1,0 +1,443 @@
+/* =========================
+   RESET + VARIABLES
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bleu-fonce: #1A2947;
+    --bleu: #01A7E0;
+    --turquoise: #2bbcd3;
+    --blanc: #ffffff;
+    --gris: #f4f4f4;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    background: white;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+.header {
+    height: 95px;
+    background: var(--bleu);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 35px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 130px;
+    width: 200px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-item,
+.dropdown {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+/* FIX ici */
+.nav-item a,
+.dropdown > a {
+    display: flex;
+    align-items: center;
+    height: 95px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.nav a:hover {
+    color: var(--bleu-fonce);
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.dropdown-menu a {
+    color: var(--bleu-fonce);
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid #f2f2f2;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+    background: var(--turquoise);
+    color: white;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: flex;
+}
+
+/* =========================
+   SOCIAL ICONS
+========================= */
+.socials {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.socials img {
+    width: 28px;
+    height: 28px;
+    opacity: 0.85;
+    transition: 0.2s;
+}
+
+.socials img:hover {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+    background: var(--bleu-fonce);
+    color: white;
+    padding: 14px 22px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: var(--turquoise);
+    transform: scale(1.05);
+}
+
+/* =========================
+   HERO
+========================= */
+.hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+}
+
+.hero-left {
+    position: absolute;
+    top: 50%;
+    left: 80px;
+    transform: translateY(-50%);
+    color: white;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.hero-left h1 {
+    font-size: 60px;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.hero-left p {
+    font-size: 20px;
+    margin-top: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* =========================
+   QUICK ACCESS
+========================= */
+.quick-access {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 60px 80px;
+    background: var(--gris);
+}
+
+.quick-btn {
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--bleu-fonce);
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: 0.2s;
+}
+
+.quick-btn:hover {
+    background: var(--turquoise);
+    color: white;
+    transform: translateY(-5px);
+}
+
+/* =========================
+   NEWS SECTION
+========================= */
+.news-section {
+    padding: 80px;
+}
+
+.news-section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 35px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.news-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.news-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.news-card h3,
+.news-card p {
+    padding: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* =========================
+   FLOAT BUTTON
+========================= */
+.snow-float-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--turquoise);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    z-index: 9999;
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 700px;
+    max-width: 90%;
+}
+
+.conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+    background: #243858;
+    padding: 80px;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.footer img {
+    width: 320px;
+}
+
+.footer h3,
+.footer p,
+.footer input,
+.footer button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer h3 {
+    color: white;
+}
+
+.footer p {
+    color: white;
+    opacity: 0.85;
+}
+
+.footer input,
+.footer button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+}
+
+.footer button {
+    background: var(--turquoise);
+    color: white;
+    border: none;
+}
+
+/* =========================
+   TABLET
+========================= */
+@media (max-width: 1024px) {
+    .quick-access,
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+    .nav {
+        display: none;
+    }
+
+    .quick-access,
+    .news-grid,
+    .footer-container,
+    .conditions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-left h1 {
+        font-size: 35px;
+    }
+
+    .hero-left {
+        left: 20px;
+        right: 20px;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+@media (max-width: 480px) {
+    .hero-left h1 {
+        font-size: 28px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+}

@@ -1,0 +1,101 @@
+<div class="snow-float-btn" onclick="openModal()">
+    ❄️ Conditions de neige
+</div>
+
+<div id="conditionsModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+
+        <h2>Conditions météo complètes</h2>
+
+        <div class="conditions-grid">
+
+            <!-- PISTES -->
+            <div class="condition-item">
+                <strong>Pistes jour</strong>
+                <p><%= conditions.pistesJour %></p>
+            </div>
+
+            <div class="condition-item">
+                <strong>Pistes nuit</strong>
+                <p><%= conditions.pistesNuit %></p>
+            </div>
+
+            <!-- NEIGE -->
+            <div class="condition-item">
+                <strong>Neige 24h</strong>
+                <p><%= conditions.neige24h %></p>
+            </div>
+
+            <div class="condition-item">
+                <strong>Neige 48h</strong>
+                <p><%= conditions.neige48h %></p>
+            </div>
+
+            <div class="condition-item">
+                <strong>Neige 7 jours</strong>
+                <p><%= conditions.neige7j %></p>
+            </div>
+
+            <div class="condition-item">
+                <strong>Neige saison</strong>
+                <p><%= conditions.neigeSaison %></p>
+            </div>
+
+            <!-- REMONTÉES -->
+            <div class="condition-item">
+                <strong>Télésièges jour</strong>
+                <p><%= conditions.telesiegesJour %></p>
+            </div>
+
+            <div class="condition-item">
+                <strong>Télésièges nuit</strong>
+                <p><%= conditions.telesiegesNuit %></p>
+            </div>
+
+            <!-- ZONES -->
+            <div class="condition-item">
+                <strong>Sous-bois</strong>
+                <p><%= conditions.sousBois %></p>
+            </div>
+
+            <div class="condition-item">
+                <strong>Parc à neige</strong>
+                <p><%= conditions.parcNeige %></p>
+            </div>
+
+            <div class="condition-item">
+                <strong>Randonnée alpine</strong>
+                <p><%= conditions.randonnee %></p>
+            </div>
+
+            <!-- STATUT -->
+            <div class="condition-item full-width">
+                <strong>Statut de la station</strong>
+                <p><%= conditions.statut %></p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function openModal() {
+    document.getElementById("conditionsModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("conditionsModal").style.display = "none";
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById("conditionsModal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+}
+</script>

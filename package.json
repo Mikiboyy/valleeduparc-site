@@ -1,0 +1,31 @@
+{
+  "name": "valleeduparc-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "axios": "^1.15.2",
+    "cheerio": "^1.2.0",
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.19.0",
+    "i18n": "^0.15.3",
+    "mongoose": "^9.3.1",
+    "multer": "^2.1.1",
+    "puppeteer": "^24.40.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
