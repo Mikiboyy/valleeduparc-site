@@ -1,0 +1,144 @@
+<section class="schedule-page">
+
+    <div class="schedule-header">
+        <h1>Horaires</h1>
+
+        <div class="schedule-intro-box">
+            <p>
+                Envie de profiter de la montagne aujourd’hui? Excellent choix! Avant de prendre la route, 
+                pensez toutefois à consulter nos heures d’ouverture. Celles-ci peuvent varier selon la période 
+                de la saison — début d’hiver, vacances des fêtes, relâche ou printemps — ainsi que selon les 
+                conditions météo. Un rapide coup d’œil à l’horaire vous permettra de planifier votre sortie en 
+                toute tranquillité… et de profiter pleinement de votre journée sur les pistes.
+            </p>
+        </div>
+    </div>
+
+    <div class="schedule-layout">
+
+        <!-- COLONNE GAUCHE -->
+        <div class="schedule-left">
+
+            <!-- ACCORDION ITEM -->
+            <div class="schedule-item">
+                <div class="schedule-title">
+                    <span>Horaire saison de glisse 2026-2027</span>
+                    <span class="toggle">+</span>
+                </div>
+
+                <div class="schedule-content">
+
+                    <div class="schedule-table">
+                        <div>Dimanche</div>
+                        <div>Fermé</div>
+
+                        <div>Lundi</div>
+                        <div>Fermé</div>
+
+                        <div>Mardi</div>
+                        <div>Fermé</div>
+
+                        <div>Mercredi</div>
+                        <div>Fermé</div>
+
+                        <div>Jeudi</div>
+                        <div>Fermé</div>
+
+                        <div>Vendredi</div>
+                        <div>Fermé</div>
+
+                        <div>Samedi</div>
+                        <div>Fermé</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="schedule-item">
+                <div class="schedule-title">
+                    <span>Horaire pour la période des fêtes</span>
+                    <span class="toggle">+</span>
+                </div>
+
+                <div class="schedule-content">
+                    <p>Du 17 décembre au 3 janvier</p>
+
+                    <div class="schedule-table">
+                        <div>Dimanche</div>
+                        <div>Fermé</div>
+
+                        <div>Lundi</div>
+                        <div>Fermé</div>
+
+                        <div>Mardi</div>
+                        <div>Fermé</div>
+
+                        <div>Mercredi</div>
+                        <div>Fermé</div>
+
+                        <div>Jeudi</div>
+                        <div>Fermé</div>
+                        
+                        <div>Vendredi</div><div>Fermé</div>
+                        <div>Samedi</div><div>Fermé</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="schedule-item">
+                <div class="schedule-title">
+                    <span>Horaire pour la semaine de relâche 2026</span>
+                    <span class="toggle">+</span>
+                </div>
+
+                <div class="schedule-content">
+                    <p></p>
+
+                    <div class="schedule-table">
+                        <div>Dimanche</div>
+                        <div>Fermé</div>
+
+                        <div>Lundi</div>
+                        <div>Fermé</div>
+
+                        <div>Mardi</div>
+                        <div>Fermé</div>
+
+                        <div>Mercredi</div>
+                        <div>Fermé</div>
+
+                        <div>Jeudi</div>
+                        <div>Fermé</div>
+                        
+                        <div>Vendredi</div><div>Fermé</div>
+                        <div>Samedi</div><div>Fermé</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IMAGE DROITE -->
+         <div class="schedule-right">
+            <img src="/image/photo-horaire.webp" alt="Ski Vallée du Parc">
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+document.querySelectorAll(".schedule-title").forEach(title => {
+    title.addEventListener("click", () => {
+        const content = title.nextElementSibling;
+        const toggle = title.querySelector(".toggle");
+
+        if (content.style.display === "block") {
+            content.style.display = "none";
+            toggle.textContent = "+";
+        } else {
+            content.style.display = "block";
+            toggle.textContent = "−";
+        }
+    });
+});
+</script>

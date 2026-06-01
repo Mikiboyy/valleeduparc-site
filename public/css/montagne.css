@@ -1,0 +1,236 @@
+/* =================================
+   SECTION MONTAGNE VALLÉE DU PARC
+================================= */
+
+.montagne-hero{
+    position: relative;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(19,35,61,0.78),
+            rgba(40,71,109,0.82)
+        ),
+        url('/images/montagne-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+/* overlay style moderne */
+.montagne-overlay{
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(19,35,61,0.95) 0%,
+            rgba(33,58,92,0.78) 45%,
+            rgba(40,71,109,0.30) 100%
+        );
+}
+
+/* contenu */
+.montagne-content{
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 1400px;
+
+    margin: auto;
+    padding: 80px 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 60px;
+}
+
+/* =========================
+   TEXTE
+========================= */
+
+.montagne-text{
+    flex: 1;
+    color: white;
+}
+
+.montagne-subtitle{
+    color: #4fc3ff;
+    font-size: 1.3rem;
+    font-weight: 600;
+
+    margin-bottom: 15px;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.montagne-text h1{
+    font-size: 4rem;
+    line-height: 1.05;
+
+    margin-bottom: 25px;
+
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.montagne-description{
+    font-size: 1.2rem;
+    line-height: 1.8;
+
+    max-width: 650px;
+
+    color: rgba(255,255,255,0.90);
+
+    margin-bottom: 35px;
+}
+
+/* features */
+.montagne-features{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 40px;
+}
+
+.feature{
+    background: rgba(255,255,255,0.08);
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    padding: 16px 18px;
+
+    border-radius: 16px;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.18);
+
+    font-weight: 500;
+
+    transition: 0.3s ease;
+}
+
+.feature:hover{
+    transform: translateY(-4px);
+
+    background: rgba(255,255,255,0.12);
+}
+
+/* boutons */
+.montagne-buttons{
+    display: flex;
+    gap: 20px;
+}
+
+.btn-primary,
+.btn-secondary{
+    padding: 16px 28px;
+
+    border-radius: 14px;
+
+    text-decoration: none;
+    font-weight: 700;
+
+    transition: 0.3s ease;
+}
+
+.btn-primary{
+    background: #4fc3ff;
+    color: #071120;
+
+    box-shadow:
+        0 10px 25px rgba(79,195,255,0.35);
+}
+
+.btn-primary:hover{
+    background: white;
+    transform: translateY(-3px);
+}
+
+.btn-secondary{
+    border: 2px solid rgba(255,255,255,0.35);
+    color: white;
+
+    background: rgba(255,255,255,0.05);
+
+    backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover{
+    background: rgba(255,255,255,0.12);
+    transform: translateY(-3px);
+}
+
+/* =========================
+   IMAGE
+========================= */
+
+.montagne-image{
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+}
+
+.montagne-image img{
+    width: 100%;
+    max-width: 650px;
+
+    border-radius: 28px;
+
+    object-fit: cover;
+
+    border: 1px solid rgba(255,255,255,0.10);
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,0.45);
+
+    transition: 0.4s ease;
+}
+
+.montagne-image img:hover{
+    transform: scale(1.02);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 1100px){
+
+    .montagne-content{
+        flex-direction: column;
+        text-align: center;
+
+        padding: 60px 25px;
+    }
+
+    .montagne-text h1{
+        font-size: 2.7rem;
+    }
+
+    .montagne-features{
+        grid-template-columns: 1fr;
+    }
+
+    .montagne-buttons{
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}

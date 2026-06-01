@@ -1,0 +1,56 @@
+/* =========================
+   RESET + VARIABLES
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bleu-fonce: #1A2947;
+    --bleu: #01A7E0;
+    --turquoise: #2bbcd3;
+    --blanc: #ffffff;
+    --gris: #f4f4f4;
+}
+html,
+body {
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    background: white;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding-top: 95px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+    background: var(--bleu-fonce);
+    color: white;
+    padding: 14px 22px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: var(--turquoise);
+    transform: scale(1.05);
+}

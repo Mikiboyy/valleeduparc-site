@@ -1,0 +1,192 @@
+<section class="pricing-section" id="abonnements">
+
+    <h2>Abonnements 2025-2026</h2>
+
+    <div class="pricing-wrapper">
+
+        <!-- ACCORDÉON 1 -->
+        <div class="pricing-group">
+
+            <button class="pricing-toggle">
+                <span>Tout temps</span>
+                <span class="icon">+</span>
+            </button>
+
+            <div class="pricing-content">
+
+                <div class="pricing-grid">
+
+                    <div class="price-row">
+                        <span>5 ans et moins</span>
+                        <strong>133$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>6 à 12 ans</span>
+                        <strong>299$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>13 à 17 ans</span>
+                        <strong>399$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>18 ans et plus</span>
+                        <strong>599$</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ACCORDÉON 2 -->
+        <div class="pricing-group">
+
+            <button class="pricing-toggle">
+                <span>Partiel</span>
+                <span class="icon">+</span>
+            </button>
+
+            <div class="pricing-content">
+
+                <div class="pricing-grid">
+
+                    <div class="price-row">
+                        <span>Presque tout-temps</span>
+                        <strong>99$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>Soirée</span>
+                        <strong>199$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>3 jours</span>
+                        <strong>299$</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ACCORDÉON 3 -->
+        <div class="pricing-group">
+
+            <button class="pricing-toggle">
+                <span>Famille (3 personnes min.)</span>
+                <span class="icon">+</span>
+            </button>
+
+            <div class="pricing-content">
+
+                <div class="pricing-grid">
+
+                    <div class="price-row">
+                        <span>5 ans et moins</span>
+                        <strong>133$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>6 à 12 ans</span>
+                        <strong>299$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>13 à 17 ans</span>
+                        <strong>399$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>18 ans et plus</span>
+                        <strong>599$</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ACCORDÉON 4 -->
+        <div class="pricing-group">
+
+            <button class="pricing-toggle">
+                <span>Autres</span>
+                <span class="icon">+</span>
+            </button>
+
+            <div class="pricing-content">
+
+                <div class="pricing-grid">
+
+                    <div class="price-row">
+                        <span>Petit casier</span>
+                        <strong>190$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>Grand casier</span>
+                        <strong>210$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>Casier à bottes</span>
+                        <strong>165$</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>Randonnée alpine</span>
+                        <strong>250$</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+    </div>
+
+</section>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const toggles =
+        document.querySelectorAll(".pricing-toggle");
+
+    toggles.forEach(toggle => {
+
+        toggle.addEventListener("click", () => {
+
+            const content =
+                toggle.nextElementSibling;
+
+            content.classList.toggle("open");
+
+            const icon =
+                toggle.querySelector(".icon");
+
+            if(content.classList.contains("open")){
+                icon.textContent = "−";
+            }
+            else{
+                icon.textContent = "+";
+            }
+
+        });
+
+    });
+
+});
+
+</script>

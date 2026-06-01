@@ -1,0 +1,300 @@
+<section class="montagne-hero prive-hero">
+
+    <div class="montagne-overlay"></div>
+
+    <div class="montagne-content">
+
+        <div class="montagne-text">
+
+            <span class="montagne-subtitle">ÉCOLE DE GLISSE</span>
+
+            <h1>
+                COURS<br>
+                PRIVÉS
+            </h1>
+
+            <p class="montagne-description">
+                Profitez d’un accompagnement personnalisé avec nos moniteurs.
+                En privé, semi-privé ou en bloc de leçons, progressez à votre rythme
+                dans un environnement sécuritaire.
+            </p>
+
+            <div class="montagne-features">
+                <div class="feature">✔ Cours personnalisés</div>
+                <div class="feature">✔ Ski ou planche à neige</div>
+                <div class="feature">✔ Privé ou semi-privé</div>
+                <div class="feature">✔ Moniteurs qualifiés</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="ecole-cards-section">
+    <div class="ecole-cards" id="coursPrivesCards"></div>
+</section>
+
+<div id="coursPrivesModals"></div>
+
+<script>
+const coursPrives = [
+    {
+        id: "prive-1h",
+        titre: "COURS PRIVÉ",
+        duree: "1H",
+        resume: "Leçon individuelle pour progresser rapidement en ski ou en planche.",
+        prix: "89$",
+        details: `
+            <h2>Cours privé – Bloc de 1 heure</h2>
+            <p>Leçon individuelle avec un moniteur dans un environnement amusant et sécuritaire.</p>
+            <ul>
+                <li>Durée : 1 heure</li>
+                <li>Ski ou planche à neige</li>
+                <li>Disponible sur réservation</li>
+                <li>20% de rabais sur location pour la durée du cours</li>
+                <li>À l’achat d’un cours, le billet est offert avec rabais</li>
+                <li>Parent accompagnateur : rabais 25% billet au choix</li>
+                <li>Prix régulier : 89$</li>
+            </ul>
+        `
+    },
+    {
+        id: "prive-2h",
+        titre: "COURS PRIVÉ",
+        duree: "2H",
+        resume: "Cours privé plus complet pour un apprentissage personnalisé.",
+        prix: "159$",
+        details: `
+            <h2>Cours privé – Bloc de 2 heures</h2>
+            <p>Leçon individuelle prolongée pour travailler davantage la technique et la confiance.</p>
+            <ul>
+                <li>Durée : 2 heures</li>
+                <li>Ski ou planche à neige</li>
+                <li>Disponible sur réservation</li>
+                <li>20% de rabais sur location pour la durée du cours</li>
+                <li>À l’achat d’un cours, le billet est offert avec rabais</li>
+                <li>Parent accompagnateur : rabais 25% billet au choix</li>
+                <li>Prix régulier : 159$</li>
+            </ul>
+        `
+    },
+    {
+        id: "semi-prive-1h",
+        titre: "COURS SEMI-PRIVÉ",
+        duree: "1H",
+        resume: "Cours pour 2 personnes avec accompagnement personnalisé.",
+        prix: "83$ / personne",
+        details: `
+            <h2>Cours semi-privé – Bloc de 1 heure</h2>
+            <p>Cours pour deux personnes dans un environnement amusant et sécuritaire.</p>
+            <ul>
+                <li>Durée : 1 heure</li>
+                <li>2 personnes</li>
+                <li>Ski ou planche à neige</li>
+                <li>Disponible sur réservation</li>
+                <li>20% de rabais sur location pour la durée du cours</li>
+                <li>À l’achat d’un cours, le billet est offert avec rabais</li>
+                <li>Prix régulier : 83$ par personne</li>
+            </ul>
+        `
+    },
+    {
+        id: "semi-prive-2h",
+        titre: "COURS SEMI-PRIVÉ",
+        duree: "2H",
+        resume: "Cours semi-privé prolongé pour 2 personnes.",
+        prix: "139$ / personne",
+        details: `
+            <h2>Cours semi-privé – Bloc de 2 heures</h2>
+            <p>Cours prolongé pour deux personnes permettant une progression plus complète.</p>
+            <ul>
+                <li>Durée : 2 heures</li>
+                <li>2 personnes</li>
+                <li>Ski ou planche à neige</li>
+                <li>Disponible sur réservation</li>
+                <li>20% de rabais sur location pour la durée du cours</li>
+                <li>À l’achat d’un cours, le billet est offert avec rabais</li>
+                <li>Prix régulier : 139$ par personne</li>
+            </ul>
+        `
+    },
+    {
+        id: "ini-ski-surf-ecole-prive",
+        titre: "INI-SKI OU INI-SURF",
+        duree: "PENTE-ÉCOLE PRIVÉ",
+        resume: "Forfait d’initiation privé pour débuter sur la pente-école.",
+        prix: "99$",
+        details: `
+            <h2>Forfait Ini-Ski ou Ini-Surf – Pente-école privé</h2>
+            <p>Forfait parfait pour une première expérience en ski ou en planche.</p>
+            <ul>
+                <li>1 ou 2 élèves pour 1 moniteur</li>
+                <li>Initiation au plaisir de la glisse</li>
+                <li>Cours offert dans la pente-école</li>
+                <li>Disponible sur réservation</li>
+                <li>Inclut 2h de location d’équipement</li>
+                <li>Inclut 2h de billet de pente-école</li>
+                <li>Prix régulier : 99$</li>
+            </ul>
+        `
+    },
+    {
+        id: "ini-ski-surf-ecole-semi",
+        titre: "INI-SKI OU INI-SURF",
+        duree: "PENTE-ÉCOLE SEMI-PRIVÉ",
+        resume: "Forfait d’initiation semi-privé pour 2 personnes.",
+        prix: "89$ / personne",
+        details: `
+            <h2>Forfait Ini-Ski ou Ini-Surf – Pente-école semi-privé</h2>
+            <p>Forfait d’initiation pour deux personnes en ski ou en planche à neige.</p>
+            <ul>
+                <li>2 personnes avec un moniteur</li>
+                <li>Cours offert dans la pente-école</li>
+                <li>Disponible sur réservation</li>
+                <li>Inclut 2h de location d’équipement</li>
+                <li>Inclut 2h de billet de pente-école</li>
+                <li>Prix régulier : 89$ par personne</li>
+            </ul>
+        `
+    },
+    {
+        id: "ini-ski-surf-montagne-prive",
+        titre: "INI-SKI OU INI-SURF",
+        duree: "MONTAGNE PRIVÉ",
+        resume: "Initiation privée avec accès à la montagne.",
+        prix: "124$",
+        details: `
+            <h2>Forfait Ini-Ski ou Ini-Surf – Montagne privé</h2>
+            <p>Forfait privé pour une initiation complète directement sur la montagne.</p>
+            <ul>
+                <li>1 ou 2 élèves pour 1 moniteur</li>
+                <li>Initiation au plaisir de la glisse avec une leçon individuelle</li>
+                <li>Disponible sur réservation</li>
+                <li>Inclut 2h de location d’équipement</li>
+                <li>Inclut 2h de billet de montagne</li>
+                <li>Prix régulier : 124$</li>
+            </ul>
+        `
+    },
+    {
+        id: "ini-ski-surf-montagne-semi",
+        titre: "INI-SKI OU INI-SURF",
+        duree: "MONTAGNE SEMI-PRIVÉ",
+        resume: "Initiation semi-privée avec accès à la montagne.",
+        prix: "114$ / personne",
+        details: `
+            <h2>Forfait Ini-Ski ou Ini-Surf – Montagne semi-privé</h2>
+            <p>Forfait semi-privé pour deux personnes avec accès à la montagne.</p>
+            <ul>
+                <li>2 personnes avec un moniteur</li>
+                <li>Disponible sur réservation</li>
+                <li>Inclut 2h de location d’équipement</li>
+                <li>Inclut 2h de billet de montagne</li>
+                <li>Prix régulier : 114$ par personne</li>
+            </ul>
+        `
+    },
+    {
+        id: "bloc-3-cours",
+        titre: "BLOC DE COURS",
+        duree: "3 OU 4 COURS",
+        resume: "Bloc de plusieurs leçons privées d’une heure.",
+        prix: "167$ à 282$",
+        details: `
+            <h2>Bloc de leçons – 3 ou 4 cours de 1 heure</h2>
+            <p>Formule idéale pour progresser sur plusieurs séances avec un suivi personnalisé.</p>
+            <ul>
+                <li>1 élève pour 1 moniteur</li>
+                <li>Durée : 1h par cours</li>
+                <li>Disponible en bloc de 3 ou 4 cours</li>
+                <li>Disponible sur réservation</li>
+                <li>20% de rabais sur location pour la durée du cours</li>
+                <li>À l’achat d’un cours, le billet est offert avec rabais</li>
+                <li>Prix régulier : 167$, 229$ ou 282$ selon la formule</li>
+            </ul>
+        `
+    },
+    {
+        id: "parc-neige",
+        titre: "PARC À NEIGE",
+        duree: "SKI OU PLANCHE",
+        resume: "Cours privé ou semi-privé pour découvrir le parc à neige.",
+        prix: "152$ à 142$",
+        details: `
+            <h2>Cours parc à neige</h2>
+            <p>Cours personnalisé pour découvrir ou progresser dans le parc à neige.</p>
+            <ul>
+                <li>1 ou 2 élèves pour 1 moniteur</li>
+                <li>Ski ou planche à neige</li>
+                <li>Pour skieurs ou planchistes habiles dans le parc à neige</li>
+                <li>Disponible sur réservation</li>
+                <li>20% de rabais sur location pour la durée du cours</li>
+                <li>À l’achat d’un cours, le billet est offert avec rabais</li>
+                <li>Privé : 152$</li>
+                <li>Semi-privé : 142$ par personne</li>
+            </ul>
+        `
+    }
+];
+
+const coursPrivesCards = document.getElementById("coursPrivesCards");
+const coursPrivesModals = document.getElementById("coursPrivesModals");
+
+coursPrives.forEach(cours => {
+    coursPrivesCards.innerHTML += `
+        <div class="ecole-card" onclick="openPriveModal('modal-${cours.id}')">
+            <div class="ecole-card-top">${cours.titre}<br>${cours.duree}</div>
+            <p>${cours.resume}</p>
+        </div>
+    `;
+
+    coursPrivesModals.innerHTML += `
+        <div id="modal-${cours.id}" class="cours-modal">
+            <div class="cours-modal-content">
+                <span class="close-modal" onclick="closePriveModal('modal-${cours.id}')">&times;</span>
+
+                ${cours.details}
+
+                <p><strong>Conditions :</strong><br>
+                    Skieurs débutants à avancés selon le programme.
+                </p>
+
+                <p><strong>Restrictions :</strong><br>
+                    En cas de température incertaine, la station se réserve le droit de vérifier si la situation permet la tenue du cours.
+                    L’horaire peut varier selon les disponibilités.
+                </p>
+
+                <a href="/inscription?returnUrl=/cours-groupe" class="btn-primary">
+                    S'INSCRIRE
+                </a>
+            </div>
+        </div>
+    `;
+});
+
+function openPriveModal(id){
+    const modal = document.getElementById(id);
+
+    if(modal){
+        modal.style.display = "flex";
+    }
+}
+
+function closePriveModal(id){
+    const modal = document.getElementById(id);
+
+    if(modal){
+        modal.style.display = "none";
+    }
+}
+
+window.addEventListener("click", function(event){
+    document.querySelectorAll(".cours-modal").forEach(function(modal){
+        if(event.target === modal){
+            modal.style.display = "none";
+        }
+    });
+});
+</script>

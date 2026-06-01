@@ -1,30 +1,108 @@
 <!-- HERO IMAGE -->
 <section class="hero-full">
 
-    <img src="/images/hero-ski.jpg" class="hero-bg">
+    <img 
+        src="/image/background.webp" 
+        class="hero-bg"
+        alt="Vallée du Parc"
+        fetchpriority="high"
+        loading="eager"
+        width="1920"
+        height="1080"
+    >
 
-    <div class="hero-overlay"></div>
+    <div class="hero-text-box">
+        <h1>Bienvenue à Vallée du Parc</h1>
+        <p>
+            Votre destination montagne pour des aventures 
+            hivernales inoubliables.
+        </p>
 
-    <div class="hero-center">
-
-        <h1>Vallée du Parc</h1>
-        <p>Une montagne vivante pour toute la famille</p>
-
+        <a href="https://valleeduparc.axess.shop/fr/Products/Tickets/" class="hero-btn">
+            Acheter vos billets
+        </a>
     </div>
 
 </section>
 
+
 <!-- NAV BOUTONS -->
 <section class="quick-access">
 
-    <a href="/billets" class="quick-btn">Billets</a>
-    <a href="/abonnements" class="quick-btn">Abonnements</a>
-    <a href="/horaires" class="quick-btn">Horaires</a>
-    <a href="/conditions" class="quick-btn">Conditions</a>
-    <a href="/evenements" class="quick-btn">Événements</a>
-    <a href="/ecole" class="quick-btn">École de ski</a>
+    <a href="/tarifs" class="quick-card">
+        <img 
+            src="/image/billets.webp" 
+            alt="Billets"
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="500"
+        >
+        <h3>Billets & abonnements</h3>
+    </a>
+
+    <a href="/horaires" class="quick-card">
+        <img 
+            src="/image/horaire.webp" 
+            alt="Horaires"
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="500"
+        >
+        <h3>Horaires</h3>
+    </a>
+
+    <a href="/ecole" class="quick-card">
+        <img 
+            src="/image/ecole.webp" 
+            alt="École de ski"
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="500"
+        >
+        <h3>École de ski</h3>
+    </a>
+
+    <a href="/evenements" class="quick-card">
+        <img 
+            src="/image/evenements.webp" 
+            alt="Événements"
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="500"
+        >
+        <h3>Événements</h3>
+    </a>
+
+    <a href="/conditions" class="quick-card">
+        <img 
+            src="/image/conditions.webp" 
+            alt="Conditions"
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="500"
+        >
+        <h3>Conditions</h3>
+    </a>
+    
+    <a href="/corpo" class="quick-card">
+        <img 
+            src="/image/corpo.webp" 
+            alt="Corporatif"
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="500"
+        >
+        <h3>Corporatif</h3>
+    </a>
 
 </section>
+
 
 <!-- ACTUALITÉS -->
 <section class="news-section">
@@ -34,19 +112,40 @@
     <div class="news-grid">
 
         <div class="news-card">
-            <img src="/images/news1.jpg">
+            <img 
+                src="/images/news1.jpg"
+                alt="Ouverture de saison"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="500"
+            >
             <h3>Ouverture de la saison</h3>
             <p>Début officiel de la saison 2026-2027 avec conditions idéales.</p>
         </div>
 
         <div class="news-card">
-            <img src="/images/news2.jpg">
+            <img 
+                src="/images/news2.jpg"
+                alt="Compétition locale"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="500"
+            >
             <h3>Compétition locale</h3>
             <p>Événement familial sur les pistes ce week-end.</p>
         </div>
 
         <div class="news-card">
-            <img src="/images/news3.jpg">
+            <img 
+                src="/images/news3.jpg"
+                alt="Nouvelle remontée"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="500"
+            >
             <h3>Nouvelle remontée</h3>
             <p>Amélioration majeure du secteur débutant.</p>
         </div>
@@ -54,3 +153,147 @@
     </div>
 
 </section>
+
+
+<!-- COMMANDITAIRES -->
+<section class="partners-section">
+
+    <h2>Nos partenaires</h2>
+
+    <div class="partners-slider">
+
+        <button class="partner-arrow left" onclick="movePartners(-1)">
+            &#10094;
+        </button>
+
+        <div class="partners-container">
+            <div class="partners-track" id="partnersTrack">
+
+                <div class="partner-item">
+                    <a href="https://brunelleskivelo.com/" target="_blank">
+                        <img src="/image/partners/brunelle.png" alt="Brunelle Ski Vélo" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://s3boardshop.com/" target="_blank">
+                        <img src="/image/partners/s3.png" alt="S3 Boardshop" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://www.cegepshawinigan.ca/" target="_blank">
+                        <img src="/image/partners/cegepShawi.png" alt="Cégep Shawinigan" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://www.head.com/en_CA/" target="_blank">
+                        <img src="/image/partners/head.png" alt="Head" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://www.avalancheskiwear.com/" target="_blank">
+                        <img src="/image/partners/avalanche.png" alt="Avalanche" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://www.mvmmotosport.com/fr/" target="_blank">
+                        <img src="/image/partners/mvm.png" alt="MVM" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://vpservicesalimentaires.com/" target="_blank">
+                        <img src="/image/partners/vp.png" alt="VP Services" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://www.sportsexperts.ca/fr-CA/" target="_blank">
+                        <img src="/image/partners/sportexperts.png" alt="Sports Experts" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://alignementmauricie.com/" target="_blank">
+                        <img src="/image/partners/alignementMauricie.png" alt="Alignement Mauricie" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://fromagerievictoria.com/" target="_blank">
+                        <img src="/image/partners/fromagerieVictoria.png" alt="Fromagerie Victoria" loading="lazy">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <button class="partner-arrow right" onclick="movePartners(1)">
+            &#10095;
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const track = document.getElementById("partnersTrack");
+
+    if (!track) return;
+
+    let items = document.querySelectorAll(".partner-item");
+    let currentPartner = 0;
+
+    function getVisibleItems() {
+        return window.innerWidth <= 768 ? 2 : 5;
+    }
+
+    let visibleItems = getVisibleItems();
+
+    // Clone les premiers éléments pour effet infini
+    for (let i = 0; i < visibleItems; i++) {
+        const clone = items[i].cloneNode(true);
+        track.appendChild(clone);
+    }
+
+    items = document.querySelectorAll(".partner-item");
+
+    window.movePartners = function(direction) {
+        const itemWidth = items[0].offsetWidth;
+
+        currentPartner += direction;
+
+        track.style.transition = "transform 0.5s ease";
+        track.style.transform =
+            `translateX(-${currentPartner * itemWidth}px)`;
+
+        if (currentPartner >= items.length - visibleItems) {
+            setTimeout(() => {
+                track.style.transition = "none";
+                currentPartner = 0;
+                track.style.transform = `translateX(0px)`;
+            }, 500);
+        }
+
+        if (currentPartner < 0) {
+            currentPartner = items.length - visibleItems - 1;
+            track.style.transition = "none";
+            track.style.transform =
+                `translateX(-${currentPartner * itemWidth}px)`;
+        }
+    };
+
+    // Rotation automatique
+    setInterval(() => {
+        movePartners(1);
+    }, 5000);
+
+});
+</script>

@@ -4,37 +4,108 @@ const express = require('express');
 const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
+
 const adminRoutes = require('./routes/admin');
-const getSnowConditions = require('./services/stationService');
+const pagesRoutes = require('./routes/pages');
 const mailchimpRoutes = require('./routes/mailchimp');
+const getSnowConditions = require('./services/stationService');
+const inscriptionRoutes = require('./routes/inscription');
 
 const app = express();
 
-app.use(expressLayouts);
-app.set('layout', 'layout');
+/* =========================
+   MONGODB
+========================= */
+mongoose.connect('mongodb://127.0.0.1/valleeduparc')
+    .then(() => console.log('MongoDB connecté'))
+    .catch(err => console.log(err));
+
+/* =========================
+   VIEW ENGINE
+========================= */
 app.set('view engine', 'ejs');
+app.set('layout', 'layout');
+app.use(expressLayouts);
+
+/* =========================
+   STATIC + BODY PARSER
+========================= */
 app.use(express.static('public'));
-app.use('/admin', adminRoutes);
-app.use('/', mailchimpRoutes);
-
-mongoose.connect('mongodb://127.0.0.1/valleeduparc');
-
-const pagesRoutes = require('./routes/pages');
-app.use('/', pagesRoutes);
-
-app.listen(3000, () => {
-    console.log('Serveur lancé sur http://localhost:3000');
-});
-
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
+/* =========================
+   SESSION (SÉCURISÉ)
+========================= */
 app.use(session({
-    secret: 'secret123',
+    secret: process.env.SESSION_SECRET || 'fallback_secret',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: false // mettre true en production avec HTTPS
+    }
 }));
 
-app.use(async (req, res, next) => {
-    res.locals.conditions = await getSnowConditions();
+/* =========================
+   GLOBAL VARIABLES
+========================= */
+app.use((req, res, next) => {
+    res.locals.title = "Vallée du Parc";
+    res.locals.success = req.query.success;
+    res.locals.exists = req.query.exists;
+    res.locals.error = req.query.error;
     next();
+});
+
+/* =========================
+   SNOW CONDITIONS (OPTIMISÉ)
+========================= */
+app.use(async (req, res, next) => {
+
+    // éviter appels inutiles
+    if (
+        req.path.startsWith('/admin') ||
+        req.path.startsWith('/css') ||
+        req.path.startsWith('/image') ||
+        req.path.startsWith('/uploads') ||
+        req.path.startsWith('/icons')
+    ) {
+        return next();
+    }
+
+    try {
+        res.locals.conditions = await getSnowConditions();
+    } catch (error) {
+        console.log("Erreur neige:", error.message);
+        res.locals.conditions = null;
+    }
+
+    next();
+});
+
+/* =========================
+   ROUTES
+========================= */
+app.use('/admin', adminRoutes);
+app.use('/', mailchimpRoutes);
+app.use('/inscription', inscriptionRoutes);
+app.use('/', pagesRoutes);
+
+/* =========================
+   404 (BONNE PRATIQUE)
+========================= */
+app.use((req, res) => {
+    res.status(404).render('404', {
+        title: "Page non trouvée"
+    });
+});
+
+/* =========================
+   SERVER
+========================= */
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });

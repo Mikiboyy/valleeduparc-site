@@ -1,4 +1,6 @@
-<div class="snow-float-btn" onclick="openModal()">
+<% if (typeof conditions !== 'undefined' && conditions) { %>
+    
+<div class="snow-float-btn" onclick="openSnowModal()">
     ❄️ Conditions de neige
 </div>
 
@@ -6,74 +8,79 @@
 
     <div class="modal-content">
 
-        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <span class="close-btn" onclick="closeSnowModal()">&times;</span>
 
-        <h2>Conditions météo complètes</h2>
+        <h2 class="modal-title">Conditions de la station</h2>
 
         <div class="conditions-grid">
 
             <!-- PISTES -->
-            <div class="condition-item">
-                <strong>Pistes jour</strong>
+            <div class="condition-card">
+                <strong>⛷️ Pistes jour</strong>
                 <p><%= conditions.pistesJour %></p>
             </div>
 
-            <div class="condition-item">
-                <strong>Pistes nuit</strong>
+            <div class="condition-card">
+                <strong>🌙 Pistes nuit</strong>
                 <p><%= conditions.pistesNuit %></p>
             </div>
 
             <!-- NEIGE -->
-            <div class="condition-item">
-                <strong>Neige 24h</strong>
+            <div class="condition-card">
+                <strong>❄️ Neige 24h</strong>
                 <p><%= conditions.neige24h %></p>
             </div>
 
-            <div class="condition-item">
-                <strong>Neige 48h</strong>
+            <div class="condition-card">
+                <strong>❄️ Neige 48h</strong>
                 <p><%= conditions.neige48h %></p>
             </div>
 
-            <div class="condition-item">
-                <strong>Neige 7 jours</strong>
+            <div class="condition-card">
+                <strong>❄️ Neige 7 jours</strong>
                 <p><%= conditions.neige7j %></p>
             </div>
 
-            <div class="condition-item">
-                <strong>Neige saison</strong>
+            <div class="condition-card">
+                <strong>❄️ Neige saison</strong>
                 <p><%= conditions.neigeSaison %></p>
             </div>
 
             <!-- REMONTÉES -->
-            <div class="condition-item">
-                <strong>Télésièges jour</strong>
+            <div class="condition-card">
+                <strong>🚡 Télésièges jour</strong>
                 <p><%= conditions.telesiegesJour %></p>
             </div>
 
-            <div class="condition-item">
-                <strong>Télésièges nuit</strong>
+            <div class="condition-card">
+                <strong>🌙 Télésièges nuit</strong>
                 <p><%= conditions.telesiegesNuit %></p>
             </div>
 
             <!-- ZONES -->
-            <div class="condition-item">
-                <strong>Sous-bois</strong>
+            <div class="condition-card">
+                <strong>🌲 Sous-bois</strong>
                 <p><%= conditions.sousBois %></p>
             </div>
 
-            <div class="condition-item">
-                <strong>Parc à neige</strong>
+            <div class="condition-card">
+                <strong>🏂 Parc à neige</strong>
                 <p><%= conditions.parcNeige %></p>
             </div>
 
-            <div class="condition-item">
-                <strong>Randonnée alpine</strong>
+            <div class="condition-card">
+                <strong>⛰️ Randonnée alpine</strong>
                 <p><%= conditions.randonnee %></p>
             </div>
 
+            <a href="/conditions" class="condition-card condition-card-link">
+                <strong>Conditions des pistes</strong>
+                <p>Cliquer ici</p>
+            </a>
+
             <!-- STATUT -->
-            <div class="condition-item full-width">
-                <strong>Statut de la station</strong>
+            <div class="condition-card full">
+                <strong>📍 Statut de la station</strong>
                 <p><%= conditions.statut %></p>
             </div>
 
@@ -84,11 +91,11 @@
 </div>
 
 <script>
-function openModal() {
+function openSnowModal() {
     document.getElementById("conditionsModal").style.display = "flex";
 }
 
-function closeModal() {
+function closeSnowModal() {
     document.getElementById("conditionsModal").style.display = "none";
 }
 
@@ -99,3 +106,5 @@ window.onclick = function(event) {
     }
 }
 </script>
+
+<% } %>

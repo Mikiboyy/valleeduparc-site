@@ -1,0 +1,89 @@
+<section class="events-page">
+
+    <h1>Événements</h1>
+
+    <!-- CALENDRIER -->
+    <div class="calendar-box">
+        <input type="month" id="calendarFilter">
+    </div>
+
+    <!-- ÉVÉNEMENTS À VENIR -->
+    <h2>À venir</h2>
+    <div class="events-grid">
+
+        <% if (upcoming && upcoming.length > 0) { %>
+            <% upcoming.forEach(event => { %>
+                <div class="event-card"
+                     data-title="<%= event.title %>"
+                     data-date="<%= new Date(event.date).toLocaleDateString('fr-CA') %>"
+                     data-description="<%= event.description %>"
+                     data-image="/uploads/<%= event.image || 'default.jpg' %>">
+
+                    <div class="event-image">
+                        <img src="/uploads/<%= event.image || 'default.jpg' %>" alt="">
+                    </div>
+
+                    <div class="event-content">
+                        <span class="date">
+                            <%= new Date(event.date).toLocaleDateString('fr-CA') %>
+                        </span>
+                        <h3><%= event.title %></h3>
+                        <p><%= event.description.substring(0, 80) %>...</p>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="no-event">Aucun événement à venir pour le moment.</p>
+        <% } %>
+
+    </div>
+
+    <!-- ÉVÉNEMENTS PASSÉS -->
+    <h2>Activités passées</h2>
+    <div class="events-grid past">
+
+        <% if (past && past.length > 0) { %>
+            <% past.forEach(event => { %>
+                <div class="event-card"
+                     data-title="<%= event.title %>"
+                     data-date="<%= new Date(event.date).toLocaleDateString('fr-CA') %>"
+                     data-description="<%= event.description %>"
+                     data-image="/uploads/<%= event.image || 'default.jpg' %>">
+
+                    <div class="event-image">
+                        <img src="/uploads/<%= event.image || 'default.jpg' %>" alt="">
+                    </div>
+
+                    <div class="event-content">
+                        <span class="date">
+                            <%= new Date(event.date).toLocaleDateString('fr-CA') %>
+                        </span>
+                        <h3><%= event.title %></h3>
+                        <p><%= event.description.substring(0, 80) %>...</p>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="no-event">Aucune activité passée.</p>
+        <% } %>
+
+    </div>
+
+    <!-- MODAL -->
+    <div id="eventModal" class="event-modal">
+        <div class="event-modal-content">
+
+            <span class="close-modal">&times;</span>
+
+            <img id="modalImage" src="" alt="">
+
+            <h2 id="modalTitle"></h2>
+
+            <p id="modalDate"></p>
+
+            <p id="modalDescription"></p>
+
+        </div>
+    </div>
+
+</section>

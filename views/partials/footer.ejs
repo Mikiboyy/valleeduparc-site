@@ -2,46 +2,99 @@
 
     <div class="footer-container">
 
+        <!-- LOGO -->
         <div>
             <img src="/image/logo_VDP_blanc_final-12.png" alt="VDP">
         </div>
 
-        <div>
+        <!-- CONTACT -->
+        <div class="footer-contact">
             <h3>Contact</h3>
-            <p>10000, ch de la Vallée-du-parc</p>
-            <p>Shawinigan, QC</p>
-            <p>G9T 0N1</p>
-            <p>819-538-1639</p>
-            <p>info@valleeduparc.com</p>
+
+            <a href="https://maps.app.goo.gl/oZZRx7jPq2PEhfC5A" class="footer-link footer-address" target="_blank">
+                10000, ch de la Vallée-du-parc<br>
+                Shawinigan, QC<br>
+                G9T 0N1
+            </a>
+
+            <p>
+                <a href="tel:8195381639" class="footer-link">
+                    819-538-1639
+                </a>
+            </p>
+
+            <p>
+                <a href="mailto:info@valleeduparc.com" class="footer-link">
+                    info@valleeduparc.com
+                </a>
+            </p>
+
+            <div class="footer-extra-links">
+                <a href="/contact" class="footer-link">
+                    Nous joindre
+                </a>
+
+                <a href="/documents/politique-confidentialite.pdf" class="footer-link" target="_blank">
+                    Politique de confidentialité
+                </a>
+            </div>
         </div>
 
-        <div>
-    <h3>RESTER INFORMÉ</h3>
+        <!-- NEWSLETTER -->
+        <div class="footer-newsletter">
+            <h3>RESTER INFORMÉ</h3>
 
-    <form action="/subscribe" method="POST">
+            <p class="newsletter-text">
+                Recevez nos nouveautés, promotions et conditions par courriel.
+            </p>
 
-    <input 
-        type="text" 
-        name="firstName"
-        placeholder="Votre nom"
-        required
-    >
+            <form action="/subscribe" method="POST">
 
-    <input 
-        type="email" 
-        name="email"
-        placeholder="Votre email"
-        required
-    >
+                <input 
+                    type="text" 
+                    name="firstName"
+                    placeholder="Votre nom"
+                    required
+                >
 
-    <button type="submit">
-        S'inscrire
-    </button>
+                <input 
+                    type="email" 
+                    name="email"
+                    placeholder="Votre email"
+                    required
+                >
 
-</form>
+                <button type="submit">
+                    S'inscrire
+                </button>
 
-</div>
+            </form>
+
+            <% if (typeof success !== 'undefined' && success) { %>
+                <p class="success-msg">
+                    Merci pour votre inscription !
+                </p>
+            <% } %>
+
+            <% if (typeof exists !== 'undefined' && exists) { %>
+                <p class="error-msg">
+                    Cet email est déjà inscrit.
+                </p>
+            <% } %>
+
+            <% if (typeof error !== 'undefined' && error) { %>
+                <p class="error-msg">
+                    Une erreur est survenue.
+                </p>
+            <% } %>
+
+        </div>
 
     </div>
+
+    <!-- TRADUCTION -->
+<div class="language-switcher">
+    <div class="gtranslate_wrapper"></div>
+</div>
 
 </footer>

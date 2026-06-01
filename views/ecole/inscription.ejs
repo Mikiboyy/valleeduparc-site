@@ -1,0 +1,53 @@
+<section class="form-section">
+
+    <form action="/inscription" method="POST" class="course-form">
+        <input type="hidden" name="returnUrl" value="<%= typeof returnUrl !== 'undefined' ? returnUrl : '/' %>">
+
+        <h2>Informations de l’élève</h2>
+
+        <label>Nom</label>
+        <input type="text" name="eleveNom" required>
+
+        <label>Date de naissance</label>
+        <input type="date" name="eleveNaissance" required>
+
+        <label>Niveau saison 2024-2025</label>
+        <input type="text" name="eleveNiveau">
+
+        <h2>Coordonnées du parent</h2>
+
+        <label>Nom</label>
+        <input type="text" name="parentNom" required>
+
+        <label>Date de naissance</label>
+        <input type="date" name="parentNaissance">
+
+        <label>Téléphone</label>
+        <input type="tel" name="telephone" required>
+
+        <label>Adresse courriel</label>
+        <input type="email" name="email" required>
+
+        <h2>Préférences horaire</h2>
+
+        <label><input type="checkbox" name="duree" value="4 semaines"> 4 semaines</label>
+        <label><input type="checkbox" name="duree" value="8 semaines"> 8 semaines</label>
+        <label><input type="checkbox" name="duree" value="6 semaines adulte soir"> 6 semaines adulte soir</label>
+
+        <br>
+
+        <label><input type="checkbox" name="horaire" value="Samedi AM"> Samedi AM</label>
+        <label><input type="checkbox" name="horaire" value="Samedi PM"> Samedi PM</label>
+        <label><input type="checkbox" name="horaire" value="Dimanche AM"> Dimanche AM</label>
+        <label><input type="checkbox" name="horaire" value="Dimanche PM"> Dimanche PM</label>
+
+        <label>Commentaires</label>
+        <textarea name="commentaires"></textarea>
+
+        <button type="submit" class="btn-primary">
+            Envoyer l’inscription
+        </button>
+
+    </form>
+
+</section>

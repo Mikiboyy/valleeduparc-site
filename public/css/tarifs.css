@@ -1,0 +1,502 @@
+/* =================================
+   PAGE TARIFS STYLE
+================================= */
+
+.tarifs-hero{
+    position: relative;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(18,35,65,0.72),
+            rgba(18,35,65,0.82)
+        ),
+        url('/images/montagne-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+/* overlay */
+.tarifs-overlay{
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(19,35,61,0.95) 0%,
+            rgba(33,58,92,0.78) 45%,
+            rgba(40,71,109,0.30) 100%
+        );
+}
+
+/* contenu */
+.tarifs-content{
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 1400px;
+
+    margin: auto;
+    padding: 80px 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 60px;
+}
+
+/* =========================
+   TEXTE
+========================= */
+
+.tarifs-text{
+    flex: 1;
+    color: white;
+}
+
+.tarifs-subtitle{
+    color: #4fc3ff;
+
+    font-size: 1.3rem;
+    font-weight: 600;
+
+    margin-bottom: 15px;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.tarifs-text h1{
+    font-size: 4rem;
+    line-height: 1.05;
+
+    margin-bottom: 25px;
+
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.tarifs-description{
+    font-size: 1.2rem;
+    line-height: 1.8;
+
+    max-width: 650px;
+
+    color: rgba(255,255,255,0.88);
+
+    margin-bottom: 35px;
+}
+
+/* features */
+.tarifs-features{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 40px;
+}
+
+.feature{
+    background: rgba(255,255,255,0.08);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    padding: 16px 18px;
+
+    border-radius: 12px;
+
+    backdrop-filter: blur(6px);
+
+    font-weight: 500;
+}
+
+/* boutons */
+.tarifs-buttons{
+    display: flex;
+    gap: 20px;
+}
+
+.btn-primary,
+.btn-secondary{
+    padding: 16px 28px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+    font-weight: 700;
+
+    transition: 0.3s ease;
+}
+
+.btn-primary{
+    background: #4fc3ff;
+    color: #071120;
+}
+
+.btn-primary:hover{
+    background: white;
+    transform: translateY(-3px);
+}
+
+.btn-secondary{
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+}
+
+.btn-secondary:hover{
+    background: rgba(255,255,255,0.12);
+    transform: translateY(-3px);
+}
+
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.tarifs-image{
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+}
+
+.tarifs-image img{
+    width: 100%;
+    max-width: 650px;
+
+    border-radius: 24px;
+
+    object-fit: cover;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.45);
+}
+
+/* =========================
+   CARTES
+========================= */
+
+.tarifs-cards-section{
+    background: #edf2f7;
+
+    padding: 90px 40px;
+}
+
+.tarifs-cards{
+    max-width: 1200px;
+
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 35px;
+}
+
+.tarif-card{
+    background: white;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    text-decoration: none;
+
+    transition: 0.35s ease;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+}
+
+.tarif-card:hover{
+    transform: translateY(-8px);
+}
+
+.tarif-card-top{
+    background: #2f436b;
+
+    color: white;
+
+    font-size: 2rem;
+
+    padding: 22px 28px;
+}
+
+.tarif-card-title{
+    background: #3d4f73;
+
+    color: white;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+
+    padding: 22px 28px;
+}
+
+.tarif-card p{
+    padding: 28px;
+
+    color: #4b5563;
+
+    line-height: 1.6;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 1100px){
+
+    .tarifs-content{
+        flex-direction: column;
+        text-align: center;
+
+        padding: 60px 25px;
+    }
+
+    .tarifs-text h1{
+        font-size: 2.8rem;
+    }
+
+    .tarifs-features{
+        grid-template-columns: 1fr;
+    }
+
+    .tarifs-buttons{
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .tarifs-cards{
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.pricing-section{
+    padding: 100px 20px;
+    background:
+        linear-gradient(
+            180deg,
+            #edf4fb 0%,
+            #dfeaf5 100%
+        );
+}
+
+.pricing-section h2{
+    text-align:center;
+    font-size:48px;
+    color:var(--bleu-fonce);
+    margin-bottom:60px;
+    font-weight:800;
+}
+
+.pricing-group{
+    max-width:1100px;
+    margin:0 auto 30px auto;
+}
+
+/* BOUTON ACCORDÉON */
+.pricing-toggle{
+    width:100%;
+    background:var(--bleu);
+    color:white;
+    border:none;
+    padding:24px 30px;
+    border-radius:18px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    font-size:28px;
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+}
+
+.pricing-toggle:hover{
+    transform:translateY(-2px);
+}
+
+/* CONTENU */
+.pricing-content{
+    background:white;
+
+    border-radius:0 0 18px 18px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.08);
+
+    max-height:0;
+
+    transition:
+        max-height 0.45s ease,
+        padding 0.45s ease;
+
+    padding:0 30px;
+}
+
+/* OUVERT */
+.pricing-content.open{
+    max-height:1000px;
+    padding:30px;
+}
+
+/* GRILLE 2 COLONNES */
+.pricing-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:20px;
+}
+
+/* CARTE */
+.price-row{
+    background:#f8fbff;
+
+    border:1px solid #d9e7f5;
+
+    border-radius:16px;
+
+    padding:24px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    transition:0.3s ease;
+}
+
+.price-row:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.08);
+}
+
+/* TEXTE */
+.price-row span{
+    color:var(--bleu-fonce);
+    font-size:22px;
+    font-weight:700;
+}
+
+.price-row strong{
+    color:var(--bleu);
+    font-size:30px;
+    font-weight:900;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+    .pricing-section h2{
+        font-size:36px;
+    }
+
+    .pricing-grid{
+        grid-template-columns:1fr;
+    }
+
+    .pricing-toggle{
+        font-size:22px;
+        padding:20px;
+    }
+
+    .price-row{
+        padding:20px;
+    }
+
+    .price-row span{
+        font-size:18px;
+    }
+
+    .price-row strong{
+        font-size:24px;
+    }
+
+}
+
+.pricing-wrapper{
+    max-width:1400px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:30px;
+
+    align-items:start;
+}
+
+.pricing-group{
+    width:100%;
+    margin:0;
+}
+
+/* IMPORTANT */
+.pricing-toggle{
+    width:100%;
+}
+
+.pricing-content{
+    width:100%;
+    box-sizing:border-box;
+}
+
+.pricing-category{
+    margin-bottom:80px;
+}
+
+.category-title{
+    background:#1A2947;
+
+    color:white;
+
+    text-align:center;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    font-size:28px;
+    font-weight:800;
+
+    margin-bottom:35px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* MOBILE */
+@media(max-width:1100px){
+
+    .pricing-wrapper{
+        grid-template-columns:1fr;
+    }
+
+}

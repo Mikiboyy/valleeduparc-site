@@ -1,0 +1,110 @@
+<section class="station-map-section">
+
+    <h2>Carte de la station</h2>
+
+    <div class="station-map-container">
+        <img 
+            src="/image/carte-station.webp" 
+            alt="Carte de la station"
+            onclick="openMapModal()"
+        >
+    </div>
+
+    <div class="station-map-text">
+        <p><strong>Horaire de la pente-école</strong></p>
+    
+        <p>
+            Dimanche, lundi et mardi : 9h à 16h
+        </p>
+
+        <p>
+            Mercredi à samedi : 9h à 20h
+        </p>
+
+        <div class="map-buttons">
+
+            <!-- téléchargement carte -->
+             <a href="/image/carte-station.webp" download class="map-btn">
+                Télécharger la carte
+            </a>
+
+            <!-- page pente école -->
+             <a href="/pente_ecole" class="map-btn secondary">
+                Voir la pente-école
+            </a>
+
+        </div>
+    </div>
+
+</section>
+
+
+<!-- MODAL IMAGE -->
+<div id="mapModal" class="map-modal" onclick="closeMapModal()">
+    <span class="map-close">&times;</span>
+    <img id="mapModalImg" class="map-modal-content" src="/image/carte-station.webp">
+</div>
+
+
+<section class="conditions-page">
+
+    <div class="conditions-header">
+        <h1>Conditions des pistes</h1>
+        <p>Mise à jour en temps réel des pistes de Vallée du Parc</p>
+    </div>
+
+    <div class="conditions-table">
+
+        <div class="table-head">
+            <span>#</span>
+            <span>Niveau</span>
+            <span>Piste</span>
+            <span>Jour</span>
+            <span>Soir</span>
+        </div>
+
+        <% trails.forEach(trail => { %>
+            <div class="table-row">
+
+                <span><%= trail.trailNumber %></span>
+
+                <span class="trail-difficulty">
+                   
+                    <% if (trail.difficulty === "vert") { %>
+                        <span class="difficulty green-circle"></span>
+                        
+                        <% } else if (trail.difficulty === "bleu") { %>
+                            <span class="difficulty blue-square"></span>
+                            
+                            <% } else if (trail.difficulty === "noir") { %>
+                                <span class="difficulty black-diamond"></span>
+                                
+                                <% } %>
+                </span>
+
+                <span class="trail-name"><%= trail.name %></span>
+
+                <span class="<%= trail.openDay ? 'open' : 'closed' %>">
+                    <%= trail.openDay ? 'Ouvert' : 'Fermé' %>
+                </span>
+
+                <span class="<%= trail.openNight ? 'open' : 'closed' %>">
+                    <%= trail.openNight ? 'Ouvert' : 'Fermé' %>
+                </span>
+
+            </div>
+        <% }) %>
+
+    </div>
+
+</section>
+
+<script>
+function openMapModal() {
+    document.getElementById("mapModal").style.display = "flex";
+}
+
+function closeMapModal() {
+    document.getElementById("mapModal").style.display = "none";
+}
+</script>

@@ -1,0 +1,80 @@
+/* =========================
+   TABLET
+========================= */
+@media (max-width: 1024px) {
+    .quick-access,
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .partners-slider {
+        padding: 0 40px;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+    .nav {
+        display: none;
+    }
+
+    .quick-access,
+    .news-grid,
+    .conditions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .condition-card.full {
+        grid-column: span 1;
+    }
+
+    .hero-text-box {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    max-width: none;
+    padding: 20px;
+}
+
+.hero-text-box h1 {
+    font-size: 30px;
+}
+
+.hero-text-box p {
+    font-size: 16px;
+}
+
+    .partner-item {
+        min-width: 100%;
+    }
+
+    .partner-arrow {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+@media (max-width: 480px) {
+    .hero-left h1 {
+        font-size: 28px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+}

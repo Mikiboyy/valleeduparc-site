@@ -1,0 +1,176 @@
+/* =================================
+   LUGE ALPINE
+================================= */
+
+.luge-hero{
+    background:
+        linear-gradient(
+            rgba(19,35,61,0.75),
+            rgba(40,71,109,0.82)
+        ),
+        url('/images/luge-alpine.jpg');
+
+    background-size: cover;
+    background-position: center;
+}
+
+/* SECTION TEXTE */
+
+.luge-section{
+    padding: 90px 20px;
+    background: #f8fbff;
+}
+
+.luge-container{
+    max-width: 1100px;
+    margin: auto;
+}
+
+.luge-container h2{
+    color: var(--bleu-fonce);
+    font-size: 42px;
+    margin-bottom: 30px;
+    font-weight: 800;
+}
+
+.luge-container p{
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* TABLEAU */
+
+.luge-table{
+    max-width: 1100px;
+    margin: auto;
+
+    background: white;
+
+    border-radius: 18px;
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+}
+
+.luge-row{
+    display: grid;
+    grid-template-columns: 250px 1fr;
+}
+
+.luge-row div{
+    padding: 20px;
+    border-bottom: 1px solid #e7edf5;
+}
+
+.luge-header{
+    background: var(--bleu-fonce);
+    color: white;
+    font-weight: 700;
+}
+
+.luge-row:not(.luge-header):nth-child(even){
+    background: #f8fbff;
+}
+
+@media(max-width:768px){
+
+    .luge-container h2{
+        font-size: 30px;
+    }
+
+    .luge-row{
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* =================================
+   RANDONNÉE ALPINE
+================================= */
+
+.rando-hero{
+    background:
+        linear-gradient(
+            rgba(19,35,61,0.75),
+            rgba(40,71,109,0.82)
+        ),
+        url('/images/randonnee-alpine.jpg');
+
+    background-size: cover;
+    background-position: center;
+}
+
+/* SECTION TEXTE */
+
+.rando-section{
+    padding: 90px 20px;
+    background: #f8fbff;
+}
+
+.rando-container{
+    max-width: 1100px;
+    margin: auto;
+}
+
+.rando-container h2{
+    color: var(--bleu-fonce);
+    font-size: 42px;
+    margin-bottom: 30px;
+    font-weight: 800;
+}
+
+.rando-container p{
+    color: #555;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* RÈGLES */
+
+.rando-rules{
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 25px;
+}
+
+.rule-card{
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    color: var(--bleu-fonce);
+
+    font-weight: 600;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+
+    transition: .3s ease;
+}
+
+.rule-card:hover{
+    transform: translateY(-5px);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .rando-rules{
+        grid-template-columns: 1fr;
+    }
+
+    .rando-container h2{
+        font-size: 30px;
+    }
+
+}

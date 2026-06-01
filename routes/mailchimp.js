@@ -10,6 +10,10 @@ mailchimp.setConfig({
 router.post('/subscribe', async (req, res) => {
     const { email, firstName } = req.body;
 
+    if (!email) {
+        return res.redirect('/?error=missing_email');
+    }
+
     try {
         await mailchimp.lists.addListMember(
             process.env.MAILCHIMP_AUDIENCE_ID,
@@ -17,15 +21,25 @@ router.post('/subscribe', async (req, res) => {
                 email_address: email,
                 status: "subscribed",
                 merge_fields: {
-                    FNAME: firstName
+                    FNAME: firstName || ""
                 }
             }
         );
 
-        res.redirect('/');
+        return res.redirect('/?success=1');
+
     } catch (error) {
-        console.log(error);
-        res.send("Erreur inscription infolettre");
+
+        const mailchimpError = error.response?.body;
+
+        // Déjà inscrit
+        if (mailchimpError?.title === "Member Exists") {
+            return res.redirect('/?exists=1');
+        }
+
+        console.log("Mailchimp error:", mailchimpError || error);
+
+        return res.redirect('/?error=1');
     }
 });
 

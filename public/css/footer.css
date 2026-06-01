@@ -1,0 +1,184 @@
+/* =========================
+   FOOTER
+========================= */
+.footer {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(19,35,61,1) 0%,
+            rgba(33,58,92,0.96) 45%,
+            rgba(40,71,109,0.92) 100%
+        );
+    padding: 80px;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1.6fr 1.5fr;
+    gap: 70px;
+    align-items: start;
+}
+
+.footer img {
+    width: 320px;
+}
+
+.footer h3 {
+    color: white;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.footer p {
+    color: white;
+    opacity: 0.9;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--turquoise);
+    opacity: 1;
+}
+
+.footer-extra-links {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-extra-links a {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.footer input,
+.footer button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 12px;
+    border-radius: 8px;
+}
+
+.footer button {
+    background: var(--turquoise);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.footer button:hover {
+    background: var(--bleu);
+}
+
+.success-msg {
+    color: #2ecc71;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.error-msg {
+    color: #e74c3c;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.footer-address {
+    display: inline-block;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   NEWSLETTER MODERNE
+========================= */
+
+.footer-newsletter {
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.footer-newsletter h3 {
+    color: white;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.footer-newsletter p.newsletter-text {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+/* formulaire */
+.footer-newsletter form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* inputs */
+.footer-newsletter input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+    color: #333;
+}
+
+/* placeholder */
+.footer-newsletter input::placeholder {
+    color: #888;
+}
+
+/* bouton */
+.footer-newsletter button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--turquoise);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.footer-newsletter button:hover {
+    background: var(--bleu);
+    transform: translateY(-2px);
+}
+
+/* messages */
+.success-msg,
+.error-msg {
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.success-msg {
+    color: #2ecc71;
+}
+
+.error-msg {
+    color: #ff6b6b;
+}

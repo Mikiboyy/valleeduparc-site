@@ -1,95 +1,40 @@
-const axios = require('axios');
-
-async function getSnowConditions() {
-    try {
-        const response = await axios.post(
-            'https://valleeduparc.com/wp-admin/admin-ajax.php',
-            new URLSearchParams({
-                action: 'stationStats_get'
-            }),
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'User-Agent': 'Mozilla/5.0'
-                }
-            }
-        );
-
-        const data = response.data;
-
-        console.log("DATA COMPLETE:", data);
-
-        // On retourne des champs simplifiés pour le frontend
-        return {
-            pistesJour: `${data.intTrailsOpen}/${data.intTrailsTotal}`,
-            pistesNuit: `${data.intTrailsOpenNight}/${data.intTrailsTotalNight}`,
-
-            neige24h: `${data.intSnow24h} cm`,
-            neige48h: `${data.intSnow48h} cm`,
-            neige7j: `${data.intSnow7days} cm`,
-            neigeSaison: `${data.intSnowSeason} cm`,
-
-            telesiegesJour: `${data.intLiftsOpen}/${data.intLiftsTotal}`,
-            telesiegesNuit: `${data.intLiftsOpenNight}/${data.intLiftsTotalNight}`,
-
-            sousBois: `${data.intSousBoisOuvert}/${data.intSousBoisTotal}`,
-            parcNeige: `${data.intSnowParkOpen}/${data.intSnowPark}`,
-            randonnee: `${data.intAlpineTrailOpen}/${data.intAlpineTrailTotal}`,
-
-            statut: data.strOpenFr
-        };
-
-    } catch (error) {
-        console.log("Erreur récupération conditions :", error.message);
-
-        return {
-            pistesJour: "N/A",
-            pistesNuit: "N/A",
-            neige24h: "N/A",
-            neige48h: "N/A",
-            neige7j: "N/A",
-            neigeSaison: "N/A",
-            telesiegesJour: "N/A",
-            telesiegesNuit: "N/A",
-            sousBois: "N/A",
-            parcNeige: "N/A",
-            randonnee: "N/A",
-            statut: "Information indisponible"
-        };
-    }
-}
+const Trail = require('../models/Trail');
+const Event = require('../models/Event');
 
 /* PAGE ACCUEIL */
-exports.home = async (req, res) => {
-    const conditions = await getSnowConditions();
-
+exports.home = (req, res) => {
     res.render('index', {
-        title: "Accueil",
-        conditions
+        title: "Accueil"
+    });
+};;
+
+/* BILLETS */
+exports.tarifs = (req, res) => {
+    res.render('tarifs/tarifs', {
+        title: "Tarifs"
     });
 };
 
-/* BILLETS */
 exports.abonnements = (req, res) => {
-    res.render('billets/abonnements', {
+    res.render('tarifs/abonnements', {
         title: "Abonnements"
     });
 };
 
 exports.billets = (req, res) => {
-    res.render('billets/billets', {
+    res.render('tarifs/billets', {
         title: "Billets"
     });
 };
 
 exports.luge = (req, res) => {
-    res.render('billets/luge', {
+    res.render('tarifs/luge', {
         title: "Luge"
     });
 };
 
 exports.randonnee = (req, res) => {
-    res.render('billets/randonnee', {
+    res.render('tarifs/randonnee', {
         title: "Randonnée"
     });
 };
@@ -101,16 +46,36 @@ exports.horaires = (req, res) => {
     });
 };
 
-exports.conditions = (req, res) => {
-    res.render('montagne/conditions', {
-        title: "Conditions"
+exports.pente_ecole = (req, res) => {
+    res.render('montagne/pente_ecole', {
+        title: "Pente école"
     });
 };
 
-exports.evenements = (req, res) => {
-    res.render('montagne/evenements', {
-        title: "Événements"
-    });
+exports.evenements = async (req, res) => {
+    try {
+        const now = new Date();
+
+        const upcoming = await Event.find({
+            date: { $gte: now }
+        }).sort({ date: 1 });
+
+        const past = await Event.find({
+            date: { $lt: now }
+        }).sort({ date: -1 });
+
+        res.render('montagne/evenements', {
+            upcoming,
+            past
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.render('montagne/evenements', {
+            upcoming: [],
+            past: []
+        });
+    }
 };
 
 exports.historique = (req, res) => {
@@ -142,4 +107,96 @@ exports.parents = (req, res) => {
     res.render('ecole/parents', {
         title: "Parents"
     });
+};
+
+exports.inscription = (req, res) => {
+    res.render('ecole/inscription', {
+        title: "Inscription aux cours",
+        returnUrl: req.query.returnUrl || '/'
+    });
+};
+
+exports.service = (req, res) => {
+    res.render('service/service', {
+        title: "Services"
+    });
+};
+
+exports.boutique = (req, res) => {
+    res.render('service/boutique', {
+        title: "Boutique"
+    });
+};
+
+exports.location = (req, res) => {
+    res.render('service/location', {
+        title: "Location"
+    });
+};
+
+exports.restauration = (req, res) => {
+    res.render('service/restauration', {
+        title: "Restauration"
+    });
+};
+
+exports.adapte = (req, res) => {
+    res.render('service/adapte', {
+        title: "Ski adapté"
+    });
+};
+
+exports.competition = (req, res) => {
+    res.render('service/competition', {
+        title: "Ski de compétition"
+    });
+};
+
+exports.patrouille = (req, res) => {
+    res.render('service/patrouille', {
+        title: "Patrouille"
+    });
+};
+
+exports.corpo = (req, res) => {
+    res.render('service/corpo', {
+        title: "Corpo"
+    });
+};
+
+exports.montagne = (req, res) => {
+    res.render('montagne/montagne', {
+        title: "Montagne"
+    });
+};
+
+exports.ecole = (req, res) => {
+    res.render('ecole/ecole', {
+        title: "École"
+    });
+};
+
+exports.contact = (req, res) => {
+    res.render('communication/contact', {
+        title: "Contact"
+    });
+};
+
+exports.conditions = async (req, res) => {
+    try {
+        const trails = await Trail.find().sort({ trailNumber: 1 });
+
+        res.render('montagne/conditions', {
+            title: "Conditions",
+            trails
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        res.render('montagne/conditions', {
+            title: "Conditions",
+            trails: []
+        });
+    }
 };

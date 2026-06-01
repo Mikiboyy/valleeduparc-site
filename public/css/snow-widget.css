@@ -1,0 +1,91 @@
+/* =========================
+   SNOW BUTTON
+========================= */
+.snow-float-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--turquoise);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 9999;
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    width: 850px;
+    max-width: 95%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.condition-card {
+    background: #f7f9fc;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #eee;
+}
+
+.condition-card.full {
+    grid-column: span 3;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.condition-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.condition-card-link:hover {
+    background: #eaf4ff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.condition-card-link strong {
+    color: var(--bleu-fonce);
+}
+
+.condition-card-link p {
+    color: var(--bleu);
+    font-weight: 600;
+}
