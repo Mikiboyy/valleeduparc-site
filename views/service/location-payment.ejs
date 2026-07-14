@@ -1,0 +1,72 @@
+<section class="checkout-section">
+
+    <div class="checkout-container">
+
+        <div class="pricing-title">
+            <span class="pricing-subtitle">
+                PAIEMENT
+            </span>
+
+            <h2>
+                Paiement sécurisé
+            </h2>
+
+            <div class="checkout-summary">
+
+                <p>
+                    Sous-total :
+                    <strong><%= order.subtotal.toFixed(2) %> $</strong>
+                </p>
+
+                <p>
+                    TPS :
+                    <strong><%= order.tps.toFixed(2) %> $</strong>
+                </p>
+
+                <p>
+                    TVQ :
+                    <strong><%= order.tvq.toFixed(2) %> $</strong>
+                </p>
+
+                <hr>
+
+                <p class="checkout-total">
+                    Total :
+                    <strong><%= order.total.toFixed(2) %> $</strong>
+                </p>
+
+            </div>
+        </div>
+
+        <div id="monerisCheckout"></div>
+
+    </div>
+
+</section>
+
+<script src="<%= monerisEnv === 'prod'
+    ? 'https://gateway.moneris.com/chkt/js/chkt_v1.00.js'
+    : 'https://gatewayt.moneris.com/chkt/js/chkt_v1.00.js' %>"></script>
+
+<script>
+    const myCheckout = new monerisCheckout();
+
+    myCheckout.setMode("<%= monerisEnv %>");
+    myCheckout.setCheckoutDiv("monerisCheckout");
+
+    myCheckout.setCallback("cancel_transaction", function () {
+        window.location.href = "/location-form?error=cancel";
+    });
+
+    myCheckout.setCallback("error_event", function (data) {
+        console.error("Erreur Moneris :", data);
+        alert("Une erreur est survenue avec le paiement.");
+    });
+
+    myCheckout.setCallback("payment_complete", function (data) {
+        const response = JSON.parse(data);
+        window.location.href = "/location-form/confirmation?ticket=" + encodeURIComponent(response.ticket);
+    });
+
+    myCheckout.startCheckout("<%= ticket %>");
+</script>

@@ -167,6 +167,13 @@
     flex-grow: 1;
 }
 
+.course-price {
+    margin-top: 18px;
+    color: var(--bleu);
+    font-weight: 900;
+    font-size: 1.25rem;
+}
+
 /* =========================
    POPUPS
 ========================= */
@@ -291,6 +298,140 @@
     margin-top:30px;
 }
 
+.ecole-hero-image{
+    flex:1;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.ecole-hero-image img{
+    width:100%;
+    max-width:600px;
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+.prive-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/cours.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.groupe-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/groupe.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.ecole-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/ecole.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* =========================
+   FORMULAIRE COURS PRIVÉ
+========================= */
+
+.private-course-form {
+    max-width: 900px;
+}
+
+.selected-private-course {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 35px;
+    padding: 20px;
+    background: #edf4fb;
+    border: 1px solid #d9e7f5;
+    border-radius: 16px;
+}
+
+.selected-course-item {
+    min-height: 90px;
+    padding: 18px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(19, 35, 61, 0.06);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+}
+
+.selected-course-item span {
+    color: #687386;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.selected-course-item strong {
+    color: var(--bleu-fonce);
+    font-size: 1.05rem;
+    line-height: 1.4;
+}
+
+.private-course-datetime {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.private-date-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.private-course-notice {
+    margin: 20px 0 30px;
+    padding: 18px 20px;
+    background: #edf8fd;
+    border-left: 5px solid var(--bleu);
+    border-radius: 8px;
+    color: var(--bleu-fonce);
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.private-course-form select,
+.private-course-form input,
+.private-course-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.private-course-form textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+
+@media (max-width: 700px) {
+    .selected-private-course,
+    .private-course-datetime {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 /* =========================
    TABLETTE
 ========================= */
@@ -325,4 +466,16 @@
         margin: 30px auto;
     }
 
+}
+
+@media(max-width:1100px){
+
+    .ecole-hero-image{
+        margin-top:40px;
+    }
+
+    .ecole-hero-image img{
+        max-width:450px;
+        height:auto;
+    }
 }

@@ -1,0 +1,1185 @@
+/* =================================
+   VARIABLES / UTILITAIRES
+================================= */
+
+.services-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/services.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.location-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/location.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.restauration-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/restauration.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.ski_adapte-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/ski_adapte.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.patrouille-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/patrouille.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.luge-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/luge.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.luge-hero-image img{
+    width:100%;
+    max-width:600px;
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+.restauration-hero-image img{
+    width:100%;
+    max-width:600px;
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+.location-hero-image img{
+    width:100%;
+    max-width:600px;
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+.ski_adapte-hero-image img{
+    width:100%;
+    max-width:600px;
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+.patrouille-hero-image img{
+    width:100%;
+    max-width:600px;
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+.section-subtitle {
+    display: inline-block;
+    color: var(--bleu);
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.section-title p {
+    max-width: 800px;
+    margin: 15px auto 0;
+    color: #5f6b7a;
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+.btn-ecrire {
+    color: #000 !important;
+}
+
+/* =================================
+   PAGE BOUTIQUE
+================================= */
+
+.boutique-hero {
+    background:
+        linear-gradient(rgba(19, 35, 61, 0.78), rgba(40, 71, 109, 0.82)),
+        url('/images/boutique-hero.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.boutique-section {
+    padding: 90px 20px;
+    background: #f8fbff;
+}
+
+.boutique-container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.boutique-text {
+    max-width: 1000px;
+}
+
+.boutique-text h2 {
+    color: var(--bleu-fonce);
+    font-size: 42px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.boutique-text p {
+    color: #4b5563;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.boutique-text .intro {
+    color: var(--bleu-fonce);
+    font-weight: 800;
+}
+
+.boutique-cards-section {
+    background: linear-gradient(180deg, #edf4fb 0%, #dfeaf5 100%);
+}
+
+/* =================================
+   PAGE LOCATION
+================================= */
+
+.location-intro {
+    padding: 90px 20px 50px;
+    background: #f8fbff;
+}
+
+.location-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.location-intro h2 {
+    color: var(--bleu-fonce);
+    font-size: 42px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.location-intro p {
+    color: #4b5563;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.important-note {
+    color: var(--bleu-fonce) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* TARIFS LOCATION */
+
+.location-pricing-section {
+    padding: 40px 20px 100px;
+    background: linear-gradient(180deg, #f8fbff 0%, #dfeaf5 100%);
+}
+
+.location-block {
+    margin-bottom: 70px;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.location-title {
+    background: var(--bleu-fonce);
+    color: #fff;
+    padding: 24px 30px;
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.location-table {
+    width: 100%;
+}
+
+.location-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+}
+
+.location-table.individual .location-row {
+    grid-template-columns: 1.5fr repeat(5, 1fr);
+}
+
+.location-row div {
+    padding: 18px;
+    border-bottom: 1px solid #dbe7f3;
+    border-right: 1px solid #dbe7f3;
+    text-align: center;
+    font-size: 16px;
+    color: var(--bleu-fonce);
+}
+
+.location-row div:first-child {
+    text-align: left;
+    font-weight: 700;
+}
+
+.location-head {
+    background: #edf4fb;
+    font-weight: 900;
+}
+
+.location-head div {
+    color: var(--bleu-fonce);
+    font-weight: 900;
+    text-align: center !important;
+}
+
+.location-row:nth-child(even):not(.location-head) {
+    background: #f8fbff;
+}
+
+.location-note {
+    padding: 0 30px;
+    margin: 18px 0;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.location-action {
+    padding: 10px 30px 35px;
+}
+
+.season-rental-grid {
+    width: 100%;
+}
+
+.season-card {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.season-card-title {
+    background: var(--bleu-fonce);
+    color: #fff;
+    padding: 24px 30px;
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.season-card-title span {
+    color: #ff1f1f;
+}
+
+.season-table {
+    width: 100%;
+}
+
+.season-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+}
+
+.season-row > div {
+    padding: 18px;
+    border-bottom: 1px solid #dbe7f3;
+    border-right: 1px solid #dbe7f3;
+    text-align: center;
+    font-size: 16px;
+    color: var(--bleu-fonce);
+}
+
+.season-row > div:first-child {
+    text-align: left;
+    font-weight: 700;
+}
+
+.season-row > div:last-child {
+    border-right: none;
+}
+
+.season-head {
+    background: #edf4fb;
+}
+
+.season-head div {
+    color: var(--bleu-fonce);
+    font-weight: 900;
+    text-align: center !important;
+}
+
+.season-row:nth-child(even):not(.season-head) {
+    background: #f8fbff;
+}
+/* =================================
+   PAGES SERVICES
+================================= */
+
+.corpo-image{
+    flex:1;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.corpo-image img{
+    width:100%;
+    max-width:600px;
+
+    border-radius:24px;
+
+    object-fit:cover;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+
+.corpo-hero {
+    background:
+        linear-gradient(rgba(19, 35, 61, 0.75), rgba(40, 71, 109, 0.82)),
+        url('/image/corpo2.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.scolaire-hero {
+    background:
+        linear-gradient(rgba(19, 35, 61, 0.75), rgba(40, 71, 109, 0.82)),
+        url('/image/groupes-scolaires.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.rfid-hero {
+    background:
+        linear-gradient(rgba(19, 35, 61, 0.78), rgba(40, 71, 109, 0.82)),
+        url('/image/rfid.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.careers-hero {
+    background:
+        linear-gradient(rgba(19, 35, 61, 0.78), rgba(40, 71, 109, 0.82)),
+        url('/image/carrieres.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+/* GROUPES SCOLAIRES */
+
+.school-image-section {
+    padding: 40px 20px 90px;
+    background: #f8fbff;
+}
+
+.school-image-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.school-image-container img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 22px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* RFID */
+
+.rfid-steps-section {
+    padding: 90px 20px;
+    background: linear-gradient(180deg, #edf4fb 0%, #dfeaf5 100%);
+}
+
+.rfid-container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.rfid-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.rfid-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 25px;
+    align-items: flex-start;
+    background: #fff;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.rfid-number {
+    width: 60px;
+    height: 60px;
+    background: var(--bleu);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.rfid-step h3 {
+    color: var(--bleu-fonce);
+    font-size: 1.35rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.rfid-step p {
+    color: #4b5563;
+    line-height: 1.7;
+}
+
+/* RESTAURATION */
+
+.resto-schedule-grid {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.resto-schedule-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.resto-schedule-title {
+    background: var(--bleu-fonce);
+    color: #fff;
+    padding: 22px 26px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.resto-schedule-list {
+    padding: 26px;
+}
+
+.resto-schedule-list p {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.resto-schedule-list strong {
+    color: var(--bleu-fonce);
+}
+
+.resto-schedule-list em {
+    color: var(--bleu);
+    font-weight: 700;
+}
+
+/* =================================
+   CARRIÈRES
+================================= */
+
+.careers-section {
+    padding: 90px 20px;
+    background: #f8fbff;
+}
+
+.careers-header {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 55px;
+}
+
+.careers-header h2 {
+    color: var(--bleu-fonce);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 900;
+    margin: 15px 0;
+}
+
+.careers-header p {
+    color: #5f6b7a;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.careers-grid {
+    max-width: 1400px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+}
+
+.career-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);
+    transition: 0.3s ease;
+}
+
+.career-card:hover {
+    transform: translateY(-7px);
+}
+
+.career-image {
+    height: 230px;
+    overflow: hidden;
+}
+
+.career-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.career-content {
+    padding: 25px;
+}
+
+.career-content span {
+    color: var(--bleu);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.career-content h3 {
+    color: var(--bleu-fonce);
+    font-size: 1.5rem;
+    margin: 10px 0;
+    font-weight: 900;
+}
+
+.career-content p {
+    color: #5f6b7a;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.career-btn {
+    display: inline-block;
+    background: var(--bleu-fonce);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.career-benefits-section {
+    padding: 90px 20px;
+    background: var(--bleu-fonce);
+    color: #fff;
+}
+
+.benefits-container {
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+.benefits-container h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    margin-bottom: 40px;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    text-align: left;
+}
+
+.benefits-grid div {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 16px 20px;
+    border-radius: 14px;
+    font-weight: 700;
+}
+
+.career-form-section {
+    padding: 90px 20px;
+    background: linear-gradient(180deg, #edf4fb 0%, #dfeaf5 100%);
+}
+
+.career-form {
+    max-width: 1100px;
+    margin: auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 22px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.career-form label {
+    display: block;
+    font-weight: 800;
+    color: var(--bleu-fonce);
+    margin-bottom: 8px;
+}
+
+.career-form input,
+.career-form select,
+.career-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dbe7f3;
+    border-radius: 10px;
+    font-family: inherit;
+    margin-bottom: 20px;
+}
+
+.career-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+/* =================================
+   FORMULAIRES
+================================= */
+
+.form-section {
+    background: #eef4f8;
+    padding: 80px 20px;
+}
+
+.course-form,
+.corporatif-form {
+    max-width: 950px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 45px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.corporatif-form {
+    margin-top: 50px;
+    border-radius: 8px;
+}
+
+.course-form h2 {
+    color: #10284a;
+    font-size: 2rem;
+    margin: 35px 0 20px;
+}
+
+.course-form label,
+.form-group label {
+    display: block;
+    color: #10284a;
+    font-weight: 700;
+    margin: 15px 0 8px;
+}
+
+.form-section-title {
+    color: #10284a;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+    margin: 35px 0 25px;
+    border-bottom: 2px solid #b7d7ee;
+    padding-bottom: 12px;
+}
+
+.form-section-title:first-child {
+    margin-top: 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    margin-bottom: 20px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.course-form input,
+.course-form select,
+.course-form textarea,
+.form-group input,
+.form-group textarea,
+.activite-item input[type="number"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d5dde8;
+    border-radius: 6px;
+    background: #f8fbfd;
+    color: #000 !important;
+    font-family: inherit;
+}
+
+.course-form textarea,
+.gift-card-form textarea {
+    background: #fff;
+    resize: vertical;
+}
+
+.course-form select option {
+    color: #000;
+}
+
+.course-form input::placeholder,
+.course-form textarea::placeholder {
+    color: #666;
+}
+
+.form-submit {
+    text-align: center;
+    margin-top: 35px;
+}
+
+/* Formulaires corporatifs / scolaires */
+
+.activites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activite-item {
+    display: grid;
+    grid-template-columns: 1fr 160px;
+    gap: 20px;
+    align-items: center;
+    background: #eef4f8;
+    padding: 18px 20px;
+    border-radius: 6px;
+    color: #10284a;
+    font-weight: 600;
+}
+
+.activite-item span {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.activite-item input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+}
+
+.activite-item em {
+    font-weight: 400;
+    color: #42536b;
+}
+
+.corpo-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.corpo-actions .btn-primary {
+    min-width: 260px;
+    text-align: center;
+}
+
+/* Location de salle */
+
+.salle-form .service-block {
+    background: #eef4f8;
+    border-radius: 8px;
+    padding: 28px;
+    margin-bottom: 28px;
+}
+
+.salle-form .service-check {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #10284a;
+    font-size: 1.25rem;
+    margin-bottom: 22px;
+}
+
+.salle-form .service-check input {
+    width: 22px;
+    height: 22px;
+}
+
+.salle-form .radio-grid,
+.salle-form .repas-options {
+    display: grid;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.salle-form .radio-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.salle-form .repas-options {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 22px;
+}
+
+.salle-form .radio-grid label,
+.salle-form .repas-options label {
+    background: #fff;
+    border: 1px solid #d5dde8;
+    border-radius: 6px;
+    padding: 15px;
+    color: #10284a;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.salle-form .radio-grid input,
+.salle-form .repas-options input {
+    width: 20px;
+    height: 20px;
+}
+
+/* Patrouille */
+
+.patrouille-admissibilite-cards {
+    display: flex;
+    justify-content: center;
+}
+
+.patrouille-admissibilite-card {
+    width: 100%;
+    max-width: 850px;
+}
+
+.patrouille-admissibilite-list {
+    text-align: left;
+    padding: 35px 50px;
+    line-height: 2;
+    font-size: 1.1rem;
+}
+
+/* =================================
+   FORMULAIRE LOCATION / MONERIS
+================================= */
+
+.rental-category-box {
+    margin-bottom: 30px;
+    background: #eef4f8;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.rental-category-box h3 {
+    color: #10284a;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.rental-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.rental-item-row {
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    gap: 20px;
+    align-items: center;
+    background: #fff;
+    padding: 18px 20px;
+    border-radius: 6px;
+}
+
+.rental-item-row strong {
+    color: #10284a;
+}
+
+.rental-item-row p {
+    margin: 5px 0 0;
+    color: #42536b;
+}
+
+.rental-item-row input,
+.rental-qty {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d5dde8;
+    border-radius: 6px;
+    color: #000 !important;
+    font-weight: 600;
+}
+
+.rental-total-box {
+    margin: 30px 0;
+    padding: 22px;
+    background: #10284a;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 1.4rem;
+}
+
+/* =================================
+   CARTES-CADEAUX
+================================= */
+
+.gift-card-form input,
+.gift-card-form select {
+    color: #000 !important;
+}
+
+/* =================================
+   CHECKOUT / CONFIRMATION
+================================= */
+
+.checkout-page-section,
+.checkout-section {
+    background: #f5f7fa;
+    min-height: calc(100vh - 90px);
+    padding: 80px 20px;
+}
+
+.checkout-container {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 45px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+#monerisCheckout {
+    max-width: 620px;
+    margin: 30px auto 0;
+    position: relative;
+    z-index: 1;
+}
+
+.confirmation-section {
+    background: #eef4f8;
+    min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 90px 20px;
+}
+
+.confirmation-card {
+    max-width: 760px;
+    width: 100%;
+    background: #fff;
+    text-align: center;
+    padding: 60px 45px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-card h1 {
+    color: #10284a;
+    font-size: 4rem;
+    line-height: 1;
+    margin: 15px 0 25px;
+    font-weight: 900;
+}
+
+.confirmation-card p {
+    color: #42536b;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.confirmation-total {
+    margin: 30px auto;
+    background: #eef4f8;
+    padding: 18px;
+    border-radius: 8px;
+    color: #10284a;
+    font-size: 1.2rem;
+}
+
+.confirmation-card .btn-primary {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* =================================
+   BOUTONS SERVICES
+================================= */
+
+.services-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    gap:15px;
+
+    max-width:900px;
+    margin-top:40px;
+}
+
+.services-buttons .btn-service{
+    flex:0 0 185px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:72px;
+    text-align:center;
+}
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1000px) {
+    .careers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .location-intro h2 {
+        font-size: 30px;
+    }
+
+    .location-block {
+        overflow-x: auto;
+    }
+
+    .location-table {
+        min-width: 850px;
+    }
+
+    .location-title {
+        font-size: 1.1rem;
+    }
+
+    .resto-schedule-grid,
+    .salle-form .radio-grid,
+    .salle-form .repas-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .boutique-text h2 {
+        font-size: 30px;
+    }
+
+    .boutique-text p {
+        font-size: 16px;
+    }
+
+    .school-image-container img {
+        height: 260px;
+    }
+
+    .rfid-step {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .rfid-number {
+        margin: auto;
+    }
+
+    .careers-grid,
+    .form-grid,
+    .benefits-grid,
+    .activite-item {
+        grid-template-columns: 1fr;
+    }
+
+    .career-form,
+    .course-form,
+    .corporatif-form {
+        padding: 25px;
+    }
+
+    .rental-item-row {
+        grid-template-columns: 1fr;
+    }
+
+    .confirmation-card {
+        padding: 40px 25px;
+    }
+
+    .confirmation-card h1 {
+        font-size: 2.8rem;
+    }
+
+    .services-buttons a {
+        width: 100%;
+        min-width: 0;
+    }
+}
+

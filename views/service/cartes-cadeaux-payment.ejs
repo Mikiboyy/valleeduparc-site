@@ -1,0 +1,50 @@
+<section class="checkout-page-section">
+
+    <div class="checkout-container">
+
+        <div class="pricing-title">
+            <span class="pricing-subtitle">
+                PAIEMENT
+            </span>
+
+            <h2>
+                Paiement sécurisé
+            </h2>
+
+            <p>
+                Total à payer : <strong><%= order.total.toFixed(2) %> $</strong>
+            </p>
+        </div>
+
+        <div id="monerisCheckout"></div>
+
+    </div>
+
+</section>
+
+<script src="<%= monerisEnv === 'prod'
+    ? 'https://gateway.moneris.com/chkt/js/chkt_v1.00.js'
+    : 'https://gatewayt.moneris.com/chkt/js/chkt_v1.00.js' %>"></script>
+
+<script>
+    const myCheckout = new monerisCheckout();
+
+    myCheckout.setMode("<%= monerisEnv %>");
+    myCheckout.setCheckoutDiv("monerisCheckout");
+
+    myCheckout.setCallback("cancel_transaction", function(data) {
+        window.location.href = "/cartes-cadeaux?error=cancel";
+    });
+
+    myCheckout.setCallback("error_event", function(data) {
+        console.error("Erreur Moneris :", data);
+        alert("Une erreur est survenue avec le paiement.");
+    });
+
+    myCheckout.setCallback("payment_complete", function(data) {
+        const response = JSON.parse(data);
+        window.location.href = "/cartes-cadeaux/confirmation?ticket=" + encodeURIComponent(response.ticket);
+    });
+
+    myCheckout.startCheckout("<%= ticket %>");
+</script>

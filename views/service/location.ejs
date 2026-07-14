@@ -1,0 +1,352 @@
+<!-- HERO -->
+<section class="montagne-hero location-hero">
+
+    <div class="montagne-overlay"></div>
+
+    <div class="montagne-content">
+
+        <div class="montagne-text">
+
+            <span class="montagne-subtitle">
+                LOCATION D’ÉQUIPEMENT
+            </span>
+
+            <h1>
+                LOUEZ VOTRE<br>
+                ÉQUIPEMENT
+            </h1>
+
+            <p class="montagne-description">
+                Vallée du Parc vous offre un service de location complet
+                pour profiter pleinement de votre journée en ski ou en planche à neige.
+            </p>
+
+            <div class="montagne-features">
+                <div class="feature">✔ Ski, bottes, bâtons et casque</div>
+                <div class="feature">✔ Planche à neige et bottes</div>
+                <div class="feature">✔ Location saisonnière disponible</div>
+                <div class="feature">✔ Réservation recommandée</div>
+            </div>
+
+            <div class="montagne-buttons">
+                <a href="/location-form?returnUrl=/location" class="btn-primary">
+                    REMPLIR LE FORMULAIRE
+                </a>
+
+                <a href="#tarifs-location" class="btn-secondary">
+                    VOIR LES TARIFS
+                </a>
+            </div>
+
+        </div>
+
+        <div class="location-hero-image">
+            <img src="/image/location.webp" alt="Location Vallée du Parc">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- INTRO -->
+<section class="location-intro">
+
+    <div class="location-container">
+
+        <span class="section-subtitle">
+            TARIFICATION
+        </span>
+
+        <h2>
+            Location d’équipement
+        </h2>
+
+        <p>
+            Consultez nos options de location saisonnière, complète ou individuelle.
+            Pour faire une réservation à l’avance, veuillez remplir le formulaire au minimum
+            <strong>24 heures avant</strong> le jour de la demande.
+        </p>
+
+        <p class="important-note">
+            Location non-remboursable.
+        </p>
+
+    </div>
+
+</section>
+
+
+<%
+    const items = typeof rentalItems !== 'undefined' ? rentalItems : [];
+
+    function getItem(category, subCategory, name, ageGroup, period) {
+        return items.find(item =>
+            item.category === category &&
+            item.subCategory === subCategory &&
+            item.name === name &&
+            item.ageGroup === ageGroup &&
+            item.period === period
+        );
+    }
+
+    function getPrice(category, subCategory, name, ageGroup, period) {
+        const item = getItem(category, subCategory, name, ageGroup, period);
+
+        if (!item) {
+            return '';
+        }
+
+        return item.price.toFixed(0) + '$';
+    }
+
+    function getSimplePrice(category, name, ageGroup) {
+        const item = items.find(item =>
+            item.category === category &&
+            item.name === name &&
+            item.ageGroup === ageGroup
+        );
+
+        if (!item) {
+            return '';
+        }
+
+        return item.price.toFixed(0) + '$';
+    }
+%>
+
+
+<!-- TARIFS -->
+<section class="location-pricing-section" id="tarifs-location">
+
+    <% if (adminUser && (adminUser.role === 'admin' || adminUser.role === 'prix')) { %>
+        <a href="/admin-vdp/prices" class="btn-primary">
+            Modifier les prix
+        </a>
+        <% } %>
+
+    <div class="location-container">
+
+        <!-- LOCATION SAISONNIÈRE -->
+        <div class="location-block">
+
+            <div class="location-title">
+                Locations saisonnières
+            </div>
+
+            <div class="season-rental-grid">
+
+                <!-- PRÉ-VENTE -->
+                <div class="season-card">
+
+                    <div class="season-card-title">
+                        Locations saisonnières <span>Pré-vente</span>
+                    </div>
+
+                    <div class="season-table">
+
+                        <div class="season-row season-head">
+                            <div></div>
+                            <div>117 cm et -</div>
+                            <div>127 cm et +</div>
+                        </div>
+
+                        <div class="season-row">
+                            <div>Skis + bottes</div>
+                            <div><%= getPrice('Location saisonnière', 'Pré-vente', 'Skis + bottes', '117 cm et -', 'Saison') %></div>
+                            <div><%= getPrice('Location saisonnière', 'Pré-vente', 'Skis + bottes', '127 cm et +', 'Saison') %></div>
+                        </div>
+
+                        <div class="season-row season-head">
+                            <div></div>
+                            <div>139 cm et -</div>
+                            <div>140 cm et +</div>
+                        </div>
+
+                        <div class="season-row">
+                            <div>Planche à neige + bottes</div>
+                            <div><%= getPrice('Location saisonnière', 'Pré-vente', 'Planche à neige + bottes', '139 cm et -', 'Saison') %></div>
+                            <div><%= getPrice('Location saisonnière', 'Pré-vente', 'Planche à neige + bottes', '140 cm et +', 'Saison') %></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- RÉGULIER -->
+                <div class="season-card">
+
+                    <div class="season-card-title">
+                        Locations saisonnières Régulier
+                    </div>
+
+                    <div class="season-table">
+
+                        <div class="season-row season-head">
+                            <div></div>
+                            <div>117 cm et -</div>
+                            <div>127 cm et +</div>
+                        </div>
+
+                        <div class="season-row">
+                            <div>Skis + bottes</div>
+                            <div><%= getPrice('Location saisonnière', 'Régulier', 'Skis + bottes', '117 cm et -', 'Saison') %></div>
+                            <div><%= getPrice('Location saisonnière', 'Régulier', 'Skis + bottes', '127 cm et +', 'Saison') %></div>
+                        </div>
+
+                        <div class="season-row season-head">
+                            <div></div>
+                            <div>139 cm et -</div>
+                            <div>140 cm et +</div>
+                        </div>
+
+                        <div class="season-row">
+                            <div>Planche à neige + bottes</div>
+                            <div><%= getPrice('Location saisonnière', 'Régulier', 'Planche à neige + bottes', '139 cm et -', 'Saison') %></div>
+                            <div><%= getPrice('Location saisonnière', 'Régulier', 'Planche à neige + bottes', '140 cm et +', 'Saison') %></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p class="location-note">
+                *Taxes en sus.
+            </p>
+
+            <p class="location-note">
+                Les tarifs peuvent varier selon la période d’achat et la disponibilité de l’équipement.
+            </p>
+
+            <div class="location-action">
+                <a href="/location-form?returnUrl=/location" class="btn-primary">
+                    REMPLIR LE FORMULAIRE
+                </a>
+            </div>
+
+        </div>
+
+        <p class="location-note">
+            En cette fin de saison, toutes les personnes ayant loué des skis ou une planche
+            pour la saison 2025-2026 doivent retourner leur équipement d’ici le
+            <strong>jeudi 30 avril prochain</strong>.
+        </p>
+
+        <p class="location-note">
+            À compter du lundi 13 avril, les retours pourront seulement être faits en semaine,
+            de 8h30 à 16h.
+        </p>
+
+
+        <!-- LOCATION COMPLÈTE -->
+        <div class="location-block">
+
+            <div class="location-title">
+                Location complète : skis, bottes, bâtons et casque ou planche, bottes et casque
+            </div>
+
+            <div class="location-table">
+
+                <div class="location-row location-head">
+                    <div>Catégorie</div>
+                    <div>Jour</div>
+                    <div>Soir et bloc horaire</div>
+                </div>
+
+                <div class="location-row">
+                    <div>5 ans et moins</div>
+                    <div><%= getPrice('Location complète', 'Skis, bottes, bâtons et casque ou planche, bottes et casque', '5 ans et moins', '', 'Jour') %></div>
+                    <div><%= getPrice('Location complète', 'Skis, bottes, bâtons et casque ou planche, bottes et casque', '5 ans et moins', '', 'Soir et bloc horaire') %></div>
+                </div>
+
+                <div class="location-row">
+                    <div>6 à 17 ans</div>
+                    <div><%= getPrice('Location complète', 'Skis, bottes, bâtons et casque ou planche, bottes et casque', '6 à 17 ans', '', 'Jour') %></div>
+                    <div><%= getPrice('Location complète', 'Skis, bottes, bâtons et casque ou planche, bottes et casque', '6 à 17 ans', '', 'Soir et bloc horaire') %></div>
+                </div>
+
+                <div class="location-row">
+                    <div>18 ans et plus</div>
+                    <div><%= getPrice('Location complète', 'Skis, bottes, bâtons et casque ou planche, bottes et casque', '18 ans et plus', '', 'Jour') %></div>
+                    <div><%= getPrice('Location complète', 'Skis, bottes, bâtons et casque ou planche, bottes et casque', '18 ans et plus', '', 'Soir et bloc horaire') %></div>
+                </div>
+
+            </div>
+
+            <p class="location-note">
+                *Taxes en sus.
+            </p>
+
+            <div class="location-action">
+                <a href="/location-form?returnUrl=/location" class="btn-primary">
+                    REMPLIR LE FORMULAIRE
+                </a>
+            </div>
+
+        </div>
+
+
+        <!-- LOCATION INDIVIDUELLE -->
+        <div class="location-block">
+
+            <div class="location-title">
+                Location individuelle
+            </div>
+
+            <div class="location-table individual">
+
+                <div class="location-row location-head">
+                    <div>Catégorie</div>
+                    <div>Skis ou planche à neige</div>
+                    <div>Bottes</div>
+                    <div>Casque</div>
+                    <div>Bâtons</div>
+                    <div>Lunettes</div>
+                </div>
+
+                <div class="location-row">
+                    <div>5 ans et moins</div>
+                    <div><%= getSimplePrice('Location individuelle', 'Skis ou planche à neige', '5 ans et moins') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Bottes', '5 ans et moins') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Casque', '5 ans et moins') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Bâtons', '5 ans et moins') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Lunettes', '5 ans et moins') %></div>
+                </div>
+
+                <div class="location-row">
+                    <div>6 à 17 ans</div>
+                    <div><%= getSimplePrice('Location individuelle', 'Skis ou planche à neige', '6 à 17 ans') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Bottes', '6 à 17 ans') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Casque', '6 à 17 ans') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Bâtons', '6 à 17 ans') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Lunettes', '6 à 17 ans') %></div>
+                </div>
+
+                <div class="location-row">
+                    <div>18 ans et plus</div>
+                    <div><%= getSimplePrice('Location individuelle', 'Skis ou planche à neige', '18 ans et plus') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Bottes', '18 ans et plus') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Casque', '18 ans et plus') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Bâtons', '18 ans et plus') %></div>
+                    <div><%= getSimplePrice('Location individuelle', 'Lunettes', '18 ans et plus') %></div>
+                </div>
+
+            </div>
+
+            <p class="location-note">
+                *Taxes en sus.
+            </p>
+
+            <div class="location-action">
+                <a href="/location-form?returnUrl=/location" class="btn-primary">
+                    REMPLIR LE FORMULAIRE
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

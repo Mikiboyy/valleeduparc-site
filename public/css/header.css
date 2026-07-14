@@ -1,17 +1,22 @@
 /* =========================
    HEADER
 ========================= */
+
 .header {
     height: 95px;
     background: var(--bleu);
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 0 35px;
     position: fixed;
     width: 100%;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    gap: 28px;
+}
+
+.logo {
+    flex: 0 0 auto;
 }
 
 .logo a {
@@ -33,18 +38,23 @@
 /* =========================
    NAVIGATION
 ========================= */
+
 .nav {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 30px;
+    justify-content: center;
+    gap: 35px;
+    min-width: 0;
 }
 
 .nav-item,
 .dropdown {
     display: flex;
     align-items: center;
-    height: 100%;
+    height: 95%;
     position: relative;
+    flex-shrink: 0;
 }
 
 .nav-item a,
@@ -54,8 +64,9 @@
     height: 95px;
     text-decoration: none;
     color: white;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .nav a:hover {
@@ -65,11 +76,12 @@
 /* =========================
    DROPDOWN
 ========================= */
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 220px;
+    min-width: 230px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
@@ -86,6 +98,7 @@
     font-weight: 600;
     text-decoration: none;
     border-bottom: 1px solid #f2f2f2;
+    height: auto;
 }
 
 .dropdown-menu a:last-child {
@@ -102,8 +115,16 @@
 }
 
 /* =========================
-   SOCIALS
+   RIGHT SIDE
 ========================= */
+
+.header-right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
 .socials {
     display: flex;
     gap: 12px;
@@ -111,8 +132,8 @@
 }
 
 .socials img {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     opacity: 0.85;
     transition: 0.2s;
 }
@@ -122,6 +143,32 @@
     opacity: 1;
 }
 
+.header-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.header-buttons .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 185px;
+    padding: 9px 18px;
+    border-radius: 40px;
+    background: var(--bleu-fonce);
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 1;
+    transition: 0.25s ease;
+}
+
+.header-buttons .btn:hover {
+    background: white;
+    color: var(--bleu-fonce);
+}
 
 /* =========================
    TRADUCTION HEADER
@@ -134,12 +181,10 @@
     position: relative;
 }
 
-/* bouton principal */
 .gtranslate_wrapper {
     position: relative;
 }
 
-/* bouton visible */
 .gt_switcher-popup {
     background: white !important;
     border-radius: 30px !important;
@@ -151,32 +196,27 @@
     transition: 0.3s ease;
 }
 
-/* hover */
 .gt_switcher-popup:hover {
     background: var(--bleu-fonce) !important;
     color: white !important;
 }
 
-/* drapeaux */
 .gt_switcher-popup img {
     width: 22px !important;
     margin-right: 8px;
 }
 
-/* menu déroulant */
 .gt_switcher-popup ul {
     border-radius: 12px !important;
     overflow: hidden;
     border: none !important;
 }
 
-/* items du menu */
 .gt_switcher-popup ul li a {
     padding: 10px 15px !important;
     font-weight: 600;
 }
 
-/* hover menu */
 .gt_switcher-popup ul li a:hover {
     background: var(--bleu) !important;
     color: white !important;

@@ -2,473 +2,107 @@
 
     <h2>Billets journaliers</h2>
 
-    <!-- ========================= -->
-    <!-- BILLETS DE SKI -->
-    <!-- ========================= -->
+    <% if (adminUser && (adminUser.role === 'admin' || adminUser.role === 'prix')) { %>
+        <a href="/admin-vdp/prices" class="btn-primary">
+            Modifier les prix
+        </a>
+        <% } %>
 
-    <div class="pricing-category">
+    <% if (groupedTickets && groupedTickets.length > 0) { %>
 
-        <div class="category-title">
-            Billets de ski
-        </div>
+        <% groupedTickets.forEach(categoryGroup => { %>
 
-        <div class="pricing-wrapper">
+            <div class="pricing-category">
 
-            <!-- JOURNÉE -->
-            <div class="pricing-group">
+                <div class="category-title">
+                    <%= categoryGroup.category %>
+                </div>
 
-                <button class="pricing-toggle">
-                    <span>Journée</span>
-                    <span class="icon">+</span>
-                </button>
+                <div class="pricing-wrapper">
 
-                <div class="pricing-content">
+                    <% categoryGroup.tickets.forEach(ticket => { %>
 
-                    <div class="pricing-grid">
+                        <div class="pricing-group">
 
-                        <div class="price-row">
-                            <span>5 ans et moins</span>
-                            <strong>Gratuit</strong>
+                            <button class="pricing-toggle">
+                                <span><%= ticket.ticketType %></span>
+                                <span class="icon">+</span>
+                            </button>
+
+                            <div class="pricing-content">
+
+                                <div class="pricing-grid">
+
+                                    <% ticket.items.forEach(item => { %>
+
+                                        <div class="price-row dual-price">
+
+                                            <span class="price-label">
+                                                <%= item.ageGroup %>
+                                            </span>
+
+                                            <div class="price-column">
+                                                <small>En ligne</small>
+                                                <strong>
+                                                    <% if (item.isFree) { %>
+                                                        Gratuit
+                                                    <% } else if (item.onlinePrice !== null) { %>
+                                                        <%= item.onlinePrice %>$
+                                                    <% } %>
+                                                </strong>
+                                            </div>
+
+                                            <div class="price-column">
+                                                <small>Billetterie</small>
+                                                <strong>
+                                                    <% if (item.isFree) { %>
+                                                        Gratuit
+                                                    <% } else if (item.counterPrice !== null) { %>
+                                                        <%= item.counterPrice %>$
+                                                    <% } %>
+                                                </strong>
+                                            </div>
+
+                                        </div>
+
+                                    <% }) %>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
-                        <div class="price-row">
-                            <span>6 à 12 ans</span>
-                            <strong>29$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>13 à 17 ans</span>
-                            <strong>39$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>18 ans et plus</span>
-                            <strong>49$</strong>
-                        </div>
-
-                    </div>
+                    <% }) %>
 
                 </div>
 
             </div>
 
-            <!-- JOURNÉE + -->
-            <div class="pricing-group">
+        <% }) %>
 
-                <button class="pricing-toggle">
-                    <span>Journée +</span>
-                    <span class="icon">+</span>
-                </button>
+    <% } else { %>
 
-                <div class="pricing-content">
+        <p class="no-event">
+            Aucun prix disponible pour le moment.
+        </p>
 
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>5 ans et moins</span>
-                            <strong>Gratuit</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>6 à 12 ans</span>
-                            <strong>39$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>13 à 17 ans</span>
-                            <strong>49$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>18 ans et plus</span>
-                            <strong>59$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- SOIRÉE -->
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Soirée</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>5 ans et moins</span>
-                            <strong>Gratuit</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>6 à 12 ans</span>
-                            <strong>22$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>13 à 17 ans</span>
-                            <strong>29$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>18 ans et plus</span>
-                            <strong>35$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- BLOC 4H -->
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Bloc 4H</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>5 ans et moins</span>
-                            <strong>Gratuit</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>6 à 12 ans</span>
-                            <strong>27$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>13 à 17 ans</span>
-                            <strong>37$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>18 ans et plus</span>
-                            <strong>47$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- BLOC 3H -->
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Bloc 3H</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>5 ans et moins</span>
-                            <strong>Gratuit</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>6 à 12 ans</span>
-                            <strong>24$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>13 à 17 ans</span>
-                            <strong>34$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>18 ans et plus</span>
-                            <strong>44$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- BLOC 2H -->
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Bloc 2H</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>5 ans et moins</span>
-                            <strong>Gratuit</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>6 à 12 ans</span>
-                            <strong>19$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>13 à 17 ans</span>
-                            <strong>29$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>18 ans et plus</span>
-                            <strong>39$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- BLOC 1H -->
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Bloc 1H</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>5 ans et moins</span>
-                            <strong>Gratuit</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>6 à 12 ans</span>
-                            <strong>14$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>13 à 17 ans</span>
-                            <strong>22$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>18 ans et plus</span>
-                            <strong>29$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- PENTE-ÉCOLE -->
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Pente-école</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>Accès unique</span>
-                            <strong>12$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- ========================= -->
-    <!-- CARNETS -->
-    <!-- ========================= -->
-
-    <div class="pricing-category">
-
-        <div class="category-title">
-            Carnets de billets
-        </div>
-
-        <div class="pricing-wrapper">
-
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Carnet 4x4h</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>Junior</span>
-                            <strong>149$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>Adulte</span>
-                            <strong>229$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Carnet 8x4h</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>Junior</span>
-                            <strong>249$</strong>
-                        </div>
-
-                        <div class="price-row">
-                            <span>Adulte</span>
-                            <strong>349$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- ========================= -->
-    <!-- AUTRES -->
-    <!-- ========================= -->
-
-    <div class="pricing-category">
-
-        <div class="category-title">
-            Autres
-        </div>
-
-        <div class="pricing-wrapper">
-
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Randonnée alpine</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>Accès journalier</span>
-                            <strong>19$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="pricing-group">
-
-                <button class="pricing-toggle">
-                    <span>Luge</span>
-                    <span class="icon">+</span>
-                </button>
-
-                <div class="pricing-content">
-
-                    <div class="pricing-grid">
-
-                        <div class="price-row">
-                            <span>Par personne</span>
-                            <strong>15$</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+    <% } %>
 
 </section>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", () => {
-
-    const toggles =
-        document.querySelectorAll(".pricing-toggle");
+    const toggles = document.querySelectorAll(".pricing-toggle");
 
     toggles.forEach(toggle => {
-
         toggle.addEventListener("click", () => {
-
-            const content =
-                toggle.nextElementSibling;
+            const content = toggle.nextElementSibling;
+            const icon = toggle.querySelector(".icon");
 
             content.classList.toggle("open");
-
-            const icon =
-                toggle.querySelector(".icon");
-
-            if(content.classList.contains("open")){
-                icon.textContent = "−";
-            }
-            else{
-                icon.textContent = "+";
-            }
-
+            icon.textContent = content.classList.contains("open") ? "−" : "+";
         });
-
     });
-
 });
-
 </script>

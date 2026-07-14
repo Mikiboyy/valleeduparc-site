@@ -1,0 +1,146 @@
+<!-- HERO -->
+<section class="montagne-hero restauration-hero">
+
+    <div class="montagne-overlay"></div>
+
+    <div class="montagne-content">
+        <div class="montagne-text">
+
+            <span class="montagne-subtitle">
+                LOCATION DE SALLE
+            </span>
+
+            <h1>
+                FORMULAIRE DE<br>
+                RÉSERVATION
+            </h1>
+
+            <p class="montagne-description">
+                Réservez une salle, un repas ou un service de bar à Vallée du Parc
+                pour votre événement corporatif, scolaire ou privé.
+            </p>
+
+            <div class="montagne-features">
+                <div class="feature">✔ Location de salle</div>
+                <div class="feature">✔ Repas</div>
+                <div class="feature">✔ Service de bar</div>
+                <div class="feature">✔ Événements de groupe</div>
+            </div>
+
+            <div class="montagne-buttons">
+                <a href="#formulaire-salle" class="btn-primary">
+                    RÉSERVER
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+
+<!-- FORMULAIRE -->
+<section class="boutique-section" id="formulaire-salle">
+
+    <div class="boutique-container">
+
+        <div class="pricing-title">
+            <span class="pricing-subtitle">
+                FORMULAIRE
+            </span>
+
+            <h2>
+                Réservation de salle et repas
+            </h2>
+
+            <p>
+                Remplissez les renseignements ci-dessous afin que notre équipe puisse
+                préparer votre demande et vous contacter rapidement.
+            </p>
+        </div>
+
+
+        <form action="/salle-form" method="POST" class="corporatif-form salle-form">
+
+            <div class="form-section-title">
+                Renseignements
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Client / organisation</label>
+                    <input type="text" name="client" required>
+                </div>
+
+                <div class="form-group full">
+                    <label>Adresse</label>
+                    <input type="text" name="adresse">
+                </div>
+
+                <div class="form-group">
+                    <label>Ville</label>
+                    <input type="text" name="ville">
+                </div>
+
+                <div class="form-group">
+                    <label>Code postal</label>
+                    <input type="text" name="codePostal">
+                </div>
+
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" name="telephone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Courriel</label>
+                    <input type="email" name="courriel" required>
+                </div>
+            </div>
+
+
+            <div class="form-section-title">
+                Date de l’événement & nombre de personnes
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label>Date de l’événement</label>
+                    <input type="date" name="dateEvenement" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Heure d’arrivée</label>
+                    <input type="time" name="heureArrivee">
+                </div>
+
+            </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nombre de personnes</label>
+                        <input type="number" name="nombreBar" min="0">
+                    </div>
+                </div>
+
+
+            <div class="form-section-title">
+                Informations supplémentaires
+            </div>
+
+            <div class="form-group full">
+                <label>Message ou précision</label>
+                <textarea name="message" rows="6"></textarea>
+            </div>
+
+            <div class="form-submit">
+                <button type="submit" class="btn-primary">
+                    ENVOYER LA DEMANDE
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>

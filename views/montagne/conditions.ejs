@@ -48,6 +48,12 @@
 
 <section class="conditions-page">
 
+    <% if (adminUser && (adminUser.role === 'admin' || adminUser.role === 'patrouille')) { %>
+        <a href="/admin-vdp/trails" class="btn-primary">
+            Modifier les pistes
+        </a>
+        <% } %>
+
     <div class="conditions-header">
         <h1>Conditions des pistes</h1>
         <p>Mise à jour en temps réel des pistes de Vallée du Parc</p>

@@ -35,6 +35,50 @@ img {
     height: auto;
 }
 
+.contact-float {
+    position: fixed;
+    right: 25px;
+    bottom: 105px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: #10284a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    text-decoration: none;
+    z-index: 99998;
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    transition: .3s ease;
+}
+
+.contact-float:hover {
+    transform: translateY(-4px) scale(1.05);
+    background: var(--bleu);
+}
+
+.contact-float span {
+    position: absolute;
+    right: 78px;
+    background: white;
+    color: var(--bleu-fonce);
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s ease;
+}
+
+.contact-float:hover span {
+    opacity: 1;
+    visibility: visible;
+}
+
 
 /* =========================
    BUTTONS
@@ -53,4 +97,128 @@ img {
 .btn:hover {
     background: var(--turquoise);
     transform: scale(1.05);
+}
+
+.admin-edit-button {
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    text-align: right;
+}
+
+.admin-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 18px;
+    background: #eef5fb;
+    border-radius: 12px;
+}
+
+.admin-row strong {
+    color: #111827;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.admin-row span {
+    color: #111827;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.save-container{
+    margin:50px 0;
+    display:flex;
+    justify-content:center;
+}
+
+.btn-save-all{
+    background:#1ca7e0;
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:18px 60px;
+    font-size:22px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 10px 25px rgba(28,167,224,.35);
+}
+
+.btn-save-all:hover{
+    background:#158fc1;
+    transform:translateY(-2px);
+}
+
+.admin-floating-menu{
+    position:fixed;
+    top:115px;
+    right:25px;
+
+    z-index:99999;
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    width:220px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.18);
+
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.admin-role{
+
+    font-size:14px;
+    color:var(--bleu-fonce);
+    font-weight:700;
+    text-align:center;
+
+    padding-bottom:12px;
+    border-bottom:1px solid #e6edf5;
+}
+
+.admin-mini-btn{
+
+    text-decoration:none;
+
+    background:var(--bleu);
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.admin-mini-btn:hover{
+
+    background:var(--bleu-fonce);
+
+    transform:translateY(-2px);
+
+}
+
+.admin-mini-btn.logout{
+
+    background:#d62828;
+
+}
+
+.admin-mini-btn.logout:hover{
+
+    background:#b71c1c;
+
 }

@@ -1,0 +1,200 @@
+<section class="form-section">
+
+    <form action="/location-form/checkout" method="POST" class="course-form">
+
+        <input type="hidden" name="returnUrl" value="<%= typeof returnUrl !== 'undefined' ? returnUrl : '/location' %>">
+
+        <h2>Informations de location</h2>
+
+        <label>Prénom et nom</label>
+        <input type="text" name="nom" required>
+
+        <label>Adresse courriel</label>
+        <input type="email" name="email" required>
+
+        <label>Numéro de téléphone</label>
+        <input type="tel" name="telephone" required>
+
+        <label>Date de location</label>
+        <input type="date" name="dateLocation" required>
+
+        <label>Type d’équipement</label>
+        <select name="typeEquipement" required>
+            <option value="">Choisir</option>
+            <option value="Ski">Ski</option>
+            <option value="Snow">Snow</option>
+        </select>
+
+        <label>Type de location</label>
+        <select name="typeLocation" required>
+            <option value="">Choisir</option>
+            <option value="Location journalière">Location journalière</option>
+            <option value="Location saisonnière">Location saisonnière</option>
+        </select>
+
+        <label>Période</label>
+        <select name="periode" required>
+            <option value="">Choisir</option>
+            <option value="Jour">Jour</option>
+            <option value="Soir">Soir</option>
+        </select>
+
+        <label>Heure d'arrivée</label>
+        <input type="time" name="heureArrivee" required>
+
+        <h2>Informations du participant</h2>
+
+        <label>Âge</label>
+        <input type="number" name="age" min="1" required>
+
+        <label>Date de naissance</label>
+        <input type="date" name="dateNaissance" required>
+
+        <label>Sexe</label>
+        <select name="sexe" required>
+            <option value="">Choisir</option>
+            <option value="Femme">Femme</option>
+            <option value="Homme">Homme</option>
+            <option value="Autre">Autre</option>
+            <option value="Préfère ne pas répondre">Préfère ne pas répondre</option>
+        </select>
+
+        <label>Grandeur</label>
+        <input type="text" name="grandeur" placeholder="Ex: 5 pieds 8 pouces" required>
+
+        <label>Poids</label>
+        <input type="number" name="poids" placeholder="En lbs" required>
+
+        <label>Pointure de chaussure</label>
+        <input type="text" name="pointure" required>
+
+        <label>Niveau</label>
+        <select name="niveau" required>
+            <option value="">Choisir</option>
+            <option value="Débutant">Débutant</option>
+            <option value="Intermédiaire">Intermédiaire</option>
+            <option value="Avancé">Avancé</option>
+            <option value="Expert">Expert</option>
+        </select>
+
+        <h2>Items de location</h2>
+
+<div class="rental-categories">
+
+    <% Object.keys(groupedItems).forEach(category => { %>
+
+        <div class="rental-category-box">
+
+            <h3><%= category %></h3>
+
+            <div class="rental-items-list">
+
+                <% groupedItems[category].forEach(item => { %>
+
+                    <div class="rental-item-row">
+
+                        <div>
+                            <strong><%= item.name %></strong>
+
+                            <p>
+                                <% if (item.subCategory) { %>
+                                    <%= item.subCategory %> —
+                                    <% } %>
+
+                                    <% if (item.ageGroup) { %>
+                                        <%= item.ageGroup %> —
+                                        <% } %>
+
+                                        <% if (item.period) { %>
+                                            <%= item.period %> —
+                                            <% } %>
+
+                                            <%= item.price.toFixed(2) %> $
+                                        </p>
+                                    </div>
+
+                        <input 
+                            type="number"
+                            name="items[<%= item._id %>]"
+                            min="0"
+                            value="0"
+                            class="rental-qty"
+                            data-price="<%= item.price %>"
+                        >
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        </div>
+
+    <% }) %>
+
+</div>
+
+<div class="rental-total-box">
+
+    <p>
+        Sous-total :
+        <strong><span id="subtotal">0.00</span> $</strong>
+    </p>
+
+    <p>
+        TPS + TVQ :
+        <strong><span id="taxes">0.00</span> $</strong>
+    </p>
+
+    <hr>
+
+    <p>
+        Total :
+        <strong><span id="rentalTotal">0.00</span> $</strong>
+    </p>
+
+</div>
+
+    
+<button type="submit" class="btn-primary">
+    Envoyer la demande
+</button>
+
+</form>
+
+</section>
+
+
+<script>
+    function updateRentalTotal() {
+
+        let total = 0;
+
+        document.querySelectorAll('.rental-qty').forEach(input => {
+
+            const quantity = parseInt(input.value) || 0;
+            const price = parseFloat(input.dataset.price) || 0;
+
+            total += quantity * price;
+        });
+
+        const subtotal = total;
+        const taxes = subtotal * 0.14975;
+        const grandTotal = subtotal + taxes;
+
+        document.getElementById('subtotal').textContent =
+            subtotal.toFixed(2);
+
+        document.getElementById('taxes').textContent =
+            taxes.toFixed(2);
+
+        document.getElementById('rentalTotal').textContent =
+            grandTotal.toFixed(2);
+    }
+
+    document.querySelectorAll('.rental-qty').forEach(input => {
+        input.addEventListener('input', updateRentalTotal);
+    });
+
+    updateRentalTotal();
+</script>

@@ -1,0 +1,251 @@
+<section class="form-section">
+
+    <form
+        action="/inscription/prive"
+        method="POST"
+        class="course-form private-course-form"
+    >
+
+        <input
+            type="hidden"
+            name="returnUrl"
+            value="<%= typeof returnUrl !== 'undefined' ? returnUrl : '/cours-prive' %>"
+        >
+
+        <input
+            type="hidden"
+            name="courseId"
+            value="<%= course._id %>"
+        >
+
+        <!-- COURS SÉLECTIONNÉ -->
+        <h2>Cours privé sélectionné</h2>
+
+        <div class="selected-private-course">
+
+            <div class="selected-course-item">
+                <span>Cours</span>
+                <strong><%= course.title %></strong>
+            </div>
+
+            <div class="selected-course-item">
+                <span>Catégorie</span>
+                <strong><%= course.category || 'Cours privé' %></strong>
+            </div>
+
+            <div class="selected-course-item">
+                <span>Durée</span>
+                <strong><%= course.duration || 'À confirmer' %></strong>
+            </div>
+
+            <div class="selected-course-item">
+                <span>Prix</span>
+
+                <strong>
+                    <% if (course.priceLabel) { %>
+
+                        <%= course.priceLabel %>
+
+                    <% } else if (
+                        course.price !== null &&
+                        course.price !== undefined
+                    ) { %>
+
+                        <%= course.price.toFixed(2) %> $
+
+                    <% } else { %>
+
+                        À confirmer
+
+                    <% } %>
+                </strong>
+            </div>
+
+        </div>
+
+        <!-- INFORMATIONS DE L'ÉLÈVE -->
+        <h2>Informations de l’élève</h2>
+
+        <label for="eleveNom">
+            Prénom et nom
+        </label>
+
+        <input
+            id="eleveNom"
+            type="text"
+            name="eleveNom"
+            autocomplete="name"
+            required
+        >
+
+        <label for="eleveNaissance">
+            Date de naissance
+        </label>
+
+        <input
+            id="eleveNaissance"
+            type="date"
+            name="eleveNaissance"
+            required
+        >
+
+        <label for="discipline">
+            Discipline
+        </label>
+
+        <select id="discipline" name="discipline" required>
+            <option value="">Choisir une discipline</option>
+            <option value="Ski">Ski</option>
+            <option value="Planche à neige">Planche à neige</option>
+        </select>
+
+        <label for="eleveNiveau">
+            Niveau actuel
+        </label>
+
+        <select id="eleveNiveau" name="eleveNiveau" required>
+            <option value="">Choisir un niveau</option>
+            <option value="Première expérience">Première expérience</option>
+            <option value="Débutant">Débutant</option>
+            <option value="Intermédiaire">Intermédiaire</option>
+            <option value="Avancé">Avancé</option>
+            <option value="Expert">Expert</option>
+        </select>
+
+        <!-- COORDONNÉES -->
+        <h2>Coordonnées du responsable</h2>
+
+        <label for="parentNom">
+            Prénom et nom
+        </label>
+
+        <input
+            id="parentNom"
+            type="text"
+            name="parentNom"
+            autocomplete="name"
+            required
+        >
+
+        <label for="parentNaissance">
+            Date de naissance
+        </label>
+
+        <input
+            id="parentNaissance"
+            type="date"
+            name="parentNaissance"
+        >
+
+        <label for="telephone">
+            Téléphone
+        </label>
+
+        <input
+            id="telephone"
+            type="tel"
+            name="telephone"
+            autocomplete="tel"
+            required
+        >
+
+        <label for="email">
+            Adresse courriel
+        </label>
+
+        <input
+            id="email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            required
+        >
+
+        <!-- DATE ET HEURE -->
+        <h2>Date et heure souhaitées</h2>
+
+        <div class="private-course-datetime">
+
+            <div class="private-date-field">
+
+                <label for="dateCours">
+                    Date souhaitée
+                </label>
+
+                <input
+                    id="dateCours"
+                    type="date"
+                    name="dateCours"
+                    required
+                >
+
+            </div>
+
+            <div class="private-date-field">
+
+                <label for="heureCours">
+                    Heure souhaitée
+                </label>
+
+                <input
+                    id="heureCours"
+                    type="time"
+                    name="heureCours"
+                    min="08:00"
+                    max="20:00"
+                    step="900"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+        <p class="private-course-notice">
+            La date et l’heure choisies représentent une préférence.
+            La station communiquera avec vous afin de confirmer la
+            disponibilité du moniteur et l’heure définitive du cours.
+        </p>
+
+        <label for="commentaires">
+            Commentaires ou besoins particuliers
+        </label>
+
+        <textarea
+            id="commentaires"
+            name="commentaires"
+            rows="6"
+            placeholder="Ex. : objectifs du cours, limitations, préférence de moniteur..."
+        ></textarea>
+
+        <button type="submit" class="btn-primary">
+            Envoyer la demande d’inscription
+        </button>
+
+    </form>
+
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const dateCours = document.getElementById("dateCours");
+
+    if (!dateCours) {
+        return;
+    }
+
+    const maintenant = new Date();
+
+    const dateLocale = new Date(
+        maintenant.getTime() -
+        maintenant.getTimezoneOffset() * 60000
+    )
+        .toISOString()
+        .split("T")[0];
+
+    // Empêche de choisir une date passée.
+    dateCours.min = dateLocale;
+
+});
+</script>

@@ -1,6 +1,41 @@
-<h3>Upload une image</h3>
+<section class="form-section">
+    <div class="course-form admin-dashboard-card">
 
-<form action="/admin/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image">
-    <button type="submit">Uploader</button>
-</form>
+        <h2>Administration</h2>
+
+        <p class="admin-dashboard-info">
+            Connecté en tant que :
+            <strong><%= adminUser.username %></strong>
+            —
+            rôle :
+            <strong><%= adminUser.role %></strong>
+        </p>
+
+        <div class="dashboard-actions">
+
+            <% if (canEvents) { %>
+                <a href="/admin-vdp/events" class="btn-primary">Événements</a>
+            <% } %>
+
+            <% if (canPrices) { %>
+                <a href="/admin-vdp/prices" class="btn-primary">Prix</a>
+            <% } %>
+
+            <% if (canTrails) { %>
+                <a href="/admin-vdp/trails" class="btn-primary">Pistes</a>
+            <% } %>
+
+            <% if (canJobs) { %>
+                <a href="/admin-vdp/jobs" class="btn-primary">Carrières</a>
+            <% } %>
+
+        </div>
+
+        <div class="dashboard-bottom">
+            <a href="/admin-vdp/logout" class="btn-dashboard-logout">
+                Déconnexion
+            </a>
+        </div>
+
+    </div>
+</section>

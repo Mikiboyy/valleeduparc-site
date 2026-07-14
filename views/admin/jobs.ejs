@@ -1,0 +1,62 @@
+<section class="form-section">
+
+    <form action="/admin-vdp/jobs" method="POST" enctype="multipart/form-data" class="course-form">
+
+        <h2>Ajouter un poste</h2>
+
+        <label>Titre du poste</label>
+        <input type="text" name="title" required>
+
+        <label>Département</label>
+        <input type="text" name="department" required>
+
+        <label>Résumé</label>
+        <textarea name="summary" required></textarea>
+
+        <label>Image</label>
+        <input type="file" name="image">
+
+        <label>
+            <input type="checkbox" name="isActive" checked>
+            Actif
+        </label>
+
+        <button type="submit" class="btn-primary">
+            Ajouter le poste
+        </button>
+
+    </form>
+
+    <div class="course-form" style="margin-top:30px;">
+
+        <h2>Postes existants</h2>
+
+        <% jobs.forEach(job => { %>
+            <form action="/admin-vdp/jobs/<%= job._id %>" method="POST" class="admin-price-row">
+
+                <label>Titre</label>
+                <input type="text" name="title" value="<%= job.title %>">
+
+                <label>Département</label>
+                <input type="text" name="department" value="<%= job.department %>">
+
+                <label>Résumé</label>
+                <textarea name="summary"><%= job.summary %></textarea>
+
+                <label>
+                    <input type="checkbox" name="isActive" <%= job.isActive ? 'checked' : '' %>>
+                    Actif
+                </label>
+
+                <button type="submit">Enregistrer</button>
+
+            </form>
+
+            <form action="/admin-vdp/jobs/<%= job._id %>/delete" method="POST">
+                <button type="submit">Supprimer</button>
+            </form>
+        <% }) %>
+
+    </div>
+
+</section>

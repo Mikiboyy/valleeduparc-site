@@ -1,0 +1,230 @@
+<!-- HERO -->
+<section class="montagne-hero careers-hero">
+
+    <div class="montagne-overlay"></div>
+
+    <div class="montagne-content">
+
+        <div class="montagne-text">
+
+            <span class="montagne-subtitle">
+                CARRIÈRES
+            </span>
+
+            <h1>
+                TROUVE TON<br>
+                PROCHAIN EMPLOI
+            </h1>
+
+            <p class="montagne-description">
+                Joins-toi à l’équipe de Vallée du Parc et découvre
+                un milieu de travail dynamique, humain et stimulant
+                au cœur de la montagne.
+            </p>
+
+            <div class="montagne-features">
+
+                <div class="feature">✔ Ambiance familiale</div>
+                <div class="feature">✔ Avantages employés</div>
+                <div class="feature">✔ Emplois saisonniers</div>
+                <div class="feature">✔ Travail en montagne</div>
+
+            </div>
+
+            <div class="montagne-buttons">
+
+                <a href="#emplois" class="btn-primary">
+                    VOIR LES EMPLOIS
+                </a>
+
+                <a href="/carrieres-form?returnUrl=/carrieres" class="btn-secondary">
+                    CANDIDATURE SPONTANÉE
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="carrieres-image">
+            <img src="/image/carrieres.webp" alt="Emplois Vallée du Parc">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- EMPLOIS DISPONIBLES -->
+<section class="careers-section" id="emplois">
+
+    <% if (adminUser && (adminUser.role === 'admin' || adminUser.role === 'carriere')) { %>
+        <a href="/admin-vdp/jobs" class="btn-primary">
+            Modifier les postes
+        </a>
+        <% } %>
+
+    <div class="careers-header">
+
+        <span class="section-subtitle">
+            EMPLOIS DISPONIBLES
+        </span>
+
+        <h2>
+            Travaille avec nous
+        </h2>
+
+        <p>
+            Consulte les postes disponibles et trouve celui qui te convient.
+        </p>
+
+    </div>
+
+    <div class="careers-grid">
+
+        <% if (typeof jobs !== 'undefined' && jobs.length > 0) { %>
+
+            <% jobs.forEach(job => { %>
+
+                <div class="career-card">
+
+                    <div class="career-image">
+                        <img src="/uploads/<%= job.image || 'default-job.jpg' %>" alt="<%= job.title %>">
+                    </div>
+
+                    <div class="career-content">
+
+                        <span>
+                            <%= job.department %>
+                        </span>
+
+                        <h3>
+                            <%= job.title %>
+                        </h3>
+
+                        <p>
+                            <%= job.summary %>
+                        </p>
+
+                        <a href="#candidature" class="career-btn">
+                            Postuler
+                        </a>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        <% } else { %>
+
+            <p class="no-event">
+                Aucun poste disponible pour le moment.
+            </p>
+
+        <% } %>
+
+    </div>
+
+</section>
+
+
+<!-- AVANTAGES -->
+<section class="career-benefits-section">
+
+    <div class="benefits-container">
+
+        <span class="pricing-subtitle">
+            AVANTAGES
+        </span>
+
+        <h2>
+            10 bonnes raisons de travailler à Vallée du Parc
+        </h2>
+
+        <div class="benefits-grid">
+
+            <div>✔ Prime pour les employés</div>
+            <div>✔ Rabais à la cafétéria</div>
+            <div>✔ Rabais sur les billets</div>
+            <div>✔ Horaire flexible</div>
+            <div>✔ Possibilité de grandir à l’interne</div>
+            <div>✔ Uniforme fourni</div>
+            <div>✔ Équipe dynamique</div>
+            <div>✔ Accès privilégié aux pistes</div>
+            <div>✔ Rabais pour la famille</div>
+            <div>✔ Activités sociales durant la saison</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CANDIDATURE SPONTANÉE -->
+<section class="career-form-section" id="candidature">
+
+    <div class="careers-header">
+
+        <span class="section-subtitle">
+            CANDIDATURE
+        </span>
+
+        <h2>
+            Candidature spontanée
+        </h2>
+
+        <p>
+            Tu désires faire partie de notre équipe? Remplis le formulaire
+            et nous communiquerons avec toi au besoin.
+        </p>
+
+    </div>
+
+    <form action="/carrieres-form" method="POST" enctype="multipart/form-data" class="career-form">
+
+        <div class="form-grid">
+
+            <input type="text" name="prenom" placeholder="Prénom" required>
+
+            <input type="text" name="nom" placeholder="Nom" required>
+
+            <input type="email" name="email" placeholder="Courriel" required>
+
+            <input type="tel" name="telephone" placeholder="Téléphone" required>
+
+        </div>
+
+        <label>Poste qui t’intéresse</label>
+
+        <select name="poste" required>
+            <option value="">Choisir un poste</option>
+
+            <% if (typeof jobs !== 'undefined' && jobs.length > 0) { %>
+                <% jobs.forEach(job => { %>
+                    <option value="<%= job.title %>">
+                        <%= job.title %>
+                    </option>
+                <% }) %>
+            <% } %>
+
+            <option value="Candidature spontanée">
+                Candidature spontanée
+            </option>
+        </select>
+
+        <textarea name="message" placeholder="Pourquoi veux-tu travailler avec nous?"></textarea>
+
+        <label>Curriculum vitae</label>
+        <input type="file" name="cv" accept=".pdf,.doc,.docx">
+
+        <label>Lettre de présentation</label>
+        <input type="file" name="lettre" accept=".pdf,.doc,.docx">
+
+        <button type="submit" class="btn-primary">
+            POSTULER
+        </button>
+
+    </form>
+
+</section>

@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="/css/ecole.css">
     <link rel="stylesheet" href="/css/luge-rando.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/services.css">
+    <link rel="stylesheet" href="/css/communication.css">
 </head>
 
 <body>
@@ -34,13 +36,43 @@
 
     <%- include('partials/header') %>
 
+    <% if (adminUser) { %>
+
+        <div class="admin-floating-menu">
+
+            <div class="admin-role">
+                Connecté : <strong><%= adminUser.username %></strong>
+                (<%= adminUser.role %>)
+            </div>
+
+            <a href="/admin-vdp" class="admin-mini-btn">
+                Tableau de bord
+            </a>
+
+            <a href="/admin-vdp/logout" class="admin-mini-btn logout">
+                Déconnexion
+            </a>
+
+        </div>
+
+        <% } %>
+
     <main class="main-content">
         <%- body %>
     </main>
 
-    <%- include('partials/footer') %>
+    <% if (typeof hideFooter === 'undefined' || !hideFooter) { %>
+        <%- include('partials/footer') %>
+        <% } %>
 
-    <%- include('partials/snow-widget') %>
+    <% if (typeof hideConditionsPopup === 'undefined' || !hideConditionsPopup) { %>
+        <%- include('partials/snow-widget') %>
+        <% } %>
+
+        <a href="/contact" class="contact-float" aria-label="Nous contacter">
+            💬
+            <span>Des questions ?</span>
+        </a>
 
     <!-- GTRANSLATE -->
     <script>

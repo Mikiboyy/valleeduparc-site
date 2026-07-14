@@ -1,0 +1,21 @@
+<section class="form-section">
+    <form action="/admin-vdp/login" method="POST" class="course-form">
+
+        <h2>Connexion administration</h2>
+
+        <% if (error) { %>
+            <p style="color:red;">Identifiant ou mot de passe invalide.</p>
+        <% } %>
+
+        <label>Nom d'utilisateur</label>
+        <input type="text" name="username" required>
+
+        <label>Mot de passe</label>
+        <input type="password" name="password" required>
+
+        <button type="submit" class="btn-primary">
+            Se connecter
+        </button>
+
+    </form>
+</section>

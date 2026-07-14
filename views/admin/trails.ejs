@@ -1,0 +1,63 @@
+<section class="admin-page">
+
+    <div class="admin-header">
+        <h1>Gestion des pistes</h1>
+        <p>Modifier l’état des pistes de jour et de soir.</p>
+    </div>
+
+    <form action="/admin-vdp/trails/save" method="POST">
+
+        <div class="trails-admin-grid">
+
+            <% trails.forEach(trail => { %>
+
+                <div class="trail-admin-card">
+
+                    <h3>
+                        <span><%= trail.trailNumber %></span>
+                        <%= trail.name %>
+                    </h3>
+
+                    <div class="trail-status-row">
+
+                        <label>
+                            Jour
+                            <select name="day_<%= trail._id %>">
+                                <option value="true" <%= trail.openDay ? 'selected' : '' %>>
+                                    Ouverte
+                                </option>
+                                <option value="false" <%= !trail.openDay ? 'selected' : '' %>>
+                                    Fermée
+                                </option>
+                            </select>
+                        </label>
+
+                        <label>
+                            Soir
+                            <select name="night_<%= trail._id %>">
+                                <option value="true" <%= trail.openNight ? 'selected' : '' %>>
+                                    Ouverte
+                                </option>
+                                <option value="false" <%= !trail.openNight ? 'selected' : '' %>>
+                                    Fermée
+                                </option>
+                            </select>
+                        </label>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+        <div class="save-container">
+            <button class="btn-save-all" type="submit">
+                💾Enregistrer toutes les modifications
+            </button>
+        </div>
+
+    </form>
+
+</section>

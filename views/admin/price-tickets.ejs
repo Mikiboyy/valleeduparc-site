@@ -1,0 +1,29 @@
+<section class="form-section">
+    <div class="course-form">
+        <h2>Prix billets</h2>
+
+        <% prices.forEach(price => { %>
+            <form action="/admin-vdp/prices/billets/<%= price._id %>" method="POST" class="admin-price-row">
+                <strong><%= price.category %> — <%= price.ticketType %> — <%= price.ageGroup %></strong>
+
+                <label>En ligne</label>
+                <input type="number" step="0.01" name="onlinePrice" value="<%= price.onlinePrice ?? '' %>">
+
+                <label>Billetterie</label>
+                <input type="number" step="0.01" name="counterPrice" value="<%= price.counterPrice ?? '' %>">
+
+                <label>
+                    <input type="checkbox" name="isFree" <%= price.isFree ? 'checked' : '' %>>
+                    Gratuit
+                </label>
+
+                <label>
+                    <input type="checkbox" name="isActive" <%= price.isActive ? 'checked' : '' %>>
+                    Actif
+                </label>
+
+                <button type="submit">Enregistrer</button>
+            </form>
+        <% }) %>
+    </div>
+</section>

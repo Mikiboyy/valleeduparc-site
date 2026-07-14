@@ -1,0 +1,117 @@
+<!-- HERO -->
+<section class="montagne-hero restauration-hero">
+
+    <div class="montagne-overlay"></div>
+
+    <div class="montagne-content">
+        <div class="montagne-text">
+
+            <span class="montagne-subtitle">
+                CARTES-CADEAUX
+            </span>
+
+            <h1>
+                OFFREZ<br>
+                LA MONTAGNE
+            </h1>
+
+            <p class="montagne-description">
+                Offrez une carte-cadeau Vallée du Parc à vos proches.
+                Choisissez le montant, remplissez les informations et complétez
+                l’achat en ligne de façon sécurisée.
+            </p>
+
+            <div class="montagne-features">
+                <div class="feature">✔ Paiement sécurisé</div>
+                <div class="feature">✔ Montant au choix</div>
+                <div class="feature">✔ Cadeau parfait</div>
+                <div class="feature">✔ Confirmation rapide</div>
+            </div>
+
+            <div class="montagne-buttons">
+                <a href="#gift-card-form" class="btn-primary">
+                    ACHETER
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+
+<section class="form-section" id="gift-card-form">
+
+    <form action="/cartes-cadeaux/checkout" method="POST" class="course-form gift-card-form">
+
+        <h2>Achat d’une carte-cadeau</h2>
+
+        <label>Nom de l’acheteur</label>
+        <input type="text" name="acheteurNom" required>
+
+        <label>Adresse courriel</label>
+        <input type="email" name="acheteurEmail" required>
+
+        <label>Téléphone</label>
+        <input type="tel" name="acheteurTelephone" required>
+
+        <h2>Informations de la carte</h2>
+
+        <label>Montant de la carte-cadeau</label>
+        <input
+        type="number"
+        name="montant"
+        id="montantCarte"
+        min=""
+        step="0.01"
+        placeholder="Min : 10.00"
+        required
+        >
+
+        <label>Quantité</label>
+        <input type="number" name="quantite" id="quantiteCarte" min="1" value="1" required>
+
+        <label>Nom du destinataire</label>
+        <input type="text" name="destinataireNom">
+
+        <label>Message personnalisé</label>
+        <textarea name="message" rows="5" placeholder="Message à inscrire avec la carte-cadeau"></textarea>
+
+        <h2>Réception</h2>
+
+        <label>Mode de réception</label>
+        <select name="modeReception" required>
+            <option value="">Choisir</option>
+            <option value="Ramassage à la station">Ramassage à la station</option>
+            <option value="Envoi postal">Envoi postal</option>
+        </select>
+
+        <label>Adresse de livraison, si applicable</label>
+        <textarea name="adresseLivraison" rows="4" placeholder="Adresse complète pour l’envoi postal"></textarea>
+
+        <div class="rental-total-box">
+            Total estimé : <strong><span id="giftCardTotal">0.00</span> $</strong>
+        </div>
+
+        <button type="submit" class="btn-primary">
+            PASSER AU PAIEMENT
+        </button>
+
+    </form>
+
+</section>
+
+<script>
+    function updateGiftCardTotal() {
+        const montant = parseFloat(document.getElementById('montantCarte').value) || 0;
+        const quantite = parseInt(document.getElementById('quantiteCarte').value) || 1;
+        const total = montant * quantite;
+
+        document.getElementById('giftCardTotal').textContent = total.toFixed(2);
+    }
+
+    document.getElementById('montantCarte').addEventListener('input', updateGiftCardTotal);
+    document.getElementById('quantiteCarte').addEventListener('input', updateGiftCardTotal);
+
+    updateGiftCardTotal();
+</script>

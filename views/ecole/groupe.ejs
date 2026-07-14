@@ -21,329 +21,124 @@
                 <div class="feature">✔ Programmes pour tous les âges</div>
             </div>
         </div>
+
+        <div class="ecole-hero-image">
+            <img src="/image/groupe.webp" alt="Cours de groupe Vallée du Parc">
+        </div>
     </div>
 </section>
 
 <section class="ecole-cards-section">
-    <div class="ecole-cards" id="coursCards"></div>
+
+    <% if (adminUser && (adminUser.role === 'admin' || adminUser.role === 'prix')) { %>
+        <a href="/admin-vdp/prices" class="btn-primary">
+            Modifier les prix
+        </a>
+        <% } %>
+
+    <div class="ecole-cards">
+
+        <% if (courses && courses.length > 0) { %>
+
+            <% courses.forEach(course => { %>
+
+                <div class="ecole-card" onclick="openCoursModal('modal-<%= course._id %>')">
+                    <div class="ecole-card-top">
+                        <%= course.category %><br>
+                        <%= course.title %>
+                    </div>
+
+                    <p><%= course.summary %></p>
+
+                    <p class="course-price">
+                        <% if (course.priceLabel) { %>
+                            <%= course.priceLabel %>
+                        <% } else if (course.price !== null) { %>
+                            <%= course.price.toFixed(2) %> $
+                        <% } else { %>
+                            -
+                        <% } %>
+                    </p>
+                </div>
+
+            <% }) %>
+
+        <% } else { %>
+
+            <p>Aucun cours disponible pour le moment.</p>
+
+        <% } %>
+
+    </div>
 </section>
 
-<div id="coursModals"></div>
+<% courses.forEach(course => { %>
+
+    <div id="modal-<%= course._id %>" class="cours-modal">
+        <div class="cours-modal-content">
+
+            <span class="close-modal" onclick="closeCoursModal('modal-<%= course._id %>')">
+                &times;
+            </span>
+
+            <h2><%= course.title %></h2>
+
+            <p><strong>Catégorie :</strong> <%= course.category %></p>
+            <p><strong>Durée :</strong> <%= course.duration %></p>
+            <p>
+                <strong>Période :</strong>
+                <%= course.season === 'prevente' ? 'Pré-vente' : 'Régulier' %>
+            </p>
+
+            <p>
+                <strong>Prix :</strong>
+                <% if (course.priceLabel) { %>
+                    <%= course.priceLabel %>
+                <% } else if (course.price !== null) { %>
+                    <%= course.price.toFixed(2) %> $
+                <% } else { %>
+                    -
+                <% } %>
+            </p>
+
+            <div>
+                <%- course.details %>
+            </div>
+
+            <p>
+                <strong>Conditions :</strong><br>
+                Un abonnement saisonnier ou un billet valide peut être requis pour la durée du programme.
+            </p>
+
+            <a href="/inscription?returnUrl=/cours-groupe" class="btn-primary">
+                S'INSCRIRE
+            </a>
+
+        </div>
+    </div>
+
+<% }) %>
 
 <script>
-const cours = [
-    {
-        id: "mini-yeti-4",
-        titre: "MINI-YÉTI",
-        duree: "4 SEMAINES",
-        resume: "Pour les enfants de 3 à 4 ans qui découvrent la glisse.",
-        prix: "237$",
-        details: `
-            <h2>Mini-Yéti – 4 semaines</h2>
-            <p>Programme pour les enfants de 3 à 4 ans. Le cours permet à l’enfant de se familiariser avec l’équipement de ski et son environnement tout en ayant du plaisir.</p>
-            <ul>
-                <li>Âge : 3 à 4 ans</li>
-                <li>Durée : 4 semaines</li>
-                <li>Durée du cours : 60 minutes</li>
-                <li>Ratio : 3 élèves par groupe</li>
-                <li>Prix régulier : 237$</li>
-                <li>Skieurs débutants</li>
-            </ul>
-            <p><strong>Horaire :</strong><br>
-            Samedi : 9h00, 10h00, 11h00 ou 12h00<br>
-            Dimanche : 9h00, 10h00, 11h00 ou 12h00</p>
-        `
-    },
-    {
-        id: "mini-yeti-8",
-        titre: "MINI-YÉTI",
-        duree: "8 SEMAINES",
-        resume: "Programme plus complet pour les enfants de 3 à 4 ans.",
-        prix: "445$",
-        details: `
-            <h2>Mini-Yéti – 8 semaines</h2>
-            <p>Programme destiné aux enfants de 3 à 4 ans permettant une progression plus complète dans un environnement sécuritaire et amusant.</p>
-            <ul>
-                <li>Âge : 3 à 4 ans</li>
-                <li>Durée : 8 semaines</li>
-                <li>Durée du cours : 60 minutes</li>
-                <li>Ratio : 3 élèves par groupe</li>
-                <li>Prix régulier : 445$</li>
-                <li>Skieurs débutants</li>
-            </ul>
-        `
-    },
-    {
-        id: "ourson-4",
-        titre: "OURSON",
-        duree: "4 SEMAINES",
-        resume: "Cours pour les enfants de 4 à 5 ans.",
-        prix: "206$",
-        details: `
-            <h2>Ourson – 4 semaines</h2>
-            <p>Programme pour les enfants de 4 à 5 ans. Les cours permettent de développer les bases de la glisse dans un cadre amusant et sécuritaire.</p>
-            <ul>
-                <li>Âge : 4 à 5 ans</li>
-                <li>Durée : 4 semaines</li>
-                <li>Durée du cours : 60 minutes</li>
-                <li>Ratio : 4 élèves par groupe</li>
-                <li>Prix régulier : 206$</li>
-                <li>Skieurs débutants</li>
-            </ul>
-        `
-    },
-    {
-        id: "ourson-8",
-        titre: "OURSON",
-        duree: "8 SEMAINES",
-        resume: "Programme complet pour les enfants de 4 à 5 ans.",
-        prix: "379$",
-        details: `
-            <h2>Ourson – 8 semaines</h2>
-            <p>Programme complet pour les enfants de 4 à 5 ans, basé sur le plaisir, la sécurité et la progression.</p>
-            <ul>
-                <li>Âge : 4 à 5 ans</li>
-                <li>Durée : 8 semaines</li>
-                <li>Durée du cours : 60 minutes</li>
-                <li>Ratio : 4 élèves par groupe</li>
-                <li>Prix régulier : 379$</li>
-            </ul>
-        `
-    },
-    {
-        id: "ski-6-12-4",
-        titre: "SKI 6 À 12 ANS",
-        duree: "4 SEMAINES",
-        resume: "Cours de ski pour enfants de 6 à 12 ans.",
-        prix: "249$",
-        details: `
-            <h2>6 à 12 ans – Ski – 4 semaines</h2>
-            <p>Cours de groupe donnés en alternance une fin de semaine sur deux aux enfants de 6 à 12 ans.</p>
-            <ul>
-                <li>Âge : 6 à 12 ans</li>
-                <li>Durée : 4 semaines</li>
-                <li>Durée du cours : 2h00</li>
-                <li>Ratio : 6 à 7 élèves par groupe</li>
-                <li>Prix régulier : 249$</li>
-                <li>Niveaux : débutant et intermédiaire</li>
-            </ul>
-        `
-    },
-    {
-        id: "ski-6-12-8",
-        titre: "SKI 6 À 12 ANS",
-        duree: "8 SEMAINES",
-        resume: "Programme complet de ski pour enfants de 6 à 12 ans.",
-        prix: "399$",
-        details: `
-            <h2>6 à 12 ans – Ski – 8 semaines</h2>
-            <p>Programme complet pour les enfants de 6 à 12 ans, basé sur l’apprentissage et la progression.</p>
-            <ul>
-                <li>Âge : 6 à 12 ans</li>
-                <li>Durée : 8 semaines</li>
-                <li>Durée du cours : 2h00</li>
-                <li>Ratio : 6 à 7 élèves par groupe</li>
-                <li>Prix régulier : 399$</li>
-                <li>Niveaux : débutant, intermédiaire et avancé</li>
-            </ul>
-        `
-    },
-    {
-        id: "planche-4",
-        titre: "PLANCHE À NEIGE",
-        duree: "4 SEMAINES",
-        resume: "Introduction à la planche à neige pour les jeunes.",
-        prix: "249$",
-        details: `
-            <h2>Planche à neige – 4 semaines</h2>
-            <p>Cours pour les enfants de 6 à 12 ans souhaitant apprendre ou améliorer leurs bases en planche à neige.</p>
-            <ul>
-                <li>Âge : 6 à 12 ans</li>
-                <li>Durée : 4 semaines</li>
-                <li>Durée du cours : 2h00</li>
-                <li>Ratio : 6 à 7 élèves par groupe</li>
-                <li>Prix régulier : 249$</li>
-                <li>Niveaux : débutant et intermédiaire</li>
-            </ul>
-        `
-    },
-    {
-        id: "planche-8",
-        titre: "PLANCHE À NEIGE",
-        duree: "8 SEMAINES",
-        resume: "Programme complet de planche à neige.",
-        prix: "399$",
-        details: `
-            <h2>Planche à neige – 8 semaines</h2>
-            <p>Programme structuré pour développer les habiletés en planche à neige avec une progression continue.</p>
-            <ul>
-                <li>Âge : 6 à 12 ans</li>
-                <li>Durée : 8 semaines</li>
-                <li>Durée du cours : 2h00</li>
-                <li>Ratio : 6 à 7 élèves par groupe</li>
-                <li>Prix régulier : 399$</li>
-                <li>Niveaux : débutant et intermédiaire</li>
-            </ul>
-        `
-    },
-    {
-        id: "fetes-4-5",
-        titre: "TEMPS DES FÊTES",
-        duree: "4 À 5 ANS",
-        resume: "Cours de groupe durant la période des Fêtes.",
-        prix: "À venir",
-        details: `
-            <h2>Temps des Fêtes – Ski 4 à 5 ans</h2>
-            <p>Cours offerts durant la période des Fêtes pour les enfants de 4 à 5 ans.</p>
-            <ul>
-                <li>Âge : 4 à 5 ans</li>
-                <li>Durée : 3 jours</li>
-                <li>Durée du cours : 1 moniteur / 1 assistant-moniteur</li>
-                <li>Skieurs débutants</li>
-                <li>Prix : à venir</li>
-            </ul>
-        `
-    },
-    {
-        id: "fetes-6-12",
-        titre: "TEMPS DES FÊTES",
-        duree: "6 À 12 ANS",
-        resume: "Cours de groupe durant la période des Fêtes.",
-        prix: "À venir",
-        details: `
-            <h2>Temps des Fêtes – Ski 6 à 12 ans</h2>
-            <p>Cours offerts durant la période des Fêtes pour les enfants de 6 à 12 ans.</p>
-            <ul>
-                <li>Âge : 6 à 12 ans</li>
-                <li>Durée : 3 jours</li>
-                <li>Durée du cours : 1 moniteur / 1 assistant-moniteur</li>
-                <li>Prix : à venir</li>
-            </ul>
-        `
-    },
-    {
-        id: "adultes-jour",
-        titre: "COURS ADULTES",
-        duree: "6 SEMAINES JOUR",
-        resume: "Programme technique réservé aux adultes.",
-        prix: "275$",
-        details: `
-            <h2>Cours adultes – 6 semaines jour</h2>
-            <p>Programme pour adultes souhaitant améliorer leur technique en ski.</p>
-            <ul>
-                <li>Durée : 6 semaines</li>
-                <li>Durée du cours : 2h00</li>
-                <li>Ratio : 5 à 7 élèves par groupe</li>
-                <li>Horaire : mercredi 10h00 à 12h00</li>
-                <li>Prix régulier : 275$</li>
-            </ul>
-        `
-    },
-    {
-        id: "adultes-soir",
-        titre: "COURS ADULTES",
-        duree: "6 SEMAINES SOIR",
-        resume: "Programme adulte offert en soirée.",
-        prix: "339$",
-        details: `
-            <h2>Cours adultes – 6 semaines soir</h2>
-            <p>Programme technique réservé aux adultes offert en soirée.</p>
-            <ul>
-                <li>Durée : 6 semaines</li>
-                <li>Durée du cours : 2h00</li>
-                <li>Ratio : 4 à 5 élèves par groupe</li>
-                <li>Horaire : mercredi 19h00 à 21h00</li>
-                <li>Prix régulier : 339$</li>
-            </ul>
-        `
-    },
-    {
-        id: "adultes-fin-semaine",
-        titre: "COURS ADULTES",
-        duree: "4 SEMAINES FIN DE SEMAINE",
-        resume: "Cours pour adultes durant la fin de semaine.",
-        prix: "212$",
-        details: `
-            <h2>Cours adultes – 4 semaines fin de semaine</h2>
-            <p>Programme pour adultes désirant s’initier à la glisse ou améliorer leurs bases.</p>
-            <ul>
-                <li>Durée : 4 semaines</li>
-                <li>Durée du cours : 2h00</li>
-                <li>Ratio : 6 élèves par groupe</li>
-                <li>Prix régulier : 212$</li>
-            </ul>
-        `
-    },
-    {
-        id: "intrepide",
-        titre: "L’INTRÉPIDE",
-        duree: "6 SEMAINES",
-        resume: "Programme ski seulement pour jeunes passionnés.",
-        prix: "419$",
-        details: `
-            <h2>L’Intrépide – Ski seulement</h2>
-            <p>Programme de 6 semaines en ski qui s’adresse aux jeunes talents désirant relever de nouveaux défis.</p>
-            <ul>
-                <li>Âge : 7 à 14 ans</li>
-                <li>Durée : 6 semaines</li>
-                <li>Durée du cours : 3h00</li>
-                <li>Ratio : 6 élèves par groupe</li>
-                <li>Horaire : samedi 9h00 à 12h00 ou 13h00 à 16h00</li>
-                <li>Prix régulier : 419$</li>
-            </ul>
-        `
-    }
-];
-
-const cardsContainer = document.getElementById("coursCards");
-const modalsContainer = document.getElementById("coursModals");
-
-cours.forEach(c => {
-    cardsContainer.innerHTML += `
-        <div class="ecole-card" onclick="openCoursModal('modal-${c.id}')">
-            <div class="ecole-card-top">${c.titre}<br>${c.duree}</div>
-            <p>${c.resume}</p>
-        </div>
-    `;
-
-    modalsContainer.innerHTML += `
-        <div id="modal-${c.id}" class="cours-modal">
-            <div class="cours-modal-content">
-                <span class="close-modal" onclick="closeCoursModal('modal-${c.id}')">&times;</span>
-
-                ${c.details}
-
-                <p><strong>Conditions :</strong><br>
-                Un abonnement saisonnier ou un billet valide est requis pour la durée du programme.</p>
-
-                <p><strong>Restrictions :</strong><br>
-                La station se réserve le droit de modifier l’horaire ou la date du cours selon les conditions météorologiques.</p>
-
-                <a href="/inscription?returnUrl=/cours-groupe" class="btn-primary">
-                    S'INSCRIRE
-                </a>
-            </div>
-        </div>
-    `;
-});
-
-function openCoursModal(id){
+function openCoursModal(id) {
     const modal = document.getElementById(id);
-    if(modal){
+
+    if (modal) {
         modal.style.display = "flex";
     }
 }
 
-function closeCoursModal(id){
+function closeCoursModal(id) {
     const modal = document.getElementById(id);
-    if(modal){
+
+    if (modal) {
         modal.style.display = "none";
     }
 }
 
-window.addEventListener("click", function(event){
-    document.querySelectorAll(".cours-modal").forEach(function(modal){
-        if(event.target === modal){
+window.addEventListener("click", function(event) {
+    document.querySelectorAll(".cours-modal").forEach(function(modal) {
+        if (event.target === modal) {
             modal.style.display = "none";
         }
     });

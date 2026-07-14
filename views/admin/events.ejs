@@ -1,0 +1,62 @@
+<section class="form-section">
+
+    <form action="/admin-vdp/events" method="POST" enctype="multipart/form-data" class="course-form">
+
+        <h2>Ajouter un événement</h2>
+
+        <label>Titre</label>
+        <input type="text" name="title" required>
+
+        <label>Description</label>
+        <textarea name="description" required></textarea>
+
+        <label>Date</label>
+        <input type="date" name="date" required>
+
+        <label>Lieu</label>
+        <input type="text" name="location">
+
+        <label>Image</label>
+        <input type="file" name="image">
+
+        <button type="submit" class="btn-primary">
+            Ajouter l’événement
+        </button>
+
+    </form>
+
+    <div class="course-form" style="margin-top:30px;">
+
+        <h2>Événements existants</h2>
+
+        <% if (events && events.length > 0) { %>
+
+            <% events.forEach(event => { %>
+
+                <div class="admin-row">
+
+                    <strong><%= event.title %></strong>
+
+                    <span>
+                        <%= new Date(event.date).toLocaleDateString('fr-CA') %>
+                    </span>
+
+                    <form action="/admin-vdp/events/<%= event._id %>/delete" method="POST">
+                        <button type="submit">
+                            Supprimer
+                        </button>
+                    </form>
+
+                </div>
+
+            <% }) %>
+
+        <% } else { %>
+
+            <p>Aucun événement pour le moment.</p>
+
+        <% } %>
+
+    </div>
+
+</section>

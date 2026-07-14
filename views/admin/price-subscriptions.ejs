@@ -1,0 +1,24 @@
+<section class="form-section">
+    <div class="course-form">
+        <h2>Prix abonnements</h2>
+
+        <% prices.forEach(price => { %>
+            <form action="/admin-vdp/prices/abonnements/<%= price._id %>" method="POST" class="admin-price-row">
+                <strong><%= price.category %> — <%= price.ageGroup %></strong>
+
+                <label>Régulier</label>
+                <input type="number" step="0.01" name="regularPrice" value="<%= price.regularPrice ?? '' %>">
+
+                <label>FDC</label>
+                <input type="number" step="0.01" name="fdcPrice" value="<%= price.fdcPrice ?? '' %>">
+
+                <label>
+                    <input type="checkbox" name="isActive" <%= price.isActive ? 'checked' : '' %>>
+                    Actif
+                </label>
+
+                <button type="submit">Enregistrer</button>
+            </form>
+        <% }) %>
+    </div>
+</section>

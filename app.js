@@ -10,6 +10,9 @@ const pagesRoutes = require('./routes/pages');
 const mailchimpRoutes = require('./routes/mailchimp');
 const getSnowConditions = require('./services/stationService');
 const inscriptionRoutes = require('./routes/inscription');
+const carrieresRoutes = require('./routes/carrieres');
+const locationRoutes = require('./routes/location');
+const giftCardRoutes = require('./routes/giftCards');
 
 const app = express();
 
@@ -47,6 +50,7 @@ app.use(session({
     }
 }));
 
+
 /* =========================
    GLOBAL VARIABLES
 ========================= */
@@ -55,6 +59,7 @@ app.use((req, res, next) => {
     res.locals.success = req.query.success;
     res.locals.exists = req.query.exists;
     res.locals.error = req.query.error;
+    res.locals.adminUser = req.session.admin || null;
     next();
 });
 
@@ -87,9 +92,12 @@ app.use(async (req, res, next) => {
 /* =========================
    ROUTES
 ========================= */
-app.use('/admin', adminRoutes);
+app.use('/admin-vdp', adminRoutes);
 app.use('/', mailchimpRoutes);
 app.use('/inscription', inscriptionRoutes);
+app.use('/location-form', locationRoutes);
+app.use('/carrieres-form', carrieresRoutes);
+app.use('/cartes-cadeaux', giftCardRoutes);
 app.use('/', pagesRoutes);
 
 /* =========================

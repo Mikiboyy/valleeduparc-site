@@ -1,192 +1,90 @@
 <section class="pricing-section" id="abonnements">
 
-    <h2>Abonnements 2025-2026</h2>
+    <h2>Abonnements 2026-2027</h2>
+
+    <% if (adminUser && (adminUser.role === 'admin' || adminUser.role === 'prix')) { %>
+        <a href="/admin-vdp/prices" class="btn-primary">
+            Modifier les prix
+        </a>
+        <% } %>
 
     <div class="pricing-wrapper">
 
-        <!-- ACCORDÉON 1 -->
-        <div class="pricing-group">
+        <% if (groupedPrices && groupedPrices.length > 0) { %>
 
-            <button class="pricing-toggle">
-                <span>Tout temps</span>
-                <span class="icon">+</span>
-            </button>
+            <% groupedPrices.forEach(group => { %>
 
-            <div class="pricing-content">
+                <% if (group.items && group.items.length > 0) { %>
 
-                <div class="pricing-grid">
+                    <div class="pricing-group">
 
-                    <div class="price-row">
-                        <span>5 ans et moins</span>
-                        <strong>133$</strong>
+                        <button class="pricing-toggle">
+                            <span><%= group.category %></span>
+                            <span class="icon">+</span>
+                        </button>
+
+                        <div class="pricing-content">
+
+                            <div class="pricing-grid">
+
+                                <% group.items.forEach(item => { %>
+
+                                    <div class="price-row dual-price">
+
+                                        <span class="price-label">
+                                            <%= item.ageGroup %>
+                                        </span>
+
+                                        <div class="price-column">
+                                            <small>Régulier</small>
+                                            <strong>
+                                                <%= item.regularPrice !== null ? item.regularPrice + '$' : '' %>
+                                            </strong>
+                                        </div>
+
+                                        <div class="price-column">
+                                            <small>Pré-vente</small>
+                                            <strong>
+                                                <%= item.fdcPrice !== null ? item.fdcPrice + '$' : '' %>
+                                            </strong>
+                                        </div>
+
+                                    </div>
+
+                                <% }) %>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div class="price-row">
-                        <span>6 à 12 ans</span>
-                        <strong>299$</strong>
-                    </div>
+                <% } %>
 
-                    <div class="price-row">
-                        <span>13 à 17 ans</span>
-                        <strong>399$</strong>
-                    </div>
+            <% }) %>
 
-                    <div class="price-row">
-                        <span>18 ans et plus</span>
-                        <strong>599$</strong>
-                    </div>
+        <% } else { %>
 
-                </div>
+            <p>Aucun prix disponible pour le moment.</p>
 
-            </div>
-
-        </div>
-
-        <!-- ACCORDÉON 2 -->
-        <div class="pricing-group">
-
-            <button class="pricing-toggle">
-                <span>Partiel</span>
-                <span class="icon">+</span>
-            </button>
-
-            <div class="pricing-content">
-
-                <div class="pricing-grid">
-
-                    <div class="price-row">
-                        <span>Presque tout-temps</span>
-                        <strong>99$</strong>
-                    </div>
-
-                    <div class="price-row">
-                        <span>Soirée</span>
-                        <strong>199$</strong>
-                    </div>
-
-                    <div class="price-row">
-                        <span>3 jours</span>
-                        <strong>299$</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ACCORDÉON 3 -->
-        <div class="pricing-group">
-
-            <button class="pricing-toggle">
-                <span>Famille (3 personnes min.)</span>
-                <span class="icon">+</span>
-            </button>
-
-            <div class="pricing-content">
-
-                <div class="pricing-grid">
-
-                    <div class="price-row">
-                        <span>5 ans et moins</span>
-                        <strong>133$</strong>
-                    </div>
-
-                    <div class="price-row">
-                        <span>6 à 12 ans</span>
-                        <strong>299$</strong>
-                    </div>
-
-                    <div class="price-row">
-                        <span>13 à 17 ans</span>
-                        <strong>399$</strong>
-                    </div>
-
-                    <div class="price-row">
-                        <span>18 ans et plus</span>
-                        <strong>599$</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ACCORDÉON 4 -->
-        <div class="pricing-group">
-
-            <button class="pricing-toggle">
-                <span>Autres</span>
-                <span class="icon">+</span>
-            </button>
-
-            <div class="pricing-content">
-
-                <div class="pricing-grid">
-
-                    <div class="price-row">
-                        <span>Petit casier</span>
-                        <strong>190$</strong>
-                    </div>
-
-                    <div class="price-row">
-                        <span>Grand casier</span>
-                        <strong>210$</strong>
-                    </div>
-
-                    <div class="price-row">
-                        <span>Casier à bottes</span>
-                        <strong>165$</strong>
-                    </div>
-
-                    <div class="price-row">
-                        <span>Randonnée alpine</span>
-                        <strong>250$</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        
+        <% } %>
 
     </div>
 
 </section>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", () => {
-
-    const toggles =
-        document.querySelectorAll(".pricing-toggle");
+    const toggles = document.querySelectorAll(".pricing-toggle");
 
     toggles.forEach(toggle => {
-
         toggle.addEventListener("click", () => {
-
-            const content =
-                toggle.nextElementSibling;
+            const content = toggle.nextElementSibling;
+            const icon = toggle.querySelector(".icon");
 
             content.classList.toggle("open");
-
-            const icon =
-                toggle.querySelector(".icon");
-
-            if(content.classList.contains("open")){
-                icon.textContent = "−";
-            }
-            else{
-                icon.textContent = "+";
-            }
-
+            icon.textContent = content.classList.contains("open") ? "−" : "+";
         });
-
     });
-
 });
-
 </script>

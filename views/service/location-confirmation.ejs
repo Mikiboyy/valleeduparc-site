@@ -1,0 +1,41 @@
+<section class="confirmation-section">
+
+    <div class="confirmation-card">
+
+        <span class="pricing-subtitle">
+            CONFIRMATION
+        </span>
+
+        <h1>
+            Paiement reçu
+        </h1>
+
+        <p>
+            Merci! Votre demande de location a été reçue et le paiement a été traité.
+        </p>
+
+        <div class="confirmation-total">
+
+            <p>Sous-total : <%= order.subtotal.toFixed(2) %> $</p>
+
+            <p>TPS : <%= order.tps.toFixed(2) %> $</p>
+
+            <p>TVQ : <%= order.tvq.toFixed(2) %> $</p>
+
+            <hr>
+
+            <p>
+                <strong>
+                    Total payé : <%= order.total.toFixed(2) %> $
+                </strong>
+            </p>
+        
+        </div>
+
+        <a href="/location" class="btn-primary">
+            RETOUR À LA LOCATION
+        </a>
+
+    </div>
+
+</section>

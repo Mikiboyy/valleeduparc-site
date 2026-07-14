@@ -1,0 +1,413 @@
+.careers-hero {
+    background-image:
+        linear-gradient(rgba(15, 32, 58, 0.65), rgba(15, 32, 58, 0.65)),
+        url('/image/carrieres.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 70px;
+    align-items: flex-start;
+}
+
+.contact-item {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 38px;
+}
+
+.contact-icon {
+    width: 42px;
+    height: 42px;
+    border: 2px solid #10284a;
+    color: #10284a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-item h3,
+.contact-form-box h2 {
+    color: #10284a;
+    text-transform: uppercase;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.contact-item p,
+.contact-item a {
+    color: #42536b;
+    text-decoration: none;
+}
+
+.contact-form-box h2 {
+    font-size: 2.3rem;
+    font-style: italic;
+}
+
+.contact-form {
+    margin-top: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 15px 18px;
+    border: 1px solid #d6dee8;
+    border-radius: 6px;
+    background: #fff;
+    color: #10284a;
+    font-family: inherit;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-map {
+    max-width: 1100px;
+    margin: 35px auto 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.carrieres-image{
+    flex:1;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.carrieres-image img{
+    width:100%;
+    max-width:600px;
+
+    border-radius:24px;
+
+    object-fit:cover;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.25);
+}
+
+/* =========================
+   FAQ
+========================= */
+
+.faq-hero {
+    background:
+        linear-gradient(rgba(19, 35, 61, 0.78), rgba(40, 71, 109, 0.82)),
+        url('/image/faq.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.faq-section {
+    padding: 90px 20px;
+    background: linear-gradient(180deg, #edf4fb 0%, #dfeaf5 100%);
+}
+
+.faq-container {
+    max-width: 1250px;
+    margin: auto;
+}
+
+.faq-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin: 45px 0;
+}
+
+.faq-tab {
+    background: white;
+    border: none;
+    padding: 28px 20px;
+    border-radius: 12px;
+    color: var(--bleu-fonce);
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    transition: 0.3s ease;
+}
+
+.faq-tab:hover,
+.faq-tab.active {
+    background: var(--bleu);
+    color: white;
+    transform: translateY(-4px);
+}
+
+.faq-category {
+    display: none;
+}
+
+.faq-category.active {
+    display: block;
+}
+
+.faq-category-title {
+    background: var(--bleu-fonce);
+    color: white;
+    padding: 20px 26px;
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    border-radius: 12px 12px 0 0;
+}
+
+.faq-item {
+    background: white;
+    border-bottom: 1px solid #cddbeb;
+}
+
+.faq-question {
+    width: 100%;
+    background: white;
+    border: none;
+    padding: 22px 26px;
+    color: var(--bleu-fonce);
+    font-size: 1.05rem;
+    font-weight: 900;
+    text-align: left;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.faq-question span {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    border-radius: 50%;
+    background: var(--bleu-fonce);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+}
+
+.faq-answer {
+    display: none;
+    padding: 0 26px 24px;
+    color: #4b5563;
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.faq-item.open .faq-answer {
+    display: block;
+}
+
+.faq-item.open .faq-question {
+    color: var(--bleu);
+}
+
+.admin-row,
+.admin-price-row {
+    background: #eef4f8;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    display: grid;
+    gap: 12px;
+}
+
+.admin-row {
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+}
+
+.admin-price-row strong {
+    color: #10284a;
+    font-size: 1.05rem;
+}
+
+.admin-price-row button,
+.admin-row button {
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.admin-price-row button:hover,
+.admin-row button:hover {
+    background: var(--bleu-fonce);
+}
+
+.admin-page {
+    padding: 120px 30px 80px;
+    background: linear-gradient(180deg, #edf4fb 0%, #dfeaf5 100%);
+    min-height: 100vh;
+}
+
+.admin-header {
+    max-width: 1300px;
+    margin: 0 auto 35px;
+}
+
+.admin-header h1 {
+    color: var(--bleu-fonce);
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.admin-header p {
+    color: #4b5563;
+    font-size: 18px;
+}
+
+.trails-admin-grid {
+    max-width: 1300px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.trail-admin-card {
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.trail-admin-card h3 {
+    color: var(--bleu-fonce);
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 18px;
+}
+
+.trail-admin-card h3 span {
+    color: var(--bleu);
+}
+
+.trail-status-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.trail-status-row label {
+    color: var(--bleu-fonce);
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.trail-status-row select {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d9e7f5;
+    color: var(--bleu-fonce);
+    font-weight: 700;
+}
+
+.save-container {
+    max-width: 1300px;
+    margin: 45px auto 0;
+    text-align: center;
+}
+
+.btn-save-all {
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 18px 45px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.admin-dashboard-info {
+    margin-bottom: 25px;
+    color: var(--bleu-fonce);
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.dashboard-bottom {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.btn-dashboard-logout {
+    background: #dc2626;
+    color: white;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 800;
+    transition: 0.2s ease;
+}
+
+.btn-dashboard-logout:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+}
+
+@media(max-width: 1000px) {
+    .trails-admin-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .trails-admin-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 900px) {
+    .faq-tabs {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-grid,
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+        gap: 35px;
+    }
+
+    .contact-form-box h2 {
+        font-size: 1.9rem;
+    }
+}
