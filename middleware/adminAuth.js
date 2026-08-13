@@ -7,17 +7,23 @@ function requireLogin(req, res, next) {
     next();
 }
 
-function requireRole(...roles) {
+function requireRole(...allowedRoles) {
+
     return (req, res, next) => {
+
         if (!req.session.admin) {
             return res.redirect('/admin-vdp/login');
         }
 
-        if (req.session.admin.role === 'admin') {
+        const userRole = req.session.admin.role;
+
+        // ADMIN = accès à tout
+        if (userRole === 'admin') {
             return next();
         }
 
-        if (!roles.includes(req.session.admin.role)) {
+        // Vérification du rôle
+        if (!allowedRoles.includes(userRole)) {
             return res.status(403).render('admin/forbidden', {
                 title: 'Accès refusé'
             });
@@ -27,8 +33,13 @@ function requireRole(...roles) {
     };
 }
 
-function canAccess(role, allowedRoles) {
-    return role === 'admin' || allowedRoles.includes(role);
+function canAccess(userRole, allowedRoles) {
+
+    if (userRole === 'admin') {
+        return true;
+    }
+
+    return allowedRoles.includes(userRole);
 }
 
 module.exports = {

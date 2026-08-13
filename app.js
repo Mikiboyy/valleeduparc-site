@@ -19,9 +19,9 @@ const app = express();
 /* =========================
    MONGODB
 ========================= */
-mongoose.connect('mongodb://127.0.0.1/valleeduparc')
-    .then(() => console.log('MongoDB connecté'))
-    .catch(err => console.log(err));
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('MongoDB Atlas connecté'))
+    .catch(err => console.log('Erreur MongoDB:', err));
 
 /* =========================
    VIEW ENGINE
