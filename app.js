@@ -23,6 +23,14 @@ mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoDB Atlas connecté'))
     .catch(err => console.log('Erreur MongoDB:', err));
 
+if (!process.env.MONGODB_URI) {
+    console.error("ERREUR : MONGODB_URI n'est pas définie.");
+} else {
+    mongoose.connect(process.env.MONGODB_URI)
+        .then(() => console.log('MongoDB Atlas connecté'))
+        .catch(err => console.error('Erreur MongoDB:', err));
+}
+
 /* =========================
    VIEW ENGINE
 ========================= */
