@@ -397,13 +397,17 @@ exports.conditions = async (req, res) => {
     try {
         const trails = await Trail.find().sort({ trailNumber: 1 });
 
+        console.log("=================================");
+        console.log("NOMBRE DE PISTES :", trails.length);
+        console.log("=================================");
+
         res.render('montagne/conditions', {
             title: "Conditions",
             trails
         });
 
     } catch (error) {
-        console.log(error);
+        console.error("ERREUR PISTES :", error);
 
         res.render('montagne/conditions', {
             title: "Conditions",
