@@ -5,7 +5,7 @@ const multer = require('multer');
 const Admin = require('../models/Admin');
 const Event = require('../models/Event');
 const Job = require('../models/Job');
-const Trail = require('../models/Trail');
+const Trail = require('../models/trail');
 
 const SubscriptionPrice = require('../models/SubscriptionPrice');
 const DailyTicketPrice = require('../models/DailyTicketPrice');
