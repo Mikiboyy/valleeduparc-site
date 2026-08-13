@@ -1,4 +1,4 @@
-const Trail = require('../models/Trail');
+const Trail = require('../models/trail');
 const Event = require('../models/Event');
 const SubscriptionPrice = require('../models/SubscriptionPrice');
 const DailyTicketPrice = require('../models/DailyTicketPrice');
