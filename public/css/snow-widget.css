@@ -89,3 +89,66 @@
     color: var(--bleu);
     font-weight: 600;
 }
+
+/* =========================
+   MODAL - MOBILE
+========================= */
+
+@media (max-width: 900px) {
+
+    .modal {
+        align-items: flex-start;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+
+    .modal-content {
+        width: 100%;
+        max-width: 100%;
+        max-height: calc(100vh - 40px);
+        padding: 25px 18px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .conditions-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .condition-card.full {
+        grid-column: span 1;
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    .close-btn {
+        top: 8px;
+        right: 12px;
+        font-size: 26px;
+        z-index: 10;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .modal {
+        padding: 10px;
+    }
+
+    .modal-content {
+        max-height: calc(100vh - 20px);
+        padding: 25px 15px 20px;
+        border-radius: 12px;
+    }
+
+    .condition-card {
+        padding: 15px;
+    }
+
+}
