@@ -121,23 +121,65 @@
 </div>
 </header>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', () => {
 
-    const burger = document.querySelector(".burger");
-    const nav = document.querySelector(".nav");
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('.nav');
 
-    if (!burger || !nav) {
-        console.log("Burger ou navigation introuvable");
-        return;
+    /* =========================
+       MENU BURGER
+    ========================= */
+
+    if (burger && nav) {
+        burger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            burger.classList.toggle('active');
+        });
     }
 
-    burger.addEventListener("click", function () {
 
-        nav.classList.toggle("active");
-        burger.classList.toggle("active");
+    /* =========================
+       DROPDOWNS MOBILE
+    ========================= */
+
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+
+        const link = dropdown.querySelector(':scope > a');
+
+        if (!link) return;
+
+        link.addEventListener('click', (event) => {
+
+            // Seulement sur mobile
+            if (window.innerWidth <= 900) {
+
+                // Si le menu n'est PAS ouvert
+                if (!dropdown.classList.contains('active')) {
+
+                    // Empêche d'aller sur /montagne
+                    event.preventDefault();
+
+                    // Ferme les autres dropdowns
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+
+                    // Ouvre celui-ci
+                    dropdown.classList.add('active');
+
+                }
+
+                // Si déjà ouvert :
+                // aucun preventDefault()
+                // donc le deuxième clic va vers /montagne
+            }
+
+        });
 
     });
 
 });
-</script>
