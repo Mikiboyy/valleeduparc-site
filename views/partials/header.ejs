@@ -120,3 +120,24 @@
 
 </div>
 </header>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const burger = document.querySelector(".burger");
+    const nav = document.querySelector(".nav");
+
+    if (!burger || !nav) {
+        console.log("Burger ou navigation introuvable");
+        return;
+    }
+
+    burger.addEventListener("click", function () {
+
+        nav.classList.toggle("active");
+        burger.classList.toggle("active");
+
+    });
+
+});
+</script>
