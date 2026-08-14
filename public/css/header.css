@@ -523,3 +523,31 @@
         display: flex;
     }
 }
+
+/* =========================
+   CORRECTION MOBILE HEADER
+========================= */
+
+@media (max-width: 900px) {
+
+    .header {
+        height: 75px;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    .logo img {
+        display: block;
+    }
+
+    body {
+        margin: 0;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .header {
+        height: 68px;
+    }
+}
