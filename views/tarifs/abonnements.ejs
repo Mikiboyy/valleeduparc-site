@@ -6,7 +6,8 @@
         <a href="/admin-vdp/prices" class="btn-primary">
             Modifier les prix
         </a>
-        <% } %>
+    <% } %>
+
 
     <div class="pricing-wrapper">
 
@@ -18,12 +19,239 @@
 
                     <div class="pricing-group">
 
+                        <!-- TITRE DE LA CATÉGORIE -->
                         <button class="pricing-toggle">
                             <span><%= group.category %></span>
                             <span class="icon">+</span>
                         </button>
 
+
                         <div class="pricing-content">
+
+                            <!-- ==========================================
+                                 DESCRIPTION SELON LE TYPE D'ABONNEMENT
+                            =========================================== -->
+
+                            <% 
+                                const category = group.category
+                                    .toLowerCase()
+                                    .normalize("NFD")
+                                    .replace(/[\u0300-\u036f]/g, "");
+                            %>
+
+
+                            <!-- PRESQUE TOUT-TEMPS -->
+                            <% if (
+                                category.includes("presque") ||
+                                category.includes("tout-temps") ||
+                                category.includes("tout temps")
+                            ) { %>
+
+                                <div class="subscription-info">
+
+                                    <h3>Abonnement <em>Presque tout-temps</em></h3>
+
+                                    <p>
+                                        L’abonnement <strong>Presque tout-temps</strong>
+                                        est un abonnement de saison individuel.
+                                    </p>
+
+                                    <p>
+                                        <strong>
+                                            Valide 5 jours et 4 soirs dès le début de la saison :
+                                        </strong>
+                                    </p>
+
+                                    <ul>
+                                        <li>
+                                            <strong>Lundi et mardi :</strong>
+                                            9h00 à 16h00
+                                        </li>
+
+                                        <li>
+                                            <strong>Mercredi au vendredi :</strong>
+                                            9h00 à 21h30
+                                        </li>
+
+                                        <li>
+                                            <strong>Samedi :</strong>
+                                            16h00 à 21h30
+                                        </li>
+                                    </ul>
+
+                                    <p>
+                                        L’abonnement <strong>Presque tout-temps</strong>
+                                        sera valide de <strong>9h00 à 21h30</strong>
+                                        durant la période de Noël et de la semaine de relâche.
+                                    </p>
+
+                                    <p>
+                                        <strong>Périodes :</strong>
+                                        du 21 décembre au 4 janvier 2026
+                                        et du 1er au 7 mars 2026.
+                                    </p>
+
+                                    <p>
+                                        <strong>Exception :</strong>
+                                        le samedi et le dimanche,
+                                        de 9h00 à 16h00.
+                                    </p>
+
+                                </div>
+
+
+                            <!-- SOIRÉE -->
+                            <% } else if (category.includes("soiree")) { %>
+
+                                <div class="subscription-info">
+
+                                    <h3>Abonnement <em>Soirée</em></h3>
+
+                                    <p>
+                                        L’abonnement <strong>Soirée</strong>
+                                        est un abonnement de saison individuel.
+                                    </p>
+
+                                    <p>
+                                        <strong>
+                                            Valide 4 soirs dès le début de la saison :
+                                        </strong>
+                                    </p>
+
+                                    <ul>
+                                        <li>
+                                            <strong>Mercredi au samedi :</strong>
+                                            16h00 à 21h30
+                                        </li>
+                                    </ul>
+
+                                    <p>
+                                        L’abonnement <strong>Soirée</strong> sera valide de
+                                        <strong>16h00 à 21h30</strong> durant la période
+                                        de Noël et de la semaine de relâche.
+                                    </p>
+
+                                    <p>
+                                        <strong>Périodes :</strong>
+                                        du 21 décembre au 4 janvier 2026
+                                        et du 1er au 8 mars 2026.
+                                    </p>
+
+                                    <p>
+                                        <strong>EN PRIME :</strong>
+                                        lorsque le ski de soirée sera terminé, obtenez
+                                        <strong>50 % de rabais</strong> à l’achat d’un
+                                        billet journalier (bloc 1h, 2h, 3h, 4h ou journée)
+                                        à prix régulier.
+                                    </p>
+
+                                </div>
+
+
+                            <!-- 3J -->
+                            <% } else if (
+                                category.includes("3j") ||
+                                category.includes("3 j") ||
+                                category.includes("3-jours")
+                            ) { %>
+
+                                <div class="subscription-info">
+
+                                    <h3>Abonnement <em>3J</em></h3>
+
+                                    <p>
+                                        L’abonnement <strong>3J</strong> est un abonnement
+                                        de saison individuel valide 3 jours par semaine.
+                                    </p>
+
+                                    <p>
+                                        Valide de <strong>9h00 à 16h00</strong>,
+                                        selon l’horaire choisi.
+                                    </p>
+
+                                    <p>
+                                        <strong>4 options sont offertes aux clients :</strong>
+                                    </p>
+
+                                    <ol>
+                                        <li>
+                                            <strong>Taïga</strong> = Lundi – Mardi – Mercredi
+                                        </li>
+
+                                        <li>
+                                            <strong>Boréal</strong> = Mardi – Mercredi – Jeudi
+                                        </li>
+
+                                        <li>
+                                            <strong>Toundra</strong> = Mercredi – Jeudi – Vendredi
+                                        </li>
+
+                                        <li>
+                                            <strong>Arctique</strong> = Lundi – Mercredi – Vendredi
+                                        </li>
+                                    </ol>
+
+                                </div>
+
+
+                            <!-- FAMILIAL -->
+                            <% } else if (category.includes("famil")) { %>
+
+                                <div class="subscription-info">
+
+                                    <h3>Abonnement <em>Familial</em></h3>
+
+                                    <p>
+                                        Depuis la saison 2023-24, le concept de
+                                        l’abonnement familial a été modifié.
+                                    </p>
+
+                                    <p>
+                                        L’abonnement familial adopte un format
+                                        <strong>« à la carte »</strong> et chacun des
+                                        membres de votre famille doit être ajouté
+                                        de façon individuelle.
+                                    </p>
+
+                                    <p>
+                                        L’abonnement doit être constitué d’au moins
+                                        <strong>1 parent (maximum 2)</strong> et d’un
+                                        <strong>minimum de 3 personnes</strong>.
+                                    </p>
+
+                                    <p>
+                                        Une preuve de résidence sera demandée pour
+                                        chaque membre affilié à l’abonnement.
+                                    </p>
+
+                                    <p>
+                                        L’abonnement sera également valide de
+                                        <strong>9h00 à 21h30</strong> durant la période
+                                        de Noël et de la semaine de relâche.
+                                    </p>
+
+                                    <p>
+                                        <strong>Périodes :</strong>
+                                        du 21 décembre au 4 janvier 2026
+                                        et du 1er au 8 mars 2026.
+                                    </p>
+
+                                    <p class="subscription-bonus">
+                                        <strong>AVANTAGE :</strong>
+                                        Avec cet abonnement illimité, obtenez gratuitement
+                                        la carte <strong>Skiez et Surfez</strong> chez nos
+                                        partenaires.
+                                        <strong>Valeur approximative de 950 $.</strong>
+                                    </p>
+
+                                </div>
+
+                            <% } %>
+
+
+                            <!-- ==========================================
+                                 PRIX
+                            =========================================== -->
 
                             <div class="pricing-grid">
 
@@ -36,17 +264,28 @@
                                         </span>
 
                                         <div class="price-column">
+
                                             <small>Régulier</small>
+
                                             <strong>
-                                                <%= item.regularPrice !== null ? item.regularPrice + '$' : '' %>
+                                                <%= item.regularPrice !== null
+                                                    ? item.regularPrice + '$'
+                                                    : '' %>
                                             </strong>
+
                                         </div>
 
+
                                         <div class="price-column">
+
                                             <small>Pré-vente</small>
+
                                             <strong>
-                                                <%= item.fdcPrice !== null ? item.fdcPrice + '$' : '' %>
+                                                <%= item.fdcPrice !== null
+                                                    ? item.fdcPrice + '$'
+                                                    : '' %>
                                             </strong>
+
                                         </div>
 
                                     </div>
@@ -73,18 +312,31 @@
 
 </section>
 
+
 <script>
+
 document.addEventListener("DOMContentLoaded", () => {
+
     const toggles = document.querySelectorAll(".pricing-toggle");
 
     toggles.forEach(toggle => {
+
         toggle.addEventListener("click", () => {
+
             const content = toggle.nextElementSibling;
             const icon = toggle.querySelector(".icon");
 
             content.classList.toggle("open");
-            icon.textContent = content.classList.contains("open") ? "−" : "+";
+
+            icon.textContent =
+                content.classList.contains("open")
+                    ? "−"
+                    : "+";
+
         });
+
     });
+
 });
+
 </script>
