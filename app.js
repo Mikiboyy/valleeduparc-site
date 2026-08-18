@@ -51,7 +51,6 @@ app.use(expressLayouts);
 /* Tous les fichiers dans /public */
 app.use(express.static(path.join(__dirname, 'public')));
 
-/* Images uploadées */
 app.use(
     '/uploads',
     express.static(path.join(__dirname, 'public', 'uploads'))
