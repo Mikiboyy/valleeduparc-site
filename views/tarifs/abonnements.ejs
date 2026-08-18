@@ -32,7 +32,7 @@
                                  DESCRIPTION SELON LE TYPE D'ABONNEMENT
                             =========================================== -->
 
-                            <% 
+                            <%
                                 const category = group.category
                                     .toLowerCase()
                                     .normalize("NFD")
@@ -40,19 +40,21 @@
                             %>
 
 
-                            <!-- PRESQUE TOUT-TEMPS -->
-                            <% if (
-                                category.includes("presque") ||
-                                category.includes("tout-temps") ||
-                                category.includes("tout temps")
-                            ) { %>
+                            <!-- ==========================================
+                                 PRESQUE TOUT-TEMPS
+                            =========================================== -->
+
+                            <% if (category.includes("presque")) { %>
 
                                 <div class="subscription-info">
 
-                                    <h3>Abonnement <em>Presque tout-temps</em></h3>
+                                    <h3>
+                                        Abonnement <em>Presque tout-temps</em>
+                                    </h3>
 
                                     <p>
-                                        L’abonnement <strong>Presque tout-temps</strong>
+                                        L’abonnement
+                                        <strong>Presque tout-temps</strong>
                                         est un abonnement de saison individuel.
                                     </p>
 
@@ -80,8 +82,10 @@
                                     </ul>
 
                                     <p>
-                                        L’abonnement <strong>Presque tout-temps</strong>
-                                        sera valide de <strong>9h00 à 21h30</strong>
+                                        L’abonnement
+                                        <strong>Presque tout-temps</strong>
+                                        sera valide de
+                                        <strong>9h00 à 21h30</strong>
                                         durant la période de Noël et de la semaine de relâche.
                                     </p>
 
@@ -100,15 +104,81 @@
                                 </div>
 
 
-                            <!-- SOIRÉE -->
+                            <!-- ==========================================
+                                 TOUT TEMPS
+                            =========================================== -->
+
+                            <% } else if (
+                                category.includes("tout temps") ||
+                                category.includes("tout-temps")
+                            ) { %>
+
+                                <div class="subscription-info">
+
+                                    <h3>
+                                        Abonnement <em>Tout temps</em>
+                                    </h3>
+
+                                    <p>
+                                        L’abonnement
+                                        <strong>Tout temps</strong>
+                                        est valide selon l’horaire d’ouverture des pistes.
+                                    </p>
+
+                                    <p>
+                                        <strong>Horaire :</strong>
+                                    </p>
+
+                                    <ul>
+                                        <li>
+                                            <strong>Du mercredi au samedi :</strong>
+                                            9h00 à 21h30
+                                        </li>
+
+                                        <li>
+                                            <strong>Les dimanches, lundis et mardis :</strong>
+                                            9h00 à 16h00
+                                        </li>
+                                    </ul>
+
+                                    <p>
+                                        L’abonnement sera également valide de
+                                        <strong>9h00 à 21h30</strong>
+                                        durant la période de Noël et de la semaine de relâche.
+                                    </p>
+
+                                    <p>
+                                        <strong>Périodes :</strong>
+                                        du 21 décembre au 5 janvier 2026
+                                        et du 1er au 8 mars 2026.
+                                    </p>
+
+                                    <p class="subscription-bonus">
+                                        <strong>AVANTAGE :</strong>
+                                        Avec cet abonnement illimité, obtenez gratuitement
+                                        la carte <strong>Skiez et Surfez</strong>
+                                        chez nos partenaires.
+                                        <strong>Valeur approximative de 950 $.</strong>
+                                    </p>
+
+                                </div>
+
+
+                            <!-- ==========================================
+                                 SOIRÉE
+                            =========================================== -->
+
                             <% } else if (category.includes("soiree")) { %>
 
                                 <div class="subscription-info">
 
-                                    <h3>Abonnement <em>Soirée</em></h3>
+                                    <h3>
+                                        Abonnement <em>Soirée</em>
+                                    </h3>
 
                                     <p>
-                                        L’abonnement <strong>Soirée</strong>
+                                        L’abonnement
+                                        <strong>Soirée</strong>
                                         est un abonnement de saison individuel.
                                     </p>
 
@@ -126,9 +196,11 @@
                                     </ul>
 
                                     <p>
-                                        L’abonnement <strong>Soirée</strong> sera valide de
-                                        <strong>16h00 à 21h30</strong> durant la période
-                                        de Noël et de la semaine de relâche.
+                                        L’abonnement
+                                        <strong>Soirée</strong>
+                                        sera valide de
+                                        <strong>16h00 à 21h30</strong>
+                                        durant la période de Noël et de la semaine de relâche.
                                     </p>
 
                                     <p>
@@ -137,18 +209,22 @@
                                         et du 1er au 8 mars 2026.
                                     </p>
 
-                                    <p>
+                                    <p class="subscription-bonus">
                                         <strong>EN PRIME :</strong>
-                                        lorsque le ski de soirée sera terminé, obtenez
-                                        <strong>50 % de rabais</strong> à l’achat d’un
-                                        billet journalier (bloc 1h, 2h, 3h, 4h ou journée)
+                                        Lorsque le ski de soirée sera terminé,
+                                        obtenez <strong>50 % de rabais</strong>
+                                        à l’achat d’un billet journalier
+                                        (bloc 1h, 2h, 3h, 4h ou journée)
                                         à prix régulier.
                                     </p>
 
                                 </div>
 
 
-                            <!-- 3J -->
+                            <!-- ==========================================
+                                 3J
+                            =========================================== -->
+
                             <% } else if (
                                 category.includes("3j") ||
                                 category.includes("3 j") ||
@@ -157,77 +233,95 @@
 
                                 <div class="subscription-info">
 
-                                    <h3>Abonnement <em>3J</em></h3>
+                                    <h3>
+                                        Abonnement <em>3J</em>
+                                    </h3>
 
                                     <p>
-                                        L’abonnement <strong>3J</strong> est un abonnement
-                                        de saison individuel valide 3 jours par semaine.
+                                        L’abonnement <strong>3J</strong>
+                                        est un abonnement de saison individuel
+                                        valide 3 jours par semaine.
                                     </p>
 
                                     <p>
-                                        Valide de <strong>9h00 à 16h00</strong>,
+                                        Valide de
+                                        <strong>9h00 à 16h00</strong>,
                                         selon l’horaire choisi.
                                     </p>
 
                                     <p>
-                                        <strong>4 options sont offertes aux clients :</strong>
+                                        <strong>
+                                            4 options sont offertes aux clients :
+                                        </strong>
                                     </p>
 
                                     <ol>
                                         <li>
-                                            <strong>Taïga</strong> = Lundi – Mardi – Mercredi
+                                            <strong>Taïga</strong>
+                                            = Lundi – Mardi – Mercredi
                                         </li>
 
                                         <li>
-                                            <strong>Boréal</strong> = Mardi – Mercredi – Jeudi
+                                            <strong>Boréal</strong>
+                                            = Mardi – Mercredi – Jeudi
                                         </li>
 
                                         <li>
-                                            <strong>Toundra</strong> = Mercredi – Jeudi – Vendredi
+                                            <strong>Toundra</strong>
+                                            = Mercredi – Jeudi – Vendredi
                                         </li>
 
                                         <li>
-                                            <strong>Arctique</strong> = Lundi – Mercredi – Vendredi
+                                            <strong>Arctique</strong>
+                                            = Lundi – Mercredi – Vendredi
                                         </li>
                                     </ol>
 
                                 </div>
 
 
-                            <!-- FAMILIAL -->
+                            <!-- ==========================================
+                                 FAMILIAL
+                            =========================================== -->
+
                             <% } else if (category.includes("famil")) { %>
 
                                 <div class="subscription-info">
 
-                                    <h3>Abonnement <em>Familial</em></h3>
+                                    <h3>
+                                        Abonnement <em>Familial</em>
+                                    </h3>
 
                                     <p>
-                                        Depuis la saison 2023-24, le concept de
-                                        l’abonnement familial a été modifié.
+                                        Depuis la saison 2023-24,
+                                        le concept de l’abonnement familial
+                                        a été modifié.
                                     </p>
 
                                     <p>
                                         L’abonnement familial adopte un format
-                                        <strong>« à la carte »</strong> et chacun des
-                                        membres de votre famille doit être ajouté
-                                        de façon individuelle.
+                                        <strong>« à la carte »</strong>
+                                        et chacun des membres de votre famille
+                                        doit être ajouté de façon individuelle.
                                     </p>
 
                                     <p>
-                                        L’abonnement doit être constitué d’au moins
-                                        <strong>1 parent (maximum 2)</strong> et d’un
+                                        L’abonnement doit être constitué
+                                        d’au moins
+                                        <strong>1 parent (maximum 2)</strong>
+                                        et d’un
                                         <strong>minimum de 3 personnes</strong>.
                                     </p>
 
                                     <p>
-                                        Une preuve de résidence sera demandée pour
-                                        chaque membre affilié à l’abonnement.
+                                        Une preuve de résidence sera demandée
+                                        pour chaque membre affilié à l’abonnement.
                                     </p>
 
                                     <p>
                                         L’abonnement sera également valide de
-                                        <strong>9h00 à 21h30</strong> durant la période
-                                        de Noël et de la semaine de relâche.
+                                        <strong>9h00 à 21h30</strong>
+                                        durant la période de Noël et de la semaine de relâche.
                                     </p>
 
                                     <p>
@@ -238,9 +332,10 @@
 
                                     <p class="subscription-bonus">
                                         <strong>AVANTAGE :</strong>
-                                        Avec cet abonnement illimité, obtenez gratuitement
-                                        la carte <strong>Skiez et Surfez</strong> chez nos
-                                        partenaires.
+                                        Avec cet abonnement illimité,
+                                        obtenez gratuitement la carte
+                                        <strong>Skiez et Surfez</strong>
+                                        chez nos partenaires.
                                         <strong>Valeur approximative de 950 $.</strong>
                                     </p>
 
@@ -262,6 +357,7 @@
                                         <span class="price-label">
                                             <%= item.ageGroup %>
                                         </span>
+
 
                                         <div class="price-column">
 
