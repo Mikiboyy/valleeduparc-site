@@ -154,8 +154,6 @@ exports.pente_ecole = (req, res) => {
     });
 };
 
-const Event = require('../models/Event');
-
 exports.evenements = async (req, res) => {
     try {
 
