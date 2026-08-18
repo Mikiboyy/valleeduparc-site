@@ -679,3 +679,107 @@
         font-size: 13px;
     }
 }
+
+/* =====================================================
+   CORRECTION ESPACE BLANC SOUS LE HEADER - MOBILE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 75px;
+        margin: 0;
+        padding: 0 20px;
+
+        box-sizing: border-box;
+
+        z-index: 99999;
+    }
+
+    /* Empêche un espace blanc causé par le logo */
+    .logo {
+        display: flex;
+        align-items: center;
+        height: 75px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .logo img {
+        display: block;
+        width: 145px;
+        height: auto;
+        margin: 0;
+    }
+
+    /* Le contenu commence immédiatement après le header */
+    main {
+        margin-top: 0;
+        padding-top: 75px;
+    }
+
+    /* Si tes sections utilisent un espace en haut */
+    body > section:first-of-type,
+    main > section:first-child {
+        margin-top: 0;
+    }
+
+    /* Menu mobile */
+    .nav {
+        position: fixed;
+        top: 75px;
+        left: 0;
+
+        width: 100%;
+        height: calc(100dvh - 75px);
+
+        margin: 0;
+
+        background: var(--bleu);
+
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+
+/* =====================================================
+   PETITS TÉLÉPHONES
+===================================================== */
+
+@media (max-width: 500px) {
+
+    .header {
+        height: 68px;
+        padding: 0 15px;
+    }
+
+    .logo {
+        height: 68px;
+    }
+
+    .logo img {
+        width: 125px;
+    }
+
+    main {
+        padding-top: 68px;
+    }
+
+    .nav {
+        top: 68px;
+        height: calc(100dvh - 68px);
+    }
+}
