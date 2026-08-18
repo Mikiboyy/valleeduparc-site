@@ -783,3 +783,20 @@
         height: calc(100dvh - 68px);
     }
 }
+
+@media (max-width: 900px) {
+    body {
+        padding-top: 0 !important;
+    }
+
+    main {
+        margin-top: 0 !important;
+        padding-top: 75px !important;
+    }
+
+    .hero,
+    .hero-section,
+    .home-hero {
+        margin-top: 0 !important;
+    }
+}
