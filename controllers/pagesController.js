@@ -154,37 +154,30 @@ exports.pente_ecole = (req, res) => {
     });
 };
 
+const Event = require('../models/Event');
+
 exports.evenements = async (req, res) => {
     try {
-        const now = new Date();
 
-        const allEvents = await Event.find({})
+        const allEvents = await Event
+            .find()
             .sort({ date: 1 });
 
-        const upcoming = await Event.find({
-            date: { $gte: now }
-        }).sort({ date: -1 });
-
-        const past = await Event.find({
-            date: { $lt: now }
-        }).sort({ date: -1 });
-
-        res.render('montagne/evenements', {
+        res.render('pages/evenements', {
             title: 'Événements',
-            allEvents,
-            upcoming,
-            past
+            allEvents
         });
 
     } catch (error) {
-        console.error(error);
 
-        res.render('montagne/evenements', {
-            title: 'Événements',
-            allEvents: [],
-            upcoming: [],
-            past: []
-        });
+        console.error(
+            "Erreur lors du chargement des événements :",
+            error
+        );
+
+        res.status(500).send(
+            "Erreur lors du chargement des événements."
+        );
     }
 };
 
