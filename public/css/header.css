@@ -54,8 +54,9 @@
 .logo img {
     width: clamp(140px, 10vw, 200px);
     height: auto;
-
     max-height: 130px;
+
+    display: block;
 
     cursor: pointer;
 
@@ -83,7 +84,6 @@
     min-width: 0;
 }
 
-
 .nav-item,
 .dropdown {
     display: flex;
@@ -95,7 +95,6 @@
 
     flex-shrink: 1;
 }
-
 
 .nav-item a,
 .dropdown > a {
@@ -116,7 +115,6 @@
 
     transition: color 0.2s ease;
 }
-
 
 .nav a:hover {
     color: var(--bleu-fonce);
@@ -150,7 +148,6 @@
     z-index: 9999;
 }
 
-
 .dropdown-menu a {
     color: var(--bleu-fonce);
 
@@ -169,17 +166,14 @@
     white-space: nowrap;
 }
 
-
 .dropdown-menu a:last-child {
     border-bottom: none;
 }
-
 
 .dropdown-menu a:hover {
     background: var(--turquoise);
     color: white;
 }
-
 
 .dropdown:hover .dropdown-menu {
     display: flex;
@@ -212,7 +206,6 @@
     align-items: center;
 }
 
-
 .socials img {
     width: clamp(20px, 1.4vw, 26px);
     height: clamp(20px, 1.4vw, 26px);
@@ -221,7 +214,6 @@
 
     transition: 0.2s ease;
 }
-
 
 .socials img:hover {
     transform: scale(1.2);
@@ -240,7 +232,6 @@
     gap: clamp(5px, 0.5vw, 8px);
 }
 
-
 .header-buttons .btn {
     display: flex;
 
@@ -249,8 +240,9 @@
 
     width: clamp(135px, 10vw, 185px);
 
-    padding: clamp(6px, 0.5vw, 9px)
-             clamp(10px, 1vw, 18px);
+    padding:
+        clamp(6px, 0.5vw, 9px)
+        clamp(10px, 1vw, 18px);
 
     border-radius: 40px;
 
@@ -270,7 +262,6 @@
 
     transition: 0.25s ease;
 }
-
 
 .header-buttons .btn:hover {
     background: white;
@@ -293,11 +284,9 @@
     flex-shrink: 0;
 }
 
-
 .gtranslate_wrapper {
     position: relative;
 }
-
 
 .gt_switcher-popup {
     background: white !important;
@@ -317,19 +306,16 @@
     transition: 0.3s ease;
 }
 
-
 .gt_switcher-popup:hover {
     background: var(--bleu-fonce) !important;
     color: white !important;
 }
-
 
 .gt_switcher-popup img {
     width: 22px !important;
 
     margin-right: 8px;
 }
-
 
 .gt_switcher-popup ul {
     border-radius: 12px !important;
@@ -339,13 +325,11 @@
     border: none !important;
 }
 
-
 .gt_switcher-popup ul li a {
     padding: 10px 15px !important;
 
     font-weight: 600;
 }
-
 
 .gt_switcher-popup ul li a:hover {
     background: var(--bleu) !important;
@@ -379,7 +363,6 @@
     flex-shrink: 0;
 }
 
-
 .burger span {
     display: block;
 
@@ -395,7 +378,7 @@
 
 
 /* =====================================================
-   TABLETTE / TRANSITION VERS MOBILE
+   TABLETTE / AJUSTEMENT HEADER
 ===================================================== */
 
 @media (max-width: 1300px) {
@@ -436,6 +419,17 @@
 
 @media (max-width: 1100px) {
 
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+
+    /* HEADER */
+
     .header {
         height: 75px;
 
@@ -444,31 +438,40 @@
         justify-content: space-between;
 
         gap: 0;
+
+        margin: 0;
+
+        z-index: 99999;
     }
 
 
-    /* -------------------------
-       LOGO
-    ------------------------- */
+    /* LOGO */
+
+    .logo {
+        height: 75px;
+
+        margin: 0;
+        padding: 0;
+    }
 
     .logo img {
         width: 145px;
         height: auto;
+
+        display: block;
+
+        margin: 0;
     }
 
 
-    /* -------------------------
-       BURGER
-    ------------------------- */
+    /* BURGER */
 
     .burger {
         display: flex;
     }
 
 
-    /* -------------------------
-       NAV
-    ------------------------- */
+    /* NAV MOBILE */
 
     .nav {
         position: fixed;
@@ -478,7 +481,9 @@
 
         width: 100%;
 
-        height: calc(100vh - 75px);
+        height: calc(100dvh - 75px);
+
+        margin: 0;
 
         background: var(--bleu);
 
@@ -501,15 +506,12 @@
         z-index: 1050;
     }
 
-
     .nav.active {
         display: flex;
     }
 
 
-    /* -------------------------
-       ITEMS
-    ------------------------- */
+    /* ITEMS */
 
     .nav-item,
     .dropdown {
@@ -521,7 +523,6 @@
 
         flex-shrink: 0;
     }
-
 
     .nav-item a,
     .dropdown > a {
@@ -545,9 +546,7 @@
     }
 
 
-    /* =================================================
-       DROPDOWNS MOBILE
-    ================================================= */
+    /* DROPDOWNS MOBILE */
 
     .dropdown-menu {
         position: static;
@@ -567,20 +566,17 @@
         flex-direction: column;
     }
 
-
-    /* Désactive hover desktop */
+    /* Désactive le hover desktop */
 
     .dropdown:hover .dropdown-menu {
         display: none;
     }
-
 
     /* Dropdown ouvert avec JavaScript */
 
     .dropdown.active .dropdown-menu {
         display: flex;
     }
-
 
     .dropdown-menu a {
         min-height: 48px;
@@ -594,7 +590,6 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-
     .dropdown-menu a:hover {
         background: var(--turquoise);
 
@@ -602,27 +597,28 @@
     }
 
 
-    /* =================================================
-       HEADER RIGHT
-    ================================================= */
+    /* CÔTÉ DROIT */
 
-    .header-right {
-        display: none;
-    }
-
-
-    .socials {
-        display: none;
-    }
-
-
+    .header-right,
+    .socials,
     .header-buttons {
         display: none;
     }
 
 
-    body {
-        margin: 0;
+    /* CORRECTION ESPACE BLANC SOUS LE HEADER */
+
+    main {
+        margin-top: 0 !important;
+        padding-top: 75px !important;
+    }
+
+    body > section:first-of-type,
+    main > section:first-child,
+    .hero,
+    .hero-section,
+    .home-hero {
+        margin-top: 0 !important;
     }
 }
 
@@ -639,29 +635,28 @@
         padding: 0 15px;
     }
 
+    .logo {
+        height: 68px;
+    }
 
     .logo img {
         width: 125px;
     }
-
 
     .burger {
         width: 32px;
         height: 24px;
     }
 
-
     .burger span {
         height: 3px;
     }
 
-
     .nav {
         top: 68px;
 
-        height: calc(100vh - 68px);
+        height: calc(100dvh - 68px);
     }
-
 
     .nav-item a,
     .dropdown > a {
@@ -672,131 +667,13 @@
         font-size: 15px;
     }
 
-
     .dropdown-menu a {
         padding-left: 40px;
 
         font-size: 13px;
     }
-}
-
-/* =====================================================
-   CORRECTION ESPACE BLANC SOUS LE HEADER - MOBILE
-===================================================== */
-
-@media (max-width: 900px) {
-
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        overflow-x: hidden;
-    }
-
-    .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 75px;
-        margin: 0;
-        padding: 0 20px;
-
-        box-sizing: border-box;
-
-        z-index: 99999;
-    }
-
-    /* Empêche un espace blanc causé par le logo */
-    .logo {
-        display: flex;
-        align-items: center;
-        height: 75px;
-        margin: 0;
-        padding: 0;
-    }
-
-    .logo img {
-        display: block;
-        width: 145px;
-        height: auto;
-        margin: 0;
-    }
-
-    /* Le contenu commence immédiatement après le header */
-    main {
-        margin-top: 0;
-        padding-top: 75px;
-    }
-
-    /* Si tes sections utilisent un espace en haut */
-    body > section:first-of-type,
-    main > section:first-child {
-        margin-top: 0;
-    }
-
-    /* Menu mobile */
-    .nav {
-        position: fixed;
-        top: 75px;
-        left: 0;
-
-        width: 100%;
-        height: calc(100dvh - 75px);
-
-        margin: 0;
-
-        background: var(--bleu);
-
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-}
-
-
-/* =====================================================
-   PETITS TÉLÉPHONES
-===================================================== */
-
-@media (max-width: 500px) {
-
-    .header {
-        height: 68px;
-        padding: 0 15px;
-    }
-
-    .logo {
-        height: 68px;
-    }
-
-    .logo img {
-        width: 125px;
-    }
 
     main {
-        padding-top: 68px;
-    }
-
-    .nav {
-        top: 68px;
-        height: calc(100dvh - 68px);
-    }
-}
-
-@media (max-width: 900px) {
-    body {
-        padding-top: 0 !important;
-    }
-
-    main {
-        margin-top: 0 !important;
-        padding-top: 75px !important;
-    }
-
-    .hero,
-    .hero-section,
-    .home-hero {
-        margin-top: 0 !important;
+        padding-top: 68px !important;
     }
 }
