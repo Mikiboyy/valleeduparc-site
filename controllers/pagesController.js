@@ -161,7 +161,7 @@ exports.evenements = async (req, res) => {
             .find()
             .sort({ date: 1 });
 
-        res.render('pages/evenements', {
+        res.render('montagne/evenements', {
             title: 'Événements',
             allEvents
         });
