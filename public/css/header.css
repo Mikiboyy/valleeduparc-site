@@ -1,25 +1,49 @@
-/* =========================
+/* =====================================================
+   RESET / BOX SIZING
+===================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
    HEADER
-========================= */
+===================================================== */
 
 .header {
-    height: 95px;
+    height: clamp(80px, 6vw, 95px);
     background: var(--bleu);
+
     display: flex;
     align-items: center;
-    padding: 0 35px;
+
+    padding: 0 clamp(15px, 2vw, 35px);
+
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100%;
-    box-sizing: border-box;
+
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    gap: 28px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+    gap: clamp(12px, 1.5vw, 28px);
 }
+
+
+/* =====================================================
+   LOGO
+===================================================== */
 
 .logo {
     flex: 0 0 auto;
+    display: flex;
+    align-items: center;
 }
 
 .logo a {
@@ -28,254 +52,404 @@
 }
 
 .logo img {
-    height: 130px;
-    width: 200px;
+    width: clamp(140px, 10vw, 200px);
+    height: auto;
+
+    max-height: 130px;
+
     cursor: pointer;
-    transition: 0.2s ease;
+
+    transition: transform 0.2s ease;
 }
 
 .logo img:hover {
     transform: scale(1.05);
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+
+/* =====================================================
+   NAVIGATION DESKTOP
+===================================================== */
 
 .nav {
     flex: 1;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 35px;
+
+    gap: clamp(12px, 1.6vw, 35px);
+
     min-width: 0;
 }
+
 
 .nav-item,
 .dropdown {
     display: flex;
     align-items: center;
-    height: 95%;
+
+    height: 100%;
+
     position: relative;
-    flex-shrink: 0;
+
+    flex-shrink: 1;
 }
+
 
 .nav-item a,
 .dropdown > a {
     display: flex;
     align-items: center;
-    height: 95px;
+
+    height: 100%;
+
     text-decoration: none;
+
     color: white;
-    font-size: 17px;
+
+    font-size: clamp(11px, 0.85vw, 17px);
+
     font-weight: 700;
+
     white-space: nowrap;
+
+    transition: color 0.2s ease;
 }
+
 
 .nav a:hover {
     color: var(--bleu-fonce);
 }
 
-/* =========================
-   DROPDOWN
-========================= */
+
+/* =====================================================
+   DROPDOWN DESKTOP
+===================================================== */
 
 .dropdown-menu {
     position: absolute;
+
     top: 100%;
     left: 0;
+
     min-width: 230px;
+
     background: white;
+
     border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
     display: none;
+
     flex-direction: column;
+
     overflow: hidden;
+
     z-index: 9999;
 }
 
+
 .dropdown-menu a {
     color: var(--bleu-fonce);
+
     padding: 14px 20px;
+
     font-size: 16px;
+
     font-weight: 600;
+
     text-decoration: none;
+
     border-bottom: 1px solid #f2f2f2;
+
     height: auto;
+
+    white-space: nowrap;
 }
+
 
 .dropdown-menu a:last-child {
     border-bottom: none;
 }
+
 
 .dropdown-menu a:hover {
     background: var(--turquoise);
     color: white;
 }
 
+
 .dropdown:hover .dropdown-menu {
     display: flex;
 }
 
-/* =========================
-   RIGHT SIDE
-========================= */
+
+/* =====================================================
+   CÔTÉ DROIT
+===================================================== */
 
 .header-right {
     flex: 0 0 auto;
+
     display: flex;
     align-items: center;
-    gap: 24px;
+
+    gap: clamp(10px, 1.3vw, 24px);
 }
+
+
+/* =====================================================
+   RÉSEAUX SOCIAUX
+===================================================== */
 
 .socials {
     display: flex;
-    gap: 12px;
+
+    gap: clamp(6px, 0.7vw, 12px);
+
     align-items: center;
 }
 
+
 .socials img {
-    width: 26px;
-    height: 26px;
+    width: clamp(20px, 1.4vw, 26px);
+    height: clamp(20px, 1.4vw, 26px);
+
     opacity: 0.85;
-    transition: 0.2s;
+
+    transition: 0.2s ease;
 }
+
 
 .socials img:hover {
     transform: scale(1.2);
     opacity: 1;
 }
 
+
+/* =====================================================
+   BOUTONS
+===================================================== */
+
 .header-buttons {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+
+    gap: clamp(5px, 0.5vw, 8px);
 }
+
 
 .header-buttons .btn {
     display: flex;
+
     align-items: center;
     justify-content: center;
-    min-width: 185px;
-    padding: 9px 18px;
+
+    width: clamp(135px, 10vw, 185px);
+
+    padding: clamp(6px, 0.5vw, 9px)
+             clamp(10px, 1vw, 18px);
+
     border-radius: 40px;
+
     background: var(--bleu-fonce);
+
     color: white;
+
     text-decoration: none;
+
     font-weight: 800;
-    font-size: 14px;
+
+    font-size: clamp(10px, 0.75vw, 14px);
+
     line-height: 1;
+
+    white-space: nowrap;
+
     transition: 0.25s ease;
 }
+
 
 .header-buttons .btn:hover {
     background: white;
     color: var(--bleu-fonce);
 }
 
-/* =========================
-   TRADUCTION HEADER
-========================= */
+
+/* =====================================================
+   TRADUCTION
+===================================================== */
 
 .language-switcher {
     display: flex;
     align-items: center;
-    margin: 0 15px;
+
+    margin: 0 clamp(5px, 1vw, 15px);
+
     position: relative;
+
+    flex-shrink: 0;
 }
+
 
 .gtranslate_wrapper {
     position: relative;
 }
 
+
 .gt_switcher-popup {
     background: white !important;
+
     border-radius: 30px !important;
+
     padding: 10px 18px !important;
+
     border: none !important;
+
     box-shadow: none !important;
+
     font-weight: 700 !important;
+
     color: var(--bleu-fonce) !important;
+
     transition: 0.3s ease;
 }
+
 
 .gt_switcher-popup:hover {
     background: var(--bleu-fonce) !important;
     color: white !important;
 }
 
+
 .gt_switcher-popup img {
     width: 22px !important;
+
     margin-right: 8px;
 }
 
+
 .gt_switcher-popup ul {
     border-radius: 12px !important;
+
     overflow: hidden;
+
     border: none !important;
 }
 
+
 .gt_switcher-popup ul li a {
     padding: 10px 15px !important;
+
     font-weight: 600;
 }
+
 
 .gt_switcher-popup ul li a:hover {
     background: var(--bleu) !important;
     color: white !important;
 }
 
+
 /* =====================================================
-   RESPONSIVE - TABLETTE
+   BURGER
 ===================================================== */
 
-@media (max-width: 1200px) {
+.burger {
+    display: none;
+
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 38px;
+    height: 28px;
+
+    background: transparent;
+
+    border: none;
+
+    padding: 0;
+
+    cursor: pointer;
+
+    z-index: 1100;
+
+    flex-shrink: 0;
+}
+
+
+.burger span {
+    display: block;
+
+    width: 100%;
+    height: 4px;
+
+    background: white;
+
+    border-radius: 5px;
+
+    transition: 0.3s ease;
+}
+
+
+/* =====================================================
+   TABLETTE / TRANSITION VERS MOBILE
+===================================================== */
+
+@media (max-width: 1300px) {
 
     .header {
+        gap: 12px;
         padding: 0 20px;
-        gap: 15px;
     }
 
     .nav {
-        gap: 18px;
+        gap: 14px;
     }
 
     .nav-item a,
     .dropdown > a {
-        font-size: 14px;
-    }
-
-    .header-right {
-        gap: 12px;
+        font-size: 13px;
     }
 
     .header-buttons .btn {
-        min-width: 150px;
-        font-size: 12px;
-        padding: 8px 12px;
+        width: 145px;
+        font-size: 11px;
     }
 
-    .logo img {
-        width: 160px;
-        height: auto;
+    .socials {
+        gap: 8px;
+    }
+
+    .socials img {
+        width: 22px;
+        height: 22px;
     }
 }
 
 
 /* =====================================================
-   MOBILE
+   MENU MOBILE
 ===================================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
 
     .header {
         height: 75px;
+
         padding: 0 20px;
+
         justify-content: space-between;
+
         gap: 0;
     }
 
-    /* LOGO */
+
+    /* -------------------------
+       LOGO
+    ------------------------- */
 
     .logo img {
         width: 145px;
@@ -283,42 +457,18 @@
     }
 
 
-    /* ================================================
+    /* -------------------------
        BURGER
-    ================================================ */
+    ------------------------- */
 
     .burger {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        width: 38px;
-        height: 28px;
-
-        background: none;
-        border: none;
-        padding: 0;
-
-        cursor: pointer;
-        z-index: 1100;
-    }
-
-    .burger span {
-        display: block;
-
-        width: 100%;
-        height: 4px;
-
-        background: white;
-        border-radius: 5px;
-
-        transition: 0.3s ease;
     }
 
 
-    /* ================================================
-       MENU MOBILE
-    ================================================ */
+    /* -------------------------
+       NAV
+    ------------------------- */
 
     .nav {
         position: fixed;
@@ -327,6 +477,7 @@
         left: 0;
 
         width: 100%;
+
         height: calc(100vh - 75px);
 
         background: var(--bleu);
@@ -334,6 +485,7 @@
         display: none;
 
         flex-direction: column;
+
         align-items: stretch;
 
         justify-content: flex-start;
@@ -344,34 +496,37 @@
 
         overflow-y: auto;
 
+        -webkit-overflow-scrolling: touch;
+
         z-index: 1050;
     }
 
-
-    /* MENU OUVERT */
 
     .nav.active {
         display: flex;
     }
 
 
-    /* ================================================
+    /* -------------------------
        ITEMS
-    ================================================ */
+    ------------------------- */
 
     .nav-item,
     .dropdown {
         width: 100%;
+
         height: auto;
 
         display: block;
+
+        flex-shrink: 0;
     }
 
 
     .nav-item a,
     .dropdown > a {
-
         width: 100%;
+
         height: auto;
 
         min-height: 55px;
@@ -379,6 +534,7 @@
         padding: 15px 25px;
 
         display: flex;
+
         align-items: center;
 
         justify-content: space-between;
@@ -389,12 +545,11 @@
     }
 
 
-    /* ================================================
-       DROPDOWNS
-    ================================================ */
+    /* =================================================
+       DROPDOWNS MOBILE
+    ================================================= */
 
     .dropdown-menu {
-
         position: static;
 
         width: 100%;
@@ -408,13 +563,19 @@
         box-shadow: none;
 
         display: none;
+
+        flex-direction: column;
     }
 
+
+    /* Désactive hover desktop */
 
     .dropdown:hover .dropdown-menu {
         display: none;
     }
 
+
+    /* Dropdown ouvert avec JavaScript */
 
     .dropdown.active .dropdown-menu {
         display: flex;
@@ -422,7 +583,6 @@
 
 
     .dropdown-menu a {
-
         min-height: 48px;
 
         padding: 12px 45px;
@@ -431,41 +591,38 @@
 
         font-size: 14px;
 
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
 
     .dropdown-menu a:hover {
         background: var(--turquoise);
+
         color: white;
     }
 
 
-    /* ================================================
-       CÔTÉ DROIT
-    ================================================ */
+    /* =================================================
+       HEADER RIGHT
+    ================================================= */
 
     .header-right {
-
-        display: flex;
-
-        gap: 10px;
-
-        margin-left: auto;
+        display: none;
     }
 
-
-    /* réseaux sociaux */
 
     .socials {
         display: none;
     }
 
 
-    /* boutons desktop */
-
     .header-buttons {
         display: none;
+    }
+
+
+    body {
+        margin: 0;
     }
 }
 
@@ -478,79 +635,47 @@
 
     .header {
         height: 68px;
+
         padding: 0 15px;
     }
+
 
     .logo img {
         width: 125px;
     }
+
 
     .burger {
         width: 32px;
         height: 24px;
     }
 
+
     .burger span {
         height: 3px;
     }
 
+
     .nav {
         top: 68px;
+
         height: calc(100vh - 68px);
     }
+
 
     .nav-item a,
     .dropdown > a {
         min-height: 50px;
+
         padding: 14px 20px;
+
         font-size: 15px;
     }
 
+
     .dropdown-menu a {
         padding-left: 40px;
+
         font-size: 13px;
-    }
-}
-
-
-/* =====================================================
-   BURGER CACHÉ SUR DESKTOP
-===================================================== */
-
-.burger {
-    display: none;
-}
-
-@media (max-width: 900px) {
-    .burger {
-        display: flex;
-    }
-}
-
-/* =========================
-   CORRECTION MOBILE HEADER
-========================= */
-
-@media (max-width: 900px) {
-
-    .header {
-        height: 75px;
-        box-sizing: border-box;
-        overflow: visible;
-    }
-
-    .logo img {
-        display: block;
-    }
-
-    body {
-        margin: 0;
-    }
-}
-
-@media (max-width: 500px) {
-
-    .header {
-        height: 68px;
     }
 }
