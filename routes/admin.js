@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
+
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('../config/cloudinary');
 
 const Admin = require('../models/Admin');
 const Event = require('../models/Event');
@@ -20,31 +23,30 @@ const {
 
 
 /* =========================================================
-   MULTER
+   MULTER + CLOUDINARY
 ========================================================= */
 
-const storage = multer.diskStorage({
+const storage = new CloudinaryStorage({
 
-    destination: './public/uploads',
+    cloudinary: cloudinary,
 
-    filename: (req, file, cb) => {
+    params: {
 
-        const extension = file.originalname.split('.').pop();
+        folder: 'valleeduparc',
 
-        const filename =
-            Date.now() +
-            '-' +
-            Math.round(Math.random() * 1E9) +
-            '.' +
-            extension;
+        allowed_formats: [
+            'jpg',
+            'jpeg',
+            'png',
+            'webp'
+        ]
 
-        cb(null, filename);
     }
 
 });
 
 const upload = multer({
-    storage
+    storage: storage
 });
 
 
@@ -326,16 +328,14 @@ router.post(
 
                 image:
                     req.file
-                        ? req.file.filename
+                        ? req.file.path
                         : null
 
             });
 
-
             res.redirect(
                 '/admin-vdp/events'
             );
-
 
         } catch (error) {
 
@@ -1064,19 +1064,17 @@ router.post(
 
                 image:
                     req.file
-                        ? req.file.filename
-                        : 'default-job.jpg',
+                        ? req.file.path
+                        : null,
 
                 isActive:
                     req.body.isActive === 'on'
 
             });
 
-
             res.redirect(
                 '/admin-vdp/jobs'
             );
-
 
         } catch (error) {
 

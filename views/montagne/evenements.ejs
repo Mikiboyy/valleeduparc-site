@@ -57,10 +57,10 @@
                          data-title="<%= event.title %>"
                          data-date="<%= new Date(event.date).toLocaleDateString('fr-CA') %>"
                          data-description="<%= event.description || '' %>"
-                         data-image="/uploads/<%= event.image || 'default.jpg' %>">
+                         data-image="<%= event.image || '/uploads/default.jpg' %>">
 
                         <div class="event-image">
-                            <img src="/uploads/<%= event.image || 'default.jpg' %>" alt="<%= event.title %>">
+                            <img src="<%= event.image || '/uploads/default.jpg' %>" alt="<%= event.title %>">
                         </div>
 
                         <div class="event-content">
@@ -359,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const eventImage =
                     escapeHtml(
-                        event.image || "default.jpg"
+                        event.image || "/uploads/default.jpg"
                     );
 
 
@@ -375,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         data-description="${eventDescription}"
 
-                        data-image="/uploads/${eventImage}">
+                        data-image="${eventImage}">
 
                         ${eventTitle}
 
