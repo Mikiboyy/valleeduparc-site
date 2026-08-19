@@ -1064,42 +1064,27 @@ router.post(
 
             await Job.create({
 
-                title:
-                    req.body.title,
-
-                department:
-                    req.body.department,
-
-                summary:
-                    req.body.summary,
+                title: req.body.title,
+                department: req.body.department,
+                summary: req.body.summary,
 
                 image:
                     req.file
                         ? req.file.path
-                        : null,
-
-                isActive:
-                    req.body.isActive === 'on'
+                        : null
 
             });
 
-            res.redirect(
-                '/admin-vdp/jobs'
-            );
+            res.redirect('/admin-vdp/jobs');
 
         } catch (error) {
 
-            console.error(
-                'Erreur création poste :',
-                error
-            );
+            console.error('Erreur création emploi :', error);
 
             res.status(500).send(
-                'Erreur lors de la création du poste.'
+                'Erreur lors de la création de l’emploi.'
             );
-
         }
-
     }
 );
 
