@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const path = require('path');
+const fs = require('fs');
+
 const cloudinary = require('../config/cloudinary');
 
 const Admin = require('../models/Admin');
@@ -26,27 +28,24 @@ const {
    MULTER + CLOUDINARY
 ========================================================= */
 
-const storage = new CloudinaryStorage({
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads/');
+    },
 
-    cloudinary: cloudinary,
+    filename: (req, file, cb) => {
+        const uniqueName =
+            Date.now() + '-' + Math.round(Math.random() * 1E9);
 
-    params: {
-
-        folder: 'valleeduparc',
-
-        allowed_formats: [
-            'jpg',
-            'jpeg',
-            'png',
-            'webp'
-        ]
-
+        cb(
+            null,
+            uniqueName + path.extname(file.originalname)
+        );
     }
-
 });
 
 const upload = multer({
-    storage: storage
+    storage
 });
 
 
@@ -316,6 +315,23 @@ router.post(
 
         try {
 
+            let imageUrl = null;
+
+            if (req.file) {
+
+                const result = await cloudinary.uploader.upload(
+                    req.file.path,
+                    {
+                        folder: 'valleeduparc/events'
+                    }
+                );
+
+                imageUrl = result.secure_url;
+
+                // Supprime le fichier temporaire du serveur
+                fs.unlinkSync(req.file.path);
+            }
+
             await Event.create({
 
                 title: req.body.title,
@@ -326,16 +342,11 @@ router.post(
 
                 location: req.body.location,
 
-                image:
-                    req.file
-                        ? req.file.path
-                        : null
+                image: imageUrl
 
             });
 
-            res.redirect(
-                '/admin-vdp/events'
-            );
+            res.redirect('/admin-vdp/events');
 
         } catch (error) {
 
