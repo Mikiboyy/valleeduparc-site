@@ -51,11 +51,6 @@ app.use(expressLayouts);
 /* Tous les fichiers dans /public */
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(
-    '/uploads',
-    express.static(path.join(__dirname, 'public', 'uploads'))
-);
-
 
 /* =========================
    BODY PARSER
