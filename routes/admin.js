@@ -1068,10 +1068,7 @@ router.post(
                 department: req.body.department,
                 summary: req.body.summary,
 
-                image:
-                    req.file
-                        ? req.file.path
-                        : null
+                image: req.file ? req.file.path : null
 
             });
 
@@ -1079,12 +1076,17 @@ router.post(
 
         } catch (error) {
 
-            console.error('Erreur création emploi :', error);
+            console.error(
+                'Erreur création emploi :',
+                error
+            );
 
             res.status(500).send(
                 'Erreur lors de la création de l’emploi.'
             );
+
         }
+
     }
 );
 
