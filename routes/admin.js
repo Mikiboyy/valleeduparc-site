@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 const cloudinary = require('../config/cloudinary');
+const { v2: cloudinary } = require('cloudinary');
 
 const Admin = require('../models/Admin');
 const Event = require('../models/Event');
@@ -1062,13 +1063,28 @@ router.post(
 
         try {
 
+            let imageUrl = null;
+
+            // Si une image a été envoyée
+            if (req.file) {
+
+                const result = await cloudinary.uploader.upload(
+                    req.file.path,
+                    {
+                        folder: 'valleeduparc/jobs'
+                    }
+                );
+
+                imageUrl = result.secure_url;
+            }
+
             await Job.create({
 
                 title: req.body.title,
                 department: req.body.department,
                 summary: req.body.summary,
 
-                image: req.file ? req.file.path : null
+                image: imageUrl
 
             });
 
@@ -1090,7 +1106,6 @@ router.post(
     }
 );
 
-
 /*
    Modification d'un poste
 */
@@ -1098,29 +1113,43 @@ router.post(
 router.post(
     '/jobs/:id',
     requireRole('carriere'),
+    upload.single('image'),
     async (req, res) => {
 
         try {
+
+            const updateData = {
+
+                title: req.body.title,
+
+                department: req.body.department,
+
+                summary: req.body.summary,
+
+                isActive: req.body.isActive === 'on'
+
+            };
+
+
+            // Si une nouvelle image est envoyée
+            if (req.file) {
+
+                const result = await cloudinary.uploader.upload(
+                    req.file.path,
+                    {
+                        folder: 'valleeduparc/jobs'
+                    }
+                );
+
+                updateData.image = result.secure_url;
+            }
+
 
             await Job.findByIdAndUpdate(
 
                 req.params.id,
 
-                {
-
-                    title:
-                        req.body.title,
-
-                    department:
-                        req.body.department,
-
-                    summary:
-                        req.body.summary,
-
-                    isActive:
-                        req.body.isActive === 'on'
-
-                }
+                updateData
 
             );
 
