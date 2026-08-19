@@ -6,7 +6,6 @@ const path = require('path');
 const fs = require('fs');
 
 const cloudinary = require('../config/cloudinary');
-const { v2: cloudinary } = require('cloudinary');
 
 const Admin = require('../models/Admin');
 const Event = require('../models/Event');
