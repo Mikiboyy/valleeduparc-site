@@ -411,3 +411,550 @@
         font-size: 1.9rem;
     }
 }
+
+/* =========================================
+   FAQ - DEMANDE DE CRÉDIT MALADIE
+========================================= */
+
+/* -----------------------------------------
+   ONGLETS FAQ
+----------------------------------------- */
+
+.faq-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+/* Bouton crédit maladie centré sous les 3 autres */
+
+.faq-tab[data-target="credit-maladie"] {
+    grid-column: 2;
+}
+
+
+/* -----------------------------------------
+   SECTION CRÉDIT MALADIE
+----------------------------------------- */
+
+#credit-maladie {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+/* -----------------------------------------
+   BLOC PRINCIPAL
+----------------------------------------- */
+
+.credit-maladie-content {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 40px;
+    margin-top: 20px;
+    box-shadow: 0 8px 30px rgba(25, 48, 82, 0.12);
+    border-top: 5px solid var(--turquoise);
+}
+
+
+/* -----------------------------------------
+   TITRE
+----------------------------------------- */
+
+.credit-maladie-title {
+    background: var(--bleu-fonce);
+    color: white;
+    padding: 18px 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+}
+
+
+/* -----------------------------------------
+   TEXTE INTRODUCTION
+----------------------------------------- */
+
+.credit-maladie-intro {
+    margin-bottom: 30px;
+}
+
+.credit-maladie-intro p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--bleu-fonce);
+    margin-bottom: 12px;
+}
+
+
+/* -----------------------------------------
+   SOUS-TITRES
+----------------------------------------- */
+
+.credit-maladie-content h3 {
+    color: var(--bleu-fonce);
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+
+/* -----------------------------------------
+   LISTES
+----------------------------------------- */
+
+.credit-maladie-content ul {
+    padding-left: 25px;
+    margin-bottom: 30px;
+}
+
+.credit-maladie-content li {
+    color: #43546d;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 7px;
+}
+
+
+/* =========================================
+   TABLEAU DE CRÉDIT
+========================================= */
+
+.credit-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 30px 0 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.credit-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+    background: white;
+}
+
+.credit-table thead {
+    background: var(--bleu-fonce);
+    color: white;
+}
+
+.credit-table th {
+    padding: 16px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.credit-table td {
+    padding: 14px 16px;
+    text-align: center;
+    border-bottom: 1px solid #e5e9f0;
+    color: #3d4b60;
+    font-size: 15px;
+}
+
+.credit-table tbody tr {
+    transition: 0.2s ease;
+}
+
+.credit-table tbody tr:hover {
+    background: rgba(0, 173, 181, 0.06);
+}
+
+.credit-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Première colonne */
+
+.credit-table td:first-child {
+    font-weight: 600;
+    color: var(--bleu-fonce);
+}
+
+
+/* Dernière ligne */
+
+.credit-table .no-credit {
+    font-weight: 700;
+    color: var(--bleu-fonce);
+}
+
+
+/* =========================================
+   FORMULAIRE
+========================================= */
+
+.credit-form {
+    margin-top: 40px;
+    padding: 35px;
+    background: #f7f9fc;
+    border-radius: 16px;
+    border: 1px solid #e3e8ef;
+}
+
+
+/* Titre formulaire */
+
+.credit-form-title {
+    color: var(--bleu-fonce);
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+
+/* -----------------------------------------
+   GRILLE FORMULAIRE
+----------------------------------------- */
+
+.credit-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+
+/* Champ pleine largeur */
+
+.credit-form-full {
+    grid-column: 1 / -1;
+}
+
+
+/* -----------------------------------------
+   LABELS
+----------------------------------------- */
+
+.credit-form label {
+    display: block;
+    color: var(--bleu-fonce);
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+
+/* -----------------------------------------
+   INPUTS
+----------------------------------------- */
+
+.credit-form input[type="text"],
+.credit-form input[type="email"],
+.credit-form input[type="tel"],
+.credit-form textarea,
+.credit-form select {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 14px 15px;
+
+    border: 1px solid #ccd5e0;
+    border-radius: 8px;
+
+    background: white;
+
+    color: var(--bleu-fonce);
+
+    font-size: 15px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.credit-form input:focus,
+.credit-form textarea:focus,
+.credit-form select:focus {
+    outline: none;
+
+    border-color: var(--turquoise);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 173, 181, 0.12);
+}
+
+
+/* -----------------------------------------
+   TEXTAREA
+----------------------------------------- */
+
+.credit-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+
+/* =========================================
+   CASES À COCHER
+========================================= */
+
+.credit-checkbox-section {
+    margin: 30px 0;
+}
+
+.credit-checkbox-section > label:first-child {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+
+/* Chaque choix */
+
+.credit-checkbox {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px 15px;
+
+    background: white;
+
+    border: 1px solid #e0e6ee;
+
+    border-radius: 8px;
+
+    margin-bottom: 10px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.credit-checkbox:hover {
+    background: rgba(0, 173, 181, 0.05);
+    border-color: var(--turquoise);
+}
+
+.credit-checkbox input {
+    width: 18px;
+    height: 18px;
+
+    accent-color: var(--turquoise);
+
+    cursor: pointer;
+}
+
+.credit-checkbox span {
+    color: var(--bleu-fonce);
+    font-size: 15px;
+}
+
+
+/* =========================================
+   OPTIONS CRÉDIT / REMBOURSEMENT
+========================================= */
+
+.credit-options {
+    margin: 30px 0;
+}
+
+.credit-option {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    background: white;
+
+    border-radius: 8px;
+
+    border: 1px solid #e0e6ee;
+
+    margin-bottom: 10px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.credit-option:hover {
+    border-color: var(--turquoise);
+    background: rgba(0, 173, 181, 0.05);
+}
+
+.credit-option input {
+    margin-top: 3px;
+
+    width: 18px;
+    height: 18px;
+
+    accent-color: var(--turquoise);
+}
+
+.credit-option span {
+    color: var(--bleu-fonce);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   IMPORTANT
+========================================= */
+
+.credit-important {
+    margin: 30px 0;
+
+    padding: 25px;
+
+    background: rgba(0, 173, 181, 0.08);
+
+    border-left: 5px solid var(--turquoise);
+
+    border-radius: 10px;
+}
+
+.credit-important h3 {
+    margin-top: 0;
+}
+
+.credit-important ul {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   FICHIER MÉDICAL
+========================================= */
+
+.credit-file-section {
+    margin-top: 30px;
+}
+
+.credit-form input[type="file"] {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px;
+
+    background: white;
+
+    border: 1px dashed #b9c5d4;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   BOUTON ENVOYER
+========================================= */
+
+.credit-form button[type="submit"] {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 30px;
+
+    padding: 16px 25px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--bleu-fonce);
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.credit-form button[type="submit"]:hover {
+    background: var(--turquoise);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 173, 181, 0.25);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    /* Onglets */
+
+    .faq-tabs {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .faq-tab[data-target="credit-maladie"] {
+        grid-column: auto;
+    }
+
+
+    /* Contenu */
+
+    .credit-maladie-content {
+        padding: 25px 18px;
+        border-radius: 12px;
+    }
+
+    .credit-maladie-title {
+        font-size: 18px;
+        padding: 15px;
+    }
+
+    .credit-maladie-intro p {
+        font-size: 14px;
+    }
+
+
+    /* Formulaire */
+
+    .credit-form {
+        padding: 20px 15px;
+    }
+
+    .credit-form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .credit-form-title {
+        font-size: 19px;
+    }
+
+
+    /* Tableau */
+
+    .credit-table th,
+    .credit-table td {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+}
