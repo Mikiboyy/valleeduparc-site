@@ -582,6 +582,10 @@
     border-left: 5px solid var(--turquoise);
     color: var(--bleu-fonce);
     line-height: 1.6;
+
+    /* Permet de scroller dans la carte */
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 .subscription-info h3 {
@@ -612,7 +616,27 @@
 }
 
 
-/* MOBILE */
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+.subscription-info::-webkit-scrollbar {
+    width: 8px;
+}
+
+.subscription-info::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.subscription-info::-webkit-scrollbar-thumb {
+    background: var(--turquoise);
+    border-radius: 10px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
 
 @media (max-width: 600px) {
 
@@ -620,6 +644,15 @@
         padding: 20px;
         margin: 0 10px 20px;
         font-size: 14px;
+
+        /* Hauteur maximale plus petite sur mobile */
+        max-height: 500px;
+
+        /* Scroll vertical */
+        overflow-y: auto;
+
+        /* Scroll plus fluide sur iPhone */
+        -webkit-overflow-scrolling: touch;
     }
 
     .subscription-info h3 {
