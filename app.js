@@ -67,21 +67,29 @@ app.use(express.json());
    SESSION
 ========================= */
 
+app.set('trust proxy', 1);
+
 app.use(session({
 
-    secret: process.env.SESSION_SECRET || 'fallback_secret',
+    secret: process.env.SESSION_SECRET,
 
     resave: false,
 
     saveUninitialized: false,
 
     cookie: {
+
         httpOnly: true,
-        secure: false
+
+        secure: process.env.NODE_ENV === 'production',
+
+        sameSite: 'lax',
+
+        maxAge: 1000 * 60 * 60 * 4
+
     }
 
 }));
-
 
 /* =========================
    GLOBAL VARIABLES

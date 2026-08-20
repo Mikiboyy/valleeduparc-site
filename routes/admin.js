@@ -23,6 +23,14 @@ const {
     canAccess
 } = require('../middleware/adminAuth');
 
+const rateLimit = require('express-rate-limit');
+
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: 'Trop de tentatives. Réessayez plus tard.'
+});
+
 
 /* =========================================================
    MULTER + CLOUDINARY
@@ -68,7 +76,7 @@ router.get('/login', (req, res) => {
 });
 
 
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
 
     try {
 
@@ -84,13 +92,11 @@ router.post('/login', async (req, res) => {
 
         }
 
-
         /* Recherche de l'utilisateur */
 
         const admin = await Admin.findOne({
             username: username.trim()
         });
-
 
         if (!admin) {
 
@@ -105,42 +111,28 @@ router.post('/login', async (req, res) => {
 
         }
 
-
         /* Vérification du compte */
 
         if (admin.isActive === false) {
-
-            console.log(
-                'Compte désactivé :',
-                username
-            );
 
             return res.redirect(
                 '/admin-vdp/login?error=1'
             );
 
         }
-
 
         /* Vérification du mot de passe */
 
         const validPassword =
             await admin.comparePassword(password);
 
-
         if (!validPassword) {
-
-            console.log(
-                'Mot de passe incorrect pour :',
-                username
-            );
 
             return res.redirect(
                 '/admin-vdp/login?error=1'
             );
 
         }
-
 
         /* Création de la session */
 
@@ -154,17 +146,7 @@ router.post('/login', async (req, res) => {
 
         };
 
-
-        console.log(
-            'Connexion réussie :',
-            admin.username,
-            '- rôle :',
-            admin.role
-        );
-
-
         res.redirect('/admin-vdp');
-
 
     } catch (error) {
 
