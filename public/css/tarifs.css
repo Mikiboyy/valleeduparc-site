@@ -632,3 +632,204 @@
         margin-left: 10px;
     }
 }
+
+/* =========================================
+   INFORMATIONS SUPPLÉMENTAIRES
+========================================= */
+
+.additional-info-section {
+    padding: 50px 20px 70px;
+    background: #f4f5f7;
+}
+
+.additional-info-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* TITRE */
+
+.additional-info-container > h2 {
+    background: linear-gradient(
+        135deg,
+        #2697ba,
+        #2183a5
+    );
+
+    color: white;
+
+    text-align: center;
+
+    font-size: 28px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    padding: 12px 20px;
+
+    margin: 0;
+
+    border-radius: 10px 10px 0 0;
+}
+
+
+/* ONGLET */
+
+.additional-info-tabs {
+    display: flex;
+
+    background: white;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+.additional-info-tab {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    padding: 22px;
+
+    border: none;
+
+    background: #ffffff;
+
+    color: #28384f;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    cursor: default;
+}
+
+
+.additional-info-icon {
+    font-size: 30px;
+
+    line-height: 1;
+}
+
+
+/* CONTENU */
+
+.additional-info-content {
+    background: white;
+
+    padding: 45px 50px 50px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+
+.additional-info-content h3 {
+    text-align: center;
+
+    color: #28384f;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin:
+        0
+        0
+        30px;
+}
+
+
+.additional-info-content ul {
+    margin: 0;
+
+    padding-left: 25px;
+
+    color: #4d5560;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+}
+
+
+.additional-info-content li {
+    margin-bottom: 7px;
+}
+
+
+.additional-info-content strong {
+    color: #28384f;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .additional-info-section {
+        padding:
+            30px
+            15px
+            50px;
+    }
+
+
+    .additional-info-container > h2 {
+        font-size: 20px;
+
+        padding: 13px 10px;
+    }
+
+
+    .additional-info-tab {
+        padding: 18px 10px;
+
+        font-size: 15px;
+
+        gap: 10px;
+    }
+
+
+    .additional-info-icon {
+        font-size: 24px;
+    }
+
+
+    .additional-info-content {
+        padding:
+            30px
+            20px;
+    }
+
+
+    .additional-info-content h3 {
+        font-size: 24px;
+
+        margin-bottom: 25px;
+    }
+
+
+    .additional-info-content ul {
+        padding-left: 20px;
+
+        font-size: 15px;
+
+        line-height: 1.6;
+    }
+
+
+    .additional-info-content li {
+        margin-bottom: 10px;
+    }
+
+}
