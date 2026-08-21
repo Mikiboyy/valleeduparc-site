@@ -10,10 +10,13 @@ const fs = require('fs');
 
 const upload = multer({
     dest: 'uploads/candidatures/',
+
     limits: {
-        fileSize: 5 * 1024 * 1024 // 5 MB max par fichier
+        fileSize: 5 * 1024 * 1024
     },
+
     fileFilter: (req, file, cb) => {
+
         const allowedTypes = [
             'application/pdf',
             'application/msword',
@@ -23,13 +26,18 @@ const upload = multer({
         if (allowedTypes.includes(file.mimetype)) {
             cb(null, true);
         } else {
-            cb(new Error('Format de fichier non accepté'));
+            cb(
+                new Error('Format de fichier non accepté')
+            );
         }
+
     }
 });
 
+
 /* =========================
    CONFIGURATION SMTP
+   MAILERSEND
 ========================= */
 
 const transporter = nodemailer.createTransport({
@@ -54,17 +62,30 @@ const transporter = nodemailer.createTransport({
     socketTimeout: 30000
 
 });
+
+
 /* =========================
    POSTULER
 ========================= */
 
 router.post(
     '/',
+
     upload.fields([
-        { name: 'cv', maxCount: 1 },
-        { name: 'lettre', maxCount: 1 }
+        {
+            name: 'cv',
+            maxCount: 1
+        },
+        {
+            name: 'lettre',
+            maxCount: 1
+        }
     ]),
+
     async (req, res) => {
+
+        const cv = req.files?.cv?.[0];
+        const lettre = req.files?.lettre?.[0];
 
         try {
 
@@ -77,25 +98,27 @@ router.post(
                 message
             } = req.body;
 
-            const cv = req.files?.cv?.[0];
-            const lettre = req.files?.lettre?.[0];
 
-            const transporter = nodemailer.createTransport({
+            /* =========================
+               VALIDATION
+            ========================= */
 
-                host: process.env.SMTP_HOST,
-                port: Number(process.env.SMTP_PORT),
-                secure: false,
+            if (
+                !prenom ||
+                !nom ||
+                !email
+            ) {
 
-                auth: {
-                    user: process.env.SMTP_USER,
-                    pass: process.env.SMTP_PASS
-                },
+                throw new Error(
+                    'Informations obligatoires manquantes'
+                );
 
-                tls: {
-                    rejectUnauthorized: false
-                }
+            }
 
-            });
+
+            /* =========================
+               COURRIEL À VALLÉE DU PARC
+            ========================= */
 
             await transporter.sendMail({
 
@@ -108,24 +131,48 @@ router.post(
                 subject: `Nouvelle candidature - ${prenom} ${nom}`,
 
                 html: `
+
                     <h2>Nouvelle candidature reçue</h2>
 
                     <hr>
 
-                    <p><strong>Prénom :</strong> ${prenom}</p>
-                    <p><strong>Nom :</strong> ${nom}</p>
-                    <p><strong>Courriel :</strong> ${email}</p>
-                    <p><strong>Téléphone :</strong> ${telephone}</p>
+                    <p>
+                        <strong>Prénom :</strong>
+                        ${prenom}
+                    </p>
+
+                    <p>
+                        <strong>Nom :</strong>
+                        ${nom}
+                    </p>
+
+                    <p>
+                        <strong>Courriel :</strong>
+                        ${email}
+                    </p>
+
+                    <p>
+                        <strong>Téléphone :</strong>
+                        ${telephone || 'Non précisé'}
+                    </p>
 
                     <hr>
 
-                    <p><strong>Poste :</strong> ${poste || 'Non précisé'}</p>
+                    <p>
+                        <strong>Poste :</strong>
+                        ${poste || 'Non précisé'}
+                    </p>
 
                     <h3>Message</h3>
-                    <p>${message || 'Aucun message'}</p>
+
+                    <p>
+                        ${message || 'Aucun message'}
+                    </p>
+
                 `,
 
                 attachments: [
+
                     ...(cv ? [{
                         filename: cv.originalname,
                         path: cv.path
@@ -135,25 +182,155 @@ router.post(
                         filename: lettre.originalname,
                         path: lettre.path
                     }] : [])
+
                 ]
 
             });
 
-            // Supprime les fichiers temporaires après l'envoi
-            if (cv) fs.unlinkSync(cv.path);
-            if (lettre) fs.unlinkSync(lettre.path);
 
-            res.redirect('/carrieres?success=1');
+            /* =========================
+               CONFIRMATION AU CANDIDAT
+            ========================= */
+
+            await transporter.sendMail({
+
+                from: `"Vallée du Parc" <${process.env.SMTP_USER}>`,
+
+                to: email,
+
+                subject: 'Confirmation de réception de votre candidature',
+
+                html: `
+
+                    <h2>Bonjour ${prenom},</h2>
+
+                    <p>
+                        Nous avons bien reçu votre candidature
+                        et nous vous remercions de votre intérêt
+                        envers Vallée du Parc.
+                    </p>
+
+                    <p>
+                        Votre candidature a été transmise
+                        à notre équipe.
+                    </p>
+
+                    <p>
+                        Si votre profil correspond aux besoins
+                        du poste, nous communiquerons avec vous.
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Merci,
+                    </p>
+
+                    <p>
+                        <strong>
+                            L'équipe de Vallée du Parc
+                        </strong>
+                    </p>
+
+                `
+
+            });
+
+
+            /* =========================
+               SUPPRESSION DES FICHIERS
+            ========================= */
+
+            if (cv && fs.existsSync(cv.path)) {
+
+                fs.unlinkSync(cv.path);
+
+            }
+
+            if (
+                lettre &&
+                fs.existsSync(lettre.path)
+            ) {
+
+                fs.unlinkSync(lettre.path);
+
+            }
+
+
+            /* =========================
+               REDIRECTION SUCCÈS
+            ========================= */
+
+            res.redirect(
+                '/carrieres?success=1'
+            );
+
 
         } catch (error) {
 
-            console.error('Erreur formulaire carrières :', error);
+            console.error(
+                'Erreur formulaire carrières :',
+                error
+            );
 
-            res.redirect('/carrieres?error=1');
+
+            /* =========================
+               SUPPRESSION DES FICHIERS
+               EN CAS D'ERREUR
+            ========================= */
+
+            if (
+                cv &&
+                fs.existsSync(cv.path)
+            ) {
+
+                fs.unlinkSync(cv.path);
+
+            }
+
+            if (
+                lettre &&
+                fs.existsSync(lettre.path)
+            ) {
+
+                fs.unlinkSync(lettre.path);
+
+            }
+
+
+            res.redirect(
+                '/carrieres?error=1'
+            );
 
         }
 
     }
+
 );
+
+
+/* =========================
+   GESTION ERREURS MULTER
+========================= */
+
+router.use((error, req, res, next) => {
+
+    if (error) {
+
+        console.error(
+            'Erreur upload carrière :',
+            error.message
+        );
+
+        return res.redirect(
+            '/carrieres?error=1'
+        );
+
+    }
+
+    next();
+
+});
+
 
 module.exports = router;
