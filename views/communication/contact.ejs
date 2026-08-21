@@ -99,18 +99,38 @@
                     Écrivez-nous
                 </h2>
 
-                <form action="/contact" method="POST" class="contact-form">
+                <% if (success) { %>
 
-                    <div class="form-row">
-                        <input type="text" name="name" placeholder="Votre nom" required>
-                        <input type="email" name="email" placeholder="Votre courriel" required>
+                    <div class="form-message form-success">
+                        ✓ Votre message a été envoyé avec succès. Nous vous répondrons dès que possible.
                     </div>
 
-                    <input type="text" name="subject" placeholder="Sujet" required>
+                    <% } %>
 
-                    <textarea name="message" rows="6" placeholder="Votre message" required></textarea>
 
-                    <button type="submit" class="btn-primary">
+                    <% if (error) { %>
+
+                        <div class="form-message form-error">
+                            ✕ Une erreur est survenue lors de l'envoi du message. Veuillez réessayer.
+                        </div>
+
+                        <% } %>
+
+
+                        <form action="/contact" method="POST" class="contact-form">
+
+                            <form action="/contact" method="POST" class="contact-form">
+
+                                <div class="form-row">
+                                    <input type="text" name="name" placeholder="Votre nom" required>
+                                    <input type="email" name="email" placeholder="Votre courriel" required>
+                                </div>
+
+                                <input type="text" name="subject" placeholder="Sujet" required>
+
+                                <textarea name="message" rows="6" placeholder="Votre message" required></textarea>
+
+                                <button type="submit" class="btn-primary">
                         ENVOYER
                     </button>
 
