@@ -958,3 +958,42 @@
     }
 
 }
+
+/* =========================================
+   MESSAGES FORMULAIRES
+========================================= */
+
+.form-message {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    animation: messageAppear 0.4s ease;
+}
+
+.form-success {
+    background: #e8f7ee;
+    color: #1d7a46;
+    border: 1px solid #b8e5c8;
+}
+
+.form-error {
+    background: #fdeaea;
+    color: #a52a2a;
+    border: 1px solid #f3baba;
+}
+
+@keyframes messageAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
