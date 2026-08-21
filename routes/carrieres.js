@@ -34,9 +34,9 @@ const upload = multer({
 
 const transporter = nodemailer.createTransport({
 
-    host: process.env.SMTP_HOST || 'smtp.mailersend.net',
+    host: 'smtp.mailersend.net',
 
-    port: Number(process.env.SMTP_PORT) || 2525,
+    port: 2525,
 
     secure: false,
 
@@ -54,7 +54,6 @@ const transporter = nodemailer.createTransport({
     socketTimeout: 30000
 
 });
-
 /* =========================
    POSTULER
 ========================= */
