@@ -33,7 +33,7 @@ router.post('/checkout', async (req, res) => {
         const montant = Number(req.body.montant);
         const quantite = Number(req.body.quantite) || 1;
 
-        if (!montant || montant < 10 || quantite < 1) {
+        if (!montant || montant < 0.01 || quantite < 1) {
             return res.redirect('/cartes-cadeaux?error=montant');
         }
 
