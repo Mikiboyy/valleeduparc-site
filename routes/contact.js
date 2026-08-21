@@ -35,8 +35,8 @@ router.post('/', async (req, res) => {
             secure: false,
 
             auth: {
-                user: process.env.MAILERSEND_SMTP_USERNAME,
-                pass: process.env.MAILERSEND_SMTP_PASSWORD
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS
             }
 
         });
