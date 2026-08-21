@@ -14,6 +14,7 @@ const inscriptionRoutes = require('./routes/inscription');
 const carrieresRoutes = require('./routes/carrieres');
 const locationRoutes = require('./routes/location');
 const giftCardRoutes = require('./routes/giftCards');
+const contactRoutes = require('./routes/contact');
 
 const app = express();
 
@@ -166,6 +167,8 @@ app.use('/location-form', locationRoutes);
 app.use('/carrieres-form', carrieresRoutes);
 
 app.use('/cartes-cadeaux', giftCardRoutes);
+
+app.use('/contact', contactRoutes);
 
 app.use('/', pagesRoutes);
 
