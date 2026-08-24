@@ -85,39 +85,47 @@
         ========================== -->
 
         <div
-            class="date-option"
-            id="multipleDatesOption"
-            style="display:none;"
+        class="date-option"
+        id="multipleDatesOption"
+        style="display:none;"
         >
 
-            <label>Dates de l'événement</label>
+        <label>Dates de l'événement</label>
 
-            <p style="font-size:14px;">
-                Ajoute une date pour chaque journée où
-                l'événement a lieu.
-            </p>
+        <p style="font-size:14px;">
+            Ajoute une date pour chaque journée où l'événement a lieu.
+        </p>
 
+        <div id="datesContainer">
 
-            <div id="datesContainer">
+            <div class="date-row">
 
                 <input
-                    type="date"
-                    name="dates"
-                    class="multiple-date"
+                type="date"
+                name="dates"
+                class="multiple-date"
                 >
 
-            </div>
-
-
-            <button
+                <button
                 type="button"
-                id="addDateButton"
-                class="btn-secondary"
-            >
-                + Ajouter une date
+                class="remove-date-btn"
+                >
+                ×
             </button>
 
         </div>
+
+    </div>
+
+    <button
+    type="button"
+    id="addDateButton"
+    class="btn-secondary"
+    >
+    + Ajouter une date
+</button>
+
+</div>
 
 
         <!-- =========================
