@@ -123,13 +123,13 @@
                             <ul class="career-description-list">
 
                                 <% 
-                                const descriptionLines = job.description
+                                const descriptionLines = job.summary
                                 .split(/\r?\n/)
                                 .map(line => line.trim())
                                 .filter(line => line !== '');
                                 %>
 
-                                <% descriptionLines.slice(0, 4).forEach(line => { %>
+                                <% descriptionLines.slice(0, 9).forEach(line => { %>
 
                                     <li>
                                         <%= line.replace(/^[-•*]\s*/, '') %>
