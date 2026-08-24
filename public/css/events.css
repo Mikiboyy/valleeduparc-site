@@ -448,3 +448,24 @@
         grid-template-columns: 1fr;
     }
 }
+
+.date-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.date-row input {
+    flex: 1;
+}
+
+.remove-date-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    border-radius: 4px;
+}
