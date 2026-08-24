@@ -244,7 +244,7 @@ router.get('/', requireLogin, (req, res) => {
 
 
 /*
-   Page des événements
+   Page des événements - Admin
 */
 
 router.get(
@@ -254,18 +254,22 @@ router.get(
 
         try {
 
-            const events =
-                await Event.find({})
-                    .sort({ createdAt: -1 });
+            const events = await Event.find({})
+                .sort({
+                    createdAt: -1
+                });
 
 
-            res.render('admin/events', {
+            res.render(
+                'admin/events',
+                {
 
-                title: 'Gestion des événements',
+                    title: 'Gestion des événements',
 
-                events
+                    events
 
-            });
+                }
+            );
 
 
         } catch (error) {
@@ -274,6 +278,7 @@ router.get(
                 'Erreur récupération événements :',
                 error
             );
+
 
             res.status(500).send(
                 'Erreur lors du chargement des événements.'
@@ -291,18 +296,27 @@ router.get(
 
 router.post(
     '/events',
-    requireRole('event'),
+    requireRole('evenement'),
     upload.single('image'),
     async (req, res) => {
 
         try {
 
+            /*
+                RÉCUPÉRATION DES DATES
+
+                Si une seule date est sélectionnée,
+                req.body.dates peut être une string.
+
+                Si plusieurs dates sont sélectionnées,
+                req.body.dates sera un tableau.
+            */
+
             let dates = req.body.dates;
 
+
             /*
-                Si une seule date est envoyée,
-                Express peut retourner une string
-                au lieu d'un tableau.
+                Toujours transformer en tableau
             */
 
             if (!Array.isArray(dates)) {
@@ -313,19 +327,22 @@ router.post(
 
 
             /*
-                Nettoyer les dates vides
+                SUPPRIMER LES DATES VIDES
             */
 
             dates = dates.filter(date => {
 
-                return date &&
-                    date.trim() !== '';
+                return (
+                    date &&
+                    typeof date === 'string' &&
+                    date.trim() !== ''
+                );
 
             });
 
 
             /*
-                Vérifier qu'il y a au moins une date
+                VÉRIFIER QU'IL Y A AU MOINS UNE DATE
             */
 
             if (dates.length === 0) {
@@ -338,6 +355,73 @@ router.post(
 
 
             /*
+                CONVERSION DES DATES
+
+                On ajoute T00:00:00 pour éviter
+                les problèmes de décalage de fuseau horaire.
+            */
+
+            const formattedDates = dates
+                .map(date => {
+
+                    return new Date(
+                        `${date}T00:00:00`
+                    );
+
+                })
+                .filter(date => {
+
+                    return !isNaN(
+                        date.getTime()
+                    );
+
+                });
+
+
+            /*
+                VÉRIFIER QUE LES DATES SONT VALIDES
+            */
+
+            if (formattedDates.length === 0) {
+
+                return res.status(400).send(
+                    'Les dates sélectionnées sont invalides.'
+                );
+
+            }
+
+
+            /*
+                SUPPRIMER LES DOUBLONS
+            */
+
+            const uniqueDates = [
+
+                ...new Map(
+
+                    formattedDates.map(date => [
+
+                        date.getTime(),
+
+                        date
+
+                    ])
+
+                ).values()
+
+            ];
+
+
+            /*
+                TRIER LES DATES
+            */
+
+            uniqueDates.sort(
+                (a, b) => a - b
+            );
+
+
+            /*
                 IMAGE CLOUDINARY
             */
 
@@ -346,17 +430,18 @@ router.post(
 
             if (req.file) {
 
-                const result =
-                    await cloudinary.uploader.upload(
+                const result = await cloudinary.uploader.upload(
 
-                        req.file.path,
+                    req.file.path,
 
-                        {
-                            folder:
-                                'valleeduparc/events'
-                        }
+                    {
 
-                    );
+                        folder:
+                            'valleeduparc/events'
+
+                    }
+
+                );
 
 
                 imageUrl =
@@ -378,9 +463,7 @@ router.post(
                     req.body.description,
 
                 dates:
-                    dates.map(
-                        date => new Date(date)
-                    ),
+                    uniqueDates,
 
                 location:
                     req.body.location || '',
@@ -390,6 +473,10 @@ router.post(
 
             });
 
+
+            /*
+                RETOUR À L'ADMIN
+            */
 
             res.redirect(
                 '/admin-vdp/events'
@@ -415,7 +502,7 @@ router.post(
 
 
 /*
-   Suppression événement
+   Suppression d'un événement
 */
 
 router.post(
@@ -441,6 +528,7 @@ router.post(
                 'Erreur suppression événement :',
                 error
             );
+
 
             res.status(500).send(
                 'Erreur lors de la suppression.'

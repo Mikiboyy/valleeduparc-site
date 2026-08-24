@@ -254,10 +254,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /*
-        AJOUTER UNE NOUVELLE DATE
+        Créer une nouvelle ligne de date
     */
 
-    function addDateRow() {
+    function createDateRow() {
 
         const dateRow =
             document.createElement('div');
@@ -266,34 +266,39 @@ document.addEventListener('DOMContentLoaded', function () {
             'event-date-row';
 
 
+        /*
+            Champ date
+        */
+
         const dateInput =
             document.createElement('input');
 
-        dateInput.type =
-            'date';
+        dateInput.type = 'date';
 
-        dateInput.name =
-            'dates';
-
-        dateInput.required =
-            true;
+        dateInput.name = 'dates';
 
 
         /*
-            BOUTON SUPPRIMER
+            Les dates ajoutées ne sont pas required.
+            La première date du HTML reste required.
+        */
+
+        dateInput.required = false;
+
+
+        /*
+            Bouton supprimer
         */
 
         const removeButton =
             document.createElement('button');
 
-        removeButton.type =
-            'button';
+        removeButton.type = 'button';
 
         removeButton.className =
             'remove-date-button';
 
-        removeButton.innerHTML =
-            '&times;';
+        removeButton.innerHTML = '&times;';
 
         removeButton.setAttribute(
             'aria-label',
@@ -302,31 +307,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         /*
-            SUPPRIMER LA DATE
+            Supprimer la ligne
         */
 
         removeButton.addEventListener(
             'click',
             function () {
-
-                const allDateRows =
-                    datesContainer.querySelectorAll(
-                        '.event-date-row'
-                    );
-
-
-                /*
-                    Garder au minimum
-                    un champ de date
-                */
-
-                if (allDateRows.length <= 1) {
-
-                    dateInput.value = '';
-
-                    return;
-                }
-
 
                 dateRow.remove();
 
@@ -335,62 +321,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         /*
-            AJOUT DES ÉLÉMENTS
+            Ajouter les éléments
         */
 
-        dateRow.appendChild(
-            dateInput
-        );
+        dateRow.appendChild(dateInput);
 
-        dateRow.appendChild(
-            removeButton
-        );
+        dateRow.appendChild(removeButton);
 
-        datesContainer.appendChild(
-            dateRow
-        );
+        datesContainer.appendChild(dateRow);
 
 
         /*
-            Donner automatiquement
-            le focus à la nouvelle date
+            Mettre le focus sur la nouvelle date
         */
 
         dateInput.focus();
-
-
-        /*
-            Ouvrir le calendrier
-            lorsque le navigateur le permet
-        */
-
-        if (typeof dateInput.showPicker === 'function') {
-
-            try {
-
-                dateInput.showPicker();
-
-            } catch (error) {
-
-                // Certains navigateurs bloquent
-                // showPicker selon le contexte.
-
-            }
-
-        }
 
     }
 
 
     /*
-        BOUTON + AJOUTER UNE DATE
+        Bouton + Ajouter une date
     */
 
     addDateButton.addEventListener(
         'click',
         function () {
 
-            addDateRow();
+            createDateRow();
 
         }
     );
