@@ -256,7 +256,7 @@ router.get(
 
             const events =
                 await Event.find({})
-                    .sort({ date: -1 });
+                    .sort({ createdAt: -1 });
 
 
             res.render('admin/events', {
@@ -297,32 +297,60 @@ router.post(
 
         try {
 
+            const {
+                title,
+                description,
+                dates,
+                location
+            } = req.body;
+
             let imageUrl = null;
+
+            const eventDates = Array.isArray(dates)
+                ? dates
+                : [dates];
+
+            const validDates = eventDates
+                .filter(date => date && date.trim() !== '')
+                .map(date => new Date(date));
+
+
+            if (validDates.length === 0) {
+
+                return res.status(400).send(
+                    'Veuillez sélectionner au moins une date.'
+                );
+
+            }
+
 
             if (req.file) {
 
-                const result = await cloudinary.uploader.upload(
-                    req.file.path,
-                    {
-                        folder: 'valleeduparc/events'
-                    }
-                );
+                const result =
+                    await cloudinary.uploader.upload(
+                        req.file.path,
+                        {
+                            folder: 'valleeduparc/events'
+                        }
+                    );
 
                 imageUrl = result.secure_url;
 
-                // Supprime le fichier temporaire du serveur
-                fs.unlinkSync(req.file.path);
             }
+
+            /*
+                Création de l'événement
+            */
 
             await Event.create({
 
-                title: req.body.title,
+                title,
 
-                description: req.body.description,
+                description,
 
-                date: req.body.date,
+                dates: validDates,
 
-                location: req.body.location,
+                location,
 
                 image: imageUrl
 
