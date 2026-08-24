@@ -81,52 +81,176 @@
 
     <div class="careers-grid">
 
-        <% if (typeof jobs !== 'undefined' && jobs.length > 0) { %>
+    <% if (typeof jobs !== 'undefined' && jobs.length > 0) { %>
 
-            <% jobs.forEach(job => { %>
+        <% jobs.forEach(job => { %>
 
-                <div class="career-card">
+            <article 
+                class="career-card"
+                data-job-id="<%= job._id %>"
+            >
 
-                    <div class="career-image">
-                        <img 
+                <div class="career-image">
+
+                    <img 
                         src="<%= job.image || '/uploads/default-job.jpg' %>" 
                         alt="<%= job.title %>"
-                        >
-                    </div>
+                    >
 
-                    <div class="career-content">
+                </div>
 
-                        <span>
+                <div class="career-content">
+
+                    <span class="career-department">
+                        <%= job.department %>
+                    </span>
+
+                    <h3>
+                        <%= job.title %>
+                    </h3>
+
+                    <p class="career-summary">
+                        <%= job.summary %>
+                    </p>
+
+                    <button
+                        type="button"
+                        class="career-btn open-job-modal"
+                        data-job="<%= job._id %>"
+                    >
+                        VOIR LE POSTE
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- =========================
+                 MODAL DU POSTE
+            ========================== -->
+
+            <div 
+                class="job-modal"
+                id="job-modal-<%= job._id %>"
+            >
+
+                <div class="job-modal-overlay close-job-modal"></div>
+
+                <div class="job-modal-content">
+
+                    <button 
+                        class="job-modal-close close-job-modal"
+                        type="button"
+                        aria-label="Fermer"
+                    >
+                        ×
+                    </button>
+
+
+                    <% if (job.image) { %>
+
+                        <div class="job-modal-image">
+
+                            <img 
+                                src="<%= job.image %>"
+                                alt="<%= job.title %>"
+                            >
+
+                        </div>
+
+                    <% } %>
+
+
+                    <div class="job-modal-body">
+
+                        <span class="career-department">
                             <%= job.department %>
                         </span>
 
-                        <h3>
+                        <h2>
                             <%= job.title %>
-                        </h3>
+                        </h2>
 
-                        <p>
-                            <%= job.summary %>
-                        </p>
 
-                        <a href="#candidature" class="career-btn">
-                            Postuler
-                        </a>
+                        <% if (job.summary) { %>
+
+                            <p class="job-modal-summary">
+                                <%= job.summary %>
+                            </p>
+
+                        <% } %>
+
+
+                        <% if (job.description) { %>
+
+                            <div class="job-details">
+
+                                <h3>
+                                    TON QUOTIDIEN VA RESSEMBLER À
+                                </h3>
+
+                                <ul class="job-description-list">
+
+                                    <% 
+                                    const descriptionLines = job.description
+                                        .split('\n')
+                                        .filter(line => line.trim() !== '');
+                                    %>
+
+                                    <% descriptionLines.forEach(line => { %>
+
+                                        <li>
+                                            <%= line
+                                                .replace(/^[-•*]\s*/, '')
+                                            %>
+                                        </li>
+
+                                    <% }) %>
+
+                                </ul>
+
+                            </div>
+
+                        <% } %>
+
+
+                        <div class="job-modal-actions">
+
+                            <a 
+                                href="#candidature"
+                                class="btn-primary apply-job"
+                                data-job-title="<%= job.title %>"
+                            >
+                                POSTULER
+                            </a>
+
+                            <button 
+                                type="button"
+                                class="btn-secondary close-job-modal"
+                            >
+                                FERMER
+                            </button>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            <% }) %>
+            </div>
 
-        <% } else { %>
+        <% }) %>
 
-            <p class="no-event">
-                Aucun poste disponible pour le moment.
-            </p>
+    <% } else { %>
 
-        <% } %>
+        <p class="no-event">
+            Aucun poste disponible pour le moment.
+        </p>
 
-    </div>
+    <% } %>
+
+</div>
 
 </section>
 
@@ -231,3 +355,144 @@
     </form>
 
 </section>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const openButtons = document.querySelectorAll('.open-job-modal');
+
+    const closeButtons = document.querySelectorAll('.close-job-modal');
+
+    const applyButtons = document.querySelectorAll('.apply-job');
+
+
+    /* =========================
+       OUVRIR LE MODAL
+    ========================= */
+
+    openButtons.forEach(button => {
+
+        button.addEventListener('click', (event) => {
+
+            event.stopPropagation();
+
+            const jobId = button.dataset.job;
+
+            const modal = document.getElementById(
+                `job-modal-${jobId}`
+            );
+
+            if (modal) {
+
+                modal.classList.add('active');
+
+                document.body.style.overflow = 'hidden';
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================
+       CLIQUER SUR LA CARTE
+    ========================= */
+
+    document.querySelectorAll('.career-card').forEach(card => {
+
+        card.addEventListener('click', () => {
+
+            const jobId = card.dataset.jobId;
+
+            const modal = document.getElementById(
+                `job-modal-${jobId}`
+            );
+
+            if (modal) {
+
+                modal.classList.add('active');
+
+                document.body.style.overflow = 'hidden';
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================
+       FERMER LE MODAL
+    ========================= */
+
+    closeButtons.forEach(button => {
+
+        button.addEventListener('click', () => {
+
+            const modal = button.closest('.job-modal');
+
+            if (modal) {
+
+                modal.classList.remove('active');
+
+                document.body.style.overflow = '';
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================
+       POSTULER À UN POSTE
+    ========================= */
+
+    applyButtons.forEach(button => {
+
+        button.addEventListener('click', () => {
+
+            const jobTitle = button.dataset.jobTitle;
+
+            const select = document.querySelector(
+                'select[name="poste"]'
+            );
+
+            if (select) {
+
+                select.value = jobTitle;
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================
+       TOUCHE ESC
+    ========================= */
+
+    document.addEventListener('keydown', (event) => {
+
+        if (event.key === 'Escape') {
+
+            document
+                .querySelectorAll('.job-modal.active')
+                .forEach(modal => {
+
+                    modal.classList.remove('active');
+
+                });
+
+            document.body.style.overflow = '';
+
+        }
+
+    });
+
+});
+
+</script>
