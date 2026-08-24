@@ -240,187 +240,7 @@
 
 <script>
 
-document.addEventListener(
-    'DOMContentLoaded',
-    function () {
-
-        const datesContainer =
-            document.getElementById('datesContainer');
-
-        const addDateButton =
-            document.getElementById('addDateButton');
-
-
-        /*
-            AJOUTER UNE DATE
-        */
-
-        addDateButton.addEventListener(
-            'click',
-            function () {
-
-                const dateRow =
-                    document.createElement('div');
-
-
-                dateRow.className =
-                    'event-date-row';
-
-
-                const dateInput =
-                    document.createElement('input');
-
-
-                dateInput.type =
-                    'date';
-
-
-                dateInput.name =
-                    'dates';
-
-
-                dateInput.required =
-                    true;
-
-
-                /*
-                    BOUTON SUPPRIMER
-                */
-
-                const removeButton =
-                    document.createElement('button');
-
-
-                removeButton.type =
-                    'button';
-
-
-                removeButton.className =
-                    'remove-date-button';
-
-
-                removeButton.innerHTML =
-                    '&times;';
-
-
-                removeButton.setAttribute(
-                    'aria-label',
-                    'Supprimer cette date'
-                );
-
-
-                /*
-                    SUPPRESSION
-                */
-
-                removeButton.addEventListener(
-                    'click',
-                    function () {
-
-                        const allDateRows =
-                            datesContainer.querySelectorAll(
-                                '.event-date-row'
-                            );
-
-
-                        /*
-                            On doit toujours garder
-                            au moins une date.
-                        */
-
-                        if (allDateRows.length <= 1) {
-
-                            const input =
-                                dateRow.querySelector(
-                                    'input[type="date"]'
-                                );
-
-
-                            input.value =
-                                '';
-
-                            return;
-
-                        }
-
-
-                        dateRow.remove();
-
-                    }
-                );
-
-
-                /*
-                    AJOUT DES ÉLÉMENTS
-                */
-
-                dateRow.appendChild(
-                    dateInput
-                );
-
-
-                dateRow.appendChild(
-                    removeButton
-                );
-
-
-                datesContainer.appendChild(
-                    dateRow
-                );
-
-
-                /*
-                    Ouvre automatiquement
-                    le sélecteur de date
-                */
-
-                dateInput.focus();
-
-
-                if (typeof dateInput.showPicker === 'function') {
-
-                    dateInput.showPicker();
-
-                }
-
-            }
-        );
-
-    }
-);
-
-</script>
-
-<!-- =========================
-     JAVASCRIPT GESTION DATES
-========================= -->
-
-<script>
-
-document.addEventListener('DOMContentLoaded', () => {
-
-    const dateType =
-        document.getElementById('dateType');
-
-    const singleDateOption =
-        document.getElementById('singleDateOption');
-
-    const multipleDatesOption =
-        document.getElementById('multipleDatesOption');
-
-    const rangeDateOption =
-        document.getElementById('rangeDateOption');
-
-
-    const singleDate =
-        document.getElementById('singleDate');
-
-    const startDate =
-        document.getElementById('startDate');
-
-    const endDate =
-        document.getElementById('endDate');
-
+document.addEventListener('DOMContentLoaded', function () {
 
     const datesContainer =
         document.getElementById('datesContainer');
@@ -428,363 +248,152 @@ document.addEventListener('DOMContentLoaded', () => {
     const addDateButton =
         document.getElementById('addDateButton');
 
-
-    /* =========================================
-       AFFICHER LE BON TYPE DE DATE
-    ========================================= */
-
-    function updateDateOptions() {
-
-        const type = dateType.value;
-
-
-        // Cacher toutes les options
-
-        singleDateOption.style.display = 'none';
-
-        multipleDatesOption.style.display = 'none';
-
-        rangeDateOption.style.display = 'none';
-
-
-        // Retirer tous les required
-
-        singleDate.required = false;
-
-        startDate.required = false;
-
-        endDate.required = false;
-
-
-        const multipleInputs =
-            datesContainer.querySelectorAll('.multiple-date');
-
-
-        multipleInputs.forEach(input => {
-
-            input.required = false;
-
-        });
-
-
-        /* =========================
-           UNE SEULE JOURNÉE
-        ========================== */
-
-        if (type === 'single') {
-
-            singleDateOption.style.display = 'block';
-
-            singleDate.required = true;
-
-        }
-
-
-        /* =========================
-           PLUSIEURS DATES
-        ========================== */
-
-        else if (type === 'multiple') {
-
-            multipleDatesOption.style.display = 'block';
-
-
-            const dateInputs =
-                datesContainer.querySelectorAll(
-                    '.multiple-date'
-                );
-
-
-            if (dateInputs.length > 0) {
-
-                dateInputs[0].required = true;
-
-            }
-
-        }
-
-
-        /* =========================
-           PÉRIODE CONTINUE
-        ========================== */
-
-        else if (type === 'range') {
-
-            rangeDateOption.style.display = 'block';
-
-            startDate.required = true;
-
-            endDate.required = true;
-
-        }
-
+    if (!datesContainer || !addDateButton) {
+        return;
     }
 
 
-    /* =========================================
-       AJOUTER UNE LIGNE DE DATE
-    ========================================= */
+    /*
+        AJOUTER UNE NOUVELLE DATE
+    */
 
-    function createDateRow() {
+    function addDateRow() {
 
         const dateRow =
             document.createElement('div');
 
-
         dateRow.className =
-            'date-row';
+            'event-date-row';
 
 
-        const input =
+        const dateInput =
             document.createElement('input');
 
-
-        input.type =
+        dateInput.type =
             'date';
 
-        input.name =
+        dateInput.name =
             'dates';
 
-        input.className =
-            'multiple-date';
+        dateInput.required =
+            true;
 
+
+        /*
+            BOUTON SUPPRIMER
+        */
 
         const removeButton =
             document.createElement('button');
-
 
         removeButton.type =
             'button';
 
         removeButton.className =
-            'remove-date-btn';
+            'remove-date-button';
 
-        removeButton.textContent =
-            '×';
+        removeButton.innerHTML =
+            '&times;';
 
-
-        dateRow.appendChild(input);
-
-        dateRow.appendChild(removeButton);
-
-
-        datesContainer.appendChild(dateRow);
-
-
-        /*
-           Lorsqu'une date est sélectionnée,
-           si c'est la dernière ligne,
-           on crée automatiquement
-           une nouvelle ligne vide.
-        */
-
-        input.addEventListener(
-            'change',
-            handleDateChange
+        removeButton.setAttribute(
+            'aria-label',
+            'Supprimer cette date'
         );
 
 
-        updateRemoveButtons();
+        /*
+            SUPPRIMER LA DATE
+        */
+
+        removeButton.addEventListener(
+            'click',
+            function () {
+
+                const allDateRows =
+                    datesContainer.querySelectorAll(
+                        '.event-date-row'
+                    );
 
 
-        return input;
+                /*
+                    Garder au minimum
+                    un champ de date
+                */
 
-    }
+                if (allDateRows.length <= 1) {
 
+                    dateInput.value = '';
 
-    /* =========================================
-       LORSQU'UNE DATE EST SÉLECTIONNÉE
-    ========================================= */
-
-    function handleDateChange(event) {
-
-        const inputs =
-            datesContainer.querySelectorAll(
-                '.multiple-date'
-            );
+                    return;
+                }
 
 
-        const lastInput =
-            inputs[inputs.length - 1];
+                dateRow.remove();
+
+            }
+        );
 
 
         /*
-           Si la dernière date est remplie,
-           ajouter automatiquement une nouvelle ligne
+            AJOUT DES ÉLÉMENTS
         */
 
-        if (
-            event.target === lastInput &&
-            event.target.value !== ''
-        ) {
+        dateRow.appendChild(
+            dateInput
+        );
 
-            createDateRow();
+        dateRow.appendChild(
+            removeButton
+        );
+
+        datesContainer.appendChild(
+            dateRow
+        );
+
+
+        /*
+            Donner automatiquement
+            le focus à la nouvelle date
+        */
+
+        dateInput.focus();
+
+
+        /*
+            Ouvrir le calendrier
+            lorsque le navigateur le permet
+        */
+
+        if (typeof dateInput.showPicker === 'function') {
+
+            try {
+
+                dateInput.showPicker();
+
+            } catch (error) {
+
+                // Certains navigateurs bloquent
+                // showPicker selon le contexte.
+
+            }
 
         }
-
-
-        updateRemoveButtons();
 
     }
 
 
-    /* =========================================
-       AJOUTER UNE DATE AVEC LE BOUTON
-    ========================================= */
+    /*
+        BOUTON + AJOUTER UNE DATE
+    */
 
     addDateButton.addEventListener(
         'click',
-        () => {
+        function () {
 
-            const input =
-                createDateRow();
-
-
-            input.focus();
+            addDateRow();
 
         }
     );
-
-
-    /* =========================================
-       SUPPRIMER UNE DATE
-    ========================================= */
-
-    datesContainer.addEventListener(
-        'click',
-        event => {
-
-            if (
-                event.target.classList.contains(
-                    'remove-date-btn'
-                )
-            ) {
-
-                const dateRows =
-                    datesContainer.querySelectorAll(
-                        '.date-row'
-                    );
-
-
-                /*
-                   S'il y a plus d'une ligne,
-                   supprimer la ligne.
-                */
-
-                if (dateRows.length > 1) {
-
-                    event.target
-                        .closest('.date-row')
-                        .remove();
-
-                }
-
-
-                /*
-                   S'il ne reste qu'une seule ligne,
-                   simplement vider la date.
-                */
-
-                else {
-
-                    const input =
-                        event.target
-                            .closest('.date-row')
-                            .querySelector(
-                                '.multiple-date'
-                            );
-
-
-                    input.value = '';
-
-                }
-
-
-                updateRemoveButtons();
-
-            }
-
-        }
-    );
-
-
-    /* =========================================
-       AFFICHAGE DES BOUTONS SUPPRIMER
-    ========================================= */
-
-    function updateRemoveButtons() {
-
-        const dateRows =
-            datesContainer.querySelectorAll(
-                '.date-row'
-            );
-
-
-        dateRows.forEach(
-            (row, index) => {
-
-                const button =
-                    row.querySelector(
-                        '.remove-date-btn'
-                    );
-
-
-                /*
-                   On cache le bouton
-                   si une seule ligne existe.
-                */
-
-                if (dateRows.length === 1) {
-
-                    button.style.display =
-                        'none';
-
-                } else {
-
-                    button.style.display =
-                        'flex';
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /* =========================================
-       INITIALISER LA PREMIÈRE DATE
-    ========================================= */
-
-    const firstDateInput =
-        datesContainer.querySelector(
-            '.multiple-date'
-        );
-
-
-    firstDateInput.addEventListener(
-        'change',
-        handleDateChange
-    );
-
-
-    /* =========================================
-       CHANGER LE TYPE DE DATE
-    ========================================= */
-
-    dateType.addEventListener(
-        'change',
-        updateDateOptions
-    );
-
-
-    /* =========================================
-       INITIALISATION
-    ========================================= */
-
-    updateDateOptions();
-
-    updateRemoveButtons();
 
 });
 

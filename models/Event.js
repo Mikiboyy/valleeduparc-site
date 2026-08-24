@@ -40,18 +40,19 @@ const eventSchema = new mongoose.Schema(
     }
 );
 
-// Tri automatique des dates
-eventSchema.pre('save', function (next) {
+
+// Trier automatiquement les dates avant l'enregistrement
+eventSchema.pre('save', function () {
 
     if (this.dates && this.dates.length > 0) {
 
-        this.dates.sort(
-            (a, b) => new Date(a) - new Date(b)
-        );
+        this.dates.sort((a, b) => {
+            return new Date(a) - new Date(b);
+        });
 
     }
 
-    next();
 });
+
 
 module.exports = mongoose.model('Event', eventSchema);
