@@ -193,6 +193,9 @@ exports.groupe = async (req, res) => {
             isActive: true
         }).sort({ season: 1, order: 1 });
 
+        console.log('COURS GROUPE TROUVÉS :', courses.length);
+        console.log(courses);
+
         res.render('ecole/groupe', {
             title: "Cours de groupe",
             courses
@@ -214,6 +217,9 @@ exports.prive = async (req, res) => {
             type: 'prive',
             isActive: true
         }).sort({ season: 1, order: 1 });
+
+        console.log('COURS GROUPE TROUVÉS :', courses.length);
+        console.log(courses);
 
         res.render('ecole/prive', {
             title: "Cours privé",
