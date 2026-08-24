@@ -159,7 +159,7 @@ exports.evenements = async (req, res) => {
 
         const allEvents = await Event
             .find()
-            .sort({ date: 1 });
+            .sort({ dates: 1 });
 
         res.render('montagne/evenements', {
             title: 'Événements',

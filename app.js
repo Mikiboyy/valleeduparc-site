@@ -34,6 +34,18 @@ if (!process.env.MONGODB_URI) {
 
 }
 
+mongoose.connection.once('open', () => {
+    console.log(
+        'Base de données utilisée :',
+        mongoose.connection.name
+    );
+
+    console.log(
+        'Host MongoDB :',
+        mongoose.connection.host
+    );
+});
+
 
 /* =========================
    VIEW ENGINE
