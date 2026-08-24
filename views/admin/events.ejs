@@ -14,7 +14,9 @@
         <h2>Ajouter un événement</h2>
 
 
-        <!-- TITRE -->
+        <!-- =========================
+             TITRE
+        ========================== -->
 
         <label>Titre</label>
 
@@ -25,7 +27,9 @@
         >
 
 
-        <!-- DESCRIPTION -->
+        <!-- =========================
+             DESCRIPTION
+        ========================== -->
 
         <label>Description</label>
 
@@ -35,7 +39,9 @@
         ></textarea>
 
 
-        <!-- TYPE DE DATE -->
+        <!-- =========================
+             TYPE DE DATE
+        ========================== -->
 
         <label>Type de date</label>
 
@@ -85,51 +91,55 @@
         ========================== -->
 
         <div
-        class="date-option"
-        id="multipleDatesOption"
-        style="display:none;"
+            class="date-option"
+            id="multipleDatesOption"
+            style="display:none;"
         >
 
-        <label>Dates de l'événement</label>
+            <label>Dates de l'événement</label>
 
-        <p style="font-size:14px;">
-            Ajoute une date pour chaque journée où l'événement a lieu.
-        </p>
+            <p style="font-size:14px;">
+                Ajoute une date pour chaque journée où l'événement a lieu.
+            </p>
 
-        <div id="datesContainer">
 
-            <div class="date-row">
+            <div id="datesContainer">
 
-                <input
-                type="date"
-                name="dates"
-                class="multiple-date"
-                >
+                <!-- Première date -->
 
-                <button
+                <div class="date-row">
+
+                    <input
+                        type="date"
+                        name="dates"
+                        class="multiple-date"
+                    >
+
+                    <button
+                        type="button"
+                        class="remove-date-btn"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
                 type="button"
-                class="remove-date-btn"
-                >
-                ×
+                id="addDateButton"
+                class="btn-secondary"
+            >
+                + Ajouter une date
             </button>
 
         </div>
 
-    </div>
-
-    <button
-    type="button"
-    id="addDateButton"
-    class="btn-secondary"
-    >
-    + Ajouter une date
-</button>
-
-</div>
-
 
         <!-- =========================
-             PÉRIODE
+             PÉRIODE CONTINUE
         ========================== -->
 
         <div
@@ -158,7 +168,9 @@
         </div>
 
 
-        <!-- LIEU -->
+        <!-- =========================
+             LIEU
+        ========================== -->
 
         <label>Lieu</label>
 
@@ -168,7 +180,9 @@
         >
 
 
-        <!-- IMAGE -->
+        <!-- =========================
+             IMAGE
+        ========================== -->
 
         <label>Image</label>
 
@@ -179,7 +193,9 @@
         >
 
 
-        <!-- BOUTON -->
+        <!-- =========================
+             BOUTON
+        ========================== -->
 
         <button
             type="submit"
@@ -214,7 +230,9 @@
                     </strong>
 
 
-                    <!-- UNE SEULE DATE -->
+                    <!-- =========================
+                         PLUSIEURS DATES
+                    ========================== -->
 
                     <% if (
                         event.dates &&
@@ -234,7 +252,9 @@
                         </span>
 
 
-                    <!-- PÉRIODE -->
+                    <!-- =========================
+                         PÉRIODE CONTINUE
+                    ========================== -->
 
                     <% } else if (
                         event.startDate &&
@@ -252,7 +272,9 @@
                         </span>
 
 
-                    <!-- DATE UNIQUE -->
+                    <!-- =========================
+                         UNE SEULE DATE
+                    ========================== -->
 
                     <% } else { %>
 
@@ -265,7 +287,9 @@
                     <% } %>
 
 
-                    <!-- SUPPRIMER -->
+                    <!-- =========================
+                         SUPPRIMER
+                    ========================== -->
 
                     <form
                         action="/admin-vdp/events/<%= event._id %>/delete"
@@ -297,7 +321,7 @@
 
 <!-- =========================
      JAVASCRIPT GESTION DATES
-========================== -->
+========================= -->
 
 <script>
 
@@ -315,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rangeDateOption =
         document.getElementById('rangeDateOption');
 
+
     const singleDate =
         document.getElementById('singleDate');
 
@@ -323,6 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const endDate =
         document.getElementById('endDate');
+
 
     const datesContainer =
         document.getElementById('datesContainer');
@@ -349,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rangeDateOption.style.display = 'none';
 
 
-        // Enlever les champs requis
+        // Retirer tous les required
 
         singleDate.required = false;
 
@@ -358,7 +384,20 @@ document.addEventListener('DOMContentLoaded', () => {
         endDate.required = false;
 
 
-        // Une seule date
+        const multipleInputs =
+            datesContainer.querySelectorAll('.multiple-date');
+
+
+        multipleInputs.forEach(input => {
+
+            input.required = false;
+
+        });
+
+
+        /* =========================
+           UNE SEULE JOURNÉE
+        ========================== */
 
         if (type === 'single') {
 
@@ -369,14 +408,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
-        // Plusieurs dates
+        /* =========================
+           PLUSIEURS DATES
+        ========================== */
 
         else if (type === 'multiple') {
 
             multipleDatesOption.style.display = 'block';
 
+
             const dateInputs =
-                document.querySelectorAll('.multiple-date');
+                datesContainer.querySelectorAll(
+                    '.multiple-date'
+                );
+
 
             if (dateInputs.length > 0) {
 
@@ -387,7 +432,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
-        // Période continue
+        /* =========================
+           PÉRIODE CONTINUE
+        ========================== */
 
         else if (type === 'range') {
 
@@ -403,67 +450,123 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* =========================================
-       CHANGER LE TYPE
+       AJOUTER UNE LIGNE DE DATE
     ========================================= */
 
-    dateType.addEventListener(
-        'change',
-        updateDateOptions
-    );
+    function createDateRow() {
+
+        const dateRow =
+            document.createElement('div');
+
+
+        dateRow.className =
+            'date-row';
+
+
+        const input =
+            document.createElement('input');
+
+
+        input.type =
+            'date';
+
+        input.name =
+            'dates';
+
+        input.className =
+            'multiple-date';
+
+
+        const removeButton =
+            document.createElement('button');
+
+
+        removeButton.type =
+            'button';
+
+        removeButton.className =
+            'remove-date-btn';
+
+        removeButton.textContent =
+            '×';
+
+
+        dateRow.appendChild(input);
+
+        dateRow.appendChild(removeButton);
+
+
+        datesContainer.appendChild(dateRow);
+
+
+        /*
+           Lorsqu'une date est sélectionnée,
+           si c'est la dernière ligne,
+           on crée automatiquement
+           une nouvelle ligne vide.
+        */
+
+        input.addEventListener(
+            'change',
+            handleDateChange
+        );
+
+
+        updateRemoveButtons();
+
+
+        return input;
+
+    }
 
 
     /* =========================================
-       AJOUTER UNE NOUVELLE DATE
+       LORSQU'UNE DATE EST SÉLECTIONNÉE
+    ========================================= */
+
+    function handleDateChange(event) {
+
+        const inputs =
+            datesContainer.querySelectorAll(
+                '.multiple-date'
+            );
+
+
+        const lastInput =
+            inputs[inputs.length - 1];
+
+
+        /*
+           Si la dernière date est remplie,
+           ajouter automatiquement une nouvelle ligne
+        */
+
+        if (
+            event.target === lastInput &&
+            event.target.value !== ''
+        ) {
+
+            createDateRow();
+
+        }
+
+
+        updateRemoveButtons();
+
+    }
+
+
+    /* =========================================
+       AJOUTER UNE DATE AVEC LE BOUTON
     ========================================= */
 
     addDateButton.addEventListener(
         'click',
         () => {
 
-            const dateRow =
-                document.createElement('div');
-
-            dateRow.className =
-                'date-row';
-
-
             const input =
-                document.createElement('input');
+                createDateRow();
 
-            input.type =
-                'date';
-
-            input.name =
-                'dates';
-
-            input.className =
-                'multiple-date';
-
-
-            const removeButton =
-                document.createElement('button');
-
-            removeButton.type =
-                'button';
-
-            removeButton.className =
-                'remove-date-btn';
-
-            removeButton.textContent =
-                '×';
-
-
-            dateRow.appendChild(input);
-
-            dateRow.appendChild(removeButton);
-
-            datesContainer.appendChild(dateRow);
-
-
-            /*
-               Met automatiquement le curseur
-               sur la nouvelle date
-            */
 
             input.focus();
 
@@ -492,8 +595,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                 /*
-                   Garder toujours au moins
-                   un champ de date
+                   S'il y a plus d'une ligne,
+                   supprimer la ligne.
                 */
 
                 if (dateRows.length > 1) {
@@ -502,16 +605,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         .closest('.date-row')
                         .remove();
 
-                } else {
+                }
+
+
+                /*
+                   S'il ne reste qu'une seule ligne,
+                   simplement vider la date.
+                */
+
+                else {
 
                     const input =
                         event.target
                             .closest('.date-row')
-                            .querySelector('input');
+                            .querySelector(
+                                '.multiple-date'
+                            );
+
 
                     input.value = '';
 
                 }
+
+
+                updateRemoveButtons();
 
             }
 
@@ -520,10 +637,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* =========================================
+       AFFICHAGE DES BOUTONS SUPPRIMER
+    ========================================= */
+
+    function updateRemoveButtons() {
+
+        const dateRows =
+            datesContainer.querySelectorAll(
+                '.date-row'
+            );
+
+
+        dateRows.forEach(
+            (row, index) => {
+
+                const button =
+                    row.querySelector(
+                        '.remove-date-btn'
+                    );
+
+
+                /*
+                   On cache le bouton
+                   si une seule ligne existe.
+                */
+
+                if (dateRows.length === 1) {
+
+                    button.style.display =
+                        'none';
+
+                } else {
+
+                    button.style.display =
+                        'flex';
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       INITIALISER LA PREMIÈRE DATE
+    ========================================= */
+
+    const firstDateInput =
+        datesContainer.querySelector(
+            '.multiple-date'
+        );
+
+
+    firstDateInput.addEventListener(
+        'change',
+        handleDateChange
+    );
+
+
+    /* =========================================
+       CHANGER LE TYPE DE DATE
+    ========================================= */
+
+    dateType.addEventListener(
+        'change',
+        updateDateOptions
+    );
+
+
+    /* =========================================
        INITIALISATION
     ========================================= */
 
     updateDateOptions();
+
+    updateRemoveButtons();
 
 });
 
