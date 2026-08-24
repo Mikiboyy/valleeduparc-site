@@ -347,17 +347,14 @@
 
 
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
 <script>
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    /*
-        ÉLÉMENTS
-    */
+
+    /* =========================================================
+       ÉLÉMENTS
+    ========================================================= */
 
     const dateType =
         document.getElementById('dateType');
@@ -386,10 +383,85 @@ document.addEventListener('DOMContentLoaded', function () {
     const addDateButton =
         document.getElementById('addDateButton');
 
+    const form =
+        document.querySelector('.course-form');
 
-    /*
-        CHANGER LE TYPE DE DATE
-    */
+
+    /* =========================================================
+       SÉCURITÉ
+    ========================================================= */
+
+    if (
+        !dateType ||
+        !singleDateSection ||
+        !multipleDatesSection ||
+        !rangeDateSection ||
+        !singleDate ||
+        !startDate ||
+        !endDate ||
+        !datesContainer ||
+        !form
+    ) {
+        return;
+    }
+
+
+    /* =========================================================
+       FONCTION : RÉCUPÉRER LES CHAMPS DE DATES MULTIPLES
+    ========================================================= */
+
+    function getMultipleDateInputs() {
+
+        return Array.from(
+            datesContainer.querySelectorAll(
+                'input[name="multipleDates"]'
+            )
+        );
+
+    }
+
+
+    /* =========================================================
+       FONCTION : VÉRIFIER S'IL Y A DÉJÀ UN CHAMP VIDE
+    ========================================================= */
+
+    function hasEmptyDateInput() {
+
+        const inputs =
+            getMultipleDateInputs();
+
+        return inputs.some(input => {
+
+            return input.value === '';
+
+        });
+
+    }
+
+
+    /* =========================================================
+       FONCTION : METTRE À JOUR REQUIRED
+    ========================================================= */
+
+    function updateMultipleRequired() {
+
+        const inputs =
+            getMultipleDateInputs();
+
+        inputs.forEach((input, index) => {
+
+            input.required =
+                dateType.value === 'multiple' &&
+                index === 0;
+
+        });
+
+    }
+
+
+    /* =========================================================
+       CHANGER LE TYPE DE DATE
+    ========================================================= */
 
     function updateDateSections() {
 
@@ -426,9 +498,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         const multipleDateInputs =
-            datesContainer.querySelectorAll(
-                'input[name="multipleDates"]'
-            );
+            getMultipleDateInputs();
 
         multipleDateInputs.forEach(input => {
 
@@ -463,17 +533,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 'block';
 
 
-            const firstDateInput =
-                datesContainer.querySelector(
-                    'input[name="multipleDates"]'
-                );
+            /*
+                S'assurer qu'il existe
+                toujours au moins un champ
+            */
 
-            if (firstDateInput) {
+            if (
+                getMultipleDateInputs().length === 0
+            ) {
 
-                firstDateInput.required =
-                    true;
+                createDateRow(false);
 
             }
+
+
+            updateMultipleRequired();
 
         }
 
@@ -498,9 +572,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    /*
-        ÉVÉNEMENT CHANGEMENT TYPE
-    */
+    /* =========================================================
+       ÉVÉNEMENT CHANGEMENT TYPE
+    ========================================================= */
 
     dateType.addEventListener(
         'change',
@@ -512,11 +586,12 @@ document.addEventListener('DOMContentLoaded', function () {
     );
 
 
-    /*
-        AJOUTER UNE DATE
-    */
+    /* =========================================================
+       CRÉER UNE NOUVELLE LIGNE DE DATE
+    ========================================================= */
 
     function createDateRow(autoFocus = false) {
+
 
         /*
             Créer la ligne
@@ -530,12 +605,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         /*
-            Permet au champ et au bouton ×
-            d'être côte à côte
+            Style forcé pour éviter
+            que la ligne soit invisible
         */
 
         dateRow.style.display =
             'flex';
+
+        dateRow.style.visibility =
+            'visible';
+
+        dateRow.style.opacity =
+            '1';
+
+        dateRow.style.position =
+            'relative';
 
         dateRow.style.alignItems =
             'center';
@@ -546,10 +630,19 @@ document.addEventListener('DOMContentLoaded', function () {
         dateRow.style.width =
             '100%';
 
+        dateRow.style.minHeight =
+            '42px';
 
-        /*
-            CHAMP DATE
-        */
+        dateRow.style.marginTop =
+            '10px';
+
+        dateRow.style.marginBottom =
+            '10px';
+
+
+        /* =====================================================
+           CHAMP DATE
+        ===================================================== */
 
         const dateInput =
             document.createElement('input');
@@ -563,16 +656,28 @@ document.addEventListener('DOMContentLoaded', function () {
         dateInput.required =
             false;
 
+        dateInput.style.display =
+            'block';
+
+        dateInput.style.visibility =
+            'visible';
+
+        dateInput.style.opacity =
+            '1';
+
         dateInput.style.flex =
             '1';
+
+        dateInput.style.width =
+            '100%';
 
         dateInput.style.minWidth =
             '0';
 
 
-        /*
-            BOUTON SUPPRIMER
-        */
+        /* =====================================================
+           BOUTON SUPPRIMER
+        ===================================================== */
 
         const removeButton =
             document.createElement('button');
@@ -595,9 +700,9 @@ document.addEventListener('DOMContentLoaded', function () {
             '0';
 
 
-        /*
-            SUPPRIMER LA DATE
-        */
+        /* =====================================================
+           SUPPRIMER LA DATE
+        ===================================================== */
 
         removeButton.addEventListener(
             'click',
@@ -610,7 +715,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 /*
-                    Garder au moins un champ
+                    S'il reste seulement
+                    une ligne, on la vide
                 */
 
                 if (rows.length <= 1) {
@@ -626,78 +732,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 dateRow.remove();
 
 
-                /*
-                    Mettre le premier champ
-                    restant en required
-                */
-
-                const remainingInputs =
-                    datesContainer.querySelectorAll(
-                        'input[name="multipleDates"]'
-                    );
-
-                remainingInputs.forEach(
-                    (input, index) => {
-
-                        input.required =
-                            index === 0;
-
-                    }
-                );
-
-            }
-        );
-
-
-        /*
-            AJOUTER AUTOMATIQUEMENT
-            UN NOUVEAU CHAMP APRÈS
-            LA SÉLECTION D'UNE DATE
-        */
-
-        dateInput.addEventListener(
-            'change',
-            function () {
-
-                /*
-                    Si aucune date,
-                    ne rien faire
-                */
-
-                if (!dateInput.value) {
-
-                    return;
-
-                }
-
-
-                const rows =
-                    datesContainer.querySelectorAll(
-                        '.event-date-row'
-                    );
+                updateMultipleRequired();
 
 
                 /*
-                    Vérifier si cette ligne
-                    est la dernière
+                    S'assurer qu'il reste
+                    un champ vide à la fin
+                    si nécessaire
                 */
 
-                const lastRow =
-                    rows[rows.length - 1];
-
-
-                /*
-                    Si oui, créer immédiatement
-                    le prochain champ vide
-
-                    IMPORTANT :
-                    false empêche le nouveau
-                    champ de voler le focus
-                    et de causer un bug avec
-                    le calendrier.
-                */
-
-                if (dateRow === lastRow) {
+                if (
+                    dateType.value === 'multiple' &&
+                    !hasEmptyDateInput()
+                ) {
 
                     createDateRow(false);
 
@@ -707,9 +754,120 @@ document.addEventListener('DOMContentLoaded', function () {
         );
 
 
+        /* =====================================================
+           AJOUT AUTOMATIQUE DU PROCHAIN CHAMP
+        ===================================================== */
+
+        function handleDateSelected() {
+
+            if (!dateInput.value) {
+
+                return;
+
+            }
+
+
+            /*
+                Vérifier que ce champ est
+                le dernier de la liste
+            */
+
+            const rows =
+                Array.from(
+                    datesContainer.querySelectorAll(
+                        '.event-date-row'
+                    )
+                );
+
+            const lastRow =
+                rows[rows.length - 1];
+
+
+            /*
+                On ajoute uniquement si :
+
+                - le type est "multiple"
+                - cette ligne est la dernière
+                - aucun champ vide n'existe déjà
+            */
+
+            if (
+                dateType.value === 'multiple' &&
+                dateRow === lastRow &&
+                !hasEmptyDateInput()
+            ) {
+
+
+                /*
+                    IMPORTANT
+
+                    Petit délai pour permettre
+                    au calendrier natif du navigateur
+                    de terminer sa fermeture.
+
+                    Cela évite le bug où le champ
+                    existe mais n'apparaît pas avant
+                    de cliquer ailleurs.
+                */
+
+                setTimeout(function () {
+
+
+                    /*
+                        Revérifier après le délai
+                        pour éviter les doublons
+                    */
+
+                    if (!hasEmptyDateInput()) {
+
+                        createDateRow(false);
+
+                    }
+
+
+                    /*
+                        Forcer le navigateur
+                        à recalculer l'affichage
+                    */
+
+                    requestAnimationFrame(function () {
+
+                        datesContainer.style.display =
+                            'none';
+
+                        void datesContainer.offsetHeight;
+
+                        datesContainer.style.display =
+                            '';
+
+                    });
+
+                }, 100);
+
+            }
+
+        }
+
+
         /*
-            AJOUTER LES ÉLÉMENTS
+            Certains navigateurs réagissent
+            mieux à input, d'autres à change.
         */
+
+        dateInput.addEventListener(
+            'change',
+            handleDateSelected
+        );
+
+        dateInput.addEventListener(
+            'input',
+            handleDateSelected
+        );
+
+
+        /* =====================================================
+           AJOUTER LES ÉLÉMENTS
+        ===================================================== */
 
         dateRow.appendChild(
             dateInput
@@ -719,56 +877,197 @@ document.addEventListener('DOMContentLoaded', function () {
             removeButton
         );
 
+
+        /*
+            Ajouter la nouvelle ligne
+            directement à la fin
+        */
+
         datesContainer.appendChild(
             dateRow
         );
 
 
         /*
-            Donner le focus seulement
-            lorsqu'on ajoute manuellement
-            une nouvelle date.
+            Forcer le recalcul visuel
+        */
 
-            Cela évite le bug lorsque
-            le champ est créé automatiquement.
+        void dateRow.offsetHeight;
+
+
+        requestAnimationFrame(function () {
+
+            dateRow.style.display =
+                'flex';
+
+            dateRow.style.visibility =
+                'visible';
+
+            dateRow.style.opacity =
+                '1';
+
+        });
+
+
+        /*
+            Mettre à jour required
+        */
+
+        updateMultipleRequired();
+
+
+        /*
+            Focus seulement lors
+            d'un ajout manuel
         */
 
         if (autoFocus) {
 
-            dateInput.focus();
+            setTimeout(function () {
+
+                dateInput.focus();
+
+            }, 50);
 
         }
+
+
+        return dateInput;
 
     }
 
 
-    /*
-        BOUTON AJOUTER DATE
-    */
+    /* =========================================================
+       PRÉPARER LE PREMIER CHAMP EXISTANT
+    ========================================================= */
 
-    addDateButton.addEventListener(
-        'click',
-        function () {
+    function prepareExistingDateInputs() {
+
+        const existingInputs =
+            getMultipleDateInputs();
+
+
+        existingInputs.forEach(input => {
 
             /*
-                true = donner le focus
-                puisque l'utilisateur
-                a volontairement ajouté
-                une nouvelle date
+                Éviter de préparer
+                deux fois le même champ
             */
 
-            createDateRow(true);
+            if (
+                input.dataset.initialized === 'true'
+            ) {
+                return;
+            }
 
-        }
-    );
+
+            input.dataset.initialized =
+                'true';
 
 
-    /*
-        VÉRIFIER LA PÉRIODE
+            function handleExistingDateSelected() {
 
-        La date de fin ne peut pas être
-        avant la date de début.
-    */
+                if (!input.value) {
+
+                    return;
+
+                }
+
+
+                const inputs =
+                    getMultipleDateInputs();
+
+                const lastInput =
+                    inputs[inputs.length - 1];
+
+
+                if (
+                    dateType.value === 'multiple' &&
+                    input === lastInput &&
+                    !hasEmptyDateInput()
+                ) {
+
+                    setTimeout(function () {
+
+                        if (!hasEmptyDateInput()) {
+
+                            createDateRow(false);
+
+                        }
+
+
+                        requestAnimationFrame(function () {
+
+                            datesContainer.style.display =
+                                'none';
+
+                            void datesContainer.offsetHeight;
+
+                            datesContainer.style.display =
+                                '';
+
+                        });
+
+                    }, 100);
+
+                }
+
+            }
+
+
+            input.addEventListener(
+                'change',
+                handleExistingDateSelected
+            );
+
+            input.addEventListener(
+                'input',
+                handleExistingDateSelected
+            );
+
+        });
+
+
+        updateMultipleRequired();
+
+    }
+
+
+    prepareExistingDateInputs();
+
+
+    /* =========================================================
+       BOUTON AJOUTER UNE DATE
+    ========================================================= */
+
+    if (addDateButton) {
+
+        addDateButton.addEventListener(
+            'click',
+            function () {
+
+
+                /*
+                    Ajouter seulement
+                    s'il n'y a pas déjà
+                    un champ vide
+                */
+
+                if (!hasEmptyDateInput()) {
+
+                    createDateRow(true);
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       VÉRIFIER LA PÉRIODE
+    ========================================================= */
 
     endDate.addEventListener(
         'change',
@@ -793,200 +1092,189 @@ document.addEventListener('DOMContentLoaded', function () {
     );
 
 
-    /*
-        INITIALISATION
-    */
+    /* =========================================================
+       INITIALISATION
+    ========================================================= */
 
     updateDateSections();
 
 
-    /*
-        AVANT L'ENVOI DU FORMULAIRE
+    /* =========================================================
+       AVANT L'ENVOI DU FORMULAIRE
+    ========================================================= */
 
-        On transforme les dates sélectionnées
-        en champs "dates" pour que le backend
-        puisse les recevoir correctement.
-    */
-
-    document.querySelector('.course-form')
-        .addEventListener(
-            'submit',
-            function (event) {
+    form.addEventListener(
+        'submit',
+        function (event) {
 
 
-                /*
-                    Supprimer les anciens
-                    champs dates générés
-                */
+            /*
+                Supprimer les anciens
+                champs cachés générés
+            */
 
-                document.querySelectorAll(
-                    '.generated-date-input'
-                ).forEach(input => {
+            document.querySelectorAll(
+                '.generated-date-input'
+            ).forEach(input => {
 
-                    input.remove();
+                input.remove();
 
-                });
-
-
-                const selectedType =
-                    dateType.value;
-
-                const form =
-                    event.target;
+            });
 
 
-                /*
-                    FONCTION POUR AJOUTER
-                    UNE DATE AU FORMULAIRE
-                */
-
-                function addHiddenDate(value) {
-
-                    if (!value) {
-
-                        return;
-
-                    }
+            const selectedType =
+                dateType.value;
 
 
-                    const hiddenInput =
-                        document.createElement('input');
+            /*
+                Ajouter une date cachée
+                pour le backend
+            */
 
-                    hiddenInput.type =
-                        'hidden';
+            function addHiddenDate(value) {
 
-                    hiddenInput.name =
-                        'dates';
+                if (!value) {
 
-                    hiddenInput.value =
-                        value;
-
-                    hiddenInput.className =
-                        'generated-date-input';
-
-                    form.appendChild(
-                        hiddenInput
-                    );
+                    return;
 
                 }
 
 
-                /*
-                    DATE SIMPLE
-                */
+                const hiddenInput =
+                    document.createElement('input');
 
-                if (
-                    selectedType === 'single'
-                ) {
+                hiddenInput.type =
+                    'hidden';
 
-                    addHiddenDate(
-                        singleDate.value
-                    );
+                hiddenInput.name =
+                    'dates';
 
-                }
+                hiddenInput.value =
+                    value;
 
+                hiddenInput.className =
+                    'generated-date-input';
 
-                /*
-                    PLUSIEURS DATES
-                */
+                form.appendChild(
+                    hiddenInput
+                );
 
-                if (
-                    selectedType === 'multiple'
-                ) {
-
-                    const inputs =
-                        datesContainer.querySelectorAll(
-                            'input[name="multipleDates"]'
-                        );
+            }
 
 
-                    inputs.forEach(input => {
+            /* ================================================
+               DATE SIMPLE
+            ================================================= */
+
+            if (
+                selectedType === 'single'
+            ) {
+
+                addHiddenDate(
+                    singleDate.value
+                );
+
+            }
+
+
+            /* ================================================
+               PLUSIEURS DATES
+            ================================================= */
+
+            if (
+                selectedType === 'multiple'
+            ) {
+
+                const inputs =
+                    getMultipleDateInputs();
+
+
+                inputs.forEach(input => {
+
+                    if (input.value) {
 
                         addHiddenDate(
                             input.value
                         );
 
-                    });
+                    }
 
-                }
+                });
+
+            }
 
 
-                /*
-                    PÉRIODE CONTINUE
-                */
+            /* ================================================
+               PÉRIODE CONTINUE
+            ================================================= */
+
+            if (
+                selectedType === 'range'
+            ) {
 
                 if (
-                    selectedType === 'range'
+                    startDate.value &&
+                    endDate.value
                 ) {
 
-                    if (
-                        startDate.value &&
-                        endDate.value
+                    const start =
+                        new Date(
+                            startDate.value +
+                            'T00:00:00'
+                        );
+
+                    const end =
+                        new Date(
+                            endDate.value +
+                            'T00:00:00'
+                        );
+
+
+                    const current =
+                        new Date(start);
+
+
+                    while (
+                        current <= end
                     ) {
 
-                        const start =
-                            new Date(
-                                startDate.value +
-                                'T00:00:00'
+                        const year =
+                            current.getFullYear();
+
+                        const month =
+                            String(
+                                current.getMonth() + 1
+                            ).padStart(
+                                2,
+                                '0'
                             );
 
-                        const end =
-                            new Date(
-                                endDate.value +
-                                'T00:00:00'
-                            );
-
-
-                        /*
-                            Ajouter chaque journée
-                            entre début et fin
-                        */
-
-                        const current =
-                            new Date(start);
-
-
-                        while (
-                            current <= end
-                        ) {
-
-                            const year =
-                                current.getFullYear();
-
-                            const month =
-                                String(
-                                    current.getMonth() + 1
-                                ).padStart(
-                                    2,
-                                    '0'
-                                );
-
-                            const day =
-                                String(
-                                    current.getDate()
-                                ).padStart(
-                                    2,
-                                    '0'
-                                );
-
-
-                            addHiddenDate(
-                                `${year}-${month}-${day}`
+                        const day =
+                            String(
+                                current.getDate()
+                            ).padStart(
+                                2,
+                                '0'
                             );
 
 
-                            current.setDate(
-                                current.getDate() + 1
-                            );
+                        addHiddenDate(
+                            `${year}-${month}-${day}`
+                        );
 
-                        }
+
+                        current.setDate(
+                            current.getDate() + 1
+                        );
 
                     }
 
                 }
 
             }
-        );
+
+        }
+    );
 
 });
 
