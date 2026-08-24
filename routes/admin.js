@@ -984,7 +984,6 @@ router.post(
    CARRIÈRES
 ========================================================= */
 
-
 /*
    Liste des postes
 */
@@ -996,24 +995,18 @@ router.get(
 
         try {
 
-            const jobs =
-                await Job.find({})
-                    .sort({
-                        createdAt: -1
-                    });
-
+            const jobs = await Job.find({})
+                .sort({
+                    createdAt: -1
+                });
 
             res.render(
                 'admin/jobs',
                 {
-
                     title: 'Gestion des postes',
-
                     jobs
-
                 }
             );
-
 
         } catch (error) {
 
@@ -1032,9 +1025,9 @@ router.get(
 );
 
 
-/*
-   Création d'un poste
-*/
+/* =========================================================
+   CRÉATION D'UN POSTE
+========================================================= */
 
 router.post(
     '/jobs',
@@ -1046,7 +1039,25 @@ router.post(
 
             let imageUrl = null;
 
-            // Si une image a été envoyée
+            /*
+               Transformation des détails.
+
+               Chaque ligne du textarea devient
+               un élément dans le tableau details.
+            */
+
+            const detailsArray = req.body.details
+                ? req.body.details
+                    .split('\n')
+                    .map(detail => detail.trim())
+                    .filter(detail => detail.length > 0)
+                : [];
+
+
+            /*
+               Si une image a été envoyée
+            */
+
             if (req.file) {
 
                 const result = await cloudinary.uploader.upload(
@@ -1057,19 +1068,33 @@ router.post(
                 );
 
                 imageUrl = result.secure_url;
+
             }
+
+
+            /*
+               Création du poste
+            */
 
             await Job.create({
 
                 title: req.body.title,
+
                 department: req.body.department,
+
                 summary: req.body.summary,
 
-                image: imageUrl
+                details: detailsArray,
+
+                image: imageUrl,
+
+                isActive: req.body.isActive === 'on'
 
             });
 
+
             res.redirect('/admin-vdp/jobs');
+
 
         } catch (error) {
 
@@ -1087,9 +1112,10 @@ router.post(
     }
 );
 
-/*
-   Modification d'un poste
-*/
+
+/* =========================================================
+   MODIFICATION D'UN POSTE
+========================================================= */
 
 router.post(
     '/jobs/:id',
@@ -1099,6 +1125,24 @@ router.post(
 
         try {
 
+            /*
+               Transformation des détails.
+
+               Un élément par ligne.
+            */
+
+            const detailsArray = req.body.details
+                ? req.body.details
+                    .split('\n')
+                    .map(detail => detail.trim())
+                    .filter(detail => detail.length > 0)
+                : [];
+
+
+            /*
+               Données à modifier
+            */
+
             const updateData = {
 
                 title: req.body.title,
@@ -1107,12 +1151,17 @@ router.post(
 
                 summary: req.body.summary,
 
+                details: detailsArray,
+
                 isActive: req.body.isActive === 'on'
 
             };
 
 
-            // Si une nouvelle image est envoyée
+            /*
+               Si une nouvelle image est envoyée
+            */
+
             if (req.file) {
 
                 const result = await cloudinary.uploader.upload(
@@ -1123,14 +1172,23 @@ router.post(
                 );
 
                 updateData.image = result.secure_url;
+
             }
 
+
+            /*
+               Mise à jour du poste
+            */
 
             await Job.findByIdAndUpdate(
 
                 req.params.id,
 
-                updateData
+                updateData,
+
+                {
+                    new: true
+                }
 
             );
 
@@ -1157,9 +1215,9 @@ router.post(
 );
 
 
-/*
-   Suppression d'un poste
-*/
+/* =========================================================
+   SUPPRESSION D'UN POSTE
+========================================================= */
 
 router.post(
     '/jobs/:id/delete',

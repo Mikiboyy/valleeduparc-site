@@ -1,61 +1,250 @@
 <section class="form-section">
 
-    <form action="/admin-vdp/jobs" method="POST" enctype="multipart/form-data" class="course-form">
+    <!-- =========================
+         AJOUTER UN POSTE
+    ========================== -->
+
+    <form 
+        action="/admin-vdp/jobs" 
+        method="POST" 
+        enctype="multipart/form-data" 
+        class="course-form"
+    >
 
         <h2>Ajouter un poste</h2>
 
-        <label>Titre du poste</label>
-        <input type="text" name="title" required>
 
-        <label>Département</label>
-        <input type="text" name="department" required>
+        <!-- TITRE -->
 
-        <label>Résumé</label>
-        <textarea name="summary" required></textarea>
+        <label for="title">
+            Titre du poste
+        </label>
 
-        <label>Image</label>
-        <input type="file" name="image" accept="image/*">
+        <input 
+            type="text" 
+            id="title"
+            name="title" 
+            required
+        >
+
+
+        <!-- DÉPARTEMENT -->
+
+        <label for="department">
+            Département
+        </label>
+
+        <input 
+            type="text" 
+            id="department"
+            name="department" 
+            required
+        >
+
+
+        <!-- RÉSUMÉ -->
+
+        <label for="summary">
+            Résumé
+        </label>
+
+        <textarea
+            id="summary"
+            name="summary"
+            placeholder="Courte description du poste"
+            required
+        ></textarea>
+
+
+        <!-- DÉTAILS -->
+
+        <label for="details">
+            Détails du poste
+        </label>
+
+        <p style="font-size: 14px;">
+            Écris un élément par ligne.
+        </p>
+
+        <textarea
+            id="details"
+            name="details"
+            rows="10"
+            placeholder="Assurer le support informatique
+Installer et configurer les équipements
+Diagnostiquer les problèmes techniques
+Effectuer la maintenance préventive"
+        ></textarea>
+
+
+        <!-- IMAGE -->
+
+        <label for="image">
+            Image
+        </label>
+
+        <input 
+            type="file" 
+            id="image"
+            name="image" 
+            accept="image/*"
+        >
+
+
+        <!-- ACTIF -->
 
         <label>
-            <input type="checkbox" name="isActive" checked>
+            <input 
+                type="checkbox" 
+                name="isActive" 
+                checked
+            >
+
             Actif
         </label>
 
-        <button type="submit" class="btn-primary">
+
+        <!-- BOUTON -->
+
+        <button 
+            type="submit" 
+            class="btn-primary"
+        >
             Ajouter le poste
         </button>
 
     </form>
 
-    <div class="course-form" style="margin-top:30px;">
+
+
+    <!-- =========================
+         POSTES EXISTANTS
+    ========================== -->
+
+    <div 
+        class="course-form" 
+        style="margin-top:30px;"
+    >
 
         <h2>Postes existants</h2>
 
+
         <% jobs.forEach(job => { %>
-            <form action="/admin-vdp/jobs/<%= job._id %>" method="POST" class="admin-price-row">
 
-                <label>Titre</label>
-                <input type="text" name="title" value="<%= job.title %>">
 
-                <label>Département</label>
-                <input type="text" name="department" value="<%= job.department %>">
+            <!-- MODIFIER LE POSTE -->
 
-                <label>Résumé</label>
-                <textarea name="summary"><%= job.summary %></textarea>
+            <form 
+                action="/admin-vdp/jobs/<%= job._id %>" 
+                method="POST" 
+                class="admin-price-row"
+            >
+
+
+                <!-- TITRE -->
 
                 <label>
-                    <input type="checkbox" name="isActive" <%= job.isActive ? 'checked' : '' %>>
-                    Actif
+                    Titre
                 </label>
 
-                <button type="submit">Enregistrer</button>
+                <input 
+                    type="text" 
+                    name="title" 
+                    value="<%= job.title %>"
+                    required
+                >
+
+
+                <!-- DÉPARTEMENT -->
+
+                <label>
+                    Département
+                </label>
+
+                <input 
+                    type="text" 
+                    name="department" 
+                    value="<%= job.department %>"
+                    required
+                >
+
+
+                <!-- RÉSUMÉ -->
+
+                <label>
+                    Résumé
+                </label>
+
+                <textarea 
+                    name="summary"
+                    required
+                ><%= job.summary %></textarea>
+
+
+                <!-- DÉTAILS -->
+
+                <label>
+                    Détails du poste
+                </label>
+
+                <p style="font-size: 14px;">
+                    Un élément par ligne.
+                </p>
+
+                <textarea 
+                    name="details"
+                    rows="10"
+                    placeholder="Un élément par ligne"
+                ><%= job.details && job.details.length > 0 ? job.details.join('\n') : '' %></textarea>
+
+
+                <!-- ACTIF -->
+
+                <label>
+
+                    <input 
+                        type="checkbox" 
+                        name="isActive" 
+                        <%= job.isActive ? 'checked' : '' %>
+                    >
+
+                    Actif
+
+                </label>
+
+
+                <!-- ENREGISTRER -->
+
+                <button type="submit">
+                    Enregistrer
+                </button>
+
 
             </form>
 
-            <form action="/admin-vdp/jobs/<%= job._id %>/delete" method="POST">
-                <button type="submit">Supprimer</button>
+
+            <!-- =========================
+                 SUPPRIMER LE POSTE
+            ========================== -->
+
+            <form 
+                action="/admin-vdp/jobs/<%= job._id %>/delete" 
+                method="POST"
+                onsubmit="return confirm('Voulez-vous vraiment supprimer ce poste?');"
+            >
+
+                <button type="submit">
+                    Supprimer
+                </button>
+
             </form>
+
+
+            <hr style="margin: 30px 0;">
+
+
         <% }) %>
+
 
     </div>
 
