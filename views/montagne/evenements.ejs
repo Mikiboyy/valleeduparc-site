@@ -55,7 +55,7 @@
 
                     <div class="event-card"
                          data-title="<%= event.title %>"
-                         data-date="<%= new Date(event.date).toLocaleDateString('fr-CA') %>"
+                         data-date="<%= event.dates && event.dates.length > 0 ? event.dates.map(date => new Date(date).toLocaleDateString('fr-CA') ).join(', ') : '' %>"
                          data-description="<%= event.description || '' %>"
                          data-image="<%= event.image || '/uploads/default.jpg' %>">
 
@@ -69,7 +69,26 @@
                         <div class="event-content">
 
                             <span class="date">
-                                <%= new Date(event.dates).toLocaleDateString('fr-CA') %>
+                                <% if (event.dates && event.dates.length > 0) { %>
+
+                                    <% event.dates.forEach((date, index) => { %>
+
+                                        <%= new Date(date).toLocaleDateString(
+                                            'fr-CA',
+                                            {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            }
+                                            ) %>
+
+                                            <% if (index < event.dates.length - 1) { %>
+                                                <br>
+                                                <% } %>
+
+                                                <% }) %>
+
+                                                <% } %>
                             </span>
 
                             <h3><%= event.title %></h3>
@@ -148,32 +167,50 @@ document.addEventListener("DOMContentLoaded", () => {
        CONVERSION DATE ÉVÉNEMENT
     ========================================= */
 
-    function getEventDate(event) {
+    function getEventDates(event) {
 
-        const date = new Date(event.date);
-
-        return new Date(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate()
-        );
+    if (!event.dates) {
+        return [];
     }
+
+    const dates = Array.isArray(event.dates)
+        ? event.dates
+        : [event.dates];
+
+    return dates
+        .filter(date => date)
+        .map(date => {
+
+            const eventDate = new Date(date);
+
+            return new Date(
+                eventDate.getUTCFullYear(),
+                eventDate.getUTCMonth(),
+                eventDate.getUTCDate()
+            );
+
+        })
+        .filter(date => !isNaN(date.getTime()));
+
+}
 
 
     /* =========================================
        FORMAT DATE AFFICHAGE
     ========================================= */
 
-    function formatEventDate(event) {
+    function formatEventDate(date) {
 
-        const date = getEventDate(event);
-
-        return date.toLocaleDateString("fr-CA", {
+    return date.toLocaleDateString(
+        "fr-CA",
+        {
             year: "numeric",
             month: "long",
             day: "numeric"
-        });
-    }
+        }
+    );
+
+}
 
 
     /* =========================================
@@ -285,23 +322,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         calendarEvents.forEach(event => {
 
-            const eventDate =
-                getEventDate(event);
-
-            const key =
-                formatDateKey(eventDate);
+    const eventDates =
+        getEventDates(event);
 
 
-            if (!eventsByDate[key]) {
+    eventDates.forEach(eventDate => {
 
-                eventsByDate[key] = [];
+        const key =
+            formatDateKey(eventDate);
 
-            }
+
+        if (!eventsByDate[key]) {
+
+            eventsByDate[key] = [];
+
+        }
 
 
-            eventsByDate[key].push(event);
+        eventsByDate[key].push({
+
+            ...event,
+
+            calendarDate:
+                eventDate
 
         });
+
+    });
+
+});
 
 
         /* =========================================
@@ -348,7 +397,9 @@ document.addEventListener("DOMContentLoaded", () => {
             dayEvents.forEach(event => {
 
                 const eventDate =
-                    formatEventDate(event);
+                    formatEventDate(
+                        event.calendarDate
+                    );
 
                 const eventTitle =
                     escapeHtml(
