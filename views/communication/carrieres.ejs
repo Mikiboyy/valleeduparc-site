@@ -109,19 +109,48 @@
                         <%= job.title %>
                     </h3>
 
-                    <p class="career-summary">
-                        <%= job.summary %>
-                    </p>
+                    <!-- RÉSUMÉ -->
+                     <% if (job.summary) { %>
+                        <p class="career-summary">
+                            <%= job.summary %>
+                        </p>
+                        <% } %>
 
-                    <button
-                        type="button"
-                        class="career-btn open-job-modal"
-                        data-job="<%= job._id %>"
-                    >
-                        VOIR LE POSTE
-                    </button>
 
-                </div>
+                        <!-- APERÇU DES RESPONSABILITÉS -->
+                         <% if (job.description) { %>
+
+                            <ul class="career-description-list">
+
+                                <% 
+                                const descriptionLines = job.description
+                                .split(/\r?\n/)
+                                .map(line => line.trim())
+                                .filter(line => line !== '');
+                                %>
+
+                                <% descriptionLines.slice(0, 4).forEach(line => { %>
+
+                                    <li>
+                                        <%= line.replace(/^[-•*]\s*/, '') %>
+                                    </li>
+
+                                    <% }) %>
+
+                                </ul>
+                                
+                                <% } %>
+
+
+                                <button
+                                type="button"
+                                class="career-btn open-job-modal"
+                                data-job="<%= job._id %>"
+                                >
+                                VOIR LE POSTE
+                            </button>
+
+                        </div>
 
             </article>
 
