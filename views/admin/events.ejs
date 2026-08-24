@@ -14,197 +14,121 @@
         <h2>Ajouter un événement</h2>
 
 
-        <!-- =========================
-             TITRE
-        ========================== -->
+        <!-- TITRE -->
 
-        <label>Titre</label>
+        <label for="title">
+            Titre
+        </label>
 
         <input
             type="text"
+            id="title"
             name="title"
             required
         >
 
 
-        <!-- =========================
-             DESCRIPTION
-        ========================== -->
+        <!-- DESCRIPTION -->
 
-        <label>Description</label>
+        <label for="description">
+            Description
+        </label>
 
         <textarea
+            id="description"
             name="description"
             required
         ></textarea>
 
 
-        <!-- =========================
-             TYPE DE DATE
-        ========================== -->
+        <!-- DATES -->
 
-        <label>Type de date</label>
+        <label>
+            Dates de l'événement
+        </label>
 
-        <select
-            name="dateType"
-            id="dateType"
-            required
+        <p
+            style="
+                font-size: 14px;
+                margin-top: 0;
+                margin-bottom: 15px;
+            "
         >
-
-            <option value="single">
-                Une seule journée
-            </option>
-
-            <option value="multiple">
-                Plusieurs dates
-            </option>
-
-            <option value="range">
-                Plusieurs jours consécutifs
-            </option>
-
-        </select>
+            Ajoute une ou plusieurs dates.
+        </p>
 
 
-        <!-- =========================
-             UNE SEULE DATE
-        ========================== -->
+        <!-- CONTENEUR DES DATES -->
 
-        <div
-            class="date-option"
-            id="singleDateOption"
-        >
+        <div id="datesContainer">
 
-            <label>Date de l'événement</label>
+            <div class="event-date-row">
 
-            <input
-                type="date"
-                name="date"
-                id="singleDate"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             PLUSIEURS DATES
-        ========================== -->
-
-        <div
-            class="date-option"
-            id="multipleDatesOption"
-            style="display:none;"
-        >
-
-            <label>Dates de l'événement</label>
-
-            <p style="font-size:14px;">
-                Ajoute une date pour chaque journée où l'événement a lieu.
-            </p>
-
-
-            <div id="datesContainer">
-
-                <!-- Première date -->
-
-                <div class="date-row">
-
-                    <input
-                        type="date"
-                        name="dates"
-                        class="multiple-date"
-                    >
-
-                    <button
-                        type="button"
-                        class="remove-date-btn"
-                    >
-                        ×
-                    </button>
-
-                </div>
+                <input
+                    type="date"
+                    name="dates"
+                    required
+                >
 
             </div>
 
-
-            <button
-                type="button"
-                id="addDateButton"
-                class="btn-secondary"
-            >
-                + Ajouter une date
-            </button>
-
         </div>
 
 
-        <!-- =========================
-             PÉRIODE CONTINUE
-        ========================== -->
+        <!-- BOUTON AJOUTER DATE -->
 
-        <div
-            class="date-option"
-            id="rangeDateOption"
-            style="display:none;"
+        <button
+            type="button"
+            id="addDateButton"
+            class="btn-secondary"
+            style="margin-top: 15px;"
         >
-
-            <label>Date de début</label>
-
-            <input
-                type="date"
-                name="startDate"
-                id="startDate"
-            >
+            + Ajouter une date
+        </button>
 
 
-            <label>Date de fin</label>
+        <!-- LIEU -->
 
-            <input
-                type="date"
-                name="endDate"
-                id="endDate"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             LIEU
-        ========================== -->
-
-        <label>Lieu</label>
+        <label
+            for="location"
+            style="margin-top: 25px;"
+        >
+            Lieu
+        </label>
 
         <input
             type="text"
+            id="location"
             name="location"
         >
 
 
-        <!-- =========================
-             IMAGE
-        ========================== -->
+        <!-- IMAGE -->
 
-        <label>Image</label>
+        <label for="image">
+            Image
+        </label>
 
         <input
             type="file"
+            id="image"
             name="image"
             accept="image/*"
         >
 
 
-        <!-- =========================
-             BOUTON
-        ========================== -->
+        <!-- BOUTON -->
 
         <button
             type="submit"
             class="btn-primary"
+            style="margin-top: 25px;"
         >
-            Ajouter l’événement
+            Ajouter l'événement
         </button>
 
     </form>
+
 
 
     <!-- =========================
@@ -213,10 +137,12 @@
 
     <div
         class="course-form"
-        style="margin-top:30px;"
+        style="margin-top: 30px;"
     >
 
-        <h2>Événements existants</h2>
+        <h2>
+            Événements existants
+        </h2>
 
 
         <% if (events && events.length > 0) { %>
@@ -225,71 +151,59 @@
 
                 <div class="admin-row">
 
-                    <strong>
-                        <%= event.title %>
-                    </strong>
+                    <div>
+
+                        <strong>
+                            <%= event.title %>
+                        </strong>
 
 
-                    <!-- =========================
-                         PLUSIEURS DATES
-                    ========================== -->
+                        <!-- AFFICHAGE DES DATES -->
 
-                    <% if (
-                        event.dates &&
-                        event.dates.length > 1
-                    ) { %>
+                        <% if (event.dates && event.dates.length > 0) { %>
 
-                        <span>
+                            <div
+                                style="
+                                    margin-top: 8px;
+                                    font-size: 14px;
+                                "
+                            >
 
-                            <% event.dates.forEach((date, index) => { %>
+                                <% event.dates.forEach((date, index) => { %>
 
-                                <%= new Date(date).toLocaleDateString('fr-CA') %>
+                                    <span>
 
-                                <%= index < event.dates.length - 1 ? ' • ' : '' %>
+                                        <%= new Date(date).toLocaleDateString(
+                                            'fr-CA',
+                                            {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            }
+                                        ) %>
 
-                            <% }) %>
+                                        <% if (index < event.dates.length - 1) { %>
+                                            <br>
+                                        <% } %>
 
-                        </span>
+                                    </span>
 
+                                <% }) %>
 
-                    <!-- =========================
-                         PÉRIODE CONTINUE
-                    ========================== -->
+                            </div>
 
-                    <% } else if (
-                        event.startDate &&
-                        event.endDate
-                    ) { %>
+                        <% } else { %>
 
-                        <span>
+                            <span>
+                                Aucune date
+                            </span>
 
-                            Du
-                            <%= new Date(event.startDate).toLocaleDateString('fr-CA') %>
+                        <% } %>
 
-                            au
-                            <%= new Date(event.endDate).toLocaleDateString('fr-CA') %>
-
-                        </span>
-
-
-                    <!-- =========================
-                         UNE SEULE DATE
-                    ========================== -->
-
-                    <% } else { %>
-
-                        <span>
-
-                            <%= new Date(event.date).toLocaleDateString('fr-CA') %>
-
-                        </span>
-
-                    <% } %>
+                    </div>
 
 
-                    <!-- =========================
-                         SUPPRIMER
-                    ========================== -->
+                    <!-- SUPPRESSION -->
 
                     <form
                         action="/admin-vdp/events/<%= event._id %>/delete"
@@ -318,6 +232,164 @@
 
 </section>
 
+
+
+<!-- =========================
+     JAVASCRIPT AJOUT DES DATES
+========================= -->
+
+<script>
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        const datesContainer =
+            document.getElementById('datesContainer');
+
+        const addDateButton =
+            document.getElementById('addDateButton');
+
+
+        /*
+            AJOUTER UNE DATE
+        */
+
+        addDateButton.addEventListener(
+            'click',
+            function () {
+
+                const dateRow =
+                    document.createElement('div');
+
+
+                dateRow.className =
+                    'event-date-row';
+
+
+                const dateInput =
+                    document.createElement('input');
+
+
+                dateInput.type =
+                    'date';
+
+
+                dateInput.name =
+                    'dates';
+
+
+                dateInput.required =
+                    true;
+
+
+                /*
+                    BOUTON SUPPRIMER
+                */
+
+                const removeButton =
+                    document.createElement('button');
+
+
+                removeButton.type =
+                    'button';
+
+
+                removeButton.className =
+                    'remove-date-button';
+
+
+                removeButton.innerHTML =
+                    '&times;';
+
+
+                removeButton.setAttribute(
+                    'aria-label',
+                    'Supprimer cette date'
+                );
+
+
+                /*
+                    SUPPRESSION
+                */
+
+                removeButton.addEventListener(
+                    'click',
+                    function () {
+
+                        const allDateRows =
+                            datesContainer.querySelectorAll(
+                                '.event-date-row'
+                            );
+
+
+                        /*
+                            On doit toujours garder
+                            au moins une date.
+                        */
+
+                        if (allDateRows.length <= 1) {
+
+                            const input =
+                                dateRow.querySelector(
+                                    'input[type="date"]'
+                                );
+
+
+                            input.value =
+                                '';
+
+                            return;
+
+                        }
+
+
+                        dateRow.remove();
+
+                    }
+                );
+
+
+                /*
+                    AJOUT DES ÉLÉMENTS
+                */
+
+                dateRow.appendChild(
+                    dateInput
+                );
+
+
+                dateRow.appendChild(
+                    removeButton
+                );
+
+
+                datesContainer.appendChild(
+                    dateRow
+                );
+
+
+                /*
+                    Ouvre automatiquement
+                    le sélecteur de date
+                */
+
+                dateInput.focus();
+
+
+                if (typeof dateInput.showPicker === 'function') {
+
+                    dateInput.showPicker();
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
 
 <!-- =========================
      JAVASCRIPT GESTION DATES

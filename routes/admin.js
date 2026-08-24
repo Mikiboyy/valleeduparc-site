@@ -291,31 +291,44 @@ router.get(
 
 router.post(
     '/events',
-    requireRole('evenement'),
+    requireRole('event'),
     upload.single('image'),
     async (req, res) => {
 
         try {
 
-            const {
-                title,
-                description,
-                dates,
-                location
-            } = req.body;
+            let dates = req.body.dates;
 
-            let imageUrl = null;
+            /*
+                Si une seule date est envoyée,
+                Express peut retourner une string
+                au lieu d'un tableau.
+            */
 
-            const eventDates = Array.isArray(dates)
-                ? dates
-                : [dates];
+            if (!Array.isArray(dates)) {
 
-            const validDates = eventDates
-                .filter(date => date && date.trim() !== '')
-                .map(date => new Date(date));
+                dates = [dates];
+
+            }
 
 
-            if (validDates.length === 0) {
+            /*
+                Nettoyer les dates vides
+            */
+
+            dates = dates.filter(date => {
+
+                return date &&
+                    date.trim() !== '';
+
+            });
+
+
+            /*
+                Vérifier qu'il y a au moins une date
+            */
+
+            if (dates.length === 0) {
 
                 return res.status(400).send(
                     'Veuillez sélectionner au moins une date.'
@@ -324,39 +337,64 @@ router.post(
             }
 
 
+            /*
+                IMAGE CLOUDINARY
+            */
+
+            let imageUrl = '';
+
+
             if (req.file) {
 
                 const result =
                     await cloudinary.uploader.upload(
+
                         req.file.path,
+
                         {
-                            folder: 'valleeduparc/events'
+                            folder:
+                                'valleeduparc/events'
                         }
+
                     );
 
-                imageUrl = result.secure_url;
+
+                imageUrl =
+                    result.secure_url;
 
             }
 
+
             /*
-                Création de l'événement
+                CRÉATION DE L'ÉVÉNEMENT
             */
 
             await Event.create({
 
-                title,
+                title:
+                    req.body.title,
 
-                description,
+                description:
+                    req.body.description,
 
-                dates: validDates,
+                dates:
+                    dates.map(
+                        date => new Date(date)
+                    ),
 
-                location,
+                location:
+                    req.body.location || '',
 
-                image: imageUrl
+                image:
+                    imageUrl
 
             });
 
-            res.redirect('/admin-vdp/events');
+
+            res.redirect(
+                '/admin-vdp/events'
+            );
+
 
         } catch (error) {
 
@@ -364,6 +402,7 @@ router.post(
                 'Erreur création événement :',
                 error
             );
+
 
             res.status(500).send(
                 'Erreur lors de la création de l’événement.'
