@@ -301,194 +301,230 @@
 
 <script>
 
-document.addEventListener(
-    'DOMContentLoaded',
-    () => {
+document.addEventListener('DOMContentLoaded', () => {
 
-        const dateType =
-            document.getElementById('dateType');
+    const dateType =
+        document.getElementById('dateType');
 
+    const singleDateOption =
+        document.getElementById('singleDateOption');
 
-        const singleDateOption =
-            document.getElementById(
-                'singleDateOption'
-            );
+    const multipleDatesOption =
+        document.getElementById('multipleDatesOption');
 
+    const rangeDateOption =
+        document.getElementById('rangeDateOption');
 
-        const multipleDatesOption =
-            document.getElementById(
-                'multipleDatesOption'
-            );
+    const singleDate =
+        document.getElementById('singleDate');
 
+    const startDate =
+        document.getElementById('startDate');
 
-        const rangeDateOption =
-            document.getElementById(
-                'rangeDateOption'
-            );
+    const endDate =
+        document.getElementById('endDate');
 
+    const datesContainer =
+        document.getElementById('datesContainer');
 
-        const singleDate =
-            document.getElementById(
-                'singleDate'
-            );
+    const addDateButton =
+        document.getElementById('addDateButton');
 
 
-        const startDate =
-            document.getElementById(
-                'startDate'
-            );
+    /* =========================================
+       AFFICHER LE BON TYPE DE DATE
+    ========================================= */
+
+    function updateDateOptions() {
+
+        const type = dateType.value;
 
 
-        const endDate =
-            document.getElementById(
-                'endDate'
-            );
+        // Cacher toutes les options
+
+        singleDateOption.style.display = 'none';
+
+        multipleDatesOption.style.display = 'none';
+
+        rangeDateOption.style.display = 'none';
 
 
-        /*
-           CHANGER LE TYPE DE DATE
-        */
+        // Enlever les champs requis
 
-        function updateDateOptions() {
+        singleDate.required = false;
 
-            const type =
-                dateType.value;
+        startDate.required = false;
 
-
-            /*
-               CACHER TOUT
-            */
-
-            singleDateOption.style.display =
-                'none';
-
-            multipleDatesOption.style.display =
-                'none';
-
-            rangeDateOption.style.display =
-                'none';
+        endDate.required = false;
 
 
-            /*
-               ENLEVER REQUIRED
-            */
+        // Une seule date
 
-            singleDate.required =
-                false;
+        if (type === 'single') {
 
-            startDate.required =
-                false;
+            singleDateOption.style.display = 'block';
 
-            endDate.required =
-                false;
+            singleDate.required = true;
+
+        }
 
 
-            /*
-               UNE DATE
-            */
+        // Plusieurs dates
 
-            if (type === 'single') {
+        else if (type === 'multiple') {
 
-                singleDateOption.style.display =
-                    'block';
+            multipleDatesOption.style.display = 'block';
 
-                singleDate.required =
-                    true;
+            const dateInputs =
+                document.querySelectorAll('.multiple-date');
 
-            }
+            if (dateInputs.length > 0) {
 
-
-            /*
-               PLUSIEURS DATES
-            */
-
-            if (type === 'multiple') {
-
-                multipleDatesOption.style.display =
-                    'block';
-
-            }
-
-
-            /*
-               PÉRIODE
-            */
-
-            if (type === 'range') {
-
-                rangeDateOption.style.display =
-                    'block';
-
-                startDate.required =
-                    true;
-
-                endDate.required =
-                    true;
+                dateInputs[0].required = true;
 
             }
 
         }
 
 
-        /*
-           CHANGEMENT DU SELECT
-        */
+        // Période continue
 
-        dateType.addEventListener(
-            'change',
-            updateDateOptions
-        );
+        else if (type === 'range') {
 
+            rangeDateOption.style.display = 'block';
 
-        /*
-           AJOUTER UNE DATE
-        */
+            startDate.required = true;
 
-        document
-            .getElementById('addDateButton')
-            .addEventListener(
-                'click',
-                () => {
+            endDate.required = true;
 
-                    const container =
-                        document.getElementById(
-                            'datesContainer'
-                        );
-
-
-                    const input =
-                        document.createElement(
-                            'input'
-                        );
-
-
-                    input.type =
-                        'date';
-
-
-                    input.name =
-                        'dates';
-
-
-                    input.className =
-                        'multiple-date';
-
-
-                    container.appendChild(
-                        input
-                    );
-
-                }
-            );
-
-
-        /*
-           INITIALISER
-        */
-
-        updateDateOptions();
+        }
 
     }
-);
+
+
+    /* =========================================
+       CHANGER LE TYPE
+    ========================================= */
+
+    dateType.addEventListener(
+        'change',
+        updateDateOptions
+    );
+
+
+    /* =========================================
+       AJOUTER UNE NOUVELLE DATE
+    ========================================= */
+
+    addDateButton.addEventListener(
+        'click',
+        () => {
+
+            const dateRow =
+                document.createElement('div');
+
+            dateRow.className =
+                'date-row';
+
+
+            const input =
+                document.createElement('input');
+
+            input.type =
+                'date';
+
+            input.name =
+                'dates';
+
+            input.className =
+                'multiple-date';
+
+
+            const removeButton =
+                document.createElement('button');
+
+            removeButton.type =
+                'button';
+
+            removeButton.className =
+                'remove-date-btn';
+
+            removeButton.textContent =
+                '×';
+
+
+            dateRow.appendChild(input);
+
+            dateRow.appendChild(removeButton);
+
+            datesContainer.appendChild(dateRow);
+
+
+            /*
+               Met automatiquement le curseur
+               sur la nouvelle date
+            */
+
+            input.focus();
+
+        }
+    );
+
+
+    /* =========================================
+       SUPPRIMER UNE DATE
+    ========================================= */
+
+    datesContainer.addEventListener(
+        'click',
+        event => {
+
+            if (
+                event.target.classList.contains(
+                    'remove-date-btn'
+                )
+            ) {
+
+                const dateRows =
+                    datesContainer.querySelectorAll(
+                        '.date-row'
+                    );
+
+
+                /*
+                   Garder toujours au moins
+                   un champ de date
+                */
+
+                if (dateRows.length > 1) {
+
+                    event.target
+                        .closest('.date-row')
+                        .remove();
+
+                } else {
+
+                    const input =
+                        event.target
+                            .closest('.date-row')
+                            .querySelector('input');
+
+                    input.value = '';
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       INITIALISATION
+    ========================================= */
+
+    updateDateOptions();
+
+});
 
 </script>
