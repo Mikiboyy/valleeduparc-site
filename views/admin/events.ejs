@@ -1,33 +1,199 @@
 <section class="form-section">
 
-    <form action="/admin-vdp/events" method="POST" enctype="multipart/form-data" class="course-form">
+    <!-- =========================
+         AJOUTER UN ÉVÉNEMENT
+    ========================== -->
+
+    <form
+        action="/admin-vdp/events"
+        method="POST"
+        enctype="multipart/form-data"
+        class="course-form"
+    >
 
         <h2>Ajouter un événement</h2>
 
+
+        <!-- TITRE -->
+
         <label>Titre</label>
-        <input type="text" name="title" required>
+
+        <input
+            type="text"
+            name="title"
+            required
+        >
+
+
+        <!-- DESCRIPTION -->
 
         <label>Description</label>
-        <textarea name="description" required></textarea>
 
-        <label>Date</label>
-        <input type="date" name="date" required>
+        <textarea
+            name="description"
+            required
+        ></textarea>
+
+
+        <!-- TYPE DE DATE -->
+
+        <label>Type de date</label>
+
+        <select
+            name="dateType"
+            id="dateType"
+            required
+        >
+
+            <option value="single">
+                Une seule journée
+            </option>
+
+            <option value="multiple">
+                Plusieurs dates
+            </option>
+
+            <option value="range">
+                Plusieurs jours consécutifs
+            </option>
+
+        </select>
+
+
+        <!-- =========================
+             UNE SEULE DATE
+        ========================== -->
+
+        <div
+            class="date-option"
+            id="singleDateOption"
+        >
+
+            <label>Date de l'événement</label>
+
+            <input
+                type="date"
+                name="date"
+                id="singleDate"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             PLUSIEURS DATES
+        ========================== -->
+
+        <div
+            class="date-option"
+            id="multipleDatesOption"
+            style="display:none;"
+        >
+
+            <label>Dates de l'événement</label>
+
+            <p style="font-size:14px;">
+                Ajoute une date pour chaque journée où
+                l'événement a lieu.
+            </p>
+
+
+            <div id="datesContainer">
+
+                <input
+                    type="date"
+                    name="dates"
+                    class="multiple-date"
+                >
+
+            </div>
+
+
+            <button
+                type="button"
+                id="addDateButton"
+                class="btn-secondary"
+            >
+                + Ajouter une date
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             PÉRIODE
+        ========================== -->
+
+        <div
+            class="date-option"
+            id="rangeDateOption"
+            style="display:none;"
+        >
+
+            <label>Date de début</label>
+
+            <input
+                type="date"
+                name="startDate"
+                id="startDate"
+            >
+
+
+            <label>Date de fin</label>
+
+            <input
+                type="date"
+                name="endDate"
+                id="endDate"
+            >
+
+        </div>
+
+
+        <!-- LIEU -->
 
         <label>Lieu</label>
-        <input type="text" name="location">
+
+        <input
+            type="text"
+            name="location"
+        >
+
+
+        <!-- IMAGE -->
 
         <label>Image</label>
-        <input type="file" name="image">
 
-        <button type="submit" class="btn-primary">
+        <input
+            type="file"
+            name="image"
+            accept="image/*"
+        >
+
+
+        <!-- BOUTON -->
+
+        <button
+            type="submit"
+            class="btn-primary"
+        >
             Ajouter l’événement
         </button>
 
     </form>
 
-    <div class="course-form" style="margin-top:30px;">
+
+    <!-- =========================
+         ÉVÉNEMENTS EXISTANTS
+    ========================== -->
+
+    <div
+        class="course-form"
+        style="margin-top:30px;"
+    >
 
         <h2>Événements existants</h2>
+
 
         <% if (events && events.length > 0) { %>
 
@@ -35,16 +201,73 @@
 
                 <div class="admin-row">
 
-                    <strong><%= event.title %></strong>
+                    <strong>
+                        <%= event.title %>
+                    </strong>
 
-                    <span>
-                        <%= new Date(event.date).toLocaleDateString('fr-CA') %>
-                    </span>
 
-                    <form action="/admin-vdp/events/<%= event._id %>/delete" method="POST">
+                    <!-- UNE SEULE DATE -->
+
+                    <% if (
+                        event.dates &&
+                        event.dates.length > 1
+                    ) { %>
+
+                        <span>
+
+                            <% event.dates.forEach((date, index) => { %>
+
+                                <%= new Date(date).toLocaleDateString('fr-CA') %>
+
+                                <%= index < event.dates.length - 1 ? ' • ' : '' %>
+
+                            <% }) %>
+
+                        </span>
+
+
+                    <!-- PÉRIODE -->
+
+                    <% } else if (
+                        event.startDate &&
+                        event.endDate
+                    ) { %>
+
+                        <span>
+
+                            Du
+                            <%= new Date(event.startDate).toLocaleDateString('fr-CA') %>
+
+                            au
+                            <%= new Date(event.endDate).toLocaleDateString('fr-CA') %>
+
+                        </span>
+
+
+                    <!-- DATE UNIQUE -->
+
+                    <% } else { %>
+
+                        <span>
+
+                            <%= new Date(event.date).toLocaleDateString('fr-CA') %>
+
+                        </span>
+
+                    <% } %>
+
+
+                    <!-- SUPPRIMER -->
+
+                    <form
+                        action="/admin-vdp/events/<%= event._id %>/delete"
+                        method="POST"
+                    >
+
                         <button type="submit">
                             Supprimer
                         </button>
+
                     </form>
 
                 </div>
@@ -53,10 +276,211 @@
 
         <% } else { %>
 
-            <p>Aucun événement pour le moment.</p>
+            <p>
+                Aucun événement pour le moment.
+            </p>
 
         <% } %>
 
     </div>
 
 </section>
+
+
+<!-- =========================
+     JAVASCRIPT GESTION DATES
+========================== -->
+
+<script>
+
+document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+
+        const dateType =
+            document.getElementById('dateType');
+
+
+        const singleDateOption =
+            document.getElementById(
+                'singleDateOption'
+            );
+
+
+        const multipleDatesOption =
+            document.getElementById(
+                'multipleDatesOption'
+            );
+
+
+        const rangeDateOption =
+            document.getElementById(
+                'rangeDateOption'
+            );
+
+
+        const singleDate =
+            document.getElementById(
+                'singleDate'
+            );
+
+
+        const startDate =
+            document.getElementById(
+                'startDate'
+            );
+
+
+        const endDate =
+            document.getElementById(
+                'endDate'
+            );
+
+
+        /*
+           CHANGER LE TYPE DE DATE
+        */
+
+        function updateDateOptions() {
+
+            const type =
+                dateType.value;
+
+
+            /*
+               CACHER TOUT
+            */
+
+            singleDateOption.style.display =
+                'none';
+
+            multipleDatesOption.style.display =
+                'none';
+
+            rangeDateOption.style.display =
+                'none';
+
+
+            /*
+               ENLEVER REQUIRED
+            */
+
+            singleDate.required =
+                false;
+
+            startDate.required =
+                false;
+
+            endDate.required =
+                false;
+
+
+            /*
+               UNE DATE
+            */
+
+            if (type === 'single') {
+
+                singleDateOption.style.display =
+                    'block';
+
+                singleDate.required =
+                    true;
+
+            }
+
+
+            /*
+               PLUSIEURS DATES
+            */
+
+            if (type === 'multiple') {
+
+                multipleDatesOption.style.display =
+                    'block';
+
+            }
+
+
+            /*
+               PÉRIODE
+            */
+
+            if (type === 'range') {
+
+                rangeDateOption.style.display =
+                    'block';
+
+                startDate.required =
+                    true;
+
+                endDate.required =
+                    true;
+
+            }
+
+        }
+
+
+        /*
+           CHANGEMENT DU SELECT
+        */
+
+        dateType.addEventListener(
+            'change',
+            updateDateOptions
+        );
+
+
+        /*
+           AJOUTER UNE DATE
+        */
+
+        document
+            .getElementById('addDateButton')
+            .addEventListener(
+                'click',
+                () => {
+
+                    const container =
+                        document.getElementById(
+                            'datesContainer'
+                        );
+
+
+                    const input =
+                        document.createElement(
+                            'input'
+                        );
+
+
+                    input.type =
+                        'date';
+
+
+                    input.name =
+                        'dates';
+
+
+                    input.className =
+                        'multiple-date';
+
+
+                    container.appendChild(
+                        input
+                    );
+
+                }
+            );
+
+
+        /*
+           INITIALISER
+        */
+
+        updateDateOptions();
+
+    }
+);
+
+</script>
