@@ -1307,3 +1307,22 @@
     }
 
 }
+
+.career-description-list {
+    margin: 20px 0;
+    padding-left: 22px;
+
+    color: #596579;
+}
+
+.career-description-list li {
+    margin-bottom: 8px;
+
+    line-height: 1.5;
+
+    font-size: 0.95rem;
+}
+
+.career-description-list li::marker {
+    color: #243650;
+}
