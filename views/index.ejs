@@ -124,9 +124,11 @@
                     <article class="home-event-card">
 
                         <img
-                            src="/uploads/<%= event.image || 'default.jpg' %>"
-                            alt="<%= event.title %>"
-                            class="home-event-image"
+                        src="<%= event.image || '/uploads/default.jpg' %>"
+                        alt="<%= event.title %>"
+                        class="home-event-image"
+                        loading="lazy"
+                        decoding="async"
                         >
 
                         <div class="home-event-content">
