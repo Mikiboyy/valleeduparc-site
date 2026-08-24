@@ -355,7 +355,6 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-
     /*
         ÉLÉMENTS
     */
@@ -517,13 +516,35 @@ document.addEventListener('DOMContentLoaded', function () {
         AJOUTER UNE DATE
     */
 
-    function createDateRow() {
+    function createDateRow(autoFocus = false) {
+
+        /*
+            Créer la ligne
+        */
 
         const dateRow =
             document.createElement('div');
 
         dateRow.className =
             'event-date-row';
+
+
+        /*
+            Permet au champ et au bouton ×
+            d'être côte à côte
+        */
+
+        dateRow.style.display =
+            'flex';
+
+        dateRow.style.alignItems =
+            'center';
+
+        dateRow.style.gap =
+            '10px';
+
+        dateRow.style.width =
+            '100%';
 
 
         /*
@@ -538,6 +559,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         dateInput.name =
             'multipleDates';
+
+        dateInput.required =
+            false;
+
+        dateInput.style.flex =
+            '1';
+
+        dateInput.style.minWidth =
+            '0';
 
 
         /*
@@ -560,6 +590,9 @@ document.addEventListener('DOMContentLoaded', function () {
             'aria-label',
             'Supprimer cette date'
         );
+
+        removeButton.style.flexShrink =
+            '0';
 
 
         /*
@@ -594,8 +627,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 /*
-                    La première date restante
-                    devient required
+                    Mettre le premier champ
+                    restant en required
                 */
 
                 const remainingInputs =
@@ -611,6 +644,64 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     }
                 );
+
+            }
+        );
+
+
+        /*
+            AJOUTER AUTOMATIQUEMENT
+            UN NOUVEAU CHAMP APRÈS
+            LA SÉLECTION D'UNE DATE
+        */
+
+        dateInput.addEventListener(
+            'change',
+            function () {
+
+                /*
+                    Si aucune date,
+                    ne rien faire
+                */
+
+                if (!dateInput.value) {
+
+                    return;
+
+                }
+
+
+                const rows =
+                    datesContainer.querySelectorAll(
+                        '.event-date-row'
+                    );
+
+
+                /*
+                    Vérifier si cette ligne
+                    est la dernière
+                */
+
+                const lastRow =
+                    rows[rows.length - 1];
+
+
+                /*
+                    Si oui, créer immédiatement
+                    le prochain champ vide
+
+                    IMPORTANT :
+                    false empêche le nouveau
+                    champ de voler le focus
+                    et de causer un bug avec
+                    le calendrier.
+                */
+
+                if (dateRow === lastRow) {
+
+                    createDateRow(false);
+
+                }
 
             }
         );
@@ -634,10 +725,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         /*
-            FOCUS
+            Donner le focus seulement
+            lorsqu'on ajoute manuellement
+            une nouvelle date.
+
+            Cela évite le bug lorsque
+            le champ est créé automatiquement.
         */
 
-        dateInput.focus();
+        if (autoFocus) {
+
+            dateInput.focus();
+
+        }
 
     }
 
@@ -650,7 +750,14 @@ document.addEventListener('DOMContentLoaded', function () {
         'click',
         function () {
 
-            createDateRow();
+            /*
+                true = donner le focus
+                puisque l'utilisateur
+                a volontairement ajouté
+                une nouvelle date
+            */
+
+            createDateRow(true);
 
         }
     );
@@ -696,9 +803,9 @@ document.addEventListener('DOMContentLoaded', function () {
     /*
         AVANT L'ENVOI DU FORMULAIRE
 
-        On transforme tout en champs
-        "dates" pour que ton backend
-        puisse facilement les recevoir.
+        On transforme les dates sélectionnées
+        en champs "dates" pour que le backend
+        puisse les recevoir correctement.
     */
 
     document.querySelector('.course-form')
@@ -736,7 +843,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 function addHiddenDate(value) {
 
                     if (!value) {
+
                         return;
+
                     }
 
 
