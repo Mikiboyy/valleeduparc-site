@@ -55,7 +55,7 @@ router.post('/', async (req, res) => {
             courriel,
             dateEvenement,
             heureArrivee,
-            nombrePersonnes,
+            nombreBar,
             message
         } = req.body;
 
