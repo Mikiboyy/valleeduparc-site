@@ -36,7 +36,20 @@
                                     <div class="ticket-details">
                                         <strong>Horaire :</strong> 9h à 16h
                                     </div>
-                                    <% } %>
+
+                                    <% } else if (ticket.ticketType === 'Journée +') { %>
+
+                                        <div class="ticket-details">
+                                            <strong>Horaire :</strong> 9h à 21h30
+                                        </div>
+
+                                        <% } else if (ticket.ticketType === 'Soirée') { %>
+
+                                            <div class="ticket-details">
+                                                <strong>Horaire :</strong> 16h à 21h30
+                                            </div>
+
+                                            <% } %>
 
                                 <div class="pricing-grid">
 
