@@ -866,3 +866,26 @@
     }
 
 }
+
+.ticket-details {
+    grid-column: 1 / -1;
+
+    margin-top: 10px;
+    padding-top: 10px;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ticket-detail {
+    display: flex;
+    gap: 6px;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    opacity: 0.8;
+}
+
+.ticket-detail span {
+    font-weight: bold;
+}
