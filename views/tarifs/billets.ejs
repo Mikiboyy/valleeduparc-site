@@ -43,71 +43,53 @@
 
                                             <div class="price-column">
                                                 <small>En ligne</small>
-
                                                 <strong>
                                                     <% if (item.isFree) { %>
                                                         Gratuit
-                                                        <% } else if (item.onlinePrice !== null) { %>
-                                                            <%= item.onlinePrice %>$
-                                                            <% } %>
-                                                        </strong>
-                                                    </div>
-
-                                                    <div class="price-column">
-                                                        <small>Billetterie</small>
-
-                                                        <strong>
-                                                            <% if (item.isFree) { %>
-                                                                Gratuit
-                                                                <% } else if (item.counterPrice !== null) { %>
-                                                                    <%= item.counterPrice %>$
-                                                                    <% } %>
-                                                                </strong>
-                                                            </div>
-
-                                                            <% if (item.details && item.details.length > 0) { %>
-
-                                                                <div class="ticket-details">
-
-                                                                    <% item.details.forEach(detail => { %>
-
-                                                                        <div class="ticket-detail">
-                                                                            <span>•</span>
-                                                                            <%= detail %>
-                                                                        </div>
-
-                                                                        <% }) %>
-
-                                                                    </div>
-
-                                                                    <% } %>
-                                                                </div>
-
-                                                                <% }) %>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                    <% }) %>
-
-                                                </div>
-
+                                                    <% } else if (item.onlinePrice !== null) { %>
+                                                        <%= item.onlinePrice %>$
+                                                    <% } %>
+                                                </strong>
                                             </div>
-                                            
-                                            <% }) %>
 
-                                            <% } else { %>
+                                            <div class="price-column">
+                                                <small>Billetterie</small>
+                                                <strong>
+                                                    <% if (item.isFree) { %>
+                                                        Gratuit
+                                                    <% } else if (item.counterPrice !== null) { %>
+                                                        <%= item.counterPrice %>$
+                                                    <% } %>
+                                                </strong>
+                                            </div>
 
-                                                <p class="no-event">
-                                                    Aucun prix disponible pour le moment.
-                                                </p>
+                                        </div>
 
-                                                <% } %>
+                                    <% }) %>
 
-                                            </section>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+            </div>
+
+        <% }) %>
+
+    <% } else { %>
+
+        <p class="no-event">
+            Aucun prix disponible pour le moment.
+        </p>
+
+    <% } %>
+
+</section>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {

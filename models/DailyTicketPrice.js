@@ -37,10 +37,6 @@ const dailyTicketPriceSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    details: {
-        type: [String],
-        default: []
-    },
     isActive: {
         type: Boolean,
         default: true
