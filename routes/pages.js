@@ -34,7 +34,6 @@ router.get('/ski_adapte', pagesController.ski_adapte);
 router.get('/patrouille', pagesController.patrouille);
 router.get('/corpo_form', pagesController.corpo_form);
 router.get('/salle_form', pagesController.salle_form);
-router.post('/salle_form', pagesController.envoyerSalleForm);
 router.get('/giftcard', pagesController.giftcard);
 
 router.get('/info_carrieres', pagesController.info_carrieres);
