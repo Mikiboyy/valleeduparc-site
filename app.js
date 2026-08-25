@@ -15,6 +15,7 @@ const carrieresRoutes = require('./routes/carrieres');
 const locationRoutes = require('./routes/location');
 const giftCardRoutes = require('./routes/giftCards');
 const contactRoutes = require('./routes/contact');
+const salleFormRoutes = require('./routes/salleFormRoutes');
 
 const app = express();
 
