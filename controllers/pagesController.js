@@ -4,6 +4,7 @@ const SubscriptionPrice = require('../models/SubscriptionPrice');
 const DailyTicketPrice = require('../models/DailyTicketPrice');
 const RentalItem = require('../models/RentalItem');
 const SchoolCourse = require('../models/SchoolCourse');
+const salleFormRoutes = require('./routes/salleFormRoutes');
 
 /* PAGE ACCUEIL */
 exports.home = async (req, res) => {
