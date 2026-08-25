@@ -172,6 +172,8 @@ app.use('/contact', contactRoutes);
 
 app.use('/', pagesRoutes);
 
+app.use('/salle_form', salleFormRoutes);
+
 
 /* =========================
    404
