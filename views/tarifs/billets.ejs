@@ -31,6 +31,13 @@
 
                             <div class="pricing-content">
 
+                                <% if (ticket.ticketType === 'Journée') { %>
+
+                                    <div class="ticket-details">
+                                        <strong>Horaire :</strong> 9h à 16h
+                                    </div>
+                                    <% } %>
+
                                 <div class="pricing-grid">
 
                                     <% ticket.items.forEach(item => { %>
