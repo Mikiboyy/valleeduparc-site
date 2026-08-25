@@ -61,6 +61,24 @@
 
         </div>
 
+        <% if (typeof success !== 'undefined' && success) { %>
+
+            <div class="form-message form-success">
+                ✓ Votre demande a été envoyée avec succès.
+                Un courriel de confirmation vous a été envoyé.
+            </div>
+
+            <% } %>
+
+
+            <% if (typeof error !== 'undefined' && error) { %>
+
+                <div class="form-message form-error">
+                    ✕ Une erreur est survenue lors de l'envoi de votre demande.
+                    Veuillez réessayer.
+                </div>
+
+                <% } %>
 
         <form action="/corpo_form" method="POST" class="corporatif-form">
 

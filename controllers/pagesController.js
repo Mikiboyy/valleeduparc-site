@@ -312,9 +312,17 @@ exports.corpo = (req, res) => {
 };
 
 exports.corpo_form = (req, res) => {
+
     res.render('service/corpo_form', {
-        title: "Activité groupe corporatifs"
+
+        title: "Activité groupe corporatifs",
+
+        success: req.query.success === '1',
+
+        error: req.query.error === '1'
+
     });
+
 };
 
 exports.salle_form = (req, res) => {

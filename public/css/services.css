@@ -1218,3 +1218,79 @@
 
     border: 1px solid #efb5b5;
 }
+
+/* =========================
+   MESSAGE FORMULAIRE
+========================= */
+
+.form-message {
+    width: 100%;
+    max-width: 780px;
+
+    margin: 0 auto 30px;
+
+    padding: 18px 24px;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    text-align: center;
+
+    animation: formMessageAppear 0.4s ease;
+}
+
+
+/* SUCCÈS */
+
+.form-success {
+    color: #1f6b45;
+
+    background: #e8f7ee;
+
+    border: 1px solid #8ed4aa;
+}
+
+
+/* ERREUR */
+
+.form-error {
+    color: #a12b2b;
+
+    background: #fdeaea;
+
+    border: 1px solid #ef9a9a;
+}
+
+
+/* ANIMATION */
+
+@keyframes formMessageAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .form-message {
+        padding: 15px 18px;
+
+        font-size: 14px;
+
+        margin-bottom: 20px;
+    }
+
+}
