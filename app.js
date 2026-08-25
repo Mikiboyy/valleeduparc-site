@@ -16,6 +16,7 @@ const locationRoutes = require('./routes/location');
 const giftCardRoutes = require('./routes/giftCards');
 const contactRoutes = require('./routes/contact');
 const salleFormRoutes = require('./routes/salleFormRoutes');
+const corpoFormRoutes = require('./routes/corpoFormRoutes');
 
 const app = express();
 
@@ -175,6 +176,7 @@ app.use('/', pagesRoutes);
 
 app.use('/salle_form', salleFormRoutes);
 
+app.use('/corpo_form', corpoFormRoutes);
 
 /* =========================
    404
