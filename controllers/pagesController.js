@@ -319,52 +319,10 @@ exports.corpo_form = (req, res) => {
 
 exports.salle_form = (req, res) => {
     res.render('service/salle_form', {
-        title: "Location de salle"
+        title: "Location de salle",
+        success: req.query.success === '1',
+        error: req.query.error === '1'
     });
-};
-
-exports.envoyerSalleForm = async (req, res) => {
-    try {
-        const {
-            client,
-            adresse,
-            ville,
-            codePostal,
-            telephone,
-            courriel,
-            dateEvenement,
-            heureArrivee,
-            nombreBar,
-            message
-        } = req.body;
-
-        console.log('NOUVELLE DEMANDE DE LOCATION DE SALLE :');
-
-        console.log({
-            client,
-            adresse,
-            ville,
-            codePostal,
-            telephone,
-            courriel,
-            dateEvenement,
-            heureArrivee,
-            nombreBar,
-            message
-        });
-
-        res.redirect('/salle_form');
-
-    } catch (error) {
-        console.error(
-            'Erreur lors de l’envoi du formulaire de salle :',
-            error
-        );
-
-        res.status(500).send(
-            'Une erreur est survenue lors de l’envoi de votre demande.'
-        );
-    }
 };
 
 exports.montagne = (req, res) => {
