@@ -364,58 +364,62 @@ exports.faq = async (req, res) => {
         const faqs = await FAQ.find({
             isActive: true
         }).sort({
+            category: 1,
             order: 1
         });
 
         console.log('FAQ TROUVÉES :', faqs.length);
 
         const groupedFaqs = {
-            abonnements: faqs.filter(
-                faq => faq.category === 'abonnements'
-            ),
-
-            billets: faqs.filter(
-                faq => faq.category === 'billets'
-            ),
-
-            ecole: faqs.filter(
-                faq => faq.category === 'ecole'
-            ),
-
-            location: faqs.filter(
-                faq => faq.category === 'location'
-            ),
-
-            general: faqs.filter(
-                faq => faq.category === 'general'
-            )
+            abonnements: [],
+            montagne: [],
+            pistes: [],
+            horaires: [],
+            nousJoindre: []
         };
 
+        faqs.forEach(faq => {
+
+            if (groupedFaqs[faq.category]) {
+                groupedFaqs[faq.category].push(faq);
+            }
+
+        });
+
+        console.log('FAQ GROUPÉES :', {
+            abonnements: groupedFaqs.abonnements.length,
+            montagne: groupedFaqs.montagne.length,
+            pistes: groupedFaqs.pistes.length,
+            horaires: groupedFaqs.horaires.length,
+            nousJoindre: groupedFaqs.nousJoindre.length
+        });
+
         res.render('communication/faq', {
-            title: "F.A.Q.",
+            title: 'FAQ',
             groupedFaqs
         });
 
     } catch (error) {
 
         console.error(
-            'Erreur lors du chargement du FAQ :',
+            'Erreur lors du chargement des FAQ :',
             error
         );
 
         res.render('communication/faq', {
-            title: "F.A.Q.",
+            title: 'FAQ',
             groupedFaqs: {
                 abonnements: [],
-                billets: [],
-                ecole: [],
-                location: [],
-                general: []
+                montagne: [],
+                pistes: [],
+                horaires: [],
+                nousJoindre: []
             }
         });
 
     }
 };
+
 exports.carrieres = async (req, res) => {
     try {
         let jobs = [];
