@@ -52,23 +52,40 @@
         </div>
 
 
-        <!-- ONGLETS -->
+        <!-- =========================
+             ONGLETS
+        ========================== -->
         <div class="faq-tabs">
 
-            <button class="faq-tab active" data-target="abonnements">
+            <button
+                type="button"
+                class="faq-tab active"
+                data-target="abonnements"
+            >
                 Infos abonnements
             </button>
 
-            <button class="faq-tab" data-target="montagne">
+            <button
+                type="button"
+                class="faq-tab"
+                data-target="montagne"
+            >
                 Montagne et pistes
             </button>
 
-            <button class="faq-tab" data-target="horaire">
+            <button
+                type="button"
+                class="faq-tab"
+                data-target="horaire"
+            >
                 Horaire et nous joindre
             </button>
 
-            <!-- NOUVEL ONGLET -->
-            <button class="faq-tab" data-target="credit-maladie">
+            <button
+                type="button"
+                class="faq-tab"
+                data-target="credit-maladie"
+            >
                 Demande de crédit - Maladie
             </button>
 
@@ -78,134 +95,36 @@
         <!-- ========================================
              INFOS ABONNEMENTS
         ========================================= -->
-        <div class="faq-category active" id="abonnements">
+        <div
+            class="faq-category active"
+            id="abonnements"
+        >
 
             <div class="faq-category-title">
                 Infos abonnements
             </div>
 
+
             <% if (
                 groupedFaqs.abonnements &&
                 groupedFaqs.abonnements.length > 0
-                ) { %>
-
-                    <% groupedFaqs.abonnements.forEach(faq => { %>
-
-                        <div class="faq-item">
-
-                            <button
-                            type="button"
-                            class="faq-question"
-                            >
-
-                            <%= faq.question %>
-
-                            <span>+</span>
-
-                        </button>
-
-                        <div class="faq-answer">
-
-                            <p>
-                                <%= faq.answer %>
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <% }) %>
-
-                    <% } else { %>
-
-                        <p>
-                            Aucune question disponible.
-                        </p>
-
-                        <% } %>
-        </div>
-
-
-        <!-- ========================================
-             MONTAGNE ET PISTES
-        ========================================= -->
-        <div class="faq-category" id="montagne">
-
-            <div class="faq-category-title">
-                Montagne et pistes
-            </div>
-
-            <% if (
-                groupedFaqs.montagne &&
-                groupedFaqs.montagne.length > 0
             ) { %>
 
-                <% groupedFaqs.montagne.forEach(faq => { %>
+                <% groupedFaqs.abonnements.forEach(faq => { %>
 
                     <div class="faq-item">
 
                         <button
-                        type="button"
-                        class="faq-question"
-                        >
-
-                        <%= faq.question %>
-
-                        <span>+</span>
-
-                    </button>
-
-                    <div class="faq-answer">
-
-                        <p>
-                            <%= faq.answer %>
-                        </p>
-
-                    </div>
-
-                </div>
-
-            <% }) %>
-
-        <% } else { %>
-
-            <p>
-                Aucune question disponible.
-            </p>
-
-        <% } %>
-
-    </div>
-
-
-        <!-- ========================================
-             HORAIRE ET NOUS JOINDRE
-        ========================================= -->
-        <div class="faq-category" id="horaire">
-
-            <div class="faq-category-title">
-                Horaire et nous joindre
-            </div>
-
-            <% if (
-                groupedFaqs.horaire &&
-                groupedFaqs.horaire.length > 0
-                ) { %>
-
-                    <% groupedFaqs.horaire.forEach(faq => { %>
-
-                        <div class="faq-item">
-
-                            <button
                             type="button"
                             class="faq-question"
-                            >
+                        >
 
                             <%= faq.question %>
 
                             <span>+</span>
 
                         </button>
+
 
                         <div class="faq-answer">
 
@@ -220,6 +139,222 @@
                 <% }) %>
 
             <% } else { %>
+
+                <p>
+                    Aucune question disponible.
+                </p>
+
+            <% } %>
+
+        </div>
+
+
+        <!-- ========================================
+             MONTAGNE ET PISTES
+        ========================================= -->
+        <div
+            class="faq-category"
+            id="montagne"
+        >
+
+            <div class="faq-category-title">
+                Montagne et pistes
+            </div>
+
+
+            <!-- QUESTIONS MONTAGNE -->
+
+            <% if (
+                groupedFaqs.montagne &&
+                groupedFaqs.montagne.length > 0
+            ) { %>
+
+                <% groupedFaqs.montagne.forEach(faq => { %>
+
+                    <div class="faq-item">
+
+                        <button
+                            type="button"
+                            class="faq-question"
+                        >
+
+                            <%= faq.question %>
+
+                            <span>+</span>
+
+                        </button>
+
+
+                        <div class="faq-answer">
+
+                            <p>
+                                <%= faq.answer %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            <% } %>
+
+
+            <!-- QUESTIONS PISTES -->
+
+            <% if (
+                groupedFaqs.pistes &&
+                groupedFaqs.pistes.length > 0
+            ) { %>
+
+                <% groupedFaqs.pistes.forEach(faq => { %>
+
+                    <div class="faq-item">
+
+                        <button
+                            type="button"
+                            class="faq-question"
+                        >
+
+                            <%= faq.question %>
+
+                            <span>+</span>
+
+                        </button>
+
+
+                        <div class="faq-answer">
+
+                            <p>
+                                <%= faq.answer %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            <% } %>
+
+
+            <!-- AUCUNE QUESTION -->
+
+            <% if (
+                (!groupedFaqs.montagne ||
+                groupedFaqs.montagne.length === 0)
+                &&
+                (!groupedFaqs.pistes ||
+                groupedFaqs.pistes.length === 0)
+            ) { %>
+
+                <p>
+                    Aucune question disponible.
+                </p>
+
+            <% } %>
+
+        </div>
+
+
+        <!-- ========================================
+             HORAIRE ET NOUS JOINDRE
+        ========================================= -->
+        <div
+            class="faq-category"
+            id="horaire"
+        >
+
+            <div class="faq-category-title">
+                Horaire et nous joindre
+            </div>
+
+
+            <!-- QUESTIONS HORAIRE -->
+
+            <% if (
+                groupedFaqs.horaires &&
+                groupedFaqs.horaires.length > 0
+            ) { %>
+
+                <% groupedFaqs.horaires.forEach(faq => { %>
+
+                    <div class="faq-item">
+
+                        <button
+                            type="button"
+                            class="faq-question"
+                        >
+
+                            <%= faq.question %>
+
+                            <span>+</span>
+
+                        </button>
+
+
+                        <div class="faq-answer">
+
+                            <p>
+                                <%= faq.answer %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            <% } %>
+
+
+            <!-- QUESTIONS NOUS JOINDRE -->
+
+            <% if (
+                groupedFaqs.nousJoindre &&
+                groupedFaqs.nousJoindre.length > 0
+            ) { %>
+
+                <% groupedFaqs.nousJoindre.forEach(faq => { %>
+
+                    <div class="faq-item">
+
+                        <button
+                            type="button"
+                            class="faq-question"
+                        >
+
+                            <%= faq.question %>
+
+                            <span>+</span>
+
+                        </button>
+
+
+                        <div class="faq-answer">
+
+                            <p>
+                                <%= faq.answer %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            <% } %>
+
+
+            <!-- AUCUNE QUESTION -->
+
+            <% if (
+                (!groupedFaqs.horaires ||
+                groupedFaqs.horaires.length === 0)
+                &&
+                (!groupedFaqs.nousJoindre ||
+                groupedFaqs.nousJoindre.length === 0)
+            ) { %>
 
                 <p>
                     Aucune question disponible.
