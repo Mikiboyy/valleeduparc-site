@@ -11,7 +11,7 @@ const Admin = require('../models/Admin');
 const Event = require('../models/Event');
 const Job = require('../models/Job');
 const Trail = require('../models/trail');
-const FAQ = require('../models/FAQ');
+const FAQ = require('../models/Faq');
 
 const SubscriptionPrice = require('../models/SubscriptionPrice');
 const DailyTicketPrice = require('../models/DailyTicketPrice');
