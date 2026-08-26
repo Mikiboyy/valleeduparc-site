@@ -8,6 +8,7 @@ const faqSchema = new mongoose.Schema(
             enum: [
                 'abonnements',
                 'montagne',
+                'pistes',
                 'horaire'
             ]
         },

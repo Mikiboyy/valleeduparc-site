@@ -364,8 +364,8 @@ exports.faq = async (req, res) => {
 
         const faqs = await FAQ.find({
             isActive: true
-        }).sort({
-            category: 1,
+        })
+        .sort({
             order: 1
         });
 
@@ -374,9 +374,11 @@ exports.faq = async (req, res) => {
 
 
         const groupedFaqs = {
+
             abonnements: [],
             montagne: [],
             horaire: []
+
         };
 
 
@@ -386,13 +388,6 @@ exports.faq = async (req, res) => {
 
                 groupedFaqs[faq.category].push(faq);
 
-            } else {
-
-                console.log(
-                    'CATÉGORIE FAQ NON RECONNUE :',
-                    faq.category
-                );
-
             }
 
         });
@@ -400,25 +395,22 @@ exports.faq = async (req, res) => {
 
         console.log('FAQ GROUPÉES :', {
 
-            abonnements:
-                groupedFaqs.abonnements.length,
+            abonnements: groupedFaqs.abonnements.length,
 
-            montagne:
-                groupedFaqs.montagne.length,
+            montagne: groupedFaqs.montagne.length,
 
-            horaire:
-                groupedFaqs.horaire.length
+            horaire: groupedFaqs.horaire.length
 
         });
 
 
-        res.render(
-            'communication/faq',
-            {
-                title: 'FAQ',
-                groupedFaqs
-            }
-        );
+        res.render('communication/faq', {
+
+            title: 'FAQ',
+
+            groupedFaqs
+
+        });
 
 
     } catch (error) {
@@ -429,18 +421,19 @@ exports.faq = async (req, res) => {
         );
 
 
-        res.render(
-            'communication/faq',
-            {
-                title: 'FAQ',
+        res.render('communication/faq', {
 
-                groupedFaqs: {
-                    abonnements: [],
-                    montagne: [],
-                    horaire: []
-                }
+            title: 'FAQ',
+
+            groupedFaqs: {
+
+                abonnements: [],
+                montagne: [],
+                horaire: []
+
             }
-        );
+
+        });
 
     }
 

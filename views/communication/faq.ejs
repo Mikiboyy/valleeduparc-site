@@ -150,12 +150,10 @@
 
 
         <!-- ========================================
-             MONTAGNE ET PISTES
-        ========================================= -->
-        <div
-            class="faq-category"
-            id="montagne"
-        >
+         MONTAGNE ET PISTES
+         ========================================= -->
+         
+         <div class="faq-category" id="montagne">
 
             <div class="faq-category-title">
                 Montagne et pistes
@@ -167,38 +165,91 @@
             <% if (
                 groupedFaqs.montagne &&
                 groupedFaqs.montagne.length > 0
-            ) { %>
+                ) { %>
 
-                <% groupedFaqs.montagne.forEach(faq => { %>
+                    <% groupedFaqs.montagne.forEach(faq => { %>
 
-                    <div class="faq-item">
+                        <div class="faq-item">
 
-                        <button
-                            type="button"
-                            class="faq-question"
-                        >
+                            <button type="button" class="faq-question">
 
-                            <%= faq.question %>
+                                <%= faq.question %>
 
-                            <span>+</span>
+                                <span>+</span>
 
-                        </button>
+                            </button>
 
 
-                        <div class="faq-answer">
+                            <div class="faq-answer">
 
-                            <p>
-                                <%= faq.answer %>
-                            </p>
+                                <p>
+                                    <%= faq.answer %>
+                                </p>
+
+                            </div>
 
                         </div>
 
-                    </div>
+                        <% }) %>
 
-                <% }) %>
+                        <% } %>
 
-            <% } %>
 
+    <!-- QUESTIONS PISTES -->
+
+    <% if (
+        groupedFaqs.pistes &&
+        groupedFaqs.pistes.length > 0
+    ) { %>
+
+        <% groupedFaqs.pistes.forEach(faq => { %>
+
+            <div class="faq-item">
+
+                <button
+                    type="button"
+                    class="faq-question"
+                >
+
+                    <%= faq.question %>
+
+                    <span>+</span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+                        <%= faq.answer %>
+                    </p>
+
+                </div>
+
+            </div>
+
+        <% }) %>
+
+    <% } %>
+
+
+    <% if (
+        (!groupedFaqs.montagne ||
+        groupedFaqs.montagne.length === 0)
+
+        &&
+
+        (!groupedFaqs.pistes ||
+        groupedFaqs.pistes.length === 0)
+    ) { %>
+
+        <p>
+            Aucune question disponible.
+        </p>
+
+    <% } %>
+
+</div>
 
         <!-- ========================================
              HORAIRE ET NOUS JOINDRE
@@ -249,6 +300,8 @@
                 <% }) %>
 
             <% } %>
+
+        </div>
 
         <!-- ========================================
              DEMANDE DE CRÉDIT - MALADIE
