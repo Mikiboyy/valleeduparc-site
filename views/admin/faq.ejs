@@ -1,74 +1,143 @@
 <section class="admin-section">
 
-    <h1>Gestion du FAQ</h1>
+    <div class="admin-page-header">
+        <div>
+            <span class="admin-page-subtitle">
+                ADMINISTRATION
+            </span>
+
+            <h1>Gestion du FAQ</h1>
+
+            <p>
+                Ajoutez, modifiez ou supprimez les questions
+                affichées sur la page FAQ.
+            </p>
+        </div>
+    </div>
 
 
     <!-- =========================
          AJOUTER UNE QUESTION
     ========================== -->
 
-    <div class="admin-card">
+    <div class="admin-card faq-add-card">
 
-        <h2>Ajouter une question</h2>
+        <div class="admin-card-header">
+
+            <div>
+                <h2>Ajouter une question</h2>
+
+                <p>
+                    Créez une nouvelle question pour le FAQ.
+                </p>
+            </div>
+
+        </div>
+
 
         <form
             action="/admin-vdp/faq"
             method="POST"
-            class="admin-form"
+            class="admin-form faq-admin-form"
         >
 
-            <div class="form-group">
+            <div class="faq-form-grid">
 
-                <label>Catégorie</label>
 
-                <input
-                    type="text"
-                    name="category"
-                    placeholder="Ex : Billets"
-                    required
-                >
+                <!-- CATÉGORIE -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Catégorie
+                    </label>
+
+                    <select
+                        id="category"
+                        name="category"
+                        required
+                    >
+
+                        <option value="">
+                            Sélectionner une catégorie
+                        </option>
+
+                        <option value="abonnements">
+                            Infos abonnements
+                        </option>
+
+                        <option value="montagne">
+                            Montagne et pistes
+                        </option>
+
+                        <option value="horaire">
+                            Horaire et nous joindre
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ORDRE -->
+
+                <div class="form-group">
+
+                    <label for="order">
+                        Ordre d'affichage
+                    </label>
+
+                    <input
+                        id="order"
+                        type="number"
+                        name="order"
+                        value="0"
+                    >
+
+                </div>
 
             </div>
 
 
+            <!-- QUESTION -->
+
             <div class="form-group">
 
-                <label>Question</label>
+                <label for="question">
+                    Question
+                </label>
 
                 <input
+                    id="question"
                     type="text"
                     name="question"
+                    placeholder="Ex : Comment acheter un abonnement?"
                     required
                 >
 
             </div>
 
 
+            <!-- RÉPONSE -->
+
             <div class="form-group">
 
-                <label>Réponse</label>
+                <label for="answer">
+                    Réponse
+                </label>
 
                 <textarea
+                    id="answer"
                     name="answer"
-                    rows="5"
+                    rows="6"
+                    placeholder="Écrivez la réponse ici..."
                     required
                 ></textarea>
 
             </div>
 
 
-            <div class="form-group">
-
-                <label>Ordre d'affichage</label>
-
-                <input
-                    type="number"
-                    name="order"
-                    value="0"
-                >
-
-            </div>
-
+            <!-- ACTIVE -->
 
             <div class="form-group checkbox-group">
 
@@ -80,21 +149,25 @@
                         checked
                     >
 
-                    Question active
+                    <span>
+                        Question active
+                    </span>
 
                 </label>
 
             </div>
 
 
-            <button
-                type="submit"
-                class="btn-primary"
-            >
+            <div class="faq-form-actions">
 
-                AJOUTER LA QUESTION
+                <button
+                    type="submit"
+                    class="btn-primary"
+                >
+                    AJOUTER LA QUESTION
+                </button>
 
-            </button>
+            </div>
 
         </form>
 
@@ -105,128 +178,307 @@
          LISTE DES QUESTIONS
     ========================== -->
 
+    <div class="faq-list-header">
+
+        <div>
+
+            <h2>
+                Questions existantes
+            </h2>
+
+            <p>
+                Modifiez les informations ou supprimez une question.
+            </p>
+
+        </div>
+
+
+        <div class="faq-count">
+
+            <%= faqs ? faqs.length : 0 %>
+            question<%= faqs && faqs.length !== 1 ? 's' : '' %>
+
+        </div>
+
+    </div>
+
+
     <% if (faqs && faqs.length > 0) { %>
 
-        <% faqs.forEach(faq => { %>
 
-            <div class="admin-card faq-admin-card">
+        <div class="faq-admin-list">
 
-                <form
-                    action="/admin-vdp/faq/<%= faq._id %>"
-                    method="POST"
-                    class="admin-form"
-                >
 
-                    <div class="form-group">
+            <% faqs.forEach((faq, index) => { %>
 
-                        <label>Catégorie</label>
 
-                        <input
-                            type="text"
-                            name="category"
-                            value="<%= faq.category %>"
-                            required
+                <div class="admin-card faq-admin-card">
+
+
+                    <!-- EN-TÊTE CARTE -->
+
+                    <div class="faq-card-header">
+
+                        <div class="faq-card-number">
+
+                            <%= index + 1 %>
+
+                        </div>
+
+
+                        <div class="faq-card-title">
+
+                            <h3>
+                                <%= faq.question %>
+                            </h3>
+
+                            <span class="faq-category-badge">
+
+                                <% if (faq.category === 'abonnements') { %>
+
+                                    Infos abonnements
+
+                                <% } else if (faq.category === 'montagne') { %>
+
+                                    Montagne et pistes
+
+                                <% } else if (faq.category === 'horaire') { %>
+
+                                    Horaire et nous joindre
+
+                                <% } else { %>
+
+                                    <%= faq.category %>
+
+                                <% } %>
+
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="
+                                faq-status
+                                <%= faq.isActive
+                                    ? 'status-active'
+                                    : 'status-inactive'
+                                %>
+                            "
                         >
 
-                    </div>
+                            <%= faq.isActive
+                                ? 'Active'
+                                : 'Inactive'
+                            %>
 
-
-                    <div class="form-group">
-
-                        <label>Question</label>
-
-                        <input
-                            type="text"
-                            name="question"
-                            value="<%= faq.question %>"
-                            required
-                        >
+                        </div>
 
                     </div>
 
 
-                    <div class="form-group">
+                    <!-- FORMULAIRE MODIFICATION -->
 
-                        <label>Réponse</label>
-
-                        <textarea
-                            name="answer"
-                            rows="5"
-                            required
-                        ><%= faq.answer %></textarea>
-
-                    </div>
+                    <form
+                        action="/admin-vdp/faq/<%= faq._id %>"
+                        method="POST"
+                        class="admin-form faq-admin-form"
+                    >
 
 
-                    <div class="form-group">
-
-                        <label>Ordre</label>
-
-                        <input
-                            type="number"
-                            name="order"
-                            value="<%= faq.order %>"
-                        >
-
-                    </div>
+                        <div class="faq-form-grid">
 
 
-                    <div class="form-group checkbox-group">
+                            <!-- CATÉGORIE -->
 
-                        <label>
+                            <div class="form-group">
+
+                                <label>
+                                    Catégorie
+                                </label>
+
+                                <select
+                                    name="category"
+                                    required
+                                >
+
+                                    <option
+                                        value="abonnements"
+                                        <%= faq.category === 'abonnements'
+                                            ? 'selected'
+                                            : ''
+                                        %>
+                                    >
+                                        Infos abonnements
+                                    </option>
+
+
+                                    <option
+                                        value="montagne"
+                                        <%= faq.category === 'montagne'
+                                            ? 'selected'
+                                            : ''
+                                        %>
+                                    >
+                                        Montagne et pistes
+                                    </option>
+
+
+                                    <option
+                                        value="horaire"
+                                        <%= faq.category === 'horaire'
+                                            ? 'selected'
+                                            : ''
+                                        %>
+                                    >
+                                        Horaire et nous joindre
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- ORDRE -->
+
+                            <div class="form-group">
+
+                                <label>
+                                    Ordre d'affichage
+                                </label>
+
+                                <input
+                                    type="number"
+                                    name="order"
+                                    value="<%= faq.order %>"
+                                >
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- QUESTION -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Question
+                            </label>
 
                             <input
-                                type="checkbox"
-                                name="isActive"
-                                <%= faq.isActive ? 'checked' : '' %>
+                                type="text"
+                                name="question"
+                                value="<%= faq.question %>"
+                                required
                             >
 
-                            Active
-
-                        </label>
-
-                    </div>
+                        </div>
 
 
-                    <button
-                        type="submit"
-                        class="btn-primary"
+                        <!-- RÉPONSE -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Réponse
+                            </label>
+
+                            <textarea
+                                name="answer"
+                                rows="6"
+                                required
+                            ><%= faq.answer %></textarea>
+
+                        </div>
+
+
+                        <!-- ACTIVE -->
+
+                        <div class="form-group checkbox-group">
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="isActive"
+                                    <%= faq.isActive
+                                        ? 'checked'
+                                        : ''
+                                    %>
+                                >
+
+                                <span>
+                                    Question active
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="faq-card-actions">
+
+                            <button
+                                type="submit"
+                                class="btn-primary"
+                            >
+                                ENREGISTRER LES MODIFICATIONS
+                            </button>
+
+                        </div>
+
+                    </form>
+
+
+                    <!-- SUPPRESSION -->
+
+                    <form
+                        action="/admin-vdp/faq/<%= faq._id %>/delete"
+                        method="POST"
+                        class="faq-delete-form"
+                        onsubmit="return confirm('Voulez-vous vraiment supprimer cette question?');"
                     >
 
-                        ENREGISTRER
+                        <button
+                            type="submit"
+                            class="btn-danger"
+                        >
+                            SUPPRIMER LA QUESTION
+                        </button>
 
-                    </button>
-
-                </form>
+                    </form>
 
 
-                <form
-                    action="/admin-vdp/faq/<%= faq._id %>/delete"
-                    method="POST"
-                    onsubmit="return confirm('Voulez-vous vraiment supprimer cette question?');"
-                >
+                </div>
 
-                    <button
-                        type="submit"
-                        class="btn-danger"
-                    >
 
-                        SUPPRIMER
+            <% }) %>
 
-                    </button>
 
-                </form>
+        </div>
 
-            </div>
-
-        <% }) %>
 
     <% } else { %>
 
-        <p>
-            Aucune question dans le FAQ pour le moment.
-        </p>
+
+        <div class="admin-card faq-empty-state">
+
+            <h3>
+                Aucune question
+            </h3>
+
+            <p>
+                Il n'y a aucune question dans le FAQ pour le moment.
+            </p>
+
+        </div>
+
 
     <% } %>
+
 
 </section>
