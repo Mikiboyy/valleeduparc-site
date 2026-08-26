@@ -398,7 +398,7 @@ exports.faq = async (req, res) => {
             error
         );
 
-        res.render('faq', {
+        res.render('communication/faq', {
             groupedFaqs: {
                 abonnements: [],
                 montagne: [],
