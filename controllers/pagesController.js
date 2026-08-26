@@ -387,7 +387,7 @@ exports.faq = async (req, res) => {
 
         });
 
-        res.render('faq', {
+        res.render('communication/faq', {
             groupedFaqs
         });
 
