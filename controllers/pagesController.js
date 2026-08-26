@@ -408,7 +408,9 @@ exports.faq = async (req, res) => {
 
             title: 'FAQ',
 
-            groupedFaqs
+            groupedFaqs,
+            
+            success: req.query.success
 
         });
 

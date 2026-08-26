@@ -645,6 +645,20 @@
                         Formulaire de demande de crédit / remboursement
                     </h3>
 
+                    <% if (success) { %>
+
+                        <div class="form-success">
+
+                            <strong>✓ Votre demande a été envoyée avec succès.</strong>
+
+                            <p>
+                                Un courriel de confirmation vous a été envoyé.
+                            </p>
+
+                        </div>
+
+                        <% } %>
+
 
                     <form
                         action="/demande-credit-maladie"
