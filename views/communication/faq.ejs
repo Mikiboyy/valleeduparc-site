@@ -200,63 +200,6 @@
             <% } %>
 
 
-            <!-- QUESTIONS PISTES -->
-
-            <% if (
-                groupedFaqs.pistes &&
-                groupedFaqs.pistes.length > 0
-            ) { %>
-
-                <% groupedFaqs.pistes.forEach(faq => { %>
-
-                    <div class="faq-item">
-
-                        <button
-                            type="button"
-                            class="faq-question"
-                        >
-
-                            <%= faq.question %>
-
-                            <span>+</span>
-
-                        </button>
-
-
-                        <div class="faq-answer">
-
-                            <p>
-                                <%= faq.answer %>
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                <% }) %>
-
-            <% } %>
-
-
-            <!-- AUCUNE QUESTION -->
-
-            <% if (
-                (!groupedFaqs.montagne ||
-                groupedFaqs.montagne.length === 0)
-                &&
-                (!groupedFaqs.pistes ||
-                groupedFaqs.pistes.length === 0)
-            ) { %>
-
-                <p>
-                    Aucune question disponible.
-                </p>
-
-            <% } %>
-
-        </div>
-
-
         <!-- ========================================
              HORAIRE ET NOUS JOINDRE
         ========================================= -->
@@ -273,11 +216,11 @@
             <!-- QUESTIONS HORAIRE -->
 
             <% if (
-                groupedFaqs.horaires &&
-                groupedFaqs.horaires.length > 0
+                groupedFaqs.horaire &&
+                groupedFaqs.horaire.length > 0
             ) { %>
 
-                <% groupedFaqs.horaires.forEach(faq => { %>
+                <% groupedFaqs.horaire.forEach(faq => { %>
 
                     <div class="faq-item">
 
@@ -306,64 +249,6 @@
                 <% }) %>
 
             <% } %>
-
-
-            <!-- QUESTIONS NOUS JOINDRE -->
-
-            <% if (
-                groupedFaqs.nousJoindre &&
-                groupedFaqs.nousJoindre.length > 0
-            ) { %>
-
-                <% groupedFaqs.nousJoindre.forEach(faq => { %>
-
-                    <div class="faq-item">
-
-                        <button
-                            type="button"
-                            class="faq-question"
-                        >
-
-                            <%= faq.question %>
-
-                            <span>+</span>
-
-                        </button>
-
-
-                        <div class="faq-answer">
-
-                            <p>
-                                <%= faq.answer %>
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                <% }) %>
-
-            <% } %>
-
-
-            <!-- AUCUNE QUESTION -->
-
-            <% if (
-                (!groupedFaqs.horaires ||
-                groupedFaqs.horaires.length === 0)
-                &&
-                (!groupedFaqs.nousJoindre ||
-                groupedFaqs.nousJoindre.length === 0)
-            ) { %>
-
-                <p>
-                    Aucune question disponible.
-                </p>
-
-            <% } %>
-
-        </div>
-
 
         <!-- ========================================
              DEMANDE DE CRÉDIT - MALADIE

@@ -370,49 +370,28 @@ exports.faq = async (req, res) => {
         });
 
 
-        console.log(
-            'FAQ TROUVÉES :',
-            faqs.length
-        );
+        console.log('FAQ TROUVÉES :', faqs.length);
 
 
         const groupedFaqs = {
             abonnements: [],
-            montagnePistes: [],
-            horairesNousJoindre: []
+            montagne: [],
+            horaire: []
         };
 
 
         faqs.forEach(faq => {
 
-            // INFOS ABONNEMENTS
-            if (
-                faq.category === 'abonnements'
-            ) {
+            if (groupedFaqs[faq.category]) {
 
-                groupedFaqs.abonnements.push(faq);
+                groupedFaqs[faq.category].push(faq);
 
-            }
+            } else {
 
-
-            // MONTAGNE ET PISTES
-            if (
-                faq.category === 'montagne' ||
-                faq.category === 'pistes'
-            ) {
-
-                groupedFaqs.montagnePistes.push(faq);
-
-            }
-
-
-            // HORAIRE ET NOUS JOINDRE
-            if (
-                faq.category === 'horaires' ||
-                faq.category === 'nousJoindre'
-            ) {
-
-                groupedFaqs.horairesNousJoindre.push(faq);
+                console.log(
+                    'CATÉGORIE FAQ NON RECONNUE :',
+                    faq.category
+                );
 
             }
 
@@ -424,22 +403,23 @@ exports.faq = async (req, res) => {
             abonnements:
                 groupedFaqs.abonnements.length,
 
-            montagnePistes:
-                groupedFaqs.montagnePistes.length,
+            montagne:
+                groupedFaqs.montagne.length,
 
-            horairesNousJoindre:
-                groupedFaqs.horairesNousJoindre.length
-
-        });
-
-
-        res.render('communication/faq', {
-
-            title: 'FAQ',
-
-            groupedFaqs
+            horaire:
+                groupedFaqs.horaire.length
 
         });
+
+
+        res.render(
+            'communication/faq',
+            {
+                title: 'FAQ',
+                groupedFaqs
+            }
+        );
+
 
     } catch (error) {
 
@@ -449,17 +429,18 @@ exports.faq = async (req, res) => {
         );
 
 
-        res.render('communication/faq', {
+        res.render(
+            'communication/faq',
+            {
+                title: 'FAQ',
 
-            title: 'FAQ',
-
-            groupedFaqs: {
-                abonnements: [],
-                montagnePistes: [],
-                horairesNousJoindre: []
+                groupedFaqs: {
+                    abonnements: [],
+                    montagne: [],
+                    horaire: []
+                }
             }
-
-        });
+        );
 
     }
 
