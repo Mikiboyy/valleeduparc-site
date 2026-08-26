@@ -359,48 +359,63 @@ exports.contact = (req, res) => {
 };
 
 exports.faq = async (req, res) => {
-
     try {
 
         const faqs = await FAQ.find({
             isActive: true
         }).sort({
-            category: 1,
             order: 1
         });
 
-        console.log(
-            'FAQ TROUVÉES :',
-            faqs.length
-        );
+        console.log('FAQ TROUVÉES :', faqs.length);
 
-        res.render(
-            'communication/faq',
-            {
-                title: 'F.A.Q.',
-                faqs
-            }
-        );
+        const groupedFaqs = {
+            abonnements: faqs.filter(
+                faq => faq.category === 'abonnements'
+            ),
+
+            billets: faqs.filter(
+                faq => faq.category === 'billets'
+            ),
+
+            ecole: faqs.filter(
+                faq => faq.category === 'ecole'
+            ),
+
+            location: faqs.filter(
+                faq => faq.category === 'location'
+            ),
+
+            general: faqs.filter(
+                faq => faq.category === 'general'
+            )
+        };
+
+        res.render('communication/faq', {
+            title: "F.A.Q.",
+            groupedFaqs
+        });
 
     } catch (error) {
 
         console.error(
-            'Erreur chargement FAQ :',
+            'Erreur lors du chargement du FAQ :',
             error
         );
 
-        res.render(
-            'communication/faq',
-            {
-                title: 'F.A.Q.',
-                faqs: []
+        res.render('communication/faq', {
+            title: "F.A.Q.",
+            groupedFaqs: {
+                abonnements: [],
+                billets: [],
+                ecole: [],
+                location: [],
+                general: []
             }
-        );
+        });
 
     }
-
 };
-
 exports.carrieres = async (req, res) => {
     try {
         let jobs = [];
