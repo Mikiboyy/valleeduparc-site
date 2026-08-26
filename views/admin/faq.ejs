@@ -1,108 +1,232 @@
-<h1>
-    Gestion de la FAQ
-</h1>
+<section class="admin-section">
 
-<a
-    href="/admin-vdp/faq/new"
-    class="btn-primary"
->
-    Ajouter une question
-</a>
+    <h1>Gestion du FAQ</h1>
 
 
-<table>
+    <!-- =========================
+         AJOUTER UNE QUESTION
+    ========================== -->
 
-    <thead>
+    <div class="admin-card">
 
-        <tr>
+        <h2>Ajouter une question</h2>
 
-            <th>
-                Catégorie
-            </th>
+        <form
+            action="/admin-vdp/faq"
+            method="POST"
+            class="admin-form"
+        >
 
-            <th>
-                Question
-            </th>
+            <div class="form-group">
 
-            <th>
-                Ordre
-            </th>
+                <label>Catégorie</label>
 
-            <th>
-                Statut
-            </th>
+                <input
+                    type="text"
+                    name="category"
+                    placeholder="Ex : Billets"
+                    required
+                >
 
-            <th>
-                Actions
-            </th>
+            </div>
 
-        </tr>
 
-    </thead>
+            <div class="form-group">
 
-    <tbody>
+                <label>Question</label>
+
+                <input
+                    type="text"
+                    name="question"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Réponse</label>
+
+                <textarea
+                    name="answer"
+                    rows="5"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Ordre d'affichage</label>
+
+                <input
+                    type="number"
+                    name="order"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="form-group checkbox-group">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        name="isActive"
+                        checked
+                    >
+
+                    Question active
+
+                </label>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-primary"
+            >
+
+                AJOUTER LA QUESTION
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         LISTE DES QUESTIONS
+    ========================== -->
+
+    <% if (faqs && faqs.length > 0) { %>
 
         <% faqs.forEach(faq => { %>
 
-            <tr>
+            <div class="admin-card faq-admin-card">
 
-                <td>
+                <form
+                    action="/admin-vdp/faq/<%= faq._id %>"
+                    method="POST"
+                    class="admin-form"
+                >
 
-                    <%= faq.category %>
+                    <div class="form-group">
 
-                </td>
+                        <label>Catégorie</label>
 
-                <td>
-
-                    <%= faq.question %>
-
-                </td>
-
-                <td>
-
-                    <%= faq.order %>
-
-                </td>
-
-                <td>
-
-                    <%= faq.isActive
-                        ? 'Active'
-                        : 'Inactive'
-                    %>
-
-                </td>
-
-                <td>
-
-                    <a
-                        href="/admin-vdp/faq/<%= faq._id %>/edit"
-                    >
-                        Modifier
-                    </a>
-
-
-                    <form
-                        action="/admin-vdp/faq/<%= faq._id %>/delete"
-                        method="POST"
-                        style="display:inline;"
-                    >
-
-                        <button
-                            type="submit"
-                            onclick="return confirm('Supprimer cette question?')"
+                        <input
+                            type="text"
+                            name="category"
+                            value="<%= faq.category %>"
+                            required
                         >
-                            Supprimer
-                        </button>
 
-                    </form>
+                    </div>
 
-                </td>
 
-            </tr>
+                    <div class="form-group">
+
+                        <label>Question</label>
+
+                        <input
+                            type="text"
+                            name="question"
+                            value="<%= faq.question %>"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Réponse</label>
+
+                        <textarea
+                            name="answer"
+                            rows="5"
+                            required
+                        ><%= faq.answer %></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Ordre</label>
+
+                        <input
+                            type="number"
+                            name="order"
+                            value="<%= faq.order %>"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group checkbox-group">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                name="isActive"
+                                <%= faq.isActive ? 'checked' : '' %>
+                            >
+
+                            Active
+
+                        </label>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                    >
+
+                        ENREGISTRER
+
+                    </button>
+
+                </form>
+
+
+                <form
+                    action="/admin-vdp/faq/<%= faq._id %>/delete"
+                    method="POST"
+                    onsubmit="return confirm('Voulez-vous vraiment supprimer cette question?');"
+                >
+
+                    <button
+                        type="submit"
+                        class="btn-danger"
+                    >
+
+                        SUPPRIMER
+
+                    </button>
+
+                </form>
+
+            </div>
 
         <% }) %>
 
-    </tbody>
+    <% } else { %>
 
-</table>
+        <p>
+            Aucune question dans le FAQ pour le moment.
+        </p>
+
+    <% } %>
+
+</section>

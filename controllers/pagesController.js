@@ -5,7 +5,7 @@ const DailyTicketPrice = require('../models/DailyTicketPrice');
 const RentalItem = require('../models/RentalItem');
 const SchoolCourse = require('../models/SchoolCourse');
 const salleFormRoutes = require('../routes/salleFormRoutes');
-const Faq = require('../models/Faq');
+const FAQ = require('../models/FAQ');
 
 /* PAGE ACCUEIL */
 exports.home = async (req, res) => {
@@ -362,34 +362,25 @@ exports.faq = async (req, res) => {
 
     try {
 
-        const faqs = await Faq.find({
+        const faqs = await FAQ.find({
             isActive: true
-        })
-            .sort({
-                category: 1,
-                order: 1
-            })
-            .lean();
+        }).sort({
+            category: 1,
+            order: 1
+        });
 
-        const groupedFaqs = {
-            abonnements: [],
-            montagne: [],
-            horaire: []
-        };
+        console.log(
+            'FAQ TROUVÉES :',
+            faqs.length
+        );
 
-        faqs.forEach(faq => {
-
-            if (groupedFaqs[faq.category]) {
-
-                groupedFaqs[faq.category].push(faq);
-
+        res.render(
+            'communication/faq',
+            {
+                title: 'F.A.Q.',
+                faqs
             }
-
-        });
-
-        res.render('communication/faq', {
-            groupedFaqs
-        });
+        );
 
     } catch (error) {
 
@@ -398,13 +389,13 @@ exports.faq = async (req, res) => {
             error
         );
 
-        res.render('communication/faq', {
-            groupedFaqs: {
-                abonnements: [],
-                montagne: [],
-                horaire: []
+        res.render(
+            'communication/faq',
+            {
+                title: 'F.A.Q.',
+                faqs: []
             }
-        });
+        );
 
     }
 

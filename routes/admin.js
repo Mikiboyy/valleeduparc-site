@@ -11,6 +11,7 @@ const Admin = require('../models/Admin');
 const Event = require('../models/Event');
 const Job = require('../models/Job');
 const Trail = require('../models/trail');
+const FAQ = require('../models/FAQ');
 
 const SubscriptionPrice = require('../models/SubscriptionPrice');
 const DailyTicketPrice = require('../models/DailyTicketPrice');
@@ -231,7 +232,11 @@ router.get('/', requireLogin, (req, res) => {
 
 
         canJobs:
-            canAccess(role, ['carriere'])
+            canAccess(role, ['carriere']),
+
+        
+        canFAQ:
+            canAccess(role, ['faq'])    
 
     });
 
@@ -1400,6 +1405,199 @@ router.post(
 
             res.status(500).send(
                 'Erreur lors de la suppression du poste.'
+            );
+
+        }
+
+    }
+);
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+/* =========================
+   LISTE DES QUESTIONS
+========================= */
+
+router.get(
+    '/faq',
+    requireRole('faq'),
+    async (req, res) => {
+
+        try {
+
+            const faqs = await FAQ.find({})
+                .sort({
+                    category: 1,
+                    order: 1
+                });
+
+            res.render(
+                'admin/faq',
+                {
+                    title: 'Gestion du FAQ',
+                    faqs
+                }
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur récupération FAQ :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors du chargement du FAQ.'
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   AJOUTER UNE QUESTION
+========================= */
+
+router.post(
+    '/faq',
+    requireRole('faq'),
+    async (req, res) => {
+
+        try {
+
+            await FAQ.create({
+
+                category:
+                    req.body.category,
+
+                question:
+                    req.body.question,
+
+                answer:
+                    req.body.answer,
+
+                order:
+                    Number(req.body.order) || 0,
+
+                isActive:
+                    req.body.isActive === 'on'
+
+            });
+
+            res.redirect(
+                '/admin-vdp/faq'
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur ajout FAQ :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors de l’ajout de la question.'
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   MODIFIER UNE QUESTION
+========================= */
+
+router.post(
+    '/faq/:id',
+    requireRole('faq'),
+    async (req, res) => {
+
+        try {
+
+            await FAQ.findByIdAndUpdate(
+
+                req.params.id,
+
+                {
+
+                    category:
+                        req.body.category,
+
+                    question:
+                        req.body.question,
+
+                    answer:
+                        req.body.answer,
+
+                    order:
+                        Number(req.body.order) || 0,
+
+                    isActive:
+                        req.body.isActive === 'on'
+
+                },
+
+                {
+                    new: true
+                }
+
+            );
+
+            res.redirect(
+                '/admin-vdp/faq'
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur modification FAQ :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors de la modification.'
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   SUPPRIMER UNE QUESTION
+========================= */
+
+router.post(
+    '/faq/:id/delete',
+    requireRole('faq'),
+    async (req, res) => {
+
+        try {
+
+            await FAQ.findByIdAndDelete(
+                req.params.id
+            );
+
+            res.redirect(
+                '/admin-vdp/faq'
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur suppression FAQ :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors de la suppression.'
             );
 
         }
