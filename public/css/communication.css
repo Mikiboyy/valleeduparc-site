@@ -1326,3 +1326,48 @@
 .career-description-list li::marker {
     color: #243650;
 }
+
+.form-success-message {
+
+    max-width: 900px;
+
+    margin: 20px auto 30px;
+
+    padding: 18px 22px;
+
+    background: #e8f7ed;
+
+    border-left: 5px solid #2e9b57;
+
+    border-radius: 8px;
+
+    color: #1e6b3a;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+}
+
+
+.form-error-message {
+
+    max-width: 900px;
+
+    margin: 20px auto 30px;
+
+    padding: 18px 22px;
+
+    background: #fdeaea;
+
+    border-left: 5px solid #c53030;
+
+    border-radius: 8px;
+
+    color: #9b2020;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+}

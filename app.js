@@ -179,7 +179,7 @@ app.use('/salle_form', salleFormRoutes);
 
 app.use('/corpo_form', corpoFormRoutes);
 
-app.use('/',creditMaladieRoutes);
+app.use('/demande-credit-maladie',creditMaladieRoutes);
 
 /* =========================
    404
