@@ -5,6 +5,7 @@ const DailyTicketPrice = require('../models/DailyTicketPrice');
 const RentalItem = require('../models/RentalItem');
 const SchoolCourse = require('../models/SchoolCourse');
 const salleFormRoutes = require('../routes/salleFormRoutes');
+const Faq = require('../models/Faq');
 
 /* PAGE ACCUEIL */
 exports.home = async (req, res) => {
@@ -357,10 +358,56 @@ exports.contact = (req, res) => {
     });
 };
 
-exports.faq = (req, res) => {
-    res.render('communication/faq', {
-        title: "F.A.Q."
-    });
+exports.faq = async (req, res) => {
+
+    try {
+
+        const faqs = await Faq.find({
+            isActive: true
+        })
+            .sort({
+                category: 1,
+                order: 1
+            })
+            .lean();
+
+        const groupedFaqs = {
+            abonnements: [],
+            montagne: [],
+            horaire: []
+        };
+
+        faqs.forEach(faq => {
+
+            if (groupedFaqs[faq.category]) {
+
+                groupedFaqs[faq.category].push(faq);
+
+            }
+
+        });
+
+        res.render('faq', {
+            groupedFaqs
+        });
+
+    } catch (error) {
+
+        console.error(
+            'Erreur chargement FAQ :',
+            error
+        );
+
+        res.render('faq', {
+            groupedFaqs: {
+                abonnements: [],
+                montagne: [],
+                horaire: []
+            }
+        });
+
+    }
+
 };
 
 exports.carrieres = async (req, res) => {

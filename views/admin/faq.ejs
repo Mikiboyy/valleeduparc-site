@@ -1,0 +1,108 @@
+<h1>
+    Gestion de la FAQ
+</h1>
+
+<a
+    href="/admin-vdp/faq/new"
+    class="btn-primary"
+>
+    Ajouter une question
+</a>
+
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>
+                Catégorie
+            </th>
+
+            <th>
+                Question
+            </th>
+
+            <th>
+                Ordre
+            </th>
+
+            <th>
+                Statut
+            </th>
+
+            <th>
+                Actions
+            </th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        <% faqs.forEach(faq => { %>
+
+            <tr>
+
+                <td>
+
+                    <%= faq.category %>
+
+                </td>
+
+                <td>
+
+                    <%= faq.question %>
+
+                </td>
+
+                <td>
+
+                    <%= faq.order %>
+
+                </td>
+
+                <td>
+
+                    <%= faq.isActive
+                        ? 'Active'
+                        : 'Inactive'
+                    %>
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="/admin-vdp/faq/<%= faq._id %>/edit"
+                    >
+                        Modifier
+                    </a>
+
+
+                    <form
+                        action="/admin-vdp/faq/<%= faq._id %>/delete"
+                        method="POST"
+                        style="display:inline;"
+                    >
+
+                        <button
+                            type="submit"
+                            onclick="return confirm('Supprimer cette question?')"
+                        >
+                            Supprimer
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+        <% }) %>
+
+    </tbody>
+
+</table>

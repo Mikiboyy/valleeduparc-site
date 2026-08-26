@@ -84,81 +84,45 @@
                 Infos abonnements
             </div>
 
-            <div class="faq-item">
+            <% if (
+                groupedFaqs.abonnements &&
+                groupedFaqs.abonnements.length > 0
+                ) { %>
 
-                <button class="faq-question">
-                    À partir de quelle date peut-on acheter nos abonnements de saison?
-                    <span>+</span>
-                </button>
+                    <% groupedFaqs.abonnements.forEach(faq => { %>
 
-                <div class="faq-answer">
+                        <div class="faq-item">
 
-                    <p>
-                        Les dates de mise en vente sont annoncées avant le début
-                        de la saison sur notre site web et nos réseaux sociaux.
-                    </p>
+                            <button
+                            type="button"
+                            class="faq-question"
+                            >
 
-                </div>
+                            <%= faq.question %>
 
-            </div>
+                            <span>+</span>
 
+                        </button>
 
-            <div class="faq-item">
+                        <div class="faq-answer">
 
-                <button class="faq-question">
-                    Quels sont les tarifs d’abonnement pour la saison?
-                    <span>+</span>
-                </button>
+                            <p>
+                                <%= faq.answer %>
+                            </p>
 
-                <div class="faq-answer">
+                        </div>
 
-                    <p>
-                        Les tarifs sont disponibles dans la section Abonnements
-                        de notre site web.
-                    </p>
+                    </div>
 
-                </div>
+                    <% }) %>
 
-            </div>
+                    <% } else { %>
 
+                        <p>
+                            Aucune question disponible.
+                        </p>
 
-            <div class="faq-item">
-
-                <button class="faq-question">
-                    Quels sont les avantages à acheter un abonnement Tout temps?
-                    <span>+</span>
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        L’abonnement Tout temps permet de profiter de la montagne
-                        selon les conditions et les périodes d’ouverture prévues.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-                    Est-ce que je peux acheter mon abonnement en ligne?
-                    <span>+</span>
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        Oui, les abonnements peuvent être achetés en ligne
-                        lorsque la billetterie est ouverte.
-                    </p>
-
-                </div>
-
-            </div>
-
+                        <% } %>
         </div>
 
 
@@ -171,102 +135,47 @@
                 Montagne et pistes
             </div>
 
+            <% if (
+                groupedFaqs.montagne &&
+                groupedFaqs.montagne.length > 0
+            ) { %>
 
-            <div class="faq-item">
+                <% groupedFaqs.montagne.forEach(faq => { %>
 
-                <button class="faq-question">
-                    Où puis-je consulter les conditions de neige?
-                    <span>+</span>
-                </button>
+                    <div class="faq-item">
 
-                <div class="faq-answer">
+                        <button
+                        type="button"
+                        class="faq-question"
+                        >
 
-                    <p>
-                        Les conditions de neige sont disponibles sur la page
-                        Conditions du site web.
-                    </p>
+                        <%= faq.question %>
 
-                </div>
+                        <span>+</span>
 
-            </div>
+                    </button>
 
+                    <div class="faq-answer">
 
-            <div class="faq-item">
+                        <p>
+                            <%= faq.answer %>
+                        </p>
 
-                <button class="faq-question">
-                    Comment savoir quelles pistes sont ouvertes?
-                    <span>+</span>
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        La page Conditions indique les pistes ouvertes de jour
-                        et de soir selon les opérations.
-                    </p>
+                    </div>
 
                 </div>
 
-            </div>
+            <% }) %>
 
+        <% } else { %>
 
-            <div class="faq-item">
+            <p>
+                Aucune question disponible.
+            </p>
 
-                <button class="faq-question">
-                    Est-ce que les pistes sont éclairées le soir?
-                    <span>+</span>
-                </button>
+        <% } %>
 
-                <div class="faq-answer">
-
-                    <p>
-                        Certaines pistes sont disponibles en soirée selon
-                        l’horaire et les conditions.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-                    Est-ce que la pente-école est ouverte tous les jours?
-                    <span>+</span>
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        L’horaire de la pente-école peut varier. Consultez la
-                        page Conditions ou Horaires pour les détails.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-                    Est-ce que la montagne ferme lors de mauvaise météo?
-                    <span>+</span>
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        La station peut ajuster ses opérations selon la météo,
-                        la sécurité et les conditions de glisse.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
+    </div>
 
 
         <!-- ========================================
@@ -278,100 +187,45 @@
                 Horaire et nous joindre
             </div>
 
+            <% if (
+                groupedFaqs.horaire &&
+                groupedFaqs.horaire.length > 0
+                ) { %>
 
-            <div class="faq-item">
+                    <% groupedFaqs.horaire.forEach(faq => { %>
 
-                <button class="faq-question">
-                    Où puis-je consulter l’horaire de la station?
-                    <span>+</span>
-                </button>
+                        <div class="faq-item">
 
-                <div class="faq-answer">
+                            <button
+                            type="button"
+                            class="faq-question"
+                            >
 
-                    <p>
-                        L’horaire complet est disponible dans la section Horaires
-                        du site web.
-                    </p>
+                            <%= faq.question %>
 
-                </div>
+                            <span>+</span>
 
-            </div>
+                        </button>
 
+                        <div class="faq-answer">
 
-            <div class="faq-item">
+                            <p>
+                                <%= faq.answer %>
+                            </p>
 
-                <button class="faq-question">
-                    Comment puis-je contacter la station?
-                    <span>+</span>
-                </button>
+                        </div>
 
-                <div class="faq-answer">
+                    </div>
 
-                    <p>
-                        Vous pouvez nous joindre par téléphone, par courriel ou
-                        via la page Contact.
-                    </p>
+                <% }) %>
 
-                </div>
+            <% } else { %>
 
-            </div>
+                <p>
+                    Aucune question disponible.
+                </p>
 
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-                    Où est située Vallée du Parc?
-                    <span>+</span>
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        La station est située à Shawinigan, au 10000 chemin
-                        de la Vallée-du-Parc.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-                    Est-ce que les horaires changent pendant les Fêtes?
-                    <span>+</span>
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        Oui, un horaire spécial peut être en vigueur durant les
-                        Fêtes ou certaines périodes achalandées.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question">
-                    Où puis-je poser une question qui n’est pas dans la FAQ?
-                    <span>+</span>
-                </button>
-
-                <div class="faq-answer">
-
-                    <p>
-                        Vous pouvez utiliser la page Contact pour nous envoyer
-                        votre question.
-                    </p>
-
-                </div>
-
-            </div>
+            <% } %>
 
         </div>
 
