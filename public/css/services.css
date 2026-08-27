@@ -1391,3 +1391,30 @@
     }
 
 }
+
+/* =========================
+   HORAIRE RESTO-BAR
+========================= */
+
+.schedule-day {
+    margin-bottom: 10px;
+}
+
+.schedule-day p {
+    margin: 0;
+}
+
+.kitchen-hours {
+    font-size: 14px !important;
+    color: #6c757d;
+    margin-top: 2px !important;
+    margin-left: 82px !important;
+    font-style: normal;
+}
+
+.resto-breakfast {
+    margin-top: 15px !important;
+    color: var(--bleu);
+    font-weight: 700;
+    font-style: italic;
+}
