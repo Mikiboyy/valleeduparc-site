@@ -1104,9 +1104,34 @@ document.addEventListener("DOMContentLoaded", () => {
             tab.classList.add("active");
 
 
-            document
-                .getElementById(target)
-                .classList.add("active");
+            /* =========================
+               AFFICHER LA CATÉGORIE
+            ========================= */
+
+            const targetCategory =
+                document.getElementById(target);
+
+
+            if (targetCategory) {
+
+                targetCategory.classList.add("active");
+
+
+                /* =========================
+                   DESCENDRE JUSQU'À
+                   LA CATÉGORIE
+                ========================= */
+
+                setTimeout(() => {
+
+                    targetCategory.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }, 50);
+
+            }
 
         });
 
