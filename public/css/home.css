@@ -233,93 +233,257 @@
 ========================= */
 
 .partners-section {
+    position: relative;
+
+    padding: 70px 20px;
+
+    text-align: center;
+
+    overflow: hidden;
+
     background:
         linear-gradient(
             90deg,
-            rgba(19,35,61,1) 0%,
-            rgba(33,58,92,0.96) 45%,
-            rgba(40,71,109,0.92) 100%
+            rgba(19, 35, 61, 1) 0%,
+            rgba(33, 58, 92, 0.96) 45%,
+            rgba(40, 71, 109, 0.92) 100%
         );
-    padding: 70px 20px;
-    text-align: center;
-    position: relative;
 }
 
+
+/* =========================
+   TITRE
+========================= */
+
 .partners-section h2 {
-    color: var(--gris);
+    position: relative;
+
+    color: #ffffff;
+
     font-size: 45px;
     font-weight: 800;
+
     margin-bottom: 50px;
+
+    text-transform: uppercase;
 }
+
+
+/* LIGNE SOUS LE TITRE */
+
+.partners-section h2::after {
+    content: "";
+
+    display: block;
+
+    width: 75px;
+    height: 4px;
+
+    margin: 15px auto 0;
+
+    background: var(--bleu);
+
+    border-radius: 10px;
+}
+
+
+/* =========================
+   SLIDER
+========================= */
 
 .partners-slider {
     position: relative;
+
     width: 100%;
     max-width: 1700px;
+
     margin: auto;
+
     display: flex;
+
     align-items: center;
+
     padding: 0 80px;
+
+    box-sizing: border-box;
 }
 
+
+/* =========================
+   CONTENEUR
+========================= */
+
 .partners-container {
-    overflow: hidden;
     width: 100%;
+
+    overflow: hidden;
 }
+
+
+/* =========================
+   TRACK
+========================= */
 
 .partners-track {
     display: flex;
+
+    align-items: stretch;
+
     transition: transform 0.5s ease;
 }
 
+
+/* =========================
+   PARTENAIRE
+========================= */
+
 .partner-item {
     min-width: 260px;
-    height: 160px;
+
+    height: 180px;
+
+    padding: 10px;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
-    padding: 20px;
+
+    box-sizing: border-box;
 }
 
+
+/* =========================
+   CARTE
+========================= */
+
+.partner-item a {
+    width: 100%;
+    height: 100%;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+
+/* EFFET AU SURVOL */
+
+.partner-item a:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 35px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
 .partner-item img {
-    width: 220px;
+    display: block;
+
+    width: 100%;
+    max-width: 220px;
+
     height: 120px;
+
     object-fit: contain;
+
     transition: transform 0.3s ease;
 }
 
-.partner-item img:hover {
-    transform: scale(1.08);
+
+.partner-item a:hover img {
+    transform: scale(1.07);
 }
+
+
+/* =========================
+   FLÈCHES
+========================= */
 
 .partner-arrow {
     position: absolute;
+
     top: 50%;
+
     transform: translateY(-50%);
+
     z-index: 20;
 
     width: 55px;
     height: 55px;
 
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
     background: var(--bleu);
-    color: #fff;
+
+    color: #ffffff;
+
     border: none;
+
     border-radius: 50%;
 
     font-size: 28px;
+
     cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.3);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
 }
+
 
 .partner-arrow.left {
-    left: 30px;
+    left: 15px;
 }
+
 
 .partner-arrow.right {
-    right: 30px;
+    right: 15px;
 }
 
+
 .partner-arrow:hover {
-    background: var(--bleu-fonce);
+    background: #ffffff;
+
+    color: var(--bleu-fonce);
+
+    transform: translateY(-50%) scale(1.1);
+}
+
+
+.partner-arrow:active {
+    transform: translateY(-50%) scale(0.95);
 }
 
 
@@ -328,64 +492,187 @@
 ========================= */
 
 @media (max-width: 1000px) {
+
     .home-events-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+
+    .partner-item {
+        min-width: 240px;
+    }
+
+
+    .partners-slider {
+        padding: 0 65px;
+    }
+
 }
 
+
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 768px) {
+
     .hero-full {
         height: 75vh;
     }
 
+
     .hero-text-box {
         left: 20px;
         right: 20px;
+
         bottom: 30px;
+
         padding: 25px;
     }
+
 
     .hero-text-box h1 {
         font-size: 34px;
     }
 
+
     .hero-text-box p {
         font-size: 17px;
     }
 
+
     .quick-access {
         grid-template-columns: 1fr;
+
         gap: 35px;
+
         padding: 40px 30px;
     }
 
+
     .quick-card img {
         width: 100%;
+
         max-width: 360px;
+
         height: 220px;
     }
+
 
     .home-events-grid {
         grid-template-columns: 1fr;
     }
 
+
     .home-event-card {
         min-height: auto;
     }
+
+
+    /* PARTENAIRES */
+
+    .partners-section {
+        padding: 55px 10px;
+    }
+
+
+    .partners-section h2 {
+        font-size: 34px;
+
+        margin-bottom: 35px;
+    }
+
 
     .partners-slider {
         padding: 0 45px;
     }
 
+
     .partner-item {
-        min-width: 220px;
+        min-width: 50%;
+
+        height: 150px;
+
+        padding: 7px;
     }
+
+
+    .partner-item a {
+        padding: 15px;
+
+        border-radius: 14px;
+    }
+
+
+    .partner-item img {
+        max-width: 170px;
+
+        height: 90px;
+    }
+
+
+    .partner-arrow {
+        width: 42px;
+        height: 42px;
+
+        font-size: 22px;
+    }
+
 
     .partner-arrow.left {
-        left: 5px;
+        left: 0;
     }
 
+
     .partner-arrow.right {
-        right: 5px;
+        right: 0;
     }
+
+}
+
+
+/* =========================
+   PETITS TÉLÉPHONES
+========================= */
+
+@media (max-width: 480px) {
+
+    .partners-section h2 {
+        font-size: 28px;
+    }
+
+
+    .partners-slider {
+        padding: 0 35px;
+    }
+
+
+    .partner-item {
+        min-width: 50%;
+
+        height: 120px;
+
+        padding: 5px;
+    }
+
+
+    .partner-item a {
+        padding: 10px;
+    }
+
+
+    .partner-item img {
+        max-width: 130px;
+
+        height: 70px;
+    }
+
+
+    .partner-arrow {
+        width: 35px;
+        height: 35px;
+
+        font-size: 18px;
+    }
+
 }
