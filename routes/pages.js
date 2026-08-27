@@ -35,6 +35,7 @@ router.get('/patrouille', pagesController.patrouille);
 router.get('/corpo_form', pagesController.corpo_form);
 router.get('/salle_form', pagesController.salle_form);
 router.get('/giftcard', pagesController.giftcard);
+router.get('/boutique', pagesController.boutique);
 
 router.get('/info_carrieres', pagesController.info_carrieres);
 router.get('/contact', pagesController.contact);

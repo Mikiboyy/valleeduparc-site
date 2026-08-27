@@ -306,6 +306,12 @@ exports.giftcard = (req, res) => {
     });
 };
 
+exports.boutique = (req, res) => {
+    res.render('service/boutique', {
+        title: "Boutique"
+    });
+};
+
 exports.corpo = (req, res) => {
     res.render('service/corpo', {
         title: "Corpo"
