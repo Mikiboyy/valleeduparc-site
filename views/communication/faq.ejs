@@ -25,16 +25,8 @@
             <div class="montagne-features">
                 <div class="feature">✔ Infos abonnements</div>
                 <div class="feature">✔ Montagne et pistes</div>
-                <div class="feature">✔ Horaires</div>
-                <div class="feature">✔ Nous joindre</div>
-            </div>
-
-            <div class="montagne-buttons">
-
-                <a href="#credit-maladie" class="btn-primary">
-                    DEMANDE DE CRÉDIT - MALADIE
-                </a>
-
+                <div class="feature">✔ Horaires et nous joindre</div>
+                <div class="feature">✔ Demande de crédit - Maladie</div>
             </div>
 
         </div>
@@ -1087,46 +1079,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 tab.dataset.target;
 
 
-            /*
-            =========================
-            TROUVER L'ÉLÉMENT CIBLÉ
-            =========================
-            */
-
-            const targetElement =
-                document.getElementById(target);
-
-
-            if (!targetElement) {
-
-                console.error(
-                    "Élément introuvable :",
-                    target
-                );
-
-                return;
-
-            }
-
-
-            /*
-            =========================
-            RETIRER LES ONGLETS ACTIFS
-            =========================
-            */
-
             tabs.forEach(item => {
 
                 item.classList.remove("active");
 
             });
 
-
-            /*
-            =========================
-            CACHER LES CATÉGORIES
-            =========================
-            */
 
             categories.forEach(category => {
 
@@ -1135,75 +1093,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
 
-            /*
-            =========================
-            ACTIVER LE BOUTON
-            =========================
-            */
-
             tab.classList.add("active");
 
 
-            /*
-            =========================
-            TROUVER LA CATÉGORIE
-            PARENTE
-            =========================
-            */
-
-            const parentCategory =
-                targetElement.closest(".faq-category");
-
-
-            /*
-            =========================
-            AFFICHER LA CATÉGORIE
-            =========================
-            */
-
-            if (parentCategory) {
-
-                parentCategory.classList.add("active");
-
-            }
-
-
-            /*
-            =========================
-            SI L'ÉLÉMENT EST LUI-MÊME
-            UNE CATÉGORIE
-            =========================
-            */
-
-            if (
-                targetElement.classList.contains(
-                    "faq-category"
-                )
-            ) {
-
-                targetElement.classList.add("active");
-
-            }
-
-
-            /*
-            =========================
-            DESCENDRE JUSQU'À
-            L'ÉLÉMENT
-            =========================
-            */
-
-            setTimeout(() => {
-
-                targetElement.scrollIntoView({
-
-                    behavior: "smooth",
-
-                    block: "start"
-
-                });
-
-            }, 100);
+            document
+                .getElementById(target)
+                .classList.add("active");
 
         });
 
