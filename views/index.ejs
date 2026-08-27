@@ -134,7 +134,11 @@
                         <div class="home-event-content">
 
                             <span class="event-date">
-                                <%= new Date(event.date).toLocaleDateString('fr-CA') %>
+                                <% if (event.date && !isNaN(new Date(event.date).getTime())) { %>
+                                    <%= new Date(event.date).toLocaleDateString('fr-CA') %>
+                                    <% } else { %>
+                                        Date à venir
+                                        <% } %>
                             </span>
 
                             <h3><%= event.title %></h3>
