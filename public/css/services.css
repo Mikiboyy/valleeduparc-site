@@ -1294,3 +1294,100 @@
     }
 
 }
+
+/* =========================
+   BOUTIQUE - BIENTÔT DISPONIBLE
+========================= */
+
+.boutique-coming-soon {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(19, 35, 61, 0.97),
+            rgba(40, 71, 109, 0.92)
+        );
+}
+
+.boutique-content {
+    max-width: 700px;
+    padding: 60px 40px;
+
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.boutique-logo {
+    max-width: 180px;
+    margin-bottom: 30px;
+}
+
+.boutique-content h1 {
+    font-size: 48px;
+    color: var(--bleu-fonce);
+    margin-bottom: 20px;
+}
+
+.boutique-content p {
+    font-size: 20px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.boutique-subtitle {
+    font-size: 17px !important;
+    color: #777 !important;
+    margin-bottom: 35px !important;
+}
+
+.boutique-btn {
+    display: inline-block;
+
+    padding: 15px 30px;
+
+    background: var(--bleu);
+    color: white;
+
+    text-decoration: none;
+    font-weight: 700;
+
+    border-radius: 8px;
+
+    transition: 0.3s ease;
+}
+
+.boutique-btn:hover {
+    background: var(--bleu-fonce);
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .boutique-content {
+        padding: 45px 25px;
+    }
+
+    .boutique-content h1 {
+        font-size: 36px;
+    }
+
+    .boutique-content p {
+        font-size: 17px;
+    }
+
+}
