@@ -44,5 +44,49 @@ router.get('/carrieres', pagesController.carrieres);
 
 router.get('/rfid', pagesController.rfid);
 
+// ==================================================
+// ANCIENNES URL DU SITE
+// REDIRECTIONS 301
+// ==================================================
+
+router.get('/recharge', (req, res) => {
+    res.redirect(301, '/rfid');
+});
+
+router.get('/conditions-des-pistes', (req, res) => {
+    res.redirect(301, '/conditions');
+});
+
+router.get('/location-dequipement', (req, res) => {
+    res.redirect(301, '/location');
+});
+
+router.get('/horaire', (req, res) => {
+    res.redirect(301, '/horaires');
+});
+
+router.get('/Montagne & Horaire', (req, res) => {
+    res.redirect(301, '/evenements');
+});
+
+router.get('/billets-journaliers', (req, res) => {
+    res.redirect(301, '/billets');
+});
+
+router.get('/abonnement-de-saison', (req, res) => {
+    res.redirect(301, '/abonnements');
+});
+
+router.get('/randonnee-alpine', (req, res) => {
+    res.redirect(301, '/randonnee');
+});
+
+router.get('/ski-adapte', (req, res) => {
+    res.redirect(301, '/ski_adapte');
+});
+
+router.get('/luge-alpine-luge-nocturne', (req, res) => {
+    res.redirect(301, '/luge');
+});
 
 module.exports = router;
