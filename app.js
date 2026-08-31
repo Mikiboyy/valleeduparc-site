@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
+const { MongoStore } = require('connect-mongo');
 const helmet = require('helmet');
 const path = require('path');
 
@@ -96,15 +97,23 @@ app.use(session({
 
     saveUninitialized: false,
 
+    store: MongoStore.create({
+
+        mongoUrl: process.env.MONGODB_URI,
+
+        collectionName: 'sessions',
+
+        ttl: 14 * 24 * 60 * 60
+
+    }),
+
     cookie: {
 
         httpOnly: true,
 
         secure: process.env.NODE_ENV === 'production',
 
-        sameSite: 'lax',
-
-        maxAge: 1000 * 60 * 60 * 4
+        maxAge: 1000 * 60 * 60 * 24 * 14
 
     }
 
