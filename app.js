@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
+const helmet = require('helmet');
 const path = require('path');
 
 const adminRoutes = require('./routes/admin');
@@ -20,6 +21,20 @@ const corpoFormRoutes = require('./routes/corpoFormRoutes');
 const creditMaladieRoutes = require('./routes/creditMaladieRoutes');
 
 const app = express();
+
+
+// =========================
+// SÉCURITÉ
+// =========================
+
+app.disable('x-powered-by');
+
+app.use(
+    helmet({
+        contentSecurityPolicy: false
+    })
+);
+
 
 /* =========================
    MONGODB
