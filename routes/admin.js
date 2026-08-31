@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { rateLimit } = require('express-rate-limit');
 
 const multer = require('multer');
 const path = require('path');
@@ -24,12 +25,23 @@ const {
     canAccess
 } = require('../middleware/adminAuth');
 
-const rateLimit = require('express-rate-limit');
+/* =========================
+   PROTECTION LOGIN ADMIN
+   ANTI BRUTE-FORCE
+========================= */
 
 const loginLimiter = rateLimit({
+
     windowMs: 15 * 60 * 1000,
-    max: 5,
-    message: 'Trop de tentatives. Réessayez plus tard.'
+
+    limit: 5,
+
+    standardHeaders: 'draft-8',
+
+    legacyHeaders: false,
+
+    message: 'Trop de tentatives de connexion. Veuillez réessayer dans 15 minutes.'
+
 });
 
 
