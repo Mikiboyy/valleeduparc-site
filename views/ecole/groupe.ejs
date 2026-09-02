@@ -54,8 +54,8 @@
 
                         <% if (
                             preventeActive &&
-                            course.price?.presalePrice !== null &&
-                            course.price?.presalePrice !== undefined
+                            course.prices?.presalePrice !== null &&
+                            course.prices?.presalePrice !== undefined
                             ) { %>
 
                                 <span class="prevente-label">
@@ -70,7 +70,7 @@
 
                                         <% } else { %>
 
-                                            <%= course.price?.presalePrice.toFixed(2) %> $
+                                            <%= course.prices?.presalePrice.toFixed(2) %> $
 
                                             <% } %>
 
@@ -78,14 +78,14 @@
 
 
                                         <% if (
-                                            course.price?.regularPrice !== null &&
-                                            course.price?.regularPrice !== undefined
+                                            course.prices?.regularPrice !== null &&
+                                            course.prices?.regularPrice !== undefined
                                             ) { %>
 
                                                 <span class="regular-price">
 
                                                     Prix régulier :
-                                                    <%= course.price?.regularPrice.toFixed(2) %> $
+                                                    <%= course.prices?.regularPrice.toFixed(2) %> $
 
                                                 </span>
 
@@ -100,11 +100,11 @@
                                                         <%= course.priceLabel %>
 
                                                         <% } else if (
-                                                            course.price?.regularPrice !== null &&
-                                                            course.price?.regularPrice !== undefined
+                                                            course.prices?.regularPrice !== null &&
+                                                            course.prices?.regularPrice !== undefined
                                                             ) { %>
 
-                                                                <%= course.price?.regularPrice.toFixed(2) %> $
+                                                                <%= course.prices?.regularPrice.toFixed(2) %> $
 
                                                                 <% } else { %>
 
@@ -155,8 +155,8 @@
 
                 <% if (
                     preventeActive &&
-                    course.price?.presalePrice !== null &&
-                    course.price?.presalePrice !== undefined
+                    course.prices?.presalePrice !== null &&
+                    course.prices?.presalePrice !== undefined
                     ) { %>
 
                         <span class="prevente-modal-price">
@@ -169,7 +169,7 @@
 
                                 <% } else { %>
 
-                                    <%= course.price?.presalePrice.toFixed(2) %> $
+                                    <%= course.prices?.presalePrice.toFixed(2) %> $
 
                                     <% } %>
 
@@ -184,11 +184,11 @@
                                         <%= course.priceLabel %>
 
                                         <% } else if (
-                                            course.price?.regularPrice !== null &&
-                                            course.price?.regularPrice !== undefined
+                                            course.prices?.regularPrice !== null &&
+                                            course.prices?.regularPrice !== undefined
                                             ) { %>
 
-                                                <%= course.price?.regularPrice.toFixed(2) %> $
+                                                <%= course.prices?.regularPrice.toFixed(2) %> $
 
                                                 <% } else { %>
 
