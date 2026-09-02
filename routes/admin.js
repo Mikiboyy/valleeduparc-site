@@ -996,8 +996,9 @@ router.post(
 router.post(
     '/prevente/toggle',
 
-    requireAdmin,
-
+    requireLogin,
+    requireRole(['admin', 'prix']),
+    
     async (req, res) => {
 
         try {
