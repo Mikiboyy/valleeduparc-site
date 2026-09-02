@@ -810,6 +810,85 @@ router.post(
    PRIX - COURS
 ========================================================= */
 
+router.get('/cours-groupe', async (req, res) => {
+
+    try {
+
+        /*
+        =========================
+        RÉCUPÉRATION DES COURS
+        =========================
+        */
+
+        const courses =
+            await SchoolCourse.find({
+
+                type: 'groupe',
+
+                isActive: true
+
+            }).sort({
+
+                order: 1
+
+            });
+
+
+        /*
+        =========================
+        RÉCUPÉRATION DES PARAMÈTRES
+        =========================
+        */
+
+        const settings =
+            await SchoolSettings.findOne();
+
+
+        /*
+        =========================
+        ÉTAT DE LA PRÉVENTE
+        =========================
+        */
+
+        const preventeActive =
+            settings?.presaleActive || false;
+
+
+        /*
+        =========================
+        AFFICHAGE DE LA PAGE
+        =========================
+        */
+
+        res.render(
+            'ecole/groupe',
+            {
+
+                title: 'Cours de groupe',
+
+                courses,
+
+                preventeActive
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            'Erreur cours de groupe :',
+            error
+        );
+
+        res.status(500).send(
+            'Erreur lors du chargement des cours.'
+        );
+
+    }
+
+});
+
 router.get(
     '/prices/cours',
 
