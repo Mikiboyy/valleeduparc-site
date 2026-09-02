@@ -810,91 +810,9 @@ router.post(
    PRIX - COURS
 ========================================================= */
 
-router.get('/cours-groupe', async (req, res) => {
-
-    try {
-
-        /*
-        =========================
-        RÉCUPÉRATION DES COURS
-        =========================
-        */
-
-        const courses =
-            await SchoolCourse.find({
-
-                type: 'groupe',
-
-                isActive: true
-
-            }).sort({
-
-                order: 1
-
-            });
-
-
-        /*
-        =========================
-        RÉCUPÉRATION DES PARAMÈTRES
-        =========================
-        */
-
-        const settings =
-            await SchoolSettings.findOne();
-
-
-        /*
-        =========================
-        ÉTAT DE LA PRÉVENTE
-        =========================
-        */
-
-        const preventeActive =
-            settings?.presaleActive || false;
-
-
-        /*
-        =========================
-        AFFICHAGE DE LA PAGE
-        =========================
-        */
-
-        res.render(
-            'ecole/groupe',
-            {
-
-                title: 'Cours de groupe',
-
-                courses,
-
-                preventeActive
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            'Erreur cours de groupe :',
-            error
-        );
-
-        res.status(500).send(
-            'Erreur lors du chargement des cours.'
-        );
-
-    }
-
-});
-
 router.get(
     '/prices/cours',
-
-    requireLogin,
-    requireRole(['admin', 'prix']),
-
+    requireRole('prix'),
     async (req, res) => {
 
         try {
@@ -915,7 +833,7 @@ router.get(
 
                 settings =
                     await SchoolSettings.create({
-                        presaleActive: false
+                        preventeActive: false
                     });
 
             }
@@ -929,8 +847,8 @@ router.get(
 
                     courses,
 
-                    presaleActive:
-                        settings.presaleActive
+                    preventeActive:
+                        settings.preventeActive
 
                 }
             );
@@ -958,10 +876,7 @@ router.get(
 
 router.post(
     '/prices/cours/:id',
-
-    requireLogin,
-    requireRole(['admin', 'prix']),
-
+    requireRole('prix'),
     async (req, res) => {
 
         try {
@@ -991,14 +906,16 @@ router.post(
                     priceLabel:
                         req.body.priceLabel || '',
 
+                    presalePriceLabel:
+                        req.body.presalePriceLabel || '',
+
                     isActive:
                         req.body.isActive === 'on'
 
                 },
 
                 {
-                    new: true,
-                    runValidators: true
+                    new: true
                 }
 
             );
@@ -1007,7 +924,6 @@ router.post(
             res.redirect(
                 '/admin-vdp/prices/cours'
             );
-
 
         } catch (error) {
 
@@ -1025,13 +941,12 @@ router.post(
     }
 );
 
-
 /* =========================================================
    ACTIVER / DÉSACTIVER LA PRÉVENTE
 ========================================================= */
 
 router.post(
-    '/prevente/toggle',
+    '/prices/toggle-presale',
 
     requireLogin,
     requireRole(['admin', 'prix']),
@@ -1048,14 +963,14 @@ router.post(
 
                 settings =
                     await SchoolSettings.create({
-                        presaleActive: false
+                        preventeActive: false
                     });
 
             }
 
 
-            settings.presaleActive =
-                !settings.presaleActive;
+            settings.preventeActive =
+                !settings.preventeActive;
 
 
             await settings.save();
@@ -1064,7 +979,6 @@ router.post(
             res.redirect(
                 '/admin-vdp/prices/cours'
             );
-
 
         } catch (error) {
 

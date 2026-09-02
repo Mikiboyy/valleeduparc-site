@@ -193,34 +193,37 @@ exports.groupe = async (req, res) => {
 
     try {
 
-        const settings =
-            await SchoolSettings.findOne();
+        const courses = await SchoolCourse.find({
+            type: 'groupe',
+            isActive: true
+        }).sort({
+            order: 1
+        });
 
-        const presaleActive =
-            settings?.presaleActive || false;
+
+        let settings = await SchoolSettings.findOne();
 
 
-        const courses =
-            await SchoolCourse.find({
+        if (!settings) {
 
-                type: 'groupe',
-
-                isActive: true
-
-            })
-            .sort({
-                order: 1
+            settings = await SchoolSettings.create({
+                preventeActive: false
             });
+
+        }
 
 
         res.render(
             'ecole/groupe',
             {
+
                 title: 'Cours de groupe',
 
                 courses,
 
-                presaleActive
+                preventeActive:
+                    settings.preventeActive
+
             }
         );
 
@@ -231,15 +234,8 @@ exports.groupe = async (req, res) => {
             error
         );
 
-        res.render(
-            'ecole/groupe',
-            {
-                title: 'Cours de groupe',
-
-                courses: [],
-
-                presaleActive: false
-            }
+        res.status(500).send(
+            'Erreur lors du chargement des cours de groupe.'
         );
 
     }
@@ -250,34 +246,37 @@ exports.prive = async (req, res) => {
 
     try {
 
-        const settings =
-            await SchoolSettings.findOne();
+        const courses = await SchoolCourse.find({
+            type: 'prive',
+            isActive: true
+        }).sort({
+            order: 1
+        });
 
-        const presaleActive =
-            settings?.presaleActive || false;
+
+        let settings = await SchoolSettings.findOne();
 
 
-        const courses =
-            await SchoolCourse.find({
+        if (!settings) {
 
-                type: 'prive',
-
-                isActive: true
-
-            })
-            .sort({
-                order: 1
+            settings = await SchoolSettings.create({
+                preventeActive: false
             });
+
+        }
 
 
         res.render(
             'ecole/prive',
             {
+
                 title: 'Cours privés',
 
                 courses,
 
-                presaleActive
+                preventeActive:
+                    settings.preventeActive
+
             }
         );
 
@@ -288,15 +287,8 @@ exports.prive = async (req, res) => {
             error
         );
 
-        res.render(
-            'ecole/prive',
-            {
-                title: 'Cours privés',
-
-                courses: [],
-
-                presaleActive: false
-            }
+        res.status(500).send(
+            'Erreur lors du chargement des cours privés.'
         );
 
     }

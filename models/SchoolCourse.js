@@ -23,37 +23,22 @@ const schoolCourseSchema = new mongoose.Schema({
         default: ''
     },
 
-    /*
-    =========================
-    PRIX RÉGULIER
-    =========================
-    */
-
     regularPrice: {
         type: Number,
         default: null
     },
-
-
-    /*
-    =========================
-    PRIX PRÉVENTE
-    =========================
-    */
 
     presalePrice: {
         type: Number,
         default: null
     },
 
-
-    /*
-    =========================
-    TEXTE SPÉCIAL
-    =========================
-    */
-
     priceLabel: {
+        type: String,
+        default: ''
+    },
+
+    presalePriceLabel: {
         type: String,
         default: ''
     },
@@ -82,8 +67,7 @@ const schoolCourseSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports =
-    mongoose.model(
-        'SchoolCourse',
-        schoolCourseSchema
-    );
+module.exports = mongoose.model(
+    'SchoolCourse',
+    schoolCourseSchema
+);

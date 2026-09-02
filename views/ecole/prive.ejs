@@ -60,7 +60,7 @@
 
                     <p class="course-price">
 
-                        <% if (preventeActive && course.preventePrice !== null && course.preventePrice !== undefined) { %>
+                        <% if (preventeActive && course.presalePrice !== null && course.presalePrice !== undefined) { %>
 
                             <span class="prevente-label">
                                 PRÉ-VENTE
@@ -68,24 +68,24 @@
 
                             <span class="prevente-price">
 
-                                <% if (course.preventePriceLabel) { %>
+                                <% if (course.presalePriceLabel) { %>
 
-                                    <%= course.preventePriceLabel %>
+                                    <%= course.presalePriceLabel %>
 
                                     <% } else { %>
 
-                                        <%= course.preventePrice.toFixed(2) %> $
+                                        <%= course.presalePrice.toFixed(2) %> $
 
                                         <% } %>
 
                                     </span>
 
-                                    <% if (course.price !== null && course.price !== undefined) { %>
+                                    <% if (course.regularPrice !== null && course.regularPrice !== undefined) { %>
 
                                         <span class="regular-price">
 
                                             Prix régulier :
-                                            <%= course.price.toFixed(2) %> $
+                                            <%= course.regularPrice.toFixed(2) %> $
 
                                         </span>
 
@@ -100,11 +100,11 @@
                                                 <%= course.priceLabel %>
 
                                                 <% } else if (
-                                                    course.price !== null &&
-                                                    course.price !== undefined
+                                                    course.regularPrice !== null &&
+                                                    course.regularPrice !== undefined
                                                     ) { %>
 
-                                                        <%= course.price.toFixed(2) %> $
+                                                        <%= course.regularPrice.toFixed(2) %> $
 
                                                         <% } else { %>
 
@@ -153,21 +153,21 @@
 
                 <% if (
                     preventeActive &&
-                    course.preventePrice !== null &&
-                    course.preventePrice !== undefined
+                    course.presalePrice !== null &&
+                    course.presalePrice !== undefined
                     ) { %>
 
                         <span class="prevente-modal-price">
 
                             PRÉ-VENTE :
 
-                            <% if (course.preventePriceLabel) { %>
+                            <% if (course.presalePriceLabel) { %>
 
-                                <%= course.preventePriceLabel %>
+                                <%= course.presalePriceLabel %>
 
                                 <% } else { %>
 
-                                    <%= course.preventePrice.toFixed(2) %> $
+                                    <%= course.presalePrice.toFixed(2) %> $
 
                                     <% } %>
 
@@ -182,11 +182,11 @@
                                         <%= course.priceLabel %>
 
                                         <% } else if (
-                                            course.price !== null &&
-                                            course.price !== undefined
+                                            course.regularPrice !== null &&
+                                            course.regularPrice !== undefined
                                             ) { %>
 
-                                                <%= course.price.toFixed(2) %> $
+                                                <%= course.regularPrice.toFixed(2) %> $
 
                                                 <% } else { %>
 
