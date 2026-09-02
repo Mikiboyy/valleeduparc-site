@@ -60,62 +60,70 @@
 
                     <p class="course-price">
 
-                        <% if (preventeActive && course.price && course.price.presalePrice !== null && course.price.presalePrice !== undefined) { %>
+                        <% if (
+                            preventeActive &&
+                            course.prices?.presalePrice !== null &&
+                            course.prices?.presalePrice !== undefined
+                            ) { %>
 
-                            <span class="prevente-label">
-                                PRÉ-VENTE
-                            </span>
+                                <span class="prevente-label">
+                                    PRÉ-VENTE
+                                </span>
 
-                            <span class="prevente-price">
+                                <span class="prevente-price">
 
-                                <% if (course.presalePriceLabel) { %>
+                                    <% if (course.presalePriceLabel) { %>
 
-                                    <%= course.presalePriceLabel %>
-
-                                    <% } else { %>
-
-                                        <%= course.price.presalePrice.toFixed(2) %> $
-
-                                        <% } %>
-
-                                    </span>
-
-                                    <% if (course.price.regularPrice !== null && course.price.regularPrice !== undefined) { %>
-
-                                        <span class="regular-price">
-
-                                            Prix régulier :
-                                            <%= course.price.regularPrice.toFixed(2) %> $
-
-                                        </span>
-
-                                        <% } %>
-
+                                        <%= course.presalePriceLabel %>
 
                                         <% } else { %>
 
+                                            <%= course.prices.presalePrice.toFixed(2) %> $
 
-                                            <% if (course.priceLabel) { %>
+                                            <% } %>
 
-                                                <%= course.priceLabel %>
+                                        </span>
 
-                                                <% } else if (
-                                                    course.price &&
-                                                    course.price.regularPrice !== null &&
-                                                    course.price.regularPrice !== undefined
-                                                    ) { %>
 
-                                                        <%= course.price.regularPrice.toFixed(2) %> $
+                                        <% if (
+                                            course.prices?.regularPrice !== null &&
+                                            course.prices?.regularPrice !== undefined
+                                            ) { %>
 
-                                                        <% } else { %>
+                                                <span class="regular-price">
 
-                                                            -
+                                                    Prix régulier :
+                                                    <%= course.prices.regularPrice.toFixed(2) %> $
 
-                                                        <% } %>
-
+                                                </span>
 
                                                 <% } %>
-                    </p>
+
+
+                                                <% } else { %>
+
+
+                                                    <% if (course.priceLabel) { %>
+
+                                                        <%= course.priceLabel %>
+
+                                                        <% } else if (
+                                                            course.prices?.regularPrice !== null &&
+                                                            course.prices?.regularPrice !== undefined
+                                                            ) { %>
+
+                                                                <%= course.prices.regularPrice.toFixed(2) %> $
+
+                                                                <% } else { %>
+
+                                                                    -
+
+                                                                    <% } %>
+
+
+                                                                    <% } %>
+
+                                                                </p>
                 </div>
 
             <% }) %>
@@ -152,12 +160,10 @@
 
                 <strong>Prix :</strong>
 
-
                 <% if (
                     preventeActive &&
-                    course.price &&
-                    course.price.presalePrice !== null &&
-                    course.price.presalePrice !== undefined
+                    course.prices?.presalePrice !== null &&
+                    course.prices?.presalePrice !== undefined
                     ) { %>
 
                         <span class="prevente-modal-price">
@@ -170,27 +176,24 @@
 
                                 <% } else { %>
 
-                                    <%= course.price.presalePrice.toFixed(2) %> $
+                                    <%= course.prices.presalePrice.toFixed(2) %> $
 
                                     <% } %>
 
                                 </span>
 
-
                                 <% } else { %>
-
 
                                     <% if (course.priceLabel) { %>
 
                                         <%= course.priceLabel %>
 
                                         <% } else if (
-                                            course.price &&
-                                            course.price.regularPrice !== null &&
-                                            course.price.regularPrice !== undefined
+                                            course.prices?.regularPrice !== null &&
+                                            course.prices?.regularPrice !== undefined
                                             ) { %>
 
-                                                <%= course.price.regularPrice.toFixed(2) %> $
+                                                <%= course.prices.regularPrice.toFixed(2) %> $
 
                                                 <% } else { %>
 
@@ -198,11 +201,9 @@
 
                                                     <% } %>
 
-
                                                     <% } %>
 
                                                 </p>
-
             <div>
                 <%- course.details %>
             </div>
