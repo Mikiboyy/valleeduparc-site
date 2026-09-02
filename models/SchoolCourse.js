@@ -23,15 +23,29 @@ const schoolCourseSchema = new mongoose.Schema({
         default: ''
     },
 
-    regularPrice: {
-        type: Number,
-        default: null
+
+    // =========================
+    // PRIX
+    // =========================
+
+    prices: {
+
+        regularPrice: {
+            type: Number,
+            default: null
+        },
+
+        presalePrice: {
+            type: Number,
+            default: null
+        }
+
     },
 
-    presalePrice: {
-        type: Number,
-        default: null
-    },
+
+    // =========================
+    // TEXTES SPÉCIAUX
+    // =========================
 
     priceLabel: {
         type: String,

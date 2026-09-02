@@ -750,56 +750,49 @@ router.post(
 
         try {
 
-            const {
-                regularPrice,
-                presalePrice,
-                priceLabel,
-                presalePriceLabel,
-                isActive
-            } = req.body;
-
             await SchoolCourse.findByIdAndUpdate(
 
                 req.params.id,
 
                 {
+                    $set: {
 
-                    regularPrice:
-                        regularPrice !== ''
-                            ? Number(regularPrice)
-                            : null,
+                        'prices.regularPrice':
+                            req.body.regularPrice !== ''
+                                ? Number(req.body.regularPrice)
+                                : null,
 
-                    presalePrice:
-                        presalePrice !== ''
-                            ? Number(presalePrice)
-                            : null,
+                        'prices.presalePrice':
+                            req.body.presalePrice !== ''
+                                ? Number(req.body.presalePrice)
+                                : null,
 
-                    priceLabel:
-                        priceLabel || '',
+                        priceLabel:
+                            req.body.priceLabel || '',
 
-                    presalePriceLabel:
-                        presalePriceLabel || '',
+                        presalePriceLabel:
+                            req.body.presalePriceLabel || '',
 
-                    isActive:
-                        isActive === 'on'
+                        isActive:
+                            req.body.isActive === 'on'
+
+                    }
 
                 }
 
             );
 
-            res.redirect(
-                '/admin-vdp/prices?success=1'
-            );
+            res.redirect('/admin-vdp/prices');
 
         } catch (error) {
 
             console.error(
-                'Erreur modification prix:',
+                'Erreur modification prix cours :',
                 error
             );
 
             res.redirect(
-                '/admin-vdp/prices?error=1'
+                '/admin-vdp/prices?error=update'
             );
 
         }
@@ -878,64 +871,53 @@ router.get(
 
 router.post(
     '/prices/cours/:id',
-    requireRole('prix'),
     async (req, res) => {
 
         try {
-
-            const regularPrice =
-                req.body.regularPrice === ''
-                    ? null
-                    : Number(req.body.regularPrice);
-
-
-            const presalePrice =
-                req.body.presalePrice === ''
-                    ? null
-                    : Number(req.body.presalePrice);
-
 
             await SchoolCourse.findByIdAndUpdate(
 
                 req.params.id,
 
                 {
+                    $set: {
 
-                    regularPrice,
+                        'prices.regularPrice':
+                            req.body.regularPrice !== ''
+                                ? Number(req.body.regularPrice)
+                                : null,
 
-                    presalePrice,
+                        'prices.presalePrice':
+                            req.body.presalePrice !== ''
+                                ? Number(req.body.presalePrice)
+                                : null,
 
-                    priceLabel:
-                        req.body.priceLabel || '',
+                        priceLabel:
+                            req.body.priceLabel || '',
 
-                    presalePriceLabel:
-                        req.body.presalePriceLabel || '',
+                        presalePriceLabel:
+                            req.body.presalePriceLabel || '',
 
-                    isActive:
-                        req.body.isActive === 'on'
+                        isActive:
+                            req.body.isActive === 'on'
 
-                },
+                    }
 
-                {
-                    new: true
                 }
 
             );
 
-
-            res.redirect(
-                '/admin-vdp/prices/cours'
-            );
+            res.redirect('/admin-vdp/prices');
 
         } catch (error) {
 
             console.error(
-                'Erreur modification cours :',
+                'Erreur modification prix cours :',
                 error
             );
 
-            res.status(500).send(
-                'Erreur lors de la modification du cours.'
+            res.redirect(
+                '/admin-vdp/prices?error=update'
             );
 
         }
