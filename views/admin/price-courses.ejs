@@ -2,7 +2,7 @@
 
     <div class="course-form">
 
-        <h2>Gestion des prix des cours</h2>
+        <h2>Gestion des cours</h2>
 
 
         <!-- =========================
@@ -11,9 +11,7 @@
 
         <div class="presale-control">
 
-            <h3>
-                Prévente
-            </h3>
+            <h3>Prévente</h3>
 
             <p>
                 Activez ou désactivez les prix de prévente
@@ -28,10 +26,8 @@
                 <% if (preventeActive) { %>
 
                     <p class="presale-status active">
-
                         🟢 La prévente est actuellement
                         <strong>ACTIVE</strong>
-
                     </p>
 
                     <button
@@ -44,10 +40,8 @@
                 <% } else { %>
 
                     <p class="presale-status inactive">
-
                         🔴 La prévente est actuellement
                         <strong>DÉSACTIVÉE</strong>
-
                     </p>
 
                     <button
@@ -65,12 +59,323 @@
 
 
         <!-- =========================
+             AJOUTER UN COURS
+        ========================== -->
+
+        <div class="add-course-section">
+
+            <h2>➕ Ajouter un nouveau cours</h2>
+
+            <form
+                action="/admin-vdp/prices/cours/add"
+                method="POST"
+                class="admin-price-row"
+            >
+
+
+                <!-- TYPE -->
+
+                <div class="price-group">
+
+                    <label>Type de cours *</label>
+
+                    <select
+                        name="type"
+                        required
+                    >
+
+                        <option value="groupe">
+                            Cours de groupe
+                        </option>
+
+                        <option value="prive">
+                            Cours privé
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SAISON -->
+
+                <div class="price-group">
+
+                    <label>Saison / période</label>
+
+                    <select name="season">
+
+                        <option value="regulier">
+                            Régulier
+                        </option>
+
+                        <option value="prevente">
+                            Prévente
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- TITRE -->
+
+                <div class="price-group">
+
+                    <label>Titre *</label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CATÉGORIE -->
+
+                <div class="price-group">
+
+                    <label>Catégorie</label>
+
+                    <input
+                        type="text"
+                        name="category"
+                    >
+
+                </div>
+
+
+                <!-- RÉSUMÉ -->
+
+                <div class="price-group">
+
+                    <label>Résumé</label>
+
+                    <textarea
+                        name="summary"
+                        rows="3"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="price-group">
+
+                    <label>Description</label>
+
+                    <textarea
+                        name="description"
+                        rows="5"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- DÉTAILS -->
+
+                <div class="price-group">
+
+                    <label>Détails</label>
+
+                    <textarea
+                        name="details"
+                        rows="6"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- DURÉE -->
+
+                <div class="price-group">
+
+                    <label>Durée du programme</label>
+
+                    <input
+                        type="text"
+                        name="duration"
+                        placeholder="Ex : 6 semaines"
+                    >
+
+                </div>
+
+
+                <!-- DURÉE LEÇON -->
+
+                <div class="price-group">
+
+                    <label>Durée d'une leçon</label>
+
+                    <input
+                        type="text"
+                        name="lessonDuration"
+                        placeholder="Ex : 60 minutes"
+                    >
+
+                </div>
+
+
+                <!-- HORAIRE -->
+
+                <div class="price-group">
+
+                    <label>Horaire</label>
+
+                    <input
+                        type="text"
+                        name="schedule"
+                        placeholder="Ex : Du samedi 10 janvier au 28 février"
+                    >
+
+                </div>
+
+
+                <!-- NOTES -->
+
+                <div class="price-group">
+
+                    <label>
+                        Notes
+                        <small>(une note par ligne)</small>
+                    </label>
+
+                    <textarea
+                        name="notes"
+                        rows="5"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- PRIX RÉGULIER -->
+
+                <div class="price-group">
+
+                    <label>Prix régulier</label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        name="regularPrice"
+                    >
+
+                </div>
+
+
+                <!-- LABEL PRIX -->
+
+                <div class="price-group">
+
+                    <label>Texte spécial régulier</label>
+
+                    <input
+                        type="text"
+                        name="priceLabel"
+                        placeholder="Ex : À partir de 99 $"
+                    >
+
+                </div>
+
+
+                <!-- PRIX PRÉVENTE -->
+
+                <div class="price-group">
+
+                    <label>Prix prévente</label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        name="presalePrice"
+                    >
+
+                </div>
+
+
+                <!-- LABEL PRÉVENTE -->
+
+                <div class="price-group">
+
+                    <label>Texte spécial prévente</label>
+
+                    <input
+                        type="text"
+                        name="presalePriceLabel"
+                        placeholder="Ex : Prévente - 79 $"
+                    >
+
+                </div>
+
+
+                <!-- ORDRE -->
+
+                <div class="price-group">
+
+                    <label>Ordre d'affichage</label>
+
+                    <input
+                        type="number"
+                        name="order"
+                        value="0"
+                    >
+
+                </div>
+
+
+                <!-- ACTIF -->
+
+                <div class="course-active">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            name="isActive"
+                            checked
+                        >
+
+                        Cours actif
+
+                    </label>
+
+                </div>
+
+
+                <!-- AJOUTER -->
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                >
+                    ➕ AJOUTER LE COURS
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================
              LISTE DES COURS
         ========================== -->
+
+        <h2>Liste des cours</h2>
+
 
         <% if (courses && courses.length > 0) { %>
 
             <% courses.forEach(course => { %>
+
+
+                <!-- =========================
+                     FORMULAIRE MODIFICATION
+                ========================== -->
 
                 <form
                     action="/admin-vdp/prices/cours/<%= course._id %>"
@@ -80,29 +385,225 @@
 
 
                     <!-- =========================
-                         INFORMATIONS DU COURS
+                         TYPE
                     ========================== -->
 
                     <div class="course-info">
 
                         <strong>
+
                             <%= course.type === 'prive'
                                 ? 'COURS PRIVÉ'
                                 : 'COURS DE GROUPE'
                             %>
+
                         </strong>
 
                         <span>
                             <%= course.title %>
                         </span>
 
-                        <% if (course.category) { %>
+                    </div>
 
-                            <span>
-                                <%= course.category %>
-                            </span>
 
-                        <% } %>
+                    <div class="price-group">
+
+                        <label>Type de cours</label>
+
+                        <select name="type">
+
+                            <option
+                                value="groupe"
+                                <%= course.type === 'groupe'
+                                    ? 'selected'
+                                    : ''
+                                %>
+                            >
+                                Cours de groupe
+                            </option>
+
+                            <option
+                                value="prive"
+                                <%= course.type === 'prive'
+                                    ? 'selected'
+                                    : ''
+                                %>
+                            >
+                                Cours privé
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SAISON -->
+
+                    <div class="price-group">
+
+                        <label>Saison / période</label>
+
+                        <select name="season">
+
+                            <option
+                                value="regulier"
+                                <%= course.season === 'regulier'
+                                    ? 'selected'
+                                    : ''
+                                %>
+                            >
+                                Régulier
+                            </option>
+
+                            <option
+                                value="prevente"
+                                <%= course.season === 'prevente'
+                                    ? 'selected'
+                                    : ''
+                                %>
+                            >
+                                Prévente
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TITRE -->
+
+                    <div class="price-group">
+
+                        <label>Titre *</label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            value="<%= course.title || '' %>"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CATÉGORIE -->
+
+                    <div class="price-group">
+
+                        <label>Catégorie</label>
+
+                        <input
+                            type="text"
+                            name="category"
+                            value="<%= course.category || '' %>"
+                        >
+
+                    </div>
+
+
+                    <!-- RÉSUMÉ -->
+
+                    <div class="price-group">
+
+                        <label>Résumé</label>
+
+                        <textarea
+                            name="summary"
+                            rows="3"
+                        ><%= course.summary || '' %></textarea>
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="price-group">
+
+                        <label>Description</label>
+
+                        <textarea
+                            name="description"
+                            rows="5"
+                        ><%= course.description || '' %></textarea>
+
+                    </div>
+
+
+                    <!-- DÉTAILS -->
+
+                    <div class="price-group">
+
+                        <label>Détails</label>
+
+                        <textarea
+                            name="details"
+                            rows="6"
+                        ><%= course.details || '' %></textarea>
+
+                    </div>
+
+
+                    <!-- DURÉE -->
+
+                    <div class="price-group">
+
+                        <label>Durée du programme</label>
+
+                        <input
+                            type="text"
+                            name="duration"
+                            value="<%= course.duration || '' %>"
+                        >
+
+                    </div>
+
+
+                    <!-- DURÉE LEÇON -->
+
+                    <div class="price-group">
+
+                        <label>Durée d'une leçon</label>
+
+                        <input
+                            type="text"
+                            name="lessonDuration"
+                            value="<%= course.lessonDuration || '' %>"
+                        >
+
+                    </div>
+
+
+                    <!-- HORAIRE -->
+
+                    <div class="price-group">
+
+                        <label>Horaire</label>
+
+                        <input
+                            type="text"
+                            name="schedule"
+                            value="<%= course.schedule || '' %>"
+                        >
+
+                    </div>
+
+
+                    <!-- NOTES -->
+
+                    <div class="price-group">
+
+                        <label>
+                            Notes
+                            <small>(une note par ligne)</small>
+                        </label>
+
+                        <textarea
+                            name="notes"
+                            rows="5"
+                        ><%= course.notes && course.notes.length
+                            ? course.notes.join('\n')
+                            : ''
+                        %></textarea>
 
                     </div>
 
@@ -113,9 +614,7 @@
 
                     <div class="price-group">
 
-                        <label>
-                            Prix régulier
-                        </label>
+                        <label>Prix régulier</label>
 
                         <input
                             type="number"
@@ -128,15 +627,11 @@
                     </div>
 
 
-                    <!-- =========================
-                         TEXTE SPÉCIAL RÉGULIER
-                    ========================== -->
+                    <!-- LABEL PRIX -->
 
                     <div class="price-group">
 
-                        <label>
-                            Texte spécial régulier
-                        </label>
+                        <label>Texte spécial régulier</label>
 
                         <input
                             type="text"
@@ -154,9 +649,7 @@
 
                     <div class="price-group presale-price-group">
 
-                        <label>
-                            Prix prévente
-                        </label>
+                        <label>Prix prévente</label>
 
                         <input
                             type="number"
@@ -169,15 +662,11 @@
                     </div>
 
 
-                    <!-- =========================
-                         TEXTE SPÉCIAL PRÉVENTE
-                    ========================== -->
+                    <!-- LABEL PRÉVENTE -->
 
                     <div class="price-group presale-price-group">
 
-                        <label>
-                            Texte spécial prévente
-                        </label>
+                        <label>Texte spécial prévente</label>
 
                         <input
                             type="text"
@@ -190,7 +679,24 @@
 
 
                     <!-- =========================
-                         ACTIVATION DU COURS
+                         ORDRE
+                    ========================== -->
+
+                    <div class="price-group">
+
+                        <label>Ordre d'affichage</label>
+
+                        <input
+                            type="number"
+                            name="order"
+                            value="<%= course.order ?? 0 %>"
+                        >
+
+                    </div>
+
+
+                    <!-- =========================
+                         ACTIVATION
                     ========================== -->
 
                     <div class="course-active">
@@ -211,29 +717,47 @@
 
 
                     <!-- =========================
-                         BOUTON
+                         ENREGISTRER
                     ========================== -->
 
                     <button
                         type="submit"
                         class="btn-primary"
                     >
-
-                        ENREGISTRER
-
+                        💾 ENREGISTRER LES MODIFICATIONS
                     </button>
 
 
                 </form>
+
+
+                <!-- =========================
+                     SUPPRESSION
+                ========================== -->
+
+                <form
+                    action="/admin-vdp/prices/cours/<%= course._id %>/delete"
+                    method="POST"
+                    class="delete-course-form"
+                    onsubmit="return confirm('Voulez-vous vraiment supprimer le cours : <%= course.title %> ?');"
+                >
+
+                    <button
+                        type="submit"
+                        class="btn-danger"
+                    >
+                        🗑️ SUPPRIMER CE COURS
+                    </button>
+
+                </form>
+
 
             <% }) %>
 
         <% } else { %>
 
             <p class="no-courses">
-
                 Aucun cours disponible pour le moment.
-
             </p>
 
         <% } %>

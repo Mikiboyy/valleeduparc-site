@@ -748,6 +748,110 @@ router.get(
    PRIX - COURS
 ========================================================= */
 
+router.post(
+    '/prices/cours/add',
+
+    requireLogin,
+    requireRole(['admin', 'prix']),
+
+    async (req, res) => {
+
+        try {
+
+            await SchoolCourse.create({
+
+                type: req.body.type,
+
+                season:
+                    req.body.season || 'regulier',
+
+                title:
+                    req.body.title,
+
+                category:
+                    req.body.category || '',
+
+                summary:
+                    req.body.summary || '',
+
+                description:
+                    req.body.description || '',
+
+                details:
+                    req.body.details || '',
+
+                duration:
+                    req.body.duration || '',
+
+                lessonDuration:
+                    req.body.lessonDuration || '',
+
+                schedule:
+                    req.body.schedule || '',
+
+                notes:
+                    req.body.notes
+                        ? req.body.notes
+                            .split('\n')
+                            .map(note => note.trim())
+                            .filter(note => note !== '')
+                        : [],
+
+
+                prices: {
+
+                    regularPrice:
+                        req.body.regularPrice !== ''
+                            ? Number(req.body.regularPrice)
+                            : null,
+
+                    presalePrice:
+                        req.body.presalePrice !== ''
+                            ? Number(req.body.presalePrice)
+                            : null
+
+                },
+
+
+                priceLabel:
+                    req.body.priceLabel || '',
+
+                presalePriceLabel:
+                    req.body.presalePriceLabel || '',
+
+
+                order:
+                    req.body.order !== ''
+                        ? Number(req.body.order)
+                        : 0,
+
+
+                isActive:
+                    req.body.isActive === 'on'
+
+            });
+
+
+            res.redirect(
+                '/admin-vdp/prices/cours'
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur ajout cours :',
+                error
+            );
+
+            res.redirect(
+                '/admin-vdp/prices/cours?error=add'
+            );
+
+        }
+
+    }
+);
+
 router.get(
     '/prices/cours',
     requireLogin,
@@ -830,15 +934,77 @@ router.post(
                 {
                     $set: {
 
-                        'price.regularPrice':
+                        // =========================
+                        // INFORMATIONS
+                        // =========================
+
+                        type:
+                            req.body.type,
+
+                        season:
+                            req.body.season || 'regulier',
+
+                        title:
+                            req.body.title,
+
+                        category:
+                            req.body.category || '',
+
+                        summary:
+                            req.body.summary || '',
+
+                        description:
+                            req.body.description || '',
+
+                        details:
+                            req.body.details || '',
+
+
+                        // =========================
+                        // DURÉES
+                        // =========================
+
+                        duration:
+                            req.body.duration || '',
+
+                        lessonDuration:
+                            req.body.lessonDuration || '',
+
+                        schedule:
+                            req.body.schedule || '',
+
+
+                        // =========================
+                        // NOTES
+                        // =========================
+
+                        notes:
+                            req.body.notes
+                                ? req.body.notes
+                                    .split('\n')
+                                    .map(note => note.trim())
+                                    .filter(note => note !== '')
+                                : [],
+
+
+                        // =========================
+                        // PRIX
+                        // =========================
+
+                        'prices.regularPrice':
                             req.body.regularPrice !== ''
                                 ? Number(req.body.regularPrice)
                                 : null,
 
-                        'price.presalePrice':
+                        'prices.presalePrice':
                             req.body.presalePrice !== ''
                                 ? Number(req.body.presalePrice)
                                 : null,
+
+
+                        // =========================
+                        // LABELS
+                        // =========================
 
                         priceLabel:
                             req.body.priceLabel || '',
@@ -846,30 +1012,73 @@ router.post(
                         presalePriceLabel:
                             req.body.presalePriceLabel || '',
 
+
+                        // =========================
+                        // ADMIN
+                        // =========================
+
+                        order:
+                            req.body.order !== ''
+                                ? Number(req.body.order)
+                                : 0,
+
                         isActive:
                             req.body.isActive === 'on'
 
                     }
 
-                },
-
-                {
-                    runValidators: true
                 }
 
             );
 
-            res.redirect('/admin-vdp/prices/cours');
+
+            res.redirect(
+                '/admin-vdp/prices/cours'
+            );
 
         } catch (error) {
 
             console.error(
-                'Erreur modification prix cours :',
+                'Erreur modification cours :',
                 error
             );
 
             res.redirect(
                 '/admin-vdp/prices/cours?error=update'
+            );
+
+        }
+
+    }
+);
+
+router.post(
+    '/prices/cours/:id/delete',
+
+    requireLogin,
+    requireRole(['admin', 'prix']),
+
+    async (req, res) => {
+
+        try {
+
+            await SchoolCourse.findByIdAndDelete(
+                req.params.id
+            );
+
+            res.redirect(
+                '/admin-vdp/prices/cours'
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur suppression cours :',
+                error
+            );
+
+            res.redirect(
+                '/admin-vdp/prices/cours?error=delete'
             );
 
         }
