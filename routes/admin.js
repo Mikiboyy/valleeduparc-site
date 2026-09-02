@@ -744,70 +744,14 @@ router.get(
 );
 
 
-router.post(
-    '/prices/cours/:id',
-    async (req, res) => {
-
-        try {
-
-            await SchoolCourse.findByIdAndUpdate(
-
-                req.params.id,
-
-                {
-                    $set: {
-
-                        'prices.regularPrice':
-                            req.body.regularPrice !== ''
-                                ? Number(req.body.regularPrice)
-                                : null,
-
-                        'prices.presalePrice':
-                            req.body.presalePrice !== ''
-                                ? Number(req.body.presalePrice)
-                                : null,
-
-                        priceLabel:
-                            req.body.priceLabel || '',
-
-                        presalePriceLabel:
-                            req.body.presalePriceLabel || '',
-
-                        isActive:
-                            req.body.isActive === 'on'
-
-                    }
-
-                }
-
-            );
-
-            res.redirect('/admin-vdp/prices');
-
-        } catch (error) {
-
-            console.error(
-                'Erreur modification prix cours :',
-                error
-            );
-
-            res.redirect(
-                '/admin-vdp/prices?error=update'
-            );
-
-        }
-
-    }
-);
-
-
 /* =========================================================
    PRIX - COURS
 ========================================================= */
 
 router.get(
     '/prices/cours',
-    requireRole('prix'),
+    requireLogin,
+    requireRole(['admin', 'prix']),
     async (req, res) => {
 
         try {
@@ -871,6 +815,10 @@ router.get(
 
 router.post(
     '/prices/cours/:id',
+
+    requireLogin,
+    requireRole(['admin', 'prix']),
+
     async (req, res) => {
 
         try {
@@ -882,12 +830,12 @@ router.post(
                 {
                     $set: {
 
-                        'prices.regularPrice':
+                        'price.regularPrice':
                             req.body.regularPrice !== ''
                                 ? Number(req.body.regularPrice)
                                 : null,
 
-                        'prices.presalePrice':
+                        'price.presalePrice':
                             req.body.presalePrice !== ''
                                 ? Number(req.body.presalePrice)
                                 : null,
@@ -903,11 +851,15 @@ router.post(
 
                     }
 
+                },
+
+                {
+                    runValidators: true
                 }
 
             );
 
-            res.redirect('/admin-vdp/prices');
+            res.redirect('/admin-vdp/prices/cours');
 
         } catch (error) {
 
@@ -917,7 +869,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices?error=update'
+                '/admin-vdp/prices/cours?error=update'
             );
 
         }
