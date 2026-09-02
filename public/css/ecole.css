@@ -508,3 +508,103 @@
 .status-inactive {
     font-weight: 800;
 }
+
+/* =========================
+   PRIX DES COURS
+========================= */
+
+.course-price {
+    margin-top: 25px;
+    text-align: center;
+    font-weight: 700;
+}
+
+
+/* =========================
+   PRÉVENTE
+========================= */
+
+.prevente-label {
+    display: block;
+
+    font-size: 0.75rem;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    color: #2599bd;
+
+    margin-bottom: 8px;
+
+    text-transform: uppercase;
+}
+
+
+.prevente-price {
+    display: block;
+
+    font-size: 1.8rem;
+    font-weight: 800;
+
+    color: #2599bd;
+
+    margin-bottom: 10px;
+
+    text-shadow: 0 2px 8px rgba(37, 153, 189, 0.15);
+}
+
+
+/* =========================
+   PRIX RÉGULIER BARRÉ
+========================= */
+
+.regular-price {
+    display: block;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    color: #6c757d;
+
+    text-decoration: line-through;
+
+    opacity: 0.8;
+}
+
+
+/* =========================
+   PRIX NORMAL
+========================= */
+
+.course-price {
+    color: #2c9bc1;
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   PRIX DANS LES MODALS
+========================= */
+
+.prevente-modal-price {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 10px 15px;
+
+    background: #e8f6fa;
+
+    color: #2599bd;
+
+    border-left: 4px solid #2599bd;
+
+    border-radius: 5px;
+
+    font-size: 1.1rem;
+
+    font-weight: 800;
+}
