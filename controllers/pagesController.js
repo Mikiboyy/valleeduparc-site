@@ -200,42 +200,30 @@ exports.groupe = async (req, res) => {
             order: 1
         });
 
+        const settings = await SchoolSettings.findOne();
 
-        let settings = await SchoolSettings.findOne();
+        const preventeActive =
+            settings ? settings.preventeActive : false;
 
+        res.render('ecole/groupe', {
 
-        if (!settings) {
+            title: 'Cours de groupe',
 
-            settings = await SchoolSettings.create({
-                preventeActive: false
-            });
+            courses,
 
-        }
+            preventeActive
 
-
-        res.render(
-            'ecole/groupe',
-            {
-
-                title: 'Cours de groupe',
-
-                courses,
-
-                preventeActive:
-                    settings.preventeActive
-
-            }
-        );
+        });
 
     } catch (error) {
 
         console.error(
-            'Erreur cours groupe :',
+            'Erreur cours de groupe:',
             error
         );
 
         res.status(500).send(
-            'Erreur lors du chargement des cours de groupe.'
+            'Erreur lors du chargement des cours.'
         );
 
     }
@@ -253,42 +241,30 @@ exports.prive = async (req, res) => {
             order: 1
         });
 
+        const settings = await SchoolSettings.findOne();
 
-        let settings = await SchoolSettings.findOne();
+        const preventeActive =
+            settings ? settings.preventeActive : false;
 
+        res.render('ecole/prive', {
 
-        if (!settings) {
+            title: 'Cours privés',
 
-            settings = await SchoolSettings.create({
-                preventeActive: false
-            });
+            courses,
 
-        }
+            preventeActive
 
-
-        res.render(
-            'ecole/prive',
-            {
-
-                title: 'Cours privés',
-
-                courses,
-
-                preventeActive:
-                    settings.preventeActive
-
-            }
-        );
+        });
 
     } catch (error) {
 
         console.error(
-            'Erreur cours privés :',
+            'Erreur cours privés:',
             error
         );
 
         res.status(500).send(
-            'Erreur lors du chargement des cours privés.'
+            'Erreur lors du chargement des cours.'
         );
 
     }

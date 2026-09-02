@@ -745,59 +745,61 @@ router.get(
 
 
 router.post(
-    '/prices/billets/:id',
-    requireRole('prix'),
+    '/prices/cours/:id',
     async (req, res) => {
 
         try {
 
-            const onlinePrice =
-                req.body.onlinePrice === ''
-                    ? null
-                    : Number(req.body.onlinePrice);
+            const {
+                regularPrice,
+                presalePrice,
+                priceLabel,
+                presalePriceLabel,
+                isActive
+            } = req.body;
 
-
-            const counterPrice =
-                req.body.counterPrice === ''
-                    ? null
-                    : Number(req.body.counterPrice);
-
-
-            await DailyTicketPrice.findByIdAndUpdate(
+            await SchoolCourse.findByIdAndUpdate(
 
                 req.params.id,
 
                 {
 
-                    onlinePrice,
+                    regularPrice:
+                        regularPrice !== ''
+                            ? Number(regularPrice)
+                            : null,
 
-                    counterPrice,
+                    presalePrice:
+                        presalePrice !== ''
+                            ? Number(presalePrice)
+                            : null,
 
-                    isFree:
-                        req.body.isFree === 'on',
+                    priceLabel:
+                        priceLabel || '',
+
+                    presalePriceLabel:
+                        presalePriceLabel || '',
 
                     isActive:
-                        req.body.isActive === 'on'
+                        isActive === 'on'
 
                 }
 
             );
 
-
             res.redirect(
-                '/admin-vdp/prices/billets'
+                '/admin-vdp/prices?success=1'
             );
-
 
         } catch (error) {
 
             console.error(
-                'Erreur modification billet :',
+                'Erreur modification prix:',
                 error
             );
 
-            res.status(500).send(
-                'Erreur lors de la modification du billet.'
+            res.redirect(
+                '/admin-vdp/prices?error=1'
             );
 
         }
