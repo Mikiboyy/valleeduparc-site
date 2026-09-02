@@ -812,16 +812,13 @@ router.post(
 
 router.get(
     '/prices/cours',
-    requireRole('prix'),
+
+    requireLogin,
+    requireRole(['admin', 'prix']),
+
     async (req, res) => {
 
         try {
-
-            /*
-            =========================
-            RÉCUPÉRATION DES COURS
-            =========================
-            */
 
             const courses =
                 await SchoolCourse.find({})
@@ -831,21 +828,9 @@ router.get(
                     });
 
 
-            /*
-            =========================
-            RÉCUPÉRATION DES PARAMÈTRES
-            =========================
-            */
-
             let settings =
                 await SchoolSettings.findOne();
 
-
-            /*
-            =========================
-            SI AUCUN PARAMÈTRE N'EXISTE
-            =========================
-            */
 
             if (!settings) {
 
@@ -856,12 +841,6 @@ router.get(
 
             }
 
-
-            /*
-            =========================
-            AFFICHAGE PAGE ADMIN
-            =========================
-            */
 
             res.render(
                 'admin/price-courses',
@@ -876,7 +855,6 @@ router.get(
 
                 }
             );
-
 
         } catch (error) {
 
@@ -901,16 +879,13 @@ router.get(
 
 router.post(
     '/prices/cours/:id',
-    requireRole('prix'),
+
+    requireLogin,
+    requireRole(['admin', 'prix']),
+
     async (req, res) => {
 
         try {
-
-            /*
-            =========================
-            PRIX RÉGULIER
-            =========================
-            */
 
             const regularPrice =
                 req.body.regularPrice === ''
@@ -918,23 +893,11 @@ router.post(
                     : Number(req.body.regularPrice);
 
 
-            /*
-            =========================
-            PRIX PRÉVENTE
-            =========================
-            */
-
             const presalePrice =
                 req.body.presalePrice === ''
                     ? null
                     : Number(req.body.presalePrice);
 
-
-            /*
-            =========================
-            MISE À JOUR
-            =========================
-            */
 
             await SchoolCourse.findByIdAndUpdate(
 
@@ -955,17 +918,12 @@ router.post(
                 },
 
                 {
-                    new: true
+                    new: true,
+                    runValidators: true
                 }
 
             );
 
-
-            /*
-            =========================
-            RETOUR À LA PAGE
-            =========================
-            */
 
             res.redirect(
                 '/admin-vdp/prices/cours'
@@ -998,26 +956,14 @@ router.post(
 
     requireLogin,
     requireRole(['admin', 'prix']),
-    
+
     async (req, res) => {
 
         try {
 
-            /*
-            =========================
-            PARAMÈTRES
-            =========================
-            */
-
             let settings =
                 await SchoolSettings.findOne();
 
-
-            /*
-            =========================
-            CRÉATION SI INEXISTANT
-            =========================
-            */
 
             if (!settings) {
 
@@ -1029,24 +975,12 @@ router.post(
             }
 
 
-            /*
-            =========================
-            INVERSER L'ÉTAT
-            =========================
-            */
-
             settings.presaleActive =
                 !settings.presaleActive;
 
 
             await settings.save();
 
-
-            /*
-            =========================
-            RETOUR ADMIN
-            =========================
-            */
 
             res.redirect(
                 '/admin-vdp/prices/cours'
@@ -1068,7 +1002,6 @@ router.post(
 
     }
 );
-
 
 /* =========================================================
    PRIX - LOCATION
