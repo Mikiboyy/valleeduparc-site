@@ -51,14 +51,71 @@
                     <p><%= course.summary %></p>
 
                     <p class="course-price">
-                        <% if (course.priceLabel) { %>
-                            <%= course.priceLabel %>
-                        <% } else if (course.price !== null) { %>
-                            <%= course.price.toFixed(2) %> $
-                        <% } else { %>
-                            -
-                        <% } %>
-                    </p>
+
+                        <% if (
+                            preventeActive &&
+                            course.preventePrice !== null &&
+                            course.preventePrice !== undefined
+                            ) { %>
+
+                                <span class="prevente-label">
+                                    PRÉ-VENTE
+                                </span>
+
+                                <span class="prevente-price">
+
+                                    <% if (course.preventePriceLabel) { %>
+
+                                        <%= course.preventePriceLabel %>
+
+                                        <% } else { %>
+
+                                            <%= course.preventePrice.toFixed(2) %> $
+
+                                            <% } %>
+
+                                        </span>
+
+
+                                        <% if (
+                                            course.price !== null &&
+                                            course.price !== undefined
+                                            ) { %>
+
+                                                <span class="regular-price">
+
+                                                    Prix régulier :
+                                                    <%= course.price.toFixed(2) %> $
+
+                                                </span>
+
+                                                <% } %>
+
+
+                                                <% } else { %>
+
+
+                                                    <% if (course.priceLabel) { %>
+
+                                                        <%= course.priceLabel %>
+
+                                                        <% } else if (
+                                                            course.price !== null &&
+                                                            course.price !== undefined
+                                                            ) { %>
+
+                                                                <%= course.price.toFixed(2) %> $
+
+                                                                <% } else { %>
+
+                                                                    -
+
+                                                                    <% } %>
+
+
+                                                                    <% } %>
+
+                                                                </p>
                 </div>
 
             <% }) %>
@@ -91,15 +148,56 @@
             </p>
 
             <p>
+
                 <strong>Prix :</strong>
-                <% if (course.priceLabel) { %>
-                    <%= course.priceLabel %>
-                <% } else if (course.price !== null) { %>
-                    <%= course.price.toFixed(2) %> $
-                <% } else { %>
-                    -
-                <% } %>
-            </p>
+
+
+                <% if (
+                    preventeActive &&
+                    course.preventePrice !== null &&
+                    course.preventePrice !== undefined
+                    ) { %>
+
+                        <span class="prevente-modal-price">
+
+                            PRÉ-VENTE :
+
+                            <% if (course.preventePriceLabel) { %>
+
+                                <%= course.preventePriceLabel %>
+
+                                <% } else { %>
+
+                                    <%= course.preventePrice.toFixed(2) %> $
+
+                                    <% } %>
+
+                                </span>
+
+
+                                <% } else { %>
+
+
+                                    <% if (course.priceLabel) { %>
+
+                                        <%= course.priceLabel %>
+
+                                        <% } else if (
+                                            course.price !== null &&
+                                            course.price !== undefined
+                                            ) { %>
+
+                                                <%= course.price.toFixed(2) %> $
+
+                                                <% } else { %>
+
+                                                    -
+
+                                                    <% } %>
+
+                                                    <% } %>
+
+                                                </p>
 
             <div>
                 <%- course.details %>

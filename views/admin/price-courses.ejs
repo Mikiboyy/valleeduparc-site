@@ -1,24 +1,243 @@
 <section class="form-section">
+
     <div class="course-form">
-        <h2>Prix cours</h2>
 
-        <% courses.forEach(course => { %>
-            <form action="/admin-vdp/prices/cours/<%= course._id %>" method="POST" class="admin-price-row">
-                <strong><%= course.season %> — <%= course.title %> — <%= course.category %></strong>
+        <h2>Gestion des prix des cours</h2>
 
-                <label>Prix</label>
-                <input type="number" step="0.01" name="price" value="<%= course.price ?? '' %>">
 
-                <label>Texte spécial</label>
-                <input type="text" name="priceLabel" value="<%= course.priceLabel || '' %>">
+        <!-- =========================
+             CONTRÔLE PRÉVENTE
+        ========================== -->
 
-                <label>
-                    <input type="checkbox" name="isActive" <%= course.isActive ? 'checked' : '' %>>
-                    Actif
-                </label>
+        <div class="presale-control">
 
-                <button type="submit">Enregistrer</button>
+            <h3>
+                Prévente
+            </h3>
+
+            <p>
+                Activez ou désactivez les prix de prévente
+                pour tous les cours.
+            </p>
+
+            <form
+                action="/admin-vdp/prices/toggle-presale"
+                method="POST"
+            >
+
+                <% if (presaleActive) { %>
+
+                    <p class="presale-status active">
+
+                        🟢 La prévente est actuellement
+                        <strong>ACTIVE</strong>
+
+                    </p>
+
+                    <button
+                        type="submit"
+                        class="btn-danger"
+                    >
+                        DÉSACTIVER LA PRÉVENTE
+                    </button>
+
+                <% } else { %>
+
+                    <p class="presale-status inactive">
+
+                        🔴 La prévente est actuellement
+                        <strong>DÉSACTIVÉE</strong>
+
+                    </p>
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                    >
+                        ACTIVER LA PRÉVENTE
+                    </button>
+
+                <% } %>
+
             </form>
-        <% }) %>
+
+        </div>
+
+
+        <!-- =========================
+             LISTE DES COURS
+        ========================== -->
+
+        <% if (courses && courses.length > 0) { %>
+
+            <% courses.forEach(course => { %>
+
+                <form
+                    action="/admin-vdp/prices/cours/<%= course._id %>"
+                    method="POST"
+                    class="admin-price-row"
+                >
+
+
+                    <!-- =========================
+                         INFORMATIONS DU COURS
+                    ========================== -->
+
+                    <div class="course-info">
+
+                        <strong>
+                            <%= course.type === 'prive'
+                                ? 'COURS PRIVÉ'
+                                : 'COURS DE GROUPE'
+                            %>
+                        </strong>
+
+                        <span>
+                            <%= course.title %>
+                        </span>
+
+                        <% if (course.category) { %>
+
+                            <span>
+                                <%= course.category %>
+                            </span>
+
+                        <% } %>
+
+                    </div>
+
+
+                    <!-- =========================
+                         PRIX RÉGULIER
+                    ========================== -->
+
+                    <div class="price-group">
+
+                        <label>
+                            Prix régulier
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            name="price"
+                            value="<%= course.price ?? '' %>"
+                        >
+
+                    </div>
+
+
+                    <!-- =========================
+                         TEXTE SPÉCIAL RÉGULIER
+                    ========================== -->
+
+                    <div class="price-group">
+
+                        <label>
+                            Texte spécial régulier
+                        </label>
+
+                        <input
+                            type="text"
+                            name="priceLabel"
+                            value="<%= course.priceLabel || '' %>"
+                            placeholder="Ex : À partir de 99 $"
+                        >
+
+                    </div>
+
+
+                    <!-- =========================
+                         PRIX PRÉVENTE
+                    ========================== -->
+
+                    <div class="price-group presale-price-group">
+
+                        <label>
+                            Prix prévente
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            name="presalePrice"
+                            value="<%= course.presalePrice ?? '' %>"
+                        >
+
+                    </div>
+
+
+                    <!-- =========================
+                         TEXTE SPÉCIAL PRÉVENTE
+                    ========================== -->
+
+                    <div class="price-group presale-price-group">
+
+                        <label>
+                            Texte spécial prévente
+                        </label>
+
+                        <input
+                            type="text"
+                            name="presalePriceLabel"
+                            value="<%= course.presalePriceLabel || '' %>"
+                            placeholder="Ex : Prévente - 79 $"
+                        >
+
+                    </div>
+
+
+                    <!-- =========================
+                         ACTIVATION DU COURS
+                    ========================== -->
+
+                    <div class="course-active">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                name="isActive"
+                                <%= course.isActive ? 'checked' : '' %>
+                            >
+
+                            Cours actif
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- =========================
+                         BOUTON
+                    ========================== -->
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                    >
+
+                        ENREGISTRER
+
+                    </button>
+
+
+                </form>
+
+            <% }) %>
+
+        <% } else { %>
+
+            <p class="no-courses">
+
+                Aucun cours disponible pour le moment.
+
+            </p>
+
+        <% } %>
+
     </div>
+
 </section>

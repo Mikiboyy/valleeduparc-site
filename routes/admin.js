@@ -17,6 +17,7 @@ const FAQ = require('../models/Faq');
 const SubscriptionPrice = require('../models/SubscriptionPrice');
 const DailyTicketPrice = require('../models/DailyTicketPrice');
 const SchoolCourse = require('../models/SchoolCourse');
+const SchoolSettings = require('../models/SchoolSettings');
 const RentalItem = require('../models/RentalItem');
 
 const {
@@ -809,7 +810,6 @@ router.post(
    PRIX - COURS
 ========================================================= */
 
-
 router.get(
     '/prices/cours',
     requireRole('prix'),
@@ -817,13 +817,51 @@ router.get(
 
         try {
 
+            /*
+            =========================
+            RÉCUPÉRATION DES COURS
+            =========================
+            */
+
             const courses =
                 await SchoolCourse.find({})
                     .sort({
-                        season: 1,
+                        type: 1,
                         order: 1
                     });
 
+
+            /*
+            =========================
+            RÉCUPÉRATION DES PARAMÈTRES
+            =========================
+            */
+
+            let settings =
+                await SchoolSettings.findOne();
+
+
+            /*
+            =========================
+            SI AUCUN PARAMÈTRE N'EXISTE
+            =========================
+            */
+
+            if (!settings) {
+
+                settings =
+                    await SchoolSettings.create({
+                        presaleActive: false
+                    });
+
+            }
+
+
+            /*
+            =========================
+            AFFICHAGE PAGE ADMIN
+            =========================
+            */
 
             res.render(
                 'admin/price-courses',
@@ -831,7 +869,10 @@ router.get(
 
                     title: 'Prix cours',
 
-                    courses
+                    courses,
+
+                    presaleActive:
+                        settings.presaleActive
 
                 }
             );
@@ -854,6 +895,10 @@ router.get(
 );
 
 
+/* =========================================================
+   MODIFICATION D'UN COURS
+========================================================= */
+
 router.post(
     '/prices/cours/:id',
     requireRole('prix'),
@@ -861,11 +906,35 @@ router.post(
 
         try {
 
-            const price =
-                req.body.price === ''
-                    ? null
-                    : Number(req.body.price);
+            /*
+            =========================
+            PRIX RÉGULIER
+            =========================
+            */
 
+            const regularPrice =
+                req.body.regularPrice === ''
+                    ? null
+                    : Number(req.body.regularPrice);
+
+
+            /*
+            =========================
+            PRIX PRÉVENTE
+            =========================
+            */
+
+            const presalePrice =
+                req.body.presalePrice === ''
+                    ? null
+                    : Number(req.body.presalePrice);
+
+
+            /*
+            =========================
+            MISE À JOUR
+            =========================
+            */
 
             await SchoolCourse.findByIdAndUpdate(
 
@@ -873,7 +942,9 @@ router.post(
 
                 {
 
-                    price,
+                    regularPrice,
+
+                    presalePrice,
 
                     priceLabel:
                         req.body.priceLabel || '',
@@ -881,10 +952,20 @@ router.post(
                     isActive:
                         req.body.isActive === 'on'
 
+                },
+
+                {
+                    new: true
                 }
 
             );
 
+
+            /*
+            =========================
+            RETOUR À LA PAGE
+            =========================
+            */
 
             res.redirect(
                 '/admin-vdp/prices/cours'
@@ -900,6 +981,86 @@ router.post(
 
             res.status(500).send(
                 'Erreur lors de la modification du cours.'
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ACTIVER / DÉSACTIVER LA PRÉVENTE
+========================================================= */
+
+router.post(
+    '/prevente/toggle',
+
+    requireAdmin,
+
+    async (req, res) => {
+
+        try {
+
+            /*
+            =========================
+            PARAMÈTRES
+            =========================
+            */
+
+            let settings =
+                await SchoolSettings.findOne();
+
+
+            /*
+            =========================
+            CRÉATION SI INEXISTANT
+            =========================
+            */
+
+            if (!settings) {
+
+                settings =
+                    await SchoolSettings.create({
+                        presaleActive: false
+                    });
+
+            }
+
+
+            /*
+            =========================
+            INVERSER L'ÉTAT
+            =========================
+            */
+
+            settings.presaleActive =
+                !settings.presaleActive;
+
+
+            await settings.save();
+
+
+            /*
+            =========================
+            RETOUR ADMIN
+            =========================
+            */
+
+            res.redirect(
+                '/admin-vdp/prices/cours'
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Erreur changement prévente :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors du changement de la prévente.'
             );
 
         }

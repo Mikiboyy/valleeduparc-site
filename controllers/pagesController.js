@@ -4,6 +4,7 @@ const SubscriptionPrice = require('../models/SubscriptionPrice');
 const DailyTicketPrice = require('../models/DailyTicketPrice');
 const RentalItem = require('../models/RentalItem');
 const SchoolCourse = require('../models/SchoolCourse');
+const SchoolSettings = require('../models/SchoolSettings');
 const salleFormRoutes = require('../routes/salleFormRoutes');
 const FAQ = require('../models/Faq');
 
@@ -189,47 +190,117 @@ exports.historique = (req, res) => {
 
 /* ÉCOLE */
 exports.groupe = async (req, res) => {
-    try {
-        const courses = await SchoolCourse.find({
-            type: 'groupe',
-            isActive: true
-        }).sort({ season: 1, order: 1 });
 
-        res.render('ecole/groupe', {
-            title: "Cours de groupe",
-            courses
-        });
+    try {
+
+        const settings =
+            await SchoolSettings.findOne();
+
+        const presaleActive =
+            settings?.presaleActive || false;
+
+
+        const courses =
+            await SchoolCourse.find({
+
+                type: 'groupe',
+
+                isActive: true
+
+            })
+            .sort({
+                order: 1
+            });
+
+
+        res.render(
+            'ecole/groupe',
+            {
+                title: 'Cours de groupe',
+
+                courses,
+
+                presaleActive
+            }
+        );
 
     } catch (error) {
-        console.error('Erreur cours de groupe :', error);
 
-        res.render('ecole/groupe', {
-            title: "Cours de groupe",
-            courses: []
-        });
+        console.error(
+            'Erreur cours groupe :',
+            error
+        );
+
+        res.render(
+            'ecole/groupe',
+            {
+                title: 'Cours de groupe',
+
+                courses: [],
+
+                presaleActive: false
+            }
+        );
+
     }
+
 };
 
 exports.prive = async (req, res) => {
-    try {
-        const courses = await SchoolCourse.find({
-            type: 'prive',
-            isActive: true
-        }).sort({ season: 1, order: 1 });
 
-        res.render('ecole/prive', {
-            title: "Cours privé",
-            courses
-        });
+    try {
+
+        const settings =
+            await SchoolSettings.findOne();
+
+        const presaleActive =
+            settings?.presaleActive || false;
+
+
+        const courses =
+            await SchoolCourse.find({
+
+                type: 'prive',
+
+                isActive: true
+
+            })
+            .sort({
+                order: 1
+            });
+
+
+        res.render(
+            'ecole/prive',
+            {
+                title: 'Cours privés',
+
+                courses,
+
+                presaleActive
+            }
+        );
 
     } catch (error) {
-        console.error('Erreur cours privés :', error);
 
-        res.render('ecole/prive', {
-            title: "Cours privé",
-            courses: []
-        });
+        console.error(
+            'Erreur cours privés :',
+            error
+        );
+
+        res.render(
+            'ecole/prive',
+            {
+                title: 'Cours privés',
+
+                courses: [],
+
+                presaleActive: false
+            }
+        );
+
     }
+
 };
 
 exports.moniteur = (req, res) => {

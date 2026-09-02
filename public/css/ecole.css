@@ -479,3 +479,32 @@
         height:auto;
     }
 }
+
+.prevente-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.prevente-price {
+    display: block;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.regular-price {
+    display: block;
+    font-size: 14px;
+    margin-top: 6px;
+    opacity: 0.75;
+    text-decoration: line-through;
+}
+
+.status-active {
+    font-weight: 800;
+}
+
+.status-inactive {
+    font-weight: 800;
+}

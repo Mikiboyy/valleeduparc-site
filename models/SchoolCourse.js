@@ -1,16 +1,11 @@
 const mongoose = require('mongoose');
 
 const schoolCourseSchema = new mongoose.Schema({
+
     type: {
         type: String,
         required: true,
         enum: ['groupe', 'prive']
-    },
-
-    season: {
-        type: String,
-        required: true,
-        enum: ['prevente', 'regulier']
     },
 
     title: {
@@ -28,10 +23,35 @@ const schoolCourseSchema = new mongoose.Schema({
         default: ''
     },
 
-    price: {
+    /*
+    =========================
+    PRIX RÉGULIER
+    =========================
+    */
+
+    regularPrice: {
         type: Number,
         default: null
     },
+
+
+    /*
+    =========================
+    PRIX PRÉVENTE
+    =========================
+    */
+
+    presalePrice: {
+        type: Number,
+        default: null
+    },
+
+
+    /*
+    =========================
+    TEXTE SPÉCIAL
+    =========================
+    */
 
     priceLabel: {
         type: String,
@@ -57,8 +77,13 @@ const schoolCourseSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     }
+
 }, {
     timestamps: true
 });
 
-module.exports = mongoose.model('SchoolCourse', schoolCourseSchema);
+module.exports =
+    mongoose.model(
+        'SchoolCourse',
+        schoolCourseSchema
+    );
