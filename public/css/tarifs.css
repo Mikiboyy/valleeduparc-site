@@ -879,3 +879,11 @@
 .ticket-details strong {
     margin-right: 5px;
 }
+
+/* Ligne de séparation avant l'offre */
+.station-info hr {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    width: 80%;
+    margin: 20px auto;
+}
