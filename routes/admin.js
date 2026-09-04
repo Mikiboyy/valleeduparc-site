@@ -832,7 +832,7 @@ router.post(
 
 
             res.redirect(
-                '/admin-vdp/prices-courses'
+                '/admin/prices-courses'
             );
 
         } catch (error) {
@@ -843,7 +843,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices-courses?error=add'
+                '/admin/prices-courses?error=add'
             );
 
         }
@@ -1030,7 +1030,7 @@ router.post(
 
 
             res.redirect(
-                '/admin-vdp/prices-courses'
+                '/admin/prices-courses'
             );
 
         } catch (error) {
@@ -1041,7 +1041,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices-courses?error=update'
+                '/admin/prices-courses?error=update'
             );
 
         }
@@ -1063,7 +1063,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices-courses'
+                '/admin/prices-courses'
             );
 
         } catch (error) {
@@ -1074,7 +1074,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices-courses?error=delete'
+                '/admin/prices-courses?error=delete'
             );
 
         }
