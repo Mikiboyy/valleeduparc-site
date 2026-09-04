@@ -5,151 +5,222 @@
 .tarifs-hero {
     position: relative;
     min-height: 100vh;
+
     background:
-        linear-gradient(rgba(18,35,65,0.72), rgba(18,35,65,0.82)),
+        linear-gradient(
+            rgba(18, 35, 65, 0.72),
+            rgba(18, 35, 65, 0.82)
+        ),
         url('/image/billeterie.webp');
+
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+
     display: flex;
     align-items: center;
+
     overflow: hidden;
 }
+
 
 .tarifs-overlay {
     position: absolute;
     inset: 0;
+
     background:
         linear-gradient(
             90deg,
-            rgba(19,35,61,0.95) 0%,
-            rgba(33,58,92,0.78) 45%,
-            rgba(40,71,109,0.30) 100%
+            rgba(19, 35, 61, 0.95) 0%,
+            rgba(33, 58, 92, 0.78) 45%,
+            rgba(40, 71, 109, 0.30) 100%
         );
 }
+
 
 .tarifs-content {
     position: relative;
     z-index: 2;
+
     width: 100%;
     max-width: 1400px;
+
     margin: auto;
     padding: 80px 60px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 60px;
 }
+
 
 .tarifs-text {
     flex: 1;
     color: white;
 }
 
+
 .tarifs-subtitle {
     color: #4fc3ff;
+
     font-size: 1.3rem;
     font-weight: 600;
+
     margin-bottom: 15px;
+
     letter-spacing: 2px;
     text-transform: uppercase;
 }
 
+
 .tarifs-text h1 {
     font-size: 4rem;
     line-height: 1.05;
+
     margin-bottom: 25px;
+
     font-weight: 800;
     text-transform: uppercase;
 }
 
+
 .tarifs-description {
+    max-width: 650px;
+
+    margin-bottom: 35px;
+
+    color: rgba(255, 255, 255, 0.88);
+
     font-size: 1.2rem;
     line-height: 1.8;
-    max-width: 650px;
-    color: rgba(255,255,255,0.88);
-    margin-bottom: 35px;
 }
+
+
+/* =================================
+   CARACTÉRISTIQUES HERO
+================================= */
 
 .tarifs-features {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+
     gap: 18px;
+
     margin-bottom: 40px;
 }
 
+
 .feature {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.08);
     padding: 16px 18px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
     border-radius: 12px;
+
     backdrop-filter: blur(6px);
+
     font-weight: 500;
 }
+
+
+/* =================================
+   BOUTONS
+================================= */
 
 .tarifs-buttons {
     display: flex;
     gap: 20px;
 }
 
+
 .btn-primary,
 .btn-secondary {
     padding: 16px 28px;
+
     border-radius: 12px;
+
     text-decoration: none;
+
     font-weight: 700;
+
     transition: 0.3s ease;
 }
+
 
 .btn-primary {
     background: #4fc3ff;
     color: #071120;
 }
 
+
 .btn-primary:hover {
     background: white;
+
     transform: translateY(-3px);
 }
 
+
 .btn-secondary {
-    border: 2px solid rgba(255,255,255,0.4);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+
     color: white;
 }
 
+
 .btn-secondary:hover {
-    background: rgba(255,255,255,0.12);
+    background: rgba(255, 255, 255, 0.12);
+
     transform: translateY(-3px);
 }
 
+
+/* =================================
+   IMAGE HERO
+================================= */
+
 .tarifs-image {
     flex: 1;
+
     display: flex;
     justify-content: center;
 }
 
+
 .tarifs-image img {
     width: 100%;
     max-width: 650px;
+
     border-radius: 24px;
+
     object-fit: cover;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
 }
 
 
-/* =========================
+/* =================================
    PAGE PROMOS
-========================= */
+================================= */
 
 .promo-hero {
     background:
-        linear-gradient(rgba(19, 35, 61, 0.78), rgba(40, 71, 109, 0.82)),
+        linear-gradient(
+            rgba(19, 35, 61, 0.78),
+            rgba(40, 71, 109, 0.82)
+        ),
         url('/image/background.webp');
+
     background-size: cover;
     background-position: center;
 }
 
+
 .promo-section {
     padding: 100px 20px;
+
     background:
         linear-gradient(
             180deg,
@@ -158,99 +229,123 @@
         );
 }
 
+
 .promo-container {
     max-width: 1300px;
     margin: auto;
 }
 
+
 .promo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+
     gap: 35px;
+
     margin-top: 50px;
 }
 
+
 .promo-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.10);
-    transition: 0.3s ease;
     position: relative;
+
+    overflow: hidden;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);
+
+    transition: 0.3s ease;
 }
+
 
 .promo-card:hover {
     transform: translateY(-8px);
 }
 
+
 .promo-badge {
-    background: var(--bleu);
-    color: white;
     padding: 16px 22px;
+
+    background: var(--bleu);
+
+    color: white;
+
     font-weight: 900;
+
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
 
 .promo-content {
     padding: 30px;
 }
 
+
 .promo-content h3 {
+    margin-bottom: 15px;
+
     color: var(--bleu-fonce);
+
     font-size: 1.7rem;
     font-weight: 900;
-    margin-bottom: 15px;
 }
+
 
 .promo-content p {
-    color: #5f6b7a;
-    line-height: 1.7;
     margin-bottom: 25px;
+
+    color: #5f6b7a;
+
+    line-height: 1.7;
 }
 
+
 .promo-info {
-    background: #f8fbff;
-    border: 1px solid #d9e7f5;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    padding: 18px;
+
+    margin-bottom: 25px;
+
+    background: #f8fbff;
+
+    border: 1px solid #d9e7f5;
+    border-radius: 14px;
 }
+
 
 .promo-info span {
     color: var(--bleu-fonce);
+
     font-weight: 700;
 }
 
+
 .promo-info strong {
     color: var(--bleu);
+
     font-size: 1.3rem;
     font-weight: 900;
 }
 
+
 .promo-link {
     color: var(--bleu);
+
     font-weight: 900;
+
     text-decoration: none;
 }
 
+
 .promo-link:hover {
     color: var(--bleu-fonce);
-}
-
-@media(max-width: 1000px) {
-    .promo-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media(max-width: 768px) {
-    .promo-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 
@@ -259,49 +354,72 @@
 ================================= */
 
 .tarifs-cards-section {
-    background: #edf2f7;
     padding: 90px 40px;
+
+    background: #edf2f7;
 }
+
 
 .tarifs-cards {
     max-width: 1200px;
+
     margin: auto;
+
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+
     gap: 35px;
 }
 
+
 .tarif-card {
-    background: white;
-    border-radius: 18px;
     overflow: hidden;
+
+    background: white;
+
+    border-radius: 18px;
+
     text-decoration: none;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
     transition: 0.35s ease;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
+
 
 .tarif-card:hover {
     transform: translateY(-8px);
 }
 
+
 .tarif-card-top {
-    background: #2f436b;
-    color: white;
-    font-size: 2rem;
     padding: 22px 28px;
+
+    background: #2f436b;
+
+    color: white;
+
+    font-size: 2rem;
 }
 
+
 .tarif-card-title {
+    padding: 22px 28px;
+
     background: #3d4f73;
+
     color: white;
+
     font-size: 1.2rem;
     font-weight: 700;
-    padding: 22px 28px;
 }
+
 
 .tarif-card p {
     padding: 28px;
+
     color: #4b5563;
+
     line-height: 1.6;
 }
 
@@ -312,50 +430,77 @@
 
 .pricing-section {
     padding: 100px 20px;
+
+    overflow-x: hidden;
+
     background:
         linear-gradient(
             180deg,
             #edf4fb 0%,
             #dfeaf5 100%
         );
-    overflow-x: hidden;
 }
 
+
 .pricing-section h2 {
-    text-align: center;
-    font-size: 48px;
-    color: var(--bleu-fonce);
     margin-bottom: 60px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 48px;
     font-weight: 800;
+
+    text-align: center;
 }
+
 
 .pricing-category {
     max-width: 1200px;
-    margin: 0 auto 80px auto;
+
+    margin: 0 auto 80px;
 }
 
+
 .category-title {
-    background: #1A2947;
-    color: white;
-    text-align: center;
     padding: 18px;
+
+    margin-bottom: 35px;
+
+    background: #1A2947;
+
+    color: white;
+
     border-radius: 18px;
+
     font-size: 28px;
     font-weight: 800;
-    margin-bottom: 35px;
+
+    text-align: center;
+
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
+
+
+/* =================================
+   WRAPPER DES GROUPES
+================================= */
 
 .pricing-wrapper {
     max-width: 1200px;
+
     margin: 0 auto;
+
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 30px;
+
     align-items: start;
 }
+
 
 .pricing-group {
     width: 100%;
@@ -369,38 +514,60 @@
 
 .pricing-toggle {
     width: 100%;
-    background: var(--bleu);
-    color: white;
-    border: none;
-    padding: 24px 30px;
-    border-radius: 18px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    padding: 24px 30px;
+
+    background: var(--bleu);
+
+    color: white;
+
+    border: none;
+    border-radius: 18px;
+
     font-size: 28px;
     font-weight: 800;
+
     cursor: pointer;
+
     transition: 0.3s ease;
 }
+
 
 .pricing-toggle:hover {
     transform: translateY(-2px);
 }
 
+
 .pricing-content {
     width: 100%;
+
     box-sizing: border-box;
-    background: white;
-    border-radius: 0 0 18px 18px;
-    overflow: hidden;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+
     max-height: 0;
+
     padding: 0 28px;
-    transition: max-height 0.45s ease, padding 0.45s ease;
+
+    overflow: hidden;
+
+    background: white;
+
+    border-radius: 0 0 18px 18px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+    transition:
+        max-height 0.45s ease,
+        padding 0.45s ease;
 }
+
 
 .pricing-content.open {
     max-height: 1200px;
+
     padding: 28px;
 }
 
@@ -412,478 +579,272 @@
 .pricing-grid {
     display: grid;
     grid-template-columns: 1fr;
+
     gap: 18px;
 }
 
+
+/* =================================
+   LIGNE DE PRIX
+================================= */
+
 .price-row {
+    min-height: 110px;
+
+    display: grid;
+    align-items: center;
+
+    gap: 0;
+
+    padding: 18px 20px;
+
     background: #f8fbff;
+
     border: 1px solid #d9e7f5;
     border-radius: 16px;
-    padding: 18px 20px;
-    min-height: 110px;
-    display: grid;
-    grid-template-columns: 1fr 110px 110px;
-    align-items: center;
-    gap: 0;
+
     transition: 0.3s ease;
 }
 
-.price-row:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+
+/* Prix régulier + prévente */
+
+.price-row.dual-price {
+    grid-template-columns: 1fr 110px 110px;
 }
 
+
+/* Prix régulier seulement */
+
+.price-row.single-price {
+    grid-template-columns: 1fr 110px;
+}
+
+
+.price-row:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =================================
+   NOM DU GROUPE D'ÂGE
+================================= */
+
 .price-label {
+    padding-right: 14px;
+
     color: var(--bleu-fonce);
+
     font-size: 20px;
     font-weight: 800;
+
     line-height: 1.2;
-    padding-right: 14px;
 }
+
+
+/* =================================
+   COLONNES DE PRIX
+================================= */
 
 .price-column {
     height: 100%;
     min-height: 70px;
-    padding: 0 12px;
-    border-left: 2px solid #d9e7f5;
+
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
+
+    padding: 0 12px;
+
+    border-left: 2px solid #d9e7f5;
 }
+
 
 .price-column small {
     display: block;
+
+    margin-bottom: 6px;
+
     color: #6b7280;
+
     font-size: 11px;
     font-weight: 800;
+
     text-transform: uppercase;
     letter-spacing: 0.6px;
-    margin-bottom: 6px;
+
     text-align: center;
 }
 
+
 .price-column strong {
     color: var(--bleu);
+
     font-size: 26px;
     font-weight: 900;
+
     line-height: 1;
+
     text-align: center;
 }
 
 
 /* =================================
-   RESPONSIVE
+   LISTE DES ÂGES
 ================================= */
 
-@media(max-width: 1100px) {
+.price-ages {
+    flex: 1;
+
+    margin: 0 20px;
+    padding-left: 18px;
+
+    color: #5f6b7a;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+.price-ages li {
+    margin: 2px 0;
+}
+
+
+/* =================================
+   RESPONSIVE - TABLETTE
+================================= */
+
+@media (max-width: 1100px) {
+
     .tarifs-content {
         flex-direction: column;
-        text-align: center;
+
         padding: 60px 25px;
+
+        text-align: center;
     }
+
 
     .tarifs-text h1 {
         font-size: 2.8rem;
     }
 
+
     .tarifs-features {
         grid-template-columns: 1fr;
     }
 
+
     .tarifs-buttons {
         justify-content: center;
+
         flex-wrap: wrap;
     }
+
 
     .tarifs-cards {
         grid-template-columns: 1fr;
     }
 
+
     .pricing-wrapper {
         grid-template-columns: 1fr;
+
         max-width: 760px;
     }
+
 
     .pricing-category {
         max-width: 760px;
     }
+
 }
 
-@media(max-width: 768px) {
+
+/* =================================
+   RESPONSIVE - MOBILE
+================================= */
+
+@media (max-width: 1000px) {
+
+    .promo-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .promo-grid {
+        grid-template-columns: 1fr;
+    }
+
+
     .pricing-section {
         padding: 70px 15px;
     }
+
 
     .pricing-section h2 {
         font-size: 36px;
     }
 
+
     .category-title {
         font-size: 22px;
     }
 
+
     .pricing-toggle {
-        font-size: 22px;
         padding: 20px;
+
+        font-size: 22px;
     }
+
 
     .pricing-content.open {
         padding: 20px;
     }
 
-    .price-row {
+
+    /* Les deux types de lignes deviennent verticales */
+
+    .price-row.dual-price,
+    .price-row.single-price {
         grid-template-columns: 1fr;
+
         gap: 14px;
+
         text-align: center;
     }
 
+
     .price-label {
         padding-right: 0;
+
         font-size: 18px;
     }
 
+
     .price-column {
         width: 100%;
+        min-height: auto;
+
+        padding: 14px 0 0;
+
         border-left: none;
         border-top: 1px solid #d9e7f5;
-        padding: 14px 0 0;
-        min-height: auto;
     }
+
 
     .price-column strong {
         font-size: 24px;
     }
-}
 
-.price-ages{
-    flex: 1;
-    margin: 0 20px;
-    padding-left: 18px;
-
-    font-size: 13px;
-    color: #5f6b7a;
-    line-height: 1.5;
-}
-
-.price-ages li{
-    margin: 2px 0;
-}
-
-/* =========================================
-   INFORMATIONS ABONNEMENTS
-========================================= */
-
-.subscription-info {
-    background: #f7f9fc;
-    border-radius: 12px;
-    padding: 25px 30px;
-    margin-bottom: 25px;
-    border-left: 5px solid var(--turquoise);
-    color: var(--bleu-fonce);
-    line-height: 1.6;
-
-    /* Permet de scroller dans la carte */
-    max-height: 600px;
-    overflow-y: auto;
-}
-
-.subscription-info h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: var(--bleu-fonce);
-    font-size: 22px;
-}
-
-.subscription-info p {
-    margin: 10px 0;
-}
-
-.subscription-info ul,
-.subscription-info ol {
-    margin: 10px 0 15px 25px;
-}
-
-.subscription-info li {
-    margin-bottom: 6px;
-}
-
-.subscription-bonus {
-    background: rgba(0, 180, 180, 0.08);
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 20px !important;
-}
-
-
-/* =========================================
-   SCROLLBAR
-========================================= */
-
-.subscription-info::-webkit-scrollbar {
-    width: 8px;
-}
-
-.subscription-info::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.subscription-info::-webkit-scrollbar-thumb {
-    background: var(--turquoise);
-    border-radius: 10px;
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 600px) {
-
-    .subscription-info {
-        padding: 20px;
-        margin: 0 10px 20px;
-        font-size: 14px;
-
-        /* Hauteur maximale plus petite sur mobile */
-        max-height: 500px;
-
-        /* Scroll vertical */
-        overflow-y: auto;
-
-        /* Scroll plus fluide sur iPhone */
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .subscription-info h3 {
-        font-size: 19px;
-    }
-
-    .subscription-info ul,
-    .subscription-info ol {
-        padding-left: 15px;
-        margin-left: 10px;
-    }
-}
-
-/* =========================================
-   INFORMATIONS SUPPLÉMENTAIRES
-========================================= */
-
-.additional-info-section {
-    padding: 50px 20px 70px;
-    background: #f4f5f7;
-}
-
-.additional-info-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-
-/* TITRE */
-
-.additional-info-container > h2 {
-    background: linear-gradient(
-        135deg,
-        #2697ba,
-        #2183a5
-    );
-
-    color: white;
-
-    text-align: center;
-
-    font-size: 28px;
-    font-weight: 800;
-
-    letter-spacing: 1px;
-
-    padding: 12px 20px;
-
-    margin: 0;
-
-    border-radius: 10px 10px 0 0;
-}
-
-
-/* ONGLET */
-
-.additional-info-tabs {
-    display: flex;
-
-    background: white;
-
-    box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-
-.additional-info-tab {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-
-    padding: 22px;
-
-    border: none;
-
-    background: #ffffff;
-
-    color: #28384f;
-
-    font-size: 18px;
-    font-weight: 700;
-
-    letter-spacing: 0.5px;
-
-    cursor: default;
-}
-
-
-.additional-info-icon {
-    font-size: 30px;
-
-    line-height: 1;
-}
-
-
-/* CONTENU */
-
-.additional-info-content {
-    background: white;
-
-    padding: 45px 50px 50px;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.08);
-}
-
-
-.additional-info-content h3 {
-    text-align: center;
-
-    color: #28384f;
-
-    font-size: 30px;
-    font-weight: 800;
-
-    letter-spacing: 2px;
-
-    margin:
-        0
-        0
-        30px;
-}
-
-
-.additional-info-content ul {
-    margin: 0;
-
-    padding-left: 25px;
-
-    color: #4d5560;
-
-    font-size: 16px;
-
-    line-height: 1.7;
-}
-
-
-.additional-info-content li {
-    margin-bottom: 7px;
-}
-
-
-.additional-info-content strong {
-    color: #28384f;
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 768px) {
-
-    .additional-info-section {
-        padding:
-            30px
-            15px
-            50px;
-    }
-
-
-    .additional-info-container > h2 {
-        font-size: 20px;
-
-        padding: 13px 10px;
-    }
-
-
-    .additional-info-tab {
-        padding: 18px 10px;
-
-        font-size: 15px;
-
-        gap: 10px;
-    }
-
-
-    .additional-info-icon {
-        font-size: 24px;
-    }
-
-
-    .additional-info-content {
-        padding:
-            30px
-            20px;
-    }
-
-
-    .additional-info-content h3 {
-        font-size: 24px;
-
-        margin-bottom: 25px;
-    }
-
-
-    .additional-info-content ul {
-        padding-left: 20px;
-
-        font-size: 15px;
-
-        line-height: 1.6;
-    }
-
-
-    .additional-info-content li {
-        margin-bottom: 10px;
-    }
-
-}
-
-.ticket-details {
-    margin-bottom: 20px;
-    padding: 12px 16px;
-    background: #f3f5f7;
-    border-left: 4px solid #1d94bd;
-    font-size: 15px;
-    color: #1c3557;
-}
-
-.ticket-details strong {
-    margin-right: 5px;
-}
-
-/* Ligne de séparation avant l'offre */
-.station-info hr {
-    border: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
-    width: 80%;
-    margin: 20px auto;
 }
