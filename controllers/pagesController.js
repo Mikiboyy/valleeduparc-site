@@ -51,7 +51,8 @@ exports.abonnements = async (req, res) => {
             'Soirée',
             '3 jours',
             'Famille (3 personnes min.)',
-            'Autres'
+            'Casiers',
+            'Randonnée alpine'
         ];
 
         const groupedPrices = categoriesOrder.map(category => ({
