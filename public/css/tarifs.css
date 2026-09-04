@@ -895,6 +895,7 @@
 
 .additional-info-tabs {
     display: flex;
+    justify-content: center;
 
     margin-bottom: 0;
 
@@ -917,7 +918,7 @@
     border: none;
     border-radius: 14px 14px 0 0;
 
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 800;
 
     cursor: pointer;
@@ -971,14 +972,15 @@
 ========================================= */
 
 .additional-info-content h3 {
-    margin: 0 0 25px;
+    margin: 0 0 30px;
 
     color: var(--bleu-fonce);
 
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 800;
 
     text-transform: uppercase;
+    text-align: center;
 }
 
 
@@ -1056,15 +1058,6 @@
 
 .additional-info-content strong {
     color: var(--bleu-fonce);
-}
-
-.additional-info-tabs {
-    display: flex;
-    justify-content: center;
-
-    margin-bottom: 0;
-
-    gap: 10px;
 }
 
 
