@@ -669,7 +669,7 @@ router.post(
 
 
             res.redirect(
-                '/admin-vdp/price-subscriptions'
+                '/admin-vdp/price/abonnements'
             );
 
 
