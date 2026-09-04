@@ -545,22 +545,33 @@
 .pricing-content {
     width: 100%;
     box-sizing: border-box;
+
     background: white;
+
     border-radius: 0 0 18px 18px;
-    overflow: hidden;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 
     max-height: 0;
+
     padding: 0 28px;
+
+    overflow: hidden;
 
     transition:
         max-height 0.5s ease,
         padding 0.5s ease;
 }
 
+
+/* ACCORDÉON OUVERT */
+
 .pricing-content.open {
-    max-height: 5000px;
+    max-height: 650px;
+
     padding: 28px;
+
+    overflow-y: auto;
 }
 
 /* Correction couleur du texte des informations d'abonnement */
@@ -1132,4 +1143,107 @@
         top: 16px;
     }
 
+}
+
+/* =========================================
+   ESPACEMENT DES INFORMATIONS ABONNEMENTS
+========================================= */
+
+.subscription-info {
+    color: var(--bleu-fonce);
+}
+
+
+/* Paragraphes */
+
+.subscription-info p {
+    margin: 16px 0;
+
+    line-height: 1.6;
+}
+
+
+/* Titres principaux */
+
+.subscription-info h3 {
+    margin-bottom: 25px;
+
+    text-align: center;
+}
+
+
+/* Titres de sections */
+
+.subscription-info h4 {
+    margin: 30px 0 18px;
+
+    text-align: center;
+}
+
+
+/* Titres utilisant <strong> directement */
+
+.subscription-info > strong {
+    display: block;
+
+    margin: 30px 0 18px;
+
+    text-align: center;
+}
+
+
+/* Séparateurs */
+
+.subscription-info hr {
+    margin: 24px 0;
+
+    border: none;
+
+    border-top: 1px solid #d9e7f5;
+}
+
+
+/* Listes */
+
+.subscription-info ul,
+.subscription-info ol {
+    margin: 18px 0;
+
+    padding-left: 30px;
+
+    line-height: 1.7;
+}
+
+
+/* Éléments de listes */
+
+.subscription-info li {
+    margin-bottom: 8px;
+}
+
+/* =========================================
+   SCROLLBAR ACCORDÉON
+========================================= */
+
+.pricing-content.open::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+.pricing-content.open::-webkit-scrollbar-track {
+    background: #edf4fb;
+
+    border-radius: 10px;
+}
+
+
+.pricing-content.open::-webkit-scrollbar-thumb {
+    background: var(--bleu);
+
+    border-radius: 10px;
+}
+
+
+.pricing-content.open::-webkit-scrollbar-thumb:hover {
+    background: var(--bleu-fonce);
 }
