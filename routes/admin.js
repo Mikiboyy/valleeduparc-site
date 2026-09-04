@@ -156,7 +156,9 @@ router.post('/login', loginLimiter, async (req, res) => {
 
             username: admin.username,
 
-            role: admin.role
+            role: admin.role,
+
+            ip: req.ip
 
         };
 
