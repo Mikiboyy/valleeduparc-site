@@ -498,8 +498,16 @@
 
                                 <% group.items.forEach(item => { %>
 
-                                    <div class="price-row <%= item.fdcPrice !== null && item.fdcPrice !== undefined ? 'dual-price' : 'single-price' %>">
+                                    <% 
+                                    const hasPresale =
+                                    item.fdcPrice !== null &&
+                                    item.fdcPrice !== undefined &&
+                                    item.fdcPrice !== '';
+                                    %>
 
+                                    <div class="price-row <%= hasPresale ? 'dual-price' : 'single-price' %>">
+
+                                        <!-- NOM / GROUPE -->
                                         <span class="price-label">
                                             <%= item.ageGroup %>
                                         </span>
@@ -512,7 +520,8 @@
                                             <small>Régulier</small>
 
                                             <strong>
-                                                <%= item.regularPrice !== null && item.regularPrice !== undefined
+                                                <%= item.regularPrice !== null &&
+                                                item.regularPrice !== undefined
                                                 ? item.regularPrice + '$'
                                                 : '' %>
                                             </strong>
@@ -522,10 +531,7 @@
 
                                         <!-- PRÉ-VENTE : seulement si un prix existe -->
 
-                                        <% if (
-                                            item.fdcPrice !== null &&
-                                            item.fdcPrice !== undefined
-                                            ) { %>
+                                        <% if (hasPresale) { %>
 
                                                 <div class="price-column presale-column">
 
@@ -537,13 +543,13 @@
 
                                                 </div>
 
-                                                <% } %>
-
-                                            </div>
-
-                                            <% }) %>
+                                            <% } %>
 
                                         </div>
+
+                                    <% }) %>
+
+                                </div>
 
 </section>
 
