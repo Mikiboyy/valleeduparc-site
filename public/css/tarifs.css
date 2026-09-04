@@ -848,3 +848,271 @@
     }
 
 }
+
+/* =========================================
+   INFORMATIONS SUPPLÉMENTAIRES
+========================================= */
+
+.additional-info-section {
+    padding: 90px 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #edf4fb 0%,
+            #dfeaf5 100%
+        );
+}
+
+
+.additional-info-container {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   TITRE
+========================================= */
+
+.additional-info-container > h2 {
+    margin-bottom: 40px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 42px;
+    font-weight: 800;
+
+    text-align: center;
+}
+
+
+/* =========================================
+   ONGLETS
+========================================= */
+
+.additional-info-tabs {
+    display: flex;
+
+    margin-bottom: 0;
+
+    gap: 10px;
+}
+
+
+.additional-info-tab {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 18px 28px;
+
+    background: #1A2947;
+
+    color: white;
+
+    border: none;
+    border-radius: 14px 14px 0 0;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+
+.additional-info-tab:hover {
+    background: var(--bleu);
+}
+
+
+.additional-info-tab.active {
+    background: var(--bleu);
+}
+
+
+.additional-info-icon {
+    font-size: 22px;
+
+    line-height: 1;
+}
+
+
+/* =========================================
+   CONTENU
+========================================= */
+
+.additional-info-content {
+    display: none;
+
+    padding: 40px;
+
+    background: white;
+
+    border-radius: 0 18px 18px 18px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+.additional-info-content.active {
+    display: block;
+}
+
+
+/* =========================================
+   TITRE DU CONTENU
+========================================= */
+
+.additional-info-content h3 {
+    margin: 0 0 25px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 28px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   LISTE CODE DE CONDUITE
+========================================= */
+
+.additional-info-content ul {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+.additional-info-content li {
+    position: relative;
+
+    padding: 18px 20px 18px 55px;
+
+    background: #f8fbff;
+
+    color: #4b5563;
+
+    border: 1px solid #d9e7f5;
+    border-radius: 12px;
+
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+
+/* Numéro des règles */
+
+.additional-info-content ul {
+    counter-reset: conduite;
+}
+
+
+.additional-info-content li {
+    counter-increment: conduite;
+}
+
+
+.additional-info-content li::before {
+    content: counter(conduite);
+
+    position: absolute;
+
+    left: 16px;
+    top: 18px;
+
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--bleu);
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+.additional-info-content strong {
+    color: var(--bleu-fonce);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .additional-info-section {
+        padding: 70px 15px;
+    }
+
+
+    .additional-info-container > h2 {
+        font-size: 30px;
+    }
+
+
+    .additional-info-tabs {
+        width: 100%;
+    }
+
+
+    .additional-info-tab {
+        width: 100%;
+
+        justify-content: center;
+
+        padding: 16px;
+
+        font-size: 14px;
+    }
+
+
+    .additional-info-content {
+        padding: 25px 18px;
+
+        border-radius: 0 0 16px 16px;
+    }
+
+
+    .additional-info-content h3 {
+        font-size: 22px;
+    }
+
+
+    .additional-info-content li {
+        padding: 16px 15px 16px 50px;
+
+        font-size: 14px;
+    }
+
+
+    .additional-info-content li::before {
+        left: 13px;
+        top: 16px;
+    }
+
+}
