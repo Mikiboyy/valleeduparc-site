@@ -743,6 +743,63 @@ router.get(
     }
 );
 
+/* =========================================================
+   MODIFICATION D'UN BILLET
+========================================================= */
+
+router.post(
+    '/prices/billets/:id',
+    requireRole('prix'),
+    async (req, res) => {
+
+        try {
+
+            const updateData = {
+
+                price: req.body.price !== ''
+                    ? Number(req.body.price)
+                    : null,
+
+                isActive:
+                    req.body.isActive === 'on'
+
+            };
+
+
+            await DailyTicketPrice.findByIdAndUpdate(
+
+                req.params.id,
+
+                updateData,
+
+                {
+                    new: true
+                }
+
+            );
+
+
+            res.redirect(
+                '/admin-vdp/prices/billets'
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur modification billet :',
+                error
+            );
+
+
+            res.status(500).send(
+                'Erreur lors de la modification du billet.'
+            );
+
+        }
+
+    }
+);
+
 
 /* =========================================================
    PRIX - COURS
