@@ -1058,6 +1058,15 @@
     color: var(--bleu-fonce);
 }
 
+.additional-info-tabs {
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 0;
+
+    gap: 10px;
+}
+
 
 /* =========================================
    RESPONSIVE
