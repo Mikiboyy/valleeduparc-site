@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
 
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 
@@ -769,6 +769,13 @@
 
 }
 
+@media (max-width: 768px) {
+
+    .tarifs-hero {
+        background-attachment: scroll;
+    }
+
+}
 
 @media (max-width: 768px) {
 
