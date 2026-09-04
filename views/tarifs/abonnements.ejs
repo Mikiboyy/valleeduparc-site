@@ -490,66 +490,60 @@
 
 
                             <!-- ==========================================
-                                 PRIX
-                            =========================================== -->
+                             PRIX
+                             =========================================== -->
 
-                            <div class="pricing-grid">
+                             <div class="pricing-grid">
+
 
                                 <% group.items.forEach(item => { %>
 
-                                    <div class="price-row dual-price">
+                                    <div class="price-row <%= item.fdcPrice !== null && item.fdcPrice !== undefined ? 'dual-price' : 'single-price' %>">
 
                                         <span class="price-label">
                                             <%= item.ageGroup %>
                                         </span>
 
 
+                                        <!-- PRIX RÉGULIER -->
+
                                         <div class="price-column">
 
                                             <small>Régulier</small>
 
                                             <strong>
-                                                <%= item.regularPrice !== null
-                                                    ? item.regularPrice + '$'
-                                                    : '' %>
+                                                <%= item.regularPrice !== null && item.regularPrice !== undefined
+                                                ? item.regularPrice + '$'
+                                                : '' %>
                                             </strong>
 
                                         </div>
 
 
-                                        <div class="price-column">
+                                        <!-- PRÉ-VENTE : seulement si un prix existe -->
 
-                                            <small>Pré-vente</small>
+                                        <% if (
+                                            item.fdcPrice !== null &&
+                                            item.fdcPrice !== undefined
+                                            ) { %>
 
-                                            <strong>
-                                                <%= item.fdcPrice !== null
-                                                    ? item.fdcPrice + '$'
-                                                    : '' %>
-                                            </strong>
+                                                <div class="price-column presale-column">
+
+                                                    <small>Pré-vente</small>
+
+                                                    <strong>
+                                                        <%= item.fdcPrice %>$
+                                                    </strong>
+
+                                                </div>
+
+                                                <% } %>
+
+                                            </div>
+
+                                            <% }) %>
 
                                         </div>
-
-                                    </div>
-
-                                <% }) %>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                <% } %>
-
-            <% }) %>
-
-        <% } else { %>
-
-            <p>Aucun prix disponible pour le moment.</p>
-
-        <% } %>
-
-    </div>
 
 </section>
 
