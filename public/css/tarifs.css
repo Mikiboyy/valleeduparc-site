@@ -563,6 +563,23 @@
     padding: 28px;
 }
 
+/* Correction couleur du texte des informations d'abonnement */
+
+.pricing-content,
+.pricing-content p,
+.pricing-content li,
+.pricing-content span {
+    color: #1f2d4d;
+}
+
+.pricing-content h1,
+.pricing-content h2,
+.pricing-content h3,
+.pricing-content h4,
+.pricing-content strong {
+    color: #1f2d4d;
+}
+
 /* =================================
    GRILLE DE PRIX
 ================================= */
