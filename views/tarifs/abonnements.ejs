@@ -491,14 +491,13 @@
 
                             <!-- ==========================================
                              PRIX
-                             =========================================== -->
+                             ========================================== -->
 
                              <div class="pricing-grid">
 
-
                                 <% group.items.forEach(item => { %>
 
-                                    <% 
+                                    <%
                                     const hasPresale =
                                     item.fdcPrice !== null &&
                                     item.fdcPrice !== undefined &&
@@ -508,6 +507,7 @@
                                     <div class="price-row <%= hasPresale ? 'dual-price' : 'single-price' %>">
 
                                         <!-- NOM / GROUPE -->
+
                                         <span class="price-label">
                                             <%= item.ageGroup %>
                                         </span>
@@ -529,29 +529,63 @@
                                         </div>
 
 
-                                        <!-- PRÉ-VENTE : seulement si un prix existe -->
+                                        <!-- PRÉ-VENTE -->
 
                                         <% if (hasPresale) { %>
 
-                                                <div class="price-column presale-column">
+                                            <div class="price-column presale-column">
 
-                                                    <small>Pré-vente</small>
+                                                <small>Pré-vente</small>
 
-                                                    <strong>
-                                                        <%= item.fdcPrice %>$
-                                                    </strong>
+                                                <strong>
+                                                    <%= item.fdcPrice %>$
+                                                </strong>
 
-                                                </div>
+                                            </div>
 
                                             <% } %>
 
                                         </div>
 
-                                    <% }) %>
+                                        <% }) %>
+
+                                    </div>
+
+
+                                    <!-- FIN pricing-content -->
 
                                 </div>
 
-</section>
+
+                                <!-- FIN pricing-group -->
+
+                            </div>
+
+
+                            <!-- FIN if group.items -->
+
+                        <% } %>
+
+
+                        <!-- FIN groupedPrices.forEach -->
+
+                    <% }) %>
+
+
+                    <!-- SI AUCUN PRIX -->
+
+                <% } else { %>
+
+                    <p>Aucun prix disponible pour le moment.</p>
+
+                <% } %>
+
+
+                <!-- FIN pricing-wrapper -->
+
+            </div>
+
+        </section>
 
 
 <!-- =========================================
