@@ -249,7 +249,7 @@ router.get('/', requireLogin, (req, res) => {
 
         
         canFAQ:
-            canAccess(role, ['faq'])    
+            canAccess(role, ['admin'])    
 
     });
 
@@ -751,8 +751,7 @@ router.get(
 router.post(
     '/prices/cours/add',
 
-    requireLogin,
-    requireRole(['admin', 'prix']),
+    requireRole(['prix']),
 
     async (req, res) => {
 
@@ -833,7 +832,7 @@ router.post(
 
 
             res.redirect(
-                '/admin-vdp/prices/cours'
+                '/admin/prices-courses'
             );
 
         } catch (error) {
@@ -844,7 +843,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices/cours?error=add'
+                '/admin/prices/cours?error=add'
             );
 
         }
@@ -854,8 +853,7 @@ router.post(
 
 router.get(
     '/prices/cours',
-    requireLogin,
-    requireRole(['admin', 'prix']),
+    requireRole(['prix']),
     async (req, res) => {
 
         try {
@@ -920,8 +918,7 @@ router.get(
 router.post(
     '/prices/cours/:id',
 
-    requireLogin,
-    requireRole(['admin', 'prix']),
+    requireRole(['prix']),
 
     async (req, res) => {
 
@@ -1033,7 +1030,7 @@ router.post(
 
 
             res.redirect(
-                '/admin-vdp/prices/cours'
+                '/admin/prices-courses'
             );
 
         } catch (error) {
@@ -1044,7 +1041,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices/cours?error=update'
+                '/admin/prices-courses?error=update'
             );
 
         }
@@ -1055,8 +1052,7 @@ router.post(
 router.post(
     '/prices/cours/:id/delete',
 
-    requireLogin,
-    requireRole(['admin', 'prix']),
+    requireRole(['prix']),
 
     async (req, res) => {
 
@@ -1067,7 +1063,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices/cours'
+                '/admin/prices-courses'
             );
 
         } catch (error) {
@@ -1078,7 +1074,7 @@ router.post(
             );
 
             res.redirect(
-                '/admin-vdp/prices/cours?error=delete'
+                '/admin/prices-courses?error=delete'
             );
 
         }
@@ -1093,8 +1089,7 @@ router.post(
 router.post(
     '/prices/toggle-presale',
 
-    requireLogin,
-    requireRole(['admin', 'prix']),
+    requireRole(['prix']),
 
     async (req, res) => {
 
@@ -1122,7 +1117,7 @@ router.post(
 
 
             res.redirect(
-                '/admin-vdp/prices/cours'
+                '/admin/prices-courses'
             );
 
         } catch (error) {
