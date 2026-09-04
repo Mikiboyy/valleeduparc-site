@@ -881,7 +881,7 @@ router.get(
 
 
             res.render(
-                'admin-vdp/price-courses',
+                'admin/price-courses',
                 {
 
                     title: 'Prix cours',
