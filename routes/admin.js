@@ -754,23 +754,35 @@ router.post(
 
         try {
 
-            const updateData = {
+            const onlinePrice =
+                req.body.onlinePrice === ''
+                    ? null
+                    : Number(req.body.onlinePrice);
 
-                price: req.body.price !== ''
-                    ? Number(req.body.price)
-                    : null,
 
-                isActive:
-                    req.body.isActive === 'on'
-
-            };
+            const counterPrice =
+                req.body.counterPrice === ''
+                    ? null
+                    : Number(req.body.counterPrice);
 
 
             await DailyTicketPrice.findByIdAndUpdate(
 
                 req.params.id,
 
-                updateData,
+                {
+
+                    onlinePrice,
+
+                    counterPrice,
+
+                    isFree:
+                        req.body.isFree === 'on',
+
+                    isActive:
+                        req.body.isActive === 'on'
+
+                },
 
                 {
                     new: true
@@ -789,7 +801,6 @@ router.post(
                 'Erreur modification billet :',
                 error
             );
-
 
             res.status(500).send(
                 'Erreur lors de la modification du billet.'
