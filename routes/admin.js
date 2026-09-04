@@ -751,7 +751,7 @@ router.get(
 router.post(
     '/prices/cours/add',
 
-    requireRole(['prix']),
+    requireRole('prix'),
 
     async (req, res) => {
 
@@ -853,7 +853,7 @@ router.post(
 
 router.get(
     '/prices/cours',
-    requireRole(['prix']),
+    requireRole('prix'),
     async (req, res) => {
 
         try {
@@ -918,7 +918,7 @@ router.get(
 router.post(
     '/prices/cours/:id',
 
-    requireRole(['prix']),
+    requireRole('prix'),
 
     async (req, res) => {
 
@@ -1052,7 +1052,7 @@ router.post(
 router.post(
     '/prices/cours/:id/delete',
 
-    requireRole(['prix']),
+    requireRole('prix'),
 
     async (req, res) => {
 
@@ -1089,7 +1089,7 @@ router.post(
 router.post(
     '/prices/toggle-presale',
 
-    requireRole(['prix']),
+    requireRole('prix'),
 
     async (req, res) => {
 
