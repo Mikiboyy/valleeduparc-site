@@ -1783,44 +1783,97 @@ router.get(
 ========================= */
 
 router.post(
-    '/faq',
-    requireRole('faq'),
+    '/popup-announcement',
+
+    requireLogin,
+
+    upload.single('image'),
+
     async (req, res) => {
 
         try {
 
-            await FAQ.create({
+            const {
+                title,
+                message,
+                isActive
+            } = req.body;
 
-                category:
-                    req.body.category,
 
-                question:
-                    req.body.question,
+            let popupAnnouncement =
+                await PopupAnnouncement.findOne({})
+                    .sort({
+                        updatedAt: -1
+                    });
 
-                answer:
-                    req.body.answer,
 
-                order:
-                    Number(req.body.order) || 0,
+            const data = {
+
+                title: title.trim(),
+
+                message: message.trim(),
 
                 isActive:
-                    req.body.isActive === 'on'
+                    isActive === 'on'
 
-            });
+            };
+
+
+            /*
+                ============================
+                IMAGE CLOUDINARY
+                ============================
+            */
+
+            if (req.file) {
+
+                data.imageUrl =
+                    req.file.path;
+
+            }
+
+
+            /*
+                ============================
+                METTRE À JOUR
+                ============================
+            */
+
+            if (popupAnnouncement) {
+
+                await PopupAnnouncement.findByIdAndUpdate(
+
+                    popupAnnouncement._id,
+
+                    data,
+
+                    {
+                        new: true
+                    }
+
+                );
+
+            } else {
+
+                await PopupAnnouncement.create(data);
+
+            }
+
 
             res.redirect(
-                '/admin-vdp/faq'
+                '/admin-vdp/popup-announcement?success=1'
             );
 
         } catch (error) {
 
             console.error(
-                'Erreur ajout FAQ :',
+                'Erreur sauvegarde popup :',
                 error
             );
 
-            res.status(500).send(
-                'Erreur lors de l’ajout de la question.'
+
+            res.redirect(
+                '/admin-vdp/popup-announcement?error=1'
             );
 
         }
@@ -2022,8 +2075,7 @@ router.post(
 
             if (req.file) {
 
-                data.imageUrl =
-                req.file.path;
+                data.imageUrl = req.file.path;
 
             }
 
