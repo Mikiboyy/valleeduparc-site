@@ -49,27 +49,101 @@ const loginLimiter = rateLimit({
 
 
 /* =========================================================
-   MULTER + CLOUDINARY
+   MULTER
 ========================================================= */
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/uploads/');
-    },
+const uploadFolder = path.join(
+    __dirname,
+    '../public/uploads'
+);
 
-    filename: (req, file, cb) => {
-        const uniqueName =
-            Date.now() + '-' + Math.round(Math.random() * 1E9);
+
+/*
+    Crée le dossier s'il n'existe pas
+*/
+
+if (!fs.existsSync(uploadFolder)) {
+
+    fs.mkdirSync(
+        uploadFolder,
+        {
+            recursive: true
+        }
+    );
+
+}
+
+
+const storage = multer.diskStorage({
+
+    destination: (req, file, cb) => {
 
         cb(
             null,
-            uniqueName + path.extname(file.originalname)
+            uploadFolder
         );
+
+    },
+
+
+    filename: (req, file, cb) => {
+
+        const uniqueName =
+            Date.now() +
+            '-' +
+            Math.round(Math.random() * 1E9);
+
+        cb(
+            null,
+            uniqueName +
+            path.extname(file.originalname)
+        );
+
     }
+
 });
 
+
 const upload = multer({
-    storage: multer.memoryStorage()
+
+    storage,
+
+    limits: {
+        fileSize: 10 * 1024 * 1024
+    },
+
+    fileFilter: (req, file, cb) => {
+
+        const allowedTypes = [
+
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+            'image/webp'
+
+        ];
+
+
+        if (
+            allowedTypes.includes(
+                file.mimetype
+            )
+        ) {
+
+            cb(null, true);
+
+        } else {
+
+            cb(
+                new Error(
+                    'Format d’image non supporté.'
+                )
+            );
+
+        }
+
+    }
+
 });
 
 
@@ -467,7 +541,10 @@ router.post(
                     {
 
                         folder:
-                            'valleeduparc/events'
+                            'valleeduparc/events',
+
+                            resource_type:
+                            'image'
 
                     }
 
@@ -476,6 +553,11 @@ router.post(
 
                 imageUrl =
                     result.secure_url;
+
+                fs.unlink(
+                    req.file.path,
+                    () => {}
+                );
 
             }
 
@@ -1825,13 +1907,45 @@ router.post(
                 ============================
             */
 
-            if (req.file) {
+                if (req.file) {
 
-                data.imageUrl =
-                    req.file.path;
+                    console.log(
+                        'Image popup reçue :',
+                        req.file.path
+                    );
 
-            }
 
+                    const result =
+                    await cloudinary.uploader.upload(
+
+                        req.file.path,
+
+                        {
+
+                            folder:
+                            'valleeduparc/popup',
+
+                            resource_type:
+                            'image'
+
+                        }
+
+                    );
+
+
+                    data.imageUrl =
+                    result.secure_url;
+
+
+                    fs.unlink(
+
+                        req.file.path,
+
+                        () => {}
+
+                    );
+
+                }
 
             /*
                 ============================
