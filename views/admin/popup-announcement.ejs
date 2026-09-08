@@ -1,0 +1,182 @@
+<div class="admin-popup-page">
+
+    <div class="admin-popup-header">
+
+        <h1>
+            📢 Popup d'annonce
+        </h1>
+
+        <p>
+            Créez une annonce importante qui apparaîtra
+            sur la page d'accueil.
+        </p>
+
+    </div>
+
+
+    <% if (typeof success !== 'undefined' && success) { %>
+
+        <div class="admin-success-message">
+
+            ✅ Le popup a été sauvegardé avec succès.
+
+        </div>
+
+    <% } %>
+
+
+    <form
+        action="/admin-vdp/popup-announcement"
+        method="POST"
+        enctype="multipart/form-data"
+        class="admin-popup-form"
+    >
+
+
+        <!-- ACTIVATION -->
+
+        <div class="form-section">
+
+            <label class="toggle-label">
+
+                <input
+                    type="checkbox"
+                    name="isActive"
+
+                    <%= popupAnnouncement &&
+                        popupAnnouncement.isActive
+                        ? 'checked'
+                        : ''
+                    %>
+                >
+
+                <span>
+                    Activer le popup sur la page d'accueil
+                </span>
+
+            </label>
+
+        </div>
+
+
+        <!-- TITRE -->
+
+        <div class="form-section">
+
+            <label for="title">
+
+                Titre de l'annonce
+
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+
+                value="<%= popupAnnouncement
+                    ? popupAnnouncement.title
+                    : ''
+                %>"
+
+                placeholder="Ex: Fermeture exceptionnelle"
+
+                required
+            >
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div class="form-section">
+
+            <label for="message">
+
+                Message
+
+            </label>
+
+            <textarea
+                id="message"
+                name="message"
+
+                rows="7"
+
+                placeholder="Écrivez votre message ici..."
+
+                required
+            ><%= popupAnnouncement
+                ? popupAnnouncement.message
+                : ''
+            %></textarea>
+
+        </div>
+
+
+        <!-- IMAGE -->
+
+        <div class="form-section">
+
+            <label for="image">
+
+                Image du popup
+
+            </label>
+
+            <% if (
+                popupAnnouncement &&
+                popupAnnouncement.imageUrl
+            ) { %>
+
+                <div class="current-popup-image">
+
+                    <p>
+                        Image actuelle :
+                    </p>
+
+                    <img
+                        src="<%= popupAnnouncement.imageUrl %>"
+                        alt="Image actuelle du popup"
+                    >
+
+                </div>
+
+            <% } %>
+
+
+            <input
+                type="file"
+                id="image"
+                name="image"
+
+                accept="image/png, image/jpeg, image/jpg, image/webp"
+            >
+
+            <small>
+
+                JPG, PNG ou WEBP
+
+            </small>
+
+        </div>
+
+
+        <!-- BOUTON -->
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="admin-save-button"
+            >
+
+                💾 Sauvegarder le popup
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

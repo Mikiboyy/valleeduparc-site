@@ -7,30 +7,70 @@ const SchoolCourse = require('../models/SchoolCourse');
 const SchoolSettings = require('../models/SchoolSettings');
 const salleFormRoutes = require('../routes/salleFormRoutes');
 const FAQ = require('../models/Faq');
+const PopupAnnouncement = require('../models/PopupAnnouncement');
 
 /* PAGE ACCUEIL */
-exports.home = async (req, res) => {
-    try {
-        const totalEvents = await Event.countDocuments({});
 
-        const events = await Event.find({})
-            .sort({ date: -1 })
-            .limit(3);
+exports.home = async (req, res) => {
+
+    try {
+
+        const [
+            totalEvents,
+            events,
+            popupAnnouncement
+        ] = await Promise.all([
+
+            Event.countDocuments({}),
+
+            Event.find({})
+                .sort({ createdAt: -1 })
+                .limit(3),
+
+            PopupAnnouncement.findOne({
+                isActive: true
+            }).sort({
+                updatedAt: -1
+            })
+
+        ]);
+
 
         res.render('index', {
+
             title: 'Accueil',
+
             events,
-            totalEvents
+
+            totalEvents,
+
+            popupAnnouncement
+
         });
+
 
     } catch (error) {
-        console.error('Erreur accueil :', error);
+
+        console.error(
+            'Erreur accueil :',
+            error
+        );
+
+
         res.render('index', {
+
             title: 'Accueil',
+
             events: [],
-            totalEvents: 0
+
+            totalEvents: 0,
+
+            popupAnnouncement: null
+
         });
+
     }
+
 };
 
 /* BILLETS */

@@ -177,6 +177,83 @@
         </div>
     <% } %>
 
+
+    <% if (
+    typeof popupAnnouncement !== 'undefined' &&
+    popupAnnouncement &&
+    popupAnnouncement.isActive
+    ) { %>
+
+    <div
+        class="announcement-popup-overlay"
+        id="announcementPopup"
+    >
+
+        <div class="announcement-popup">
+
+            <!-- BOUTON FERMER -->
+
+            <button
+                class="announcement-close"
+                id="closeAnnouncement"
+                aria-label="Fermer"
+            >
+                ×
+            </button>
+
+
+            <!-- IMAGE -->
+
+            <% if (popupAnnouncement.imageUrl) { %>
+
+                <div class="announcement-image">
+
+                    <img
+                        src="<%= popupAnnouncement.imageUrl %>"
+                        alt="<%= popupAnnouncement.title %>"
+                    >
+
+                </div>
+
+            <% } %>
+
+
+            <!-- CONTENU -->
+
+            <div class="announcement-content">
+
+                <h2>
+                    <%= popupAnnouncement.title %>
+                </h2>
+
+
+                <p>
+                    <%= popupAnnouncement.message %>
+                </p>
+
+
+                <% if (
+                    popupAnnouncement.buttonText &&
+                    popupAnnouncement.buttonLink
+                ) { %>
+
+                    <a
+                        href="<%= popupAnnouncement.buttonLink %>"
+                        class="announcement-button"
+                    >
+                        <%= popupAnnouncement.buttonText %>
+                    </a>
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+    </div>
+
+<% } %>
+
 </section>
 
 
@@ -315,4 +392,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 5000);
 
 });
+</script>
+
+<script>
+
+    const announcementPopup =
+        document.getElementById('announcementPopup');
+
+    const closeAnnouncement =
+        document.getElementById('closeAnnouncement');
+
+
+    if (closeAnnouncement) {
+
+        closeAnnouncement.addEventListener('click', () => {
+
+            announcementPopup.style.display = 'none';
+
+        });
+
+    }
+
 </script>

@@ -14,6 +14,8 @@ const Job = require('../models/Job');
 const Trail = require('../models/trail');
 const FAQ = require('../models/Faq');
 
+const PopupAnnouncement = require('../models/PopupAnnouncement');
+
 const SubscriptionPrice = require('../models/SubscriptionPrice');
 const DailyTicketPrice = require('../models/DailyTicketPrice');
 const SchoolCourse = require('../models/SchoolCourse');
@@ -249,9 +251,17 @@ router.get('/', requireLogin, (req, res) => {
         canJobs:
             canAccess(role, ['carriere']),
 
-        
+
         canFAQ:
-            canAccess(role, ['admin'])    
+            canAccess(role, ['admin']),
+
+
+        // =========================
+        // POPUP D'ANNONCE
+        // =========================
+
+        canPopupAnnouncement:
+            canAccess(role, ['admin'])
 
     });
 
@@ -1908,6 +1918,150 @@ router.post(
 
             res.status(500).send(
                 'Erreur lors de la suppression.'
+            );
+
+        }
+
+    }
+);
+
+/* =========================================================
+   POPUP D'ANNONCE
+========================================================= */
+
+router.get(
+    '/popup-announcement',
+
+    requireLogin,
+
+    async (req, res) => {
+
+        try {
+
+            const popupAnnouncement =
+                await PopupAnnouncement.findOne({})
+                    .sort({
+                        updatedAt: -1
+                    });
+
+
+            res.render(
+                'admin/popup-announcement',
+                {
+
+                    title: 'Popup d’annonce',
+
+                    adminUser:
+                        req.session.admin,
+                    
+                        popupAnnouncement,
+
+                        success:
+                        req.query.success === '1',
+
+                        error:
+                        req.query.error === '1'
+
+                    }
+                );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur chargement popup :',
+                error
+            );
+
+            res.redirect('/admin-vdp');
+
+        }
+
+    }
+);
+
+router.post(
+    '/popup-announcement',
+
+    requireLogin,
+
+    upload.single('image'),
+
+    async (req, res) => {
+
+        try {
+
+            const {
+                title,
+                message,
+                isActive
+            } = req.body;
+
+
+            let popupAnnouncement =
+                await PopupAnnouncement.findOne({})
+                    .sort({
+                        updatedAt: -1
+                    });
+
+
+            const data = {
+
+                title: title.trim(),
+
+                message: message.trim(),
+
+                isActive:
+                    isActive === 'on'
+
+            };
+
+
+            /*
+                Si une nouvelle image a été envoyée
+            */
+
+            if (req.file) {
+
+                data.imageUrl =
+                req.file.path;
+
+            }
+
+
+            /*
+                Si le popup existe déjà
+            */
+
+            if (popupAnnouncement) {
+
+                await PopupAnnouncement.findByIdAndUpdate(
+
+                    popupAnnouncement._id,
+
+                    data
+
+                );
+
+            } else {
+
+                await PopupAnnouncement.create(data);
+
+            }
+
+
+            res.redirect(
+                '/admin-vdp/popup-announcement?success=1'
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur sauvegarde popup :',
+                error
+            );
+
+            res.redirect(
+                '/admin-vdp/popup-announcement?error=1'
             );
 
         }
