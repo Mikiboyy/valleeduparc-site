@@ -741,3 +741,419 @@ img {
     }
 
 }
+
+/* =========================================
+   ADMIN - POPUP ANNOUNCEMENT
+========================================= */
+
+.admin-popup-page {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 25px 60px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.admin-popup-header {
+    margin-bottom: 30px;
+}
+
+.admin-popup-header h1 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.admin-popup-header p {
+    margin: 0;
+    color: #666;
+    font-size: 1rem;
+}
+
+
+/* =========================================
+   FORMULAIRE
+========================================= */
+
+.admin-popup-form {
+    background: #ffffff;
+
+    padding: 35px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================
+   SECTIONS
+========================================= */
+
+.admin-popup-form .form-section {
+    margin-bottom: 28px;
+}
+
+.admin-popup-form .form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   LABELS
+========================================= */
+
+.admin-popup-form label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 700;
+
+    color: #333;
+
+    font-size: 0.95rem;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.admin-popup-form input[type="text"],
+.admin-popup-form textarea {
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 1px solid #d6d6d6;
+
+    border-radius: 8px;
+
+    font-size: 1rem;
+
+    font-family: inherit;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.admin-popup-form textarea {
+    resize: vertical;
+
+    min-height: 150px;
+
+    line-height: 1.5;
+}
+
+
+/* FOCUS */
+
+.admin-popup-form input[type="text"]:focus,
+.admin-popup-form textarea:focus {
+
+    outline: none;
+
+    border-color: #8b6b45;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 107, 69, 0.15);
+}
+
+
+/* =========================================
+   ACTIVATION TOGGLE
+========================================= */
+
+.toggle-label {
+
+    display: flex !important;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 18px 20px;
+
+    background: #f5f5f5;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+.toggle-label:hover {
+    background: #eeeeee;
+}
+
+
+.toggle-label input[type="checkbox"] {
+
+    width: 20px;
+
+    height: 20px;
+
+    cursor: pointer;
+
+    accent-color: #8b6b45;
+}
+
+
+.toggle-label span {
+
+    font-weight: 600;
+
+    color: #333;
+}
+
+
+/* =========================================
+   FILE INPUT
+========================================= */
+
+.admin-popup-form input[type="file"] {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: 2px dashed #ccc;
+
+    border-radius: 8px;
+
+    background: #fafafa;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+.admin-popup-form input[type="file"]:hover {
+
+    border-color: #8b6b45;
+
+    background: #fdfbf8;
+}
+
+
+.admin-popup-form small {
+
+    display: block;
+
+    margin-top: 8px;
+
+    color: #777;
+
+    font-size: 0.85rem;
+}
+
+
+/* =========================================
+   IMAGE ACTUELLE
+========================================= */
+
+.current-popup-image {
+
+    margin-bottom: 20px;
+}
+
+
+.current-popup-image p {
+
+    font-weight: 600;
+
+    margin-bottom: 10px;
+
+    color: #444;
+}
+
+
+.current-popup-image img {
+
+    display: block;
+
+    width: 100%;
+
+    max-width: 500px;
+
+    max-height: 350px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid #ddd;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.form-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 35px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #e5e5e5;
+}
+
+
+/* =========================================
+   BOUTON SAUVEGARDE
+========================================= */
+
+.admin-save-button {
+
+    border: none;
+
+    padding: 14px 25px;
+
+    border-radius: 8px;
+
+    background: #8b6b45;
+
+    color: white;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.admin-save-button:hover {
+
+    background: #6f5436;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+
+.admin-save-button:active {
+
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   MESSAGE SUCCESS
+========================================= */
+
+.admin-success-message {
+
+    margin-bottom: 25px;
+
+    padding: 15px 20px;
+
+    background: #eaf7ee;
+
+    color: #26733f;
+
+    border-left: 4px solid #38a169;
+
+    border-radius: 6px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   MESSAGE ERROR
+========================================= */
+
+.admin-error-message {
+
+    margin-bottom: 25px;
+
+    padding: 15px 20px;
+
+    background: #fdeaea;
+
+    color: #a83232;
+
+    border-left: 4px solid #d9534f;
+
+    border-radius: 6px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .admin-popup-page {
+
+        margin-top: 25px;
+
+        padding:
+            0 15px
+            40px;
+    }
+
+
+    .admin-popup-form {
+
+        padding: 22px;
+
+    }
+
+
+    .admin-popup-header h1 {
+
+        font-size: 1.6rem;
+
+    }
+
+
+    .form-actions {
+
+        justify-content: stretch;
+
+    }
+
+
+    .admin-save-button {
+
+        width: 100%;
+
+    }
+
+}
