@@ -69,7 +69,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({
-    storage
+    storage: multer.memoryStorage()
 });
 
 
@@ -2070,18 +2070,49 @@ router.post(
 
 
             /*
-                Si une nouvelle image a été envoyée
+                IMAGE CLOUDINARY
             */
 
             if (req.file) {
 
-                data.imageUrl = req.file.path;
+                const uploadResult =
+                    await new Promise((resolve, reject) => {
+
+                        const stream =
+                            cloudinary.uploader.upload_stream(
+
+                                {
+                                    folder: 'vallee-du-parc/popups'
+                                },
+
+                                (error, result) => {
+
+                                    if (error) {
+                                        return reject(error);
+                                    }
+
+                                    resolve(result);
+
+                                }
+
+                            );
+
+
+                        streamifier
+                            .createReadStream(req.file.buffer)
+                            .pipe(stream);
+
+                    });
+
+
+                data.imageUrl =
+                    uploadResult.secure_url;
 
             }
 
 
             /*
-                Si le popup existe déjà
+                UPDATE OU CREATE
             */
 
             if (popupAnnouncement) {
@@ -2090,7 +2121,11 @@ router.post(
 
                     popupAnnouncement._id,
 
-                    data
+                    data,
+
+                    {
+                        new: true
+                    }
 
                 );
 
