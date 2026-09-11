@@ -22,7 +22,8 @@ const adminSchema = new mongoose.Schema(
                 'evenement',
                 'prix',
                 'patrouille',
-                'carriere'
+                'carriere',
+                'faq'
             ],
             required: true
         },

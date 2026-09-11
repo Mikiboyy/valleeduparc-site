@@ -134,7 +134,37 @@ router.get('/login', (req, res) => {
 });
 
 
-router.post('/login', loginLimiter, async (req, res) => {
+router.post('/login', loginLimiter, 
+
+    [
+        body('username')
+            .trim()
+            .notEmpty()
+            .withMessage('Nom utilisateur obligatoire.')
+            .isLength({
+                max: 100
+            }),
+
+        body('password')
+            .notEmpty()
+            .withMessage('Mot de passe obligatoire.')
+            .isLength({
+                max: 200
+            })
+    ],
+    
+    async (req, res) => {
+
+        const errors =
+            validationResult(req);
+
+        if (!errors.isEmpty()) {
+
+            return res.redirect(
+                '/admin-vdp/login?error=1'
+            );
+
+        }
 
     try {
 
@@ -370,19 +400,48 @@ router.post(
     '/events',
     requireRole('evenement'),
     upload.single('image'),
+
+    [
+
+        body('title')
+            .trim()
+            .notEmpty()
+            .withMessage('Le titre est obligatoire.')
+            .isLength({
+                max: 150
+            }),
+
+        body('description')
+            .trim()
+            .notEmpty()
+            .withMessage('La description est obligatoire.')
+            .isLength({
+                max: 5000
+            }),
+
+        body('location')
+            .optional()
+            .trim()
+            .isLength({
+                max: 200
+            })
+
+    ],
+
     async (req, res) => {
 
+        const errors =
+            validationResult(req);
+
+        if (!errors.isEmpty()) {
+
+            return res.status(400).send(
+                'Les informations de l’événement sont invalides.'
+            );
+
+        }
+
         try {
-
-            /*
-                RÉCUPÉRATION DES DATES
-
-                Si une seule date est sélectionnée,
-                req.body.dates peut être une string.
-
-                Si plusieurs dates sont sélectionnées,
-                req.body.dates sera un tableau.
-            */
 
             let dates = req.body.dates;
 
@@ -1498,10 +1557,6 @@ router.post(
    CARRIÈRES
 ========================================================= */
 
-/*
-   Liste des postes
-*/
-
 router.get(
     '/jobs',
     requireRole('carriere'),
@@ -1547,18 +1602,44 @@ router.post(
     '/jobs',
     requireRole('carriere'),
     upload.single('image'),
+
+    [
+    body('title')
+        .trim()
+        .notEmpty()
+        .withMessage('Le titre est obligatoire.')
+        .isLength({
+            max: 150
+        }),
+
+    body('department')
+        .trim()
+        .notEmpty()
+        .withMessage('Le département est obligatoire.')
+        .isLength({
+            max: 150
+        }),
+
+    body('summary')
+        .trim()
+        .notEmpty()
+        .withMessage('Le résumé est obligatoire.')
+        .isLength({
+            max: 1000
+        }),
+
+    body('details')
+        .optional()
+        .isLength({
+            max: 10000
+        })
+],
+
     async (req, res) => {
 
         try {
 
             let imageUrl = null;
-
-            /*
-               Transformation des détails.
-
-               Chaque ligne du textarea devient
-               un élément dans le tableau details.
-            */
 
             const detailsArray = req.body.details
                 ? req.body.details
@@ -1635,6 +1716,39 @@ router.post(
     '/jobs/:id',
     requireRole('carriere'),
     upload.single('image'),
+
+    [
+    body('title')
+        .trim()
+        .notEmpty()
+        .withMessage('Le titre est obligatoire.')
+        .isLength({
+            max: 150
+        }),
+
+    body('department')
+        .trim()
+        .notEmpty()
+        .withMessage('Le département est obligatoire.')
+        .isLength({
+            max: 150
+        }),
+
+    body('summary')
+        .trim()
+        .notEmpty()
+        .withMessage('Le résumé est obligatoire.')
+        .isLength({
+            max: 1000
+        }),
+
+    body('details')
+        .optional()
+        .isLength({
+            max: 10000
+        })
+],
+
     async (req, res) => {
 
         try {
@@ -1969,7 +2083,38 @@ router.post(
 
     upload.single('image'),
 
+    [
+
+        body('title')
+            .trim()
+            .notEmpty()
+            .withMessage('Le titre est obligatoire.')
+            .isLength({
+                max: 150
+            }),
+
+        body('message')
+            .trim()
+            .notEmpty()
+            .withMessage('Le message est obligatoire.')
+            .isLength({
+                max: 2000
+            })
+
+    ],
+
     async (req, res) => {
+
+         const errors =
+            validationResult(req);
+
+        if (!errors.isEmpty()) {
+
+            return res.redirect(
+                '/admin-vdp/popup-announcement?error=1'
+            );
+
+        }
 
         try {
 
