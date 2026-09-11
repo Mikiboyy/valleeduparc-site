@@ -684,14 +684,12 @@
 .announcement-popup-overlay {
     position: fixed;
 
-    top: 0;
-    left: 0;
+    inset: 0;
 
     width: 100%;
     height: 100%;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -704,10 +702,15 @@
     box-sizing: border-box;
 
     animation: popupFadeIn 0.3s ease;
+
+    /* Permet de gérer les petits écrans */
+    overflow-y: auto;
 }
 
 
-/* POPUP */
+/* =========================================
+   POPUP
+========================================= */
 
 .announcement-popup {
     position: relative;
@@ -715,9 +718,11 @@
     width: 100%;
     max-width: 850px;
 
+    /*
+       IMPORTANT :
+       Le popup ne peut pas dépasser l'écran.
+    */
     max-height: 90vh;
-
-    overflow-y: auto;
 
     background: #ffffff;
 
@@ -728,40 +733,90 @@
 
     animation: popupSlideIn 0.35s ease;
 
-    overflow: hidden;
+    /*
+       IMPORTANT :
+       Le contenu du popup peut maintenant
+       être scrollé.
+    */
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-sizing: border-box;
 }
 
 
-/* IMAGE */
+/* =========================================
+   IMAGE
+========================================= */
 
 .announcement-image {
-    width: 100%;
-    
-    max-height: 420px;
 
+    width: 100%;
+
+    /*
+       L'image peut prendre jusqu'à 55% de
+       la hauteur de l'écran.
+    */
+    height: 55vh;
+
+    min-height: 250px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+
+    /*
+       On ne coupe PAS l'image.
+    */
     overflow: hidden;
+
+    flex-shrink: 0;
 }
 
 
 .announcement-image img {
 
+    /*
+       L'image occupe toute la largeur disponible
+       tout en gardant son ratio.
+    */
     width: 100%;
-    height: auto;
-    display: block;
+    height: 100%;
+
+    /*
+       IMPORTANT :
+       Contain = toute l'image est visible.
+       Aucune partie ne sera coupée.
+    */
     object-fit: contain;
+
+    object-position: center;
+
+    display: block;
 }
 
 
-/* CONTENU */
+/* =========================================
+   CONTENU
+========================================= */
 
 .announcement-content {
+
     padding: 35px 45px 40px;
 
     text-align: center;
+
+    background: #ffffff;
+
+    box-sizing: border-box;
 }
 
 
 .announcement-content h2 {
+
     margin: 0 0 20px;
 
     color: var(--bleu-fonce);
@@ -769,10 +824,13 @@
     font-size: 2rem;
 
     font-weight: 800;
+
+    line-height: 1.2;
 }
 
 
 .announcement-content p {
+
     margin: 0;
 
     color: #4a5568;
@@ -783,9 +841,12 @@
 }
 
 
-/* BOUTON */
+/* =========================================
+   BOUTON
+========================================= */
 
 .announcement-button {
+
     display: inline-block;
 
     margin-top: 25px;
@@ -807,15 +868,19 @@
 
 
 .announcement-button:hover {
+
     transform: translateY(-2px);
 
     background: var(--bleu-fonce);
 }
 
 
-/* FERMER */
+/* =========================================
+   BOUTON FERMER
+========================================= */
 
 .announcement-close {
+
     position: absolute;
 
     top: 15px;
@@ -841,17 +906,25 @@
     z-index: 10;
 
     transition: 0.2s ease;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
 }
 
 
 .announcement-close:hover {
+
     transform: scale(1.1);
 
     background: #e53935;
 }
 
 
-/* ANIMATIONS */
+/* =========================================
+   ANIMATIONS
+========================================= */
 
 @keyframes popupFadeIn {
 
@@ -880,50 +953,135 @@
 
 }
 
-@media (max-width: 600px) {
+
+/* =========================================
+   TABLETTE
+========================================= */
+
+@media (max-width: 768px) {
 
     .announcement-popup-overlay {
+
         padding: 12px;
+
+        align-items: center;
+    }
+
+
+    .announcement-popup {
+
+        width: 94vw;
+
+        max-height: 90vh;
+
+        border-radius: 15px;
+    }
+
+
+    .announcement-image {
+
+        /*
+           Image moins haute sur tablette.
+        */
+        height: 45vh;
+
+        min-height: 200px;
     }
 
 
     .announcement-content {
-        padding: 25px 22px 30px;
+
+        padding: 25px 25px 30px;
     }
 
 
     .announcement-content h2 {
-        font-size: 1.5rem;
+
+        font-size: 1.6rem;
+
+        margin-bottom: 15px;
     }
 
 
     .announcement-content p {
+
         font-size: 1rem;
-    }
 
-
-    .announcement-image,
-    .announcement-image img {
-        max-height: 250px;
+        line-height: 1.6;
     }
 
 }
 
-@media (max-width: 768px) {
 
-    .popup-announcement {
-        width: 94vw;
-        max-height: 90vh;
+/* =========================================
+   CELLULAIRE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .announcement-popup-overlay {
+
+        padding: 8px;
+    }
+
+
+    .announcement-popup {
+
+        width: 96vw;
+
+        max-height: 92vh;
+
         border-radius: 15px;
     }
 
-    .popup-announcement-image {
-        width: 100%;
-        height: auto;
+
+    .announcement-image {
+
+        /*
+           On laisse suffisamment de place
+           pour voir l'image au complet.
+        */
+        height: 35vh;
+
+        min-height: 180px;
     }
 
-    .popup-announcement-content {
-        padding: 20px;
+
+    .announcement-content {
+
+        padding: 22px 18px 28px;
+    }
+
+
+    .announcement-content h2 {
+
+        font-size: 1.45rem;
+    }
+
+
+    .announcement-content p {
+
+        font-size: 0.95rem;
+    }
+
+
+    .announcement-button {
+
+        margin-top: 20px;
+
+        padding: 12px 22px;
+    }
+
+
+    .announcement-close {
+
+        top: 10px;
+        right: 10px;
+
+        width: 38px;
+        height: 38px;
+
+        font-size: 1.7rem;
     }
 
 }
