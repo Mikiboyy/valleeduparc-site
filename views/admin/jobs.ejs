@@ -132,7 +132,8 @@
 
             <form 
                 action="/admin-vdp/jobs/<%= job._id %>" 
-                method="POST" 
+                method="POST"
+                enctype="multipart/form-data" 
                 class="admin-price-row"
             >
 
@@ -193,30 +194,82 @@
                     placeholder="Un élément par ligne"
                 ><%= job.details && job.details.length > 0 ? job.details.join('\n') : '' %></textarea>
 
+                <input 
+                type="file"
+                name="image"
+                accept="image/png, image/jpeg, image/jpg, image/webp"
+                >
 
-                <!-- ACTIF -->
+                <!-- =========================
+                 IMAGE
+                 ========================== -->
 
-                <label>
-
-                    <input 
-                        type="checkbox" 
-                        name="isActive" 
-                        <%= job.isActive ? 'checked' : '' %>
-                    >
-
-                    Actif
-
+                 <label>
+                    Image du poste
                 </label>
 
 
-                <!-- ENREGISTRER -->
+                <% if (job.image) { %>
 
-                <button type="submit">
-                    Enregistrer
-                </button>
+                    <div class="current-job-image">
+
+                        <p>
+                            Image actuelle :
+                        </p>
+
+                        <img 
+                        src="<%= job.image %>" 
+                        alt="<%= job.title %>"
+                        >
+
+                    </div>
+
+                <% } else { %>
+
+                    <p class="no-job-image">
+                        Aucune image actuellement.
+                    </p>
+
+                <% } %>
 
 
-            </form>
+            <input 
+            type="file"
+            name="image"
+            accept="image/png, image/jpeg, image/jpg, image/webp"
+            >
+
+        <small>
+            Laissez vide pour conserver l'image actuelle.
+        </small>
+
+
+        <!-- ACTIF -->
+
+        <label>
+
+            <input 
+            type="checkbox" 
+            name="isActive" 
+            <%= job.isActive ? 'checked' : '' %>
+            >
+
+            Actif
+
+        </label>
+
+
+        <!-- ENREGISTRER -->
+
+        <button 
+        type="submit"
+        class="btn-primary"
+        >
+        Enregistrer
+    </button>
+
+
+</form>
 
 
             <!-- =========================
