@@ -703,7 +703,6 @@
 
     animation: popupFadeIn 0.3s ease;
 
-    /* Permet de gérer les petits écrans */
     overflow-y: auto;
 }
 
@@ -718,10 +717,6 @@
     width: 100%;
     max-width: 850px;
 
-    /*
-       IMPORTANT :
-       Le popup ne peut pas dépasser l'écran.
-    */
     max-height: 90vh;
 
     background: #ffffff;
@@ -734,9 +729,8 @@
     animation: popupSlideIn 0.35s ease;
 
     /*
-       IMPORTANT :
-       Le contenu du popup peut maintenant
-       être scrollé.
+       Le popup entier peut être scrollé
+       si le contenu devient trop long.
     */
     overflow-y: auto;
     overflow-x: hidden;
@@ -754,48 +748,46 @@
     width: 100%;
 
     /*
-       L'image peut prendre jusqu'à 55% de
-       la hauteur de l'écran.
+       Hauteur de la zone image.
+       L'image remplira complètement
+       cette zone.
     */
-    height: 55vh;
+    height: 500px;
 
-    min-height: 250px;
+    display: block;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 
     background: #ffffff;
-
-    /*
-       On ne coupe PAS l'image.
-    */
-    overflow: hidden;
 
     flex-shrink: 0;
 }
 
 
+/* =========================================
+   IMAGE ELLE-MÊME
+========================================= */
+
 .announcement-image img {
 
-    /*
-       L'image occupe toute la largeur disponible
-       tout en gardant son ratio.
-    */
     width: 100%;
     height: 100%;
 
-    /*
-       IMPORTANT :
-       Contain = toute l'image est visible.
-       Aucune partie ne sera coupée.
-    */
-    object-fit: contain;
-
-    object-position: center;
-
     display: block;
+
+    /*
+       COVER = l'image remplit complètement
+       la largeur et la hauteur.
+
+       Il n'y aura plus de zones blanches
+       sur les côtés.
+    */
+    object-fit: cover;
+
+    /*
+       Centre l'image lors du recadrage.
+    */
+    object-position: center center;
 }
 
 
@@ -963,8 +955,6 @@
     .announcement-popup-overlay {
 
         padding: 12px;
-
-        align-items: center;
     }
 
 
@@ -980,12 +970,7 @@
 
     .announcement-image {
 
-        /*
-           Image moins haute sur tablette.
-        */
-        height: 45vh;
-
-        min-height: 200px;
+        height: 400px;
     }
 
 
@@ -1037,13 +1022,7 @@
 
     .announcement-image {
 
-        /*
-           On laisse suffisamment de place
-           pour voir l'image au complet.
-        */
-        height: 35vh;
-
-        min-height: 180px;
+        height: 300px;
     }
 
 
