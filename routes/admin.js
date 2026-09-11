@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
+
 const { rateLimit } = require('express-rate-limit');
 
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const streamifier = require('streamifier');
 
 const cloudinary = require('../config/cloudinary');
+
+const upload = require('../middleware/upload');
 
 const Admin = require('../models/Admin');
 const Event = require('../models/Event');
 const Job = require('../models/Job');
 const Trail = require('../models/trail');
 const FAQ = require('../models/Faq');
-
 const PopupAnnouncement = require('../models/PopupAnnouncement');
 
 const SubscriptionPrice = require('../models/SubscriptionPrice');
@@ -27,6 +27,11 @@ const {
     requireRole,
     canAccess
 } = require('../middleware/adminAuth');
+
+const {
+    body,
+    validationResult
+} = require('express-validator');
 
 /* =========================
    PROTECTION LOGIN ADMIN
@@ -48,104 +53,67 @@ const loginLimiter = rateLimit({
 });
 
 
+/* =========================
+   PROTECTION ADMIN
+========================= */
+
+const adminLimiter = rateLimit({
+
+    windowMs: 15 * 60 * 1000,
+
+    limit: 200,
+
+    standardHeaders: 'draft-8',
+
+    legacyHeaders: false,
+
+    message:
+        'Trop de requêtes. Veuillez réessayer plus tard.'
+
+});
+
+
 /* =========================================================
-   MULTER
+   UPLOAD CLOUDINARY
 ========================================================= */
 
-const uploadFolder = path.join(
-    __dirname,
-    '../public/uploads'
-);
+async function uploadImageToCloudinary(
+    buffer,
+    folder
+) {
 
+    return new Promise((resolve, reject) => {
 
-/*
-    Crée le dossier s'il n'existe pas
-*/
+        const stream =
+            cloudinary.uploader.upload_stream(
 
-if (!fs.existsSync(uploadFolder)) {
+                {
+                    folder: folder,
+                    resource_type: 'image'
+                },
 
-    fs.mkdirSync(
-        uploadFolder,
-        {
-            recursive: true
-        }
-    );
+                (error, result) => {
 
-}
+                    if (error) {
 
+                        return reject(error);
 
-const storage = multer.diskStorage({
+                    }
 
-    destination: (req, file, cb) => {
+                    resolve(result);
 
-        cb(
-            null,
-            uploadFolder
-        );
+                }
 
-    },
-
-
-    filename: (req, file, cb) => {
-
-        const uniqueName =
-            Date.now() +
-            '-' +
-            Math.round(Math.random() * 1E9);
-
-        cb(
-            null,
-            uniqueName +
-            path.extname(file.originalname)
-        );
-
-    }
-
-});
-
-
-const upload = multer({
-
-    storage,
-
-    limits: {
-        fileSize: 10 * 1024 * 1024
-    },
-
-    fileFilter: (req, file, cb) => {
-
-        const allowedTypes = [
-
-            'image/jpeg',
-            'image/jpg',
-            'image/png',
-            'image/webp'
-
-        ];
-
-
-        if (
-            allowedTypes.includes(
-                file.mimetype
-            )
-        ) {
-
-            cb(null, true);
-
-        } else {
-
-            cb(
-                new Error(
-                    'Format d’image non supporté.'
-                )
             );
 
-        }
 
-    }
+        streamifier
+            .createReadStream(buffer)
+            .pipe(stream);
 
-});
+    });
 
+}
 
 /* =========================================================
    CONNEXION
@@ -534,30 +502,14 @@ router.post(
 
             if (req.file) {
 
-                const result = await cloudinary.uploader.upload(
-
-                    req.file.path,
-
-                    {
-
-                        folder:
-                            'valleeduparc/events',
-
-                            resource_type:
-                            'image'
-
-                    }
-
+                const result =
+                await uploadImageToCloudinary(
+                    req.file.buffer,
+                    'valleeduparc/events'
                 );
-
 
                 imageUrl =
-                    result.secure_url;
-
-                fs.unlink(
-                    req.file.path,
-                    () => {}
-                );
+                result.secure_url;
 
             }
 
@@ -1622,14 +1574,14 @@ router.post(
 
             if (req.file) {
 
-                const result = await cloudinary.uploader.upload(
-                    req.file.path,
-                    {
-                        folder: 'valleeduparc/jobs'
-                    }
+                const result =
+                await uploadImageToCloudinary(
+                    req.file.buffer,
+                    'valleeduparc/jobs'
                 );
 
-                imageUrl = result.secure_url;
+                imageUrl =
+                result.secure_url;
 
             }
 
@@ -1726,14 +1678,14 @@ router.post(
 
             if (req.file) {
 
-                const result = await cloudinary.uploader.upload(
-                    req.file.path,
-                    {
-                        folder: 'valleeduparc/jobs'
-                    }
+                const result =
+                await uploadImageToCloudinary(
+                    req.file.buffer,
+                    'valleeduparc/jobs'
                 );
 
-                updateData.image = result.secure_url;
+                updateData.image =
+                result.secure_url;
 
             }
 
@@ -1861,142 +1813,6 @@ router.get(
 
 
 /* =========================
-   AJOUTER UNE QUESTION
-========================= */
-
-router.post(
-    '/popup-announcement',
-
-    requireLogin,
-
-    upload.single('image'),
-
-    async (req, res) => {
-
-        try {
-
-            const {
-                title,
-                message,
-                isActive
-            } = req.body;
-
-
-            let popupAnnouncement =
-                await PopupAnnouncement.findOne({})
-                    .sort({
-                        updatedAt: -1
-                    });
-
-
-            const data = {
-
-                title: title.trim(),
-
-                message: message.trim(),
-
-                isActive:
-                    isActive === 'on'
-
-            };
-
-
-            /*
-                ============================
-                IMAGE CLOUDINARY
-                ============================
-            */
-
-                if (req.file) {
-
-                    console.log(
-                        'Image popup reçue :',
-                        req.file.path
-                    );
-
-
-                    const result =
-                    await cloudinary.uploader.upload(
-
-                        req.file.path,
-
-                        {
-
-                            folder:
-                            'valleeduparc/popup',
-
-                            resource_type:
-                            'image'
-
-                        }
-
-                    );
-
-
-                    data.imageUrl =
-                    result.secure_url;
-
-
-                    fs.unlink(
-
-                        req.file.path,
-
-                        () => {}
-
-                    );
-
-                }
-
-            /*
-                ============================
-                METTRE À JOUR
-                ============================
-            */
-
-            if (popupAnnouncement) {
-
-                await PopupAnnouncement.findByIdAndUpdate(
-
-                    popupAnnouncement._id,
-
-                    data,
-
-                    {
-                        new: true
-                    }
-
-                );
-
-            } else {
-
-                await PopupAnnouncement.create(data);
-
-            }
-
-
-            res.redirect(
-                '/admin-vdp/popup-announcement?success=1'
-            );
-
-        } catch (error) {
-
-            console.error(
-                'Erreur sauvegarde popup :',
-                error
-            );
-
-
-            res.redirect(
-                '/admin-vdp/popup-announcement?error=1'
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================
    MODIFIER UNE QUESTION
 ========================= */
 
@@ -2099,7 +1915,7 @@ router.post(
 router.get(
     '/popup-announcement',
 
-    requireLogin,
+    requireRole('admin'),
 
     async (req, res) => {
 
@@ -2149,7 +1965,7 @@ router.get(
 router.post(
     '/popup-announcement',
 
-    requireLogin,
+    requireRole('admin'),
 
     upload.single('image'),
 
@@ -2164,8 +1980,25 @@ router.post(
             } = req.body;
 
 
+            /* =================================================
+               VALIDATION DE BASE
+            ================================================= */
+
+            if (
+                !title ||
+                !message
+            ) {
+
+                return res.redirect(
+                    '/admin-vdp/popup-announcement?error=1'
+                );
+
+            }
+
+
             let popupAnnouncement =
-                await PopupAnnouncement.findOne({})
+                await PopupAnnouncement
+                    .findOne({})
                     .sort({
                         updatedAt: -1
                     });
@@ -2173,9 +2006,11 @@ router.post(
 
             const data = {
 
-                title: title.trim(),
+                title:
+                    title.trim(),
 
-                message: message.trim(),
+                message:
+                    message.trim(),
 
                 isActive:
                     isActive === 'on'
@@ -2183,51 +2018,31 @@ router.post(
             };
 
 
-            /*
-                IMAGE CLOUDINARY
-            */
+            /* =================================================
+               IMAGE CLOUDINARY
+            ================================================= */
 
             if (req.file) {
 
-                const uploadResult =
-                    await new Promise((resolve, reject) => {
+                const result =
+                    await uploadImageToCloudinary(
 
-                        const stream =
-                            cloudinary.uploader.upload_stream(
+                        req.file.buffer,
 
-                                {
-                                    folder: 'vallee-du-parc/popups'
-                                },
+                        'valleeduparc/popups'
 
-                                (error, result) => {
-
-                                    if (error) {
-                                        return reject(error);
-                                    }
-
-                                    resolve(result);
-
-                                }
-
-                            );
-
-
-                        streamifier
-                            .createReadStream(req.file.buffer)
-                            .pipe(stream);
-
-                    });
+                    );
 
 
                 data.imageUrl =
-                    uploadResult.secure_url;
+                    result.secure_url;
 
             }
 
 
-            /*
-                UPDATE OU CREATE
-            */
+            /* =================================================
+               UPDATE
+            ================================================= */
 
             if (popupAnnouncement) {
 
@@ -2243,9 +2058,17 @@ router.post(
 
                 );
 
-            } else {
+            }
 
-                await PopupAnnouncement.create(data);
+            /* =================================================
+               CREATE
+            ================================================= */
+
+            else {
+
+                await PopupAnnouncement.create(
+                    data
+                );
 
             }
 

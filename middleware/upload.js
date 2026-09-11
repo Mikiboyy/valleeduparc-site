@@ -1,21 +1,63 @@
 const multer = require('multer');
 
+
+/* =========================================================
+   TYPES DE FICHIERS AUTORISÉS
+========================================================= */
+
+const allowedMimeTypes = [
+
+    'image/jpeg',
+    'image/png',
+    'image/webp'
+
+];
+
+
+/* =========================================================
+   MULTER
+========================================================= */
+
 const storage = multer.memoryStorage();
 
+
 const upload = multer({
-    storage: storage,
+
+    storage,
+
     limits: {
-        fileSize: 5 * 1024 * 1024
+
+        // Maximum 5 MB par image
+        fileSize: 5 * 1024 * 1024,
+
+        // Une seule image par formulaire
+        files: 1
+
     },
+
     fileFilter: (req, file, cb) => {
 
-        if (file.mimetype.startsWith('image/')) {
+        if (
+            allowedMimeTypes.includes(
+                file.mimetype
+            )
+        ) {
+
             cb(null, true);
+
         } else {
-            cb(new Error('Seules les images sont autorisées.'));
+
+            cb(
+                new Error(
+                    'Format d’image non supporté. Utilisez JPG, PNG ou WEBP.'
+                )
+            );
+
         }
 
     }
+
 });
+
 
 module.exports = upload;
