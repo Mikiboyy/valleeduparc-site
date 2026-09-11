@@ -8,6 +8,11 @@ const { MongoStore } = require('connect-mongo');
 const helmet = require('helmet');
 const path = require('path');
 
+const {
+    adminLimiter,
+    loginLimiter
+} = require('./middleware/rateLimiter');
+
 const adminRoutes = require('./routes/admin');
 const pagesRoutes = require('./routes/pages');
 const mailchimpRoutes = require('./routes/mailchimp');
