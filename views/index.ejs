@@ -134,12 +134,17 @@
                         <div class="home-event-content">
 
                             <span class="event-date">
-                                <% if (event.dates && event.dates.length > 0 && !isNaN(new Date(event.dates[0]).getTime())) { %>
-                                    <%= new Date(event.dates[0]).toLocaleDateString('fr-CA') %>
+                                <% if (event.dates && event.dates.length > 0) { %>
+                                    <% event.dates.forEach((date, index) => { %>
+                                        <%= new Date(date).toLocaleDateString('fr-CA', {
+                                            day: 'numeric',
+                                            month: 'long'
+                                        }) %><%= index < event.dates.length - 1 ? ' • ' : '' %>
+                                    <% }) %>
                                     <% } else { %>
                                         Date à venir
-                                        <% } %>
-                                    </span>
+                                    <% } %>
+                            </span>
 
                             <h3><%= event.title %></h3>
 
