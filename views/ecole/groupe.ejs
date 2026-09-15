@@ -28,8 +28,6 @@
     </div>
 </section>
 
-<p class="taxes-note">* Taxes en sus.</p>
-
 <section class="ecole-cards-section">
 
     <% if (adminUser && (adminUser.role === 'admin' || adminUser.role === 'prix')) { %>
@@ -37,6 +35,8 @@
             Modifier les prix
         </a>
         <% } %>
+
+        <p class="taxes-note"><strong>Taxes en sus.</strong></p>
 
     <div class="ecole-cards">
 
