@@ -1247,3 +1247,11 @@
 .pricing-content.open::-webkit-scrollbar-thumb:hover {
     background: var(--bleu-fonce);
 }
+
+.taxes-note {
+    text-align: center;
+    font-size: 0.95rem;
+    margin: -10px 0 20px;
+    opacity: 0.75;
+    font-style: italic;
+}
