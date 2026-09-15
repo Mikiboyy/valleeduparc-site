@@ -16,7 +16,7 @@ const {
 const adminRoutes = require('./routes/admin');
 const pagesRoutes = require('./routes/pages');
 const mailchimpRoutes = require('./routes/mailchimp');
-const { getSnowConditions} = require('../services/stationService');
+const { getSnowConditions} = require('./services/stationService');
 const inscriptionRoutes = require('./routes/inscription');
 const carrieresRoutes = require('./routes/carrieres');
 const locationRoutes = require('./routes/location');
