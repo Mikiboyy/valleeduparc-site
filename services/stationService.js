@@ -1,191 +1,108 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
+const axios = require('axios');
+const cheerio = require('cheerio');
+const StationConditions = require('../models/StationConditions');
 
-const MANEIGE_URL = "https://maneige.ski/stations/vallee-du-parc/";
-
-// Cache serveur : 10 minutes
-const CACHE_DURATION = 10 * 60 * 1000;
-
-let cachedConditions = null;
-let lastFetch = 0;
+const MANEIGE_URL =
+    'https://maneige.ski/xml/stations.xml.php?station=49';
 
 
-/**
- * Récupère les conditions de Vallée du Parc
- * directement depuis maneige.ski
- */
-async function getSnowConditions() {
-
-    // -------------------------------------------------
-    // UTILISER LE CACHE SI LES DONNÉES SONT RÉCENTES
-    // -------------------------------------------------
-
-    if (
-        cachedConditions &&
-        Date.now() - lastFetch < CACHE_DURATION
-    ) {
-        return cachedConditions;
-    }
-
+async function updateSnowConditions() {
 
     try {
 
-        console.log("Récupération des conditions depuis maneige.ski...");
-
-
-        // -------------------------------------------------
-        // RÉCUPÉRATION DE LA PAGE
-        // -------------------------------------------------
+        console.log(
+            'Récupération des conditions depuis l\'API XML Maneige...'
+        );
 
         const response = await axios.get(MANEIGE_URL, {
+            timeout: 15000,
+            responseType: 'text',
             headers: {
-                "User-Agent": "Mozilla/5.0"
-            },
-            timeout: 10000
+                'User-Agent': 'ValleeDuParc/1.0'
+            }
         });
 
 
-        const $ = cheerio.load(response.data);
+        const $ = cheerio.load(
+            response.data,
+            {
+                xmlMode: true
+            }
+        );
 
 
-        // -------------------------------------------------
-        // TEXTE DE LA PAGE
-        // -------------------------------------------------
+        function getValue(name, defaultValue = '') {
 
-        const pageText = $("body")
-            .text()
-            .replace(/\s+/g, " ")
-            .trim();
+            const element = $(name).first();
 
-
-        // -------------------------------------------------
-        // FONCTION POUR EXTRAIRE UNE VALEUR
-        // -------------------------------------------------
-
-        function extract(regex, defaultValue = "0") {
-
-            const match = pageText.match(regex);
-
-            if (!match) {
+            if (!element.length) {
                 return defaultValue;
             }
 
-            return match[1].trim();
+            return element.text().trim();
         }
 
 
-        // -------------------------------------------------
-        // CONDITIONS
-        // -------------------------------------------------
-
         const conditions = {
 
-            // ---------------------------------------------
-            // STATUT
-            // ---------------------------------------------
+            stationId: '49',
 
-            statut: extract(
-                /(?:Ouverture prévue le|Fermé pour la saison)\s+(.+?)(?=\s+(?:Dernières accumulations|$))/i,
-                "Fermé"
-            ),
+            pistesJour:
+                `${getValue('intTrailsOpen', '0')}/${getValue('intTrailsTotal', '0')}`,
 
+            pistesNuit:
+                `${getValue('intTrailsOpenNight', '0')}/${getValue('intTrailsTotalNight', '0')}`,
 
-            // ---------------------------------------------
-            // NEIGE
-            // ---------------------------------------------
+            neige24h:
+                `${getValue('intSnow24h', '0')} cm`,
 
-            neige24h: `${extract(
-                /24h\s+(\d+)\s*cm/i,
-                "0"
-            )} cm`,
+            neige48h:
+                `${getValue('intSnow48h', '0')} cm`,
 
-            neige48h: `${extract(
-                /48h\s+(\d+)\s*cm/i,
-                "0"
-            )} cm`,
+            neige7j:
+                `${getValue('intSnow7days', '0')} cm`,
 
-            neige7j: `${extract(
-                /7 jours\s+(\d+)\s*cm/i,
-                "0"
-            )} cm`,
+            neigeSaison:
+                `${getValue('intSnowSeason', '0')} cm`,
 
-            neigeSaison: `${extract(
-                /Saison\s+(\d+)\s*cm/i,
-                "0"
-            )} cm`,
+            telesiegesJour:
+                `${getValue('intLiftsOpen', '0')}/${getValue('intLiftsTotal', '0')}`,
 
+            telesiegesNuit:
+                `${getValue('intLiftsOpenNight', '0')}/${getValue('intLiftsTotalNight', '0')}`,
 
-            // ---------------------------------------------
-            // PISTES
-            // ---------------------------------------------
+            sousBois:
+                `${getValue('intSousBoisOuvert', '0')}/${getValue('intSousBoisTotal', '0')}`,
 
-            pistesJour: extract(
-                /Pistes ouvertes\s+Jour\s+(\d+\/\d+)/i,
-                "0/0"
-            ),
+            parcNeige:
+                `${getValue('intSnowParkOpen', '0')}/${getValue('intSnowPark', '0')}`,
 
-            pistesNuit: extract(
-                /Pistes ouvertes\s+Jour\s+\d+\/\d+\s+Nuit\s+(\d+\/\d+)/i,
-                "0/0"
-            ),
+            randonnee:
+                `${getValue('intAlpineTrailOpen', '0')}/${getValue('intAlpineTrailTotal', '0')}`,
 
-
-            // ---------------------------------------------
-            // SOUS-BOIS
-            // ---------------------------------------------
-
-            sousBois: extract(
-                /Sous-bois\s+(\d+\/\d+)/i,
-                "0/0"
-            ),
-
-
-            // ---------------------------------------------
-            // PARC À NEIGE
-            // ---------------------------------------------
-
-            parcNeige: extract(
-                /Parc à neige\s+(\d+\/\d+)/i,
-                "0/0"
-            ),
-
-
-            // ---------------------------------------------
-            // RANDONNÉE ALPINE
-            // ---------------------------------------------
-
-            randonnee: extract(
-                /Randonnée alpine\s+(\d+\/\d+)/i,
-                "0/0"
-            ),
-
-
-            // ---------------------------------------------
-            // TÉLÉSIÈGES
-            // ---------------------------------------------
-
-            telesiegesJour: extract(
-                /Télésièges\s+Jour\s+(\d+\/\d+)/i,
-                "0/0"
-            ),
-
-            telesiegesNuit: extract(
-                /Télésièges\s+Jour\s+\d+\/\d+\s+Nuit\s+(\d+\/\d+)/i,
-                "0/0"
-            )
+            statut:
+                getValue('strOpenFr', 'Fermé')
 
         };
 
 
-        // -------------------------------------------------
-        // SAUVEGARDE DU CACHE
-        // -------------------------------------------------
+        await StationConditions.findOneAndUpdate(
+            {
+                stationId: '49'
+            },
+            conditions,
+            {
+                upsert: true,
+                new: true,
+                setDefaultsOnInsert: true
+            }
+        );
 
-        cachedConditions = conditions;
-        lastFetch = Date.now();
 
-
-        console.log("Conditions mises à jour :", conditions);
+        console.log(
+            'Conditions Maneige enregistrées dans MongoDB :',
+            conditions
+        );
 
 
         return conditions;
@@ -194,29 +111,51 @@ async function getSnowConditions() {
     } catch (error) {
 
         console.error(
-            "Erreur récupération conditions maneige:",
-            error.message
+            'Erreur mise à jour conditions Maneige:',
+            error.response?.status || error.message
         );
 
+        throw error;
+    }
+}
 
-        // -------------------------------------------------
-        // SI MANEIGE EST TEMPORAIREMENT INDISPONIBLE
-        // ON GARDE LES DERNIÈRES DONNÉES
-        // -------------------------------------------------
 
-        if (cachedConditions) {
+async function getSnowConditions() {
 
-            console.log(
-                "Utilisation des dernières conditions disponibles."
+    try {
+
+        const conditions =
+            await StationConditions.findOne({
+                stationId: '49'
+            }).lean();
+
+
+        if (!conditions) {
+
+            console.warn(
+                'Aucune condition Maneige trouvée dans MongoDB.'
             );
 
-            return cachedConditions;
+            return null;
         }
 
+
+        return conditions;
+
+
+    } catch (error) {
+
+        console.error(
+            'Erreur lecture conditions MongoDB:',
+            error.message
+        );
 
         return null;
     }
 }
 
 
-module.exports = getSnowConditions;
+module.exports = {
+    getSnowConditions,
+    updateSnowConditions
+};
