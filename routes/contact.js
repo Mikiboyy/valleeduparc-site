@@ -1,9 +1,41 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const { rateLimit } = require('express-rate-limit');
 
 
-router.post('/', async (req, res) => {
+// =====================================================
+// ANTI-SPAM : maximum 5 messages par IP / 15 minutes
+// =====================================================
+
+const contactLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 3,
+    standardHeaders: 'draft-8',
+    legacyHeaders: false,
+    message: 'Trop de messages envoyés. Veuillez réessayer plus tard.'
+});
+
+
+// =====================================================
+// ÉCHAPPER LE HTML
+// =====================================================
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+
+// =====================================================
+// FORMULAIRE CONTACT
+// =====================================================
+
+router.post('/', contactLimiter, async (req, res) => {
 
     try {
 
@@ -11,11 +43,34 @@ router.post('/', async (req, res) => {
             name,
             email,
             subject,
-            message
+            message,
+            website
         } = req.body;
 
 
-        // Validation
+        // =================================================
+        // HONEYPOT
+        // =================================================
+
+        // Un vrai visiteur ne voit pas ce champ.
+        // Les bots peuvent souvent le remplir.
+
+        if (website) {
+
+            console.log(
+                'Spam bloqué par honeypot'
+            );
+
+            return res.redirect(
+                '/contact?success=Votre message a été envoyé avec succès.'
+            );
+        }
+
+
+        // =================================================
+        // VALIDATION
+        // =================================================
+
         if (!name || !email || !subject || !message) {
 
             return res.redirect(
@@ -25,7 +80,66 @@ router.post('/', async (req, res) => {
         }
 
 
-        // Configuration SMTP MailerSend
+        // =================================================
+        // LIMITES
+        // =================================================
+
+        if (name.length > 100) {
+
+            return res.redirect(
+                '/contact?error=Le nom est trop long.'
+            );
+
+        }
+
+
+        if (email.length > 150) {
+
+            return res.redirect(
+                '/contact?error=Le courriel est trop long.'
+            );
+
+        }
+
+
+        if (subject.length > 200) {
+
+            return res.redirect(
+                '/contact?error=Le sujet est trop long.'
+            );
+
+        }
+
+
+        if (message.length > 5000) {
+
+            return res.redirect(
+                '/contact?error=Le message est trop long.'
+            );
+
+        }
+
+
+        // =================================================
+        // VALIDATION COURRIEL
+        // =================================================
+
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+
+            return res.redirect(
+                '/contact?error=Veuillez entrer une adresse courriel valide.'
+            );
+
+        }
+
+
+        // =================================================
+        // SMTP
+        // =================================================
+
         const transporter = nodemailer.createTransport({
 
             host: 'smtp.mailersend.net',
@@ -42,7 +156,20 @@ router.post('/', async (req, res) => {
         });
 
 
-        // Envoi du courriel
+        // =================================================
+        // PROTECTION HTML
+        // =================================================
+
+        const safeName = escapeHtml(name);
+        const safeEmail = escapeHtml(email);
+        const safeSubject = escapeHtml(subject);
+        const safeMessage = escapeHtml(message);
+
+
+        // =================================================
+        // ENVOI
+        // =================================================
+
         await transporter.sendMail({
 
             from: `"Site Vallée du Parc" <${process.env.MAIL_FROM}>`,
@@ -74,17 +201,17 @@ ${message}
 
                 <p>
                     <strong>Nom :</strong>
-                    ${name}
+                    ${safeName}
                 </p>
 
                 <p>
                     <strong>Courriel :</strong>
-                    ${email}
+                    ${safeEmail}
                 </p>
 
                 <p>
                     <strong>Sujet :</strong>
-                    ${subject}
+                    ${safeSubject}
                 </p>
 
                 <hr>
@@ -94,7 +221,7 @@ ${message}
                 </p>
 
                 <p>
-                    ${message.replace(/\n/g, '<br>')}
+                    ${safeMessage.replace(/\n/g, '<br>')}
                 </p>
             `
 
@@ -106,7 +233,7 @@ ${message}
         );
 
 
-        res.redirect(
+        return res.redirect(
             '/contact?success=Votre message a été envoyé avec succès.'
         );
 
@@ -119,7 +246,7 @@ ${message}
         );
 
 
-        res.redirect(
+        return res.redirect(
             '/contact?error=Une erreur est survenue lors de l’envoi du message.'
         );
 

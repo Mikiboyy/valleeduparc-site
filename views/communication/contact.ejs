@@ -119,18 +119,66 @@
 
                         <form action="/contact" method="POST" class="contact-form">
 
-                            <form action="/contact" method="POST" class="contact-form">
+                            <div class="form-row">
 
-                                <div class="form-row">
-                                    <input type="text" name="name" placeholder="Votre nom" required>
-                                    <input type="email" name="email" placeholder="Votre courriel" required>
-                                </div>
+                                <input
+                                type="text"
+                                name="name"
+                                placeholder="Votre nom"
+                                maxlength="100"
+                                required
+                                >
 
-                                <input type="text" name="subject" placeholder="Sujet" required>
+                                <input
+                                type="email"
+                                name="email"
+                                placeholder="Votre courriel"
+                                maxlength="150"
+                                required
+                                >
 
-                                <textarea name="message" rows="6" placeholder="Votre message" required></textarea>
+                            </div>
 
-                                <button type="submit" class="btn-primary">
+                            <input
+                            type="text"
+                            name="subject"
+                            placeholder="Sujet"
+                            maxlength="200"
+                            required
+                            >
+
+                            <textarea
+                            name="message"
+                            rows="6"
+                            placeholder="Votre message"
+                            maxlength="5000"
+                            required
+                            >
+                        </textarea>
+
+
+                        <!-- HONEYPOT ANTI-SPAM -->
+
+                        <div class="contact-honeypot" aria-hidden="true">
+
+                            <label for="website">
+                                Ne pas remplir ce champ
+                            </label>
+
+                            <input
+                            type="text"
+                            id="website"
+                            name="website"
+                            tabindex="-1"
+                            autocomplete="off"
+                            >
+
+                        </div>
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                        >
                         ENVOYER
                     </button>
 
