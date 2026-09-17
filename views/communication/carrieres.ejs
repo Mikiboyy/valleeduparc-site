@@ -620,21 +620,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         button.addEventListener('click', () => {
 
-
             const jobTitle =
-                button.dataset.jobTitle;
-
+            button.dataset.jobTitle;
 
             const select =
-                document.querySelector(
-                    'select[name="poste"]'
-                );
-
+            document.querySelector(
+                'select[name="poste"]'
+            );
 
             if (select) {
 
-                select.value =
-                    jobTitle;
+                select.value = jobTitle;
+
+            }
+
+            // Fermer le modal
+
+            const modal =
+            button.closest('.job-modal');
+
+            if (modal) {
+
+                modal.classList.remove('active');
+
+                document.body.style.overflow = '';
 
             }
 
