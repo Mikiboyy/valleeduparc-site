@@ -57,7 +57,7 @@
                          data-title="<%= event.title %>"
                          data-date="<%= event.dates && event.dates.length > 0 ? event.dates.map(date => new Date(date).toLocaleDateString('fr-CA') ).join(', ') : '' %>"
                          data-description="<%= event.description || '' %>"
-                         data-image="<%= event.image || '/uploads/default.jpg' %>">
+                         data-image="<%= event.image || '/uploads/default.jpg' %>"
                          data-link="<%= event.link || '' %>"
 
                         <div class="event-image">
