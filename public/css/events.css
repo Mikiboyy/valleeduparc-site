@@ -231,24 +231,38 @@
 ========================= */
 
 .event-modal {
-    display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
-    justify-content: center;
+
+    display: none;
+
     align-items: center;
-    z-index: 99999;
+    justify-content: center;
+
+    z-index: 9999;
+
+    padding: 20px;
+
+    overflow-y: auto;
 }
 
 .event-modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 18px;
-    max-width: 700px;
-    width: 90%;
     position: relative;
-    text-align: center;
-    animation: fadeIn 0.3s ease;
+
+    width: 100%;
+    max-width: 800px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    box-sizing: border-box;
 }
 
 .event-modal-content img {
@@ -320,6 +334,26 @@
 
     .calendar-top h2 {
         font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .event-modal {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .event-modal-content {
+        max-height: 95vh;
+        margin-top: 10px;
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .event-modal-content img {
+        max-height: 250px;
+        object-fit: contain;
     }
 }
 
