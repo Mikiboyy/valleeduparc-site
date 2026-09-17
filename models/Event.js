@@ -33,6 +33,13 @@ const eventSchema = new mongoose.Schema(
         location: {
             type: String,
             default: ''
+        },
+
+        link: {
+            type: String,
+            default: '',
+            trim: true,
+            maxlength: 1000
         }
     },
     {

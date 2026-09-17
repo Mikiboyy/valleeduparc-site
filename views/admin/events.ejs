@@ -219,6 +219,18 @@
             maxlength="200"
         >
 
+        <!-- LIEN -->
+
+        <label for="link">Lien de l'événement (optionnel)</label>
+
+        <input
+        type="url"
+        id="link"
+        name="link"
+        placeholder="https://exemple.com"
+        maxlength="1000"
+        >
+
 
         <!-- IMAGE -->
 
@@ -414,6 +426,22 @@
                             name="location"
                             value="<%= event.location || '' %>"
                             maxlength="200"
+                        >
+
+
+                        <!-- LIEN -->
+
+                        <label for="link-<%= event._id %>">
+                            Lien de l'événement (optionnel)
+                        </label>
+
+                        <input
+                        type="url"
+                        id="link-<%= event._id %>"
+                        name="link"
+                        value="<%= event.link || '' %>"
+                        placeholder="https://exemple.com"
+                        maxlength="1000"
                         >
 
 

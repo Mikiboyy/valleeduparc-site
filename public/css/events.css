@@ -517,3 +517,17 @@
 .remove-date-button {
     flex-shrink: 0;
 }
+
+.event-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.event-link:hover {
+    transform: translateY(-2px);
+}
