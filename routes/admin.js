@@ -868,6 +868,9 @@ router.post(
             event.location =
                 req.body.location || '';
 
+            event.link = 
+                req.body.link || '';
+
             event.image =
                 imageUrl;
 
