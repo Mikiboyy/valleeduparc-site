@@ -179,7 +179,7 @@ html{
             rgba(19,35,61,0.75),
             rgba(40,71,109,0.82)
         ),
-        url('/images/randonnee-alpine.jpg');
+        url('/image/randonnee-alpine.webp');
 
     background-size: cover;
     background-position: center;
