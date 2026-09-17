@@ -625,6 +625,457 @@ router.post(
 
 
 /*
+   Modification d'un événement
+*/
+
+router.post(
+    '/events/:id',
+    requireRole('evenement'),
+    upload.single('image'),
+
+    [
+        body('title')
+            .trim()
+            .notEmpty()
+            .withMessage('Le titre est obligatoire.')
+            .isLength({
+                max: 150
+            }),
+
+        body('description')
+            .trim()
+            .notEmpty()
+            .withMessage('La description est obligatoire.')
+            .isLength({
+                max: 5000
+            }),
+
+        body('location')
+            .optional()
+            .trim()
+            .isLength({
+                max: 200
+            })
+    ],
+
+    async (req, res) => {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+
+            return res.status(400).send(
+                'Les informations de l’événement sont invalides.'
+            );
+
+        }
+
+        try {
+
+            /*
+                Trouver l'événement
+            */
+
+            const event = await Event.findById(
+                req.params.id
+            );
+
+            if (!event) {
+
+                return res.status(404).send(
+                    'Événement introuvable.'
+                );
+
+            }
+
+
+            /*
+                Récupération des dates
+            */
+
+            let dates = req.body.dates;
+
+
+            /*
+                Toujours transformer en tableau
+            */
+
+            if (!Array.isArray(dates)) {
+
+                dates = [dates];
+
+            }
+
+
+            /*
+                Supprimer les dates vides
+            */
+
+            dates = dates.filter(date => {
+
+                return (
+                    date &&
+                    typeof date === 'string' &&
+                    date.trim() !== ''
+                );
+
+            });
+
+
+            /*
+                Vérifier qu'il reste au moins une date
+            */
+
+            if (dates.length === 0) {
+
+                return res.status(400).send(
+                    'Veuillez sélectionner au moins une date.'
+                );
+
+            }
+
+
+            /*
+                Conversion des dates
+            */
+
+            const formattedDates = dates
+                .map(date => {
+
+                    return new Date(
+                        `${date}T00:00:00`
+                    );
+
+                })
+                .filter(date => {
+
+                    return !isNaN(
+                        date.getTime()
+                    );
+
+                });
+
+
+            /*
+                Vérifier les dates
+            */
+
+            if (formattedDates.length === 0) {
+
+                return res.status(400).send(
+                    'Les dates sélectionnées sont invalides.'
+                );
+
+            }
+
+
+            /*
+                Supprimer les doublons
+            */
+
+            const uniqueDates = [
+
+                ...new Map(
+
+                    formattedDates.map(date => [
+
+                        date.getTime(),
+
+                        date
+
+                    ])
+
+                ).values()
+
+            ];
+
+
+            /*
+                Trier les dates
+            */
+
+            uniqueDates.sort(
+                (a, b) => a - b
+            );
+
+
+            /*
+                IMAGE
+            */
+
+            let imageUrl = event.image || '';
+
+
+            /*
+                Si une nouvelle image est envoyée,
+                elle remplace l'ancienne
+            */
+
+            if (req.file) {
+
+                const result =
+                    await uploadImageToCloudinary(
+                        req.file.buffer,
+                        'valleeduparc/events'
+                    );
+
+                imageUrl =
+                    result.secure_url;
+
+            }
+
+
+            /*
+                Mise à jour
+            */
+
+            event.title =
+                req.body.title;
+
+            event.description =
+                req.body.description;
+
+            event.dates =
+                uniqueDates;
+
+            event.location =
+                req.body.location || '';
+
+            event.image =
+                imageUrl;
+
+
+            /*
+                Sauvegarder
+            */
+
+            await event.save();
+
+
+            /*
+                Retour à la page admin
+            */
+
+            res.redirect(
+                '/admin-vdp/events'
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Erreur modification événement :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors de la modification de l’événement.'
+            );
+
+        }
+
+    }
+);
+
+
+/*
+   MODIFICATION D'UN ÉVÉNEMENT
+*/
+
+router.post(
+    '/events/:id',
+    requireRole('evenement'),
+    upload.single('image'),
+
+    async (req, res) => {
+
+        try {
+
+            const event = await Event.findById(
+                req.params.id
+            );
+
+            if (!event) {
+
+                return res.status(404).send(
+                    'Événement introuvable.'
+                );
+
+            }
+
+
+            /*
+                RÉCUPÉRATION DES DATES
+            */
+
+            let dates = req.body.dates;
+
+
+            if (!Array.isArray(dates)) {
+
+                dates = [dates];
+
+            }
+
+
+            /*
+                SUPPRIMER LES DATES VIDES
+            */
+
+            dates = dates.filter(date => {
+
+                return (
+                    date &&
+                    typeof date === 'string' &&
+                    date.trim() !== ''
+                );
+
+            });
+
+
+            if (dates.length === 0) {
+
+                return res.status(400).send(
+                    'Veuillez sélectionner au moins une date.'
+                );
+
+            }
+
+
+            /*
+                CONVERSION DES DATES
+            */
+
+            const formattedDates = dates
+
+                .map(date => {
+
+                    return new Date(
+                        `${date}T00:00:00`
+                    );
+
+                })
+
+                .filter(date => {
+
+                    return !isNaN(
+                        date.getTime()
+                    );
+
+                });
+
+
+            if (formattedDates.length === 0) {
+
+                return res.status(400).send(
+                    'Les dates sélectionnées sont invalides.'
+                );
+
+            }
+
+
+            /*
+                SUPPRIMER LES DOUBLONS
+            */
+
+            const uniqueDates = [
+
+                ...new Map(
+
+                    formattedDates.map(date => [
+
+                        date.getTime(),
+
+                        date
+
+                    ])
+
+                ).values()
+
+            ];
+
+
+            /*
+                TRIER LES DATES
+            */
+
+            uniqueDates.sort(
+                (a, b) => a - b
+            );
+
+
+            /*
+                MODIFIER L'IMAGE SEULEMENT
+                SI UNE NOUVELLE IMAGE EST FOURNIE
+            */
+
+            let imageUrl = event.image || '';
+
+
+            if (req.file) {
+
+                const result =
+                    await uploadImageToCloudinary(
+                        req.file.buffer,
+                        'valleeduparc/events'
+                    );
+
+                imageUrl =
+                    result.secure_url;
+
+            }
+
+
+            /*
+                MODIFICATION
+            */
+
+            event.title =
+                req.body.title;
+
+            event.description =
+                req.body.description;
+
+            event.dates =
+                uniqueDates;
+
+            event.location =
+                req.body.location || '';
+
+            event.image =
+                imageUrl;
+
+
+            await event.save();
+
+
+            /*
+                RETOUR À LA PAGE ADMIN
+            */
+
+            res.redirect(
+                '/admin-vdp/events'
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Erreur modification événement :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors de la modification de l’événement.'
+            );
+
+        }
+
+    }
+);
+
+
+/*
    Suppression d'un événement
 */
 
