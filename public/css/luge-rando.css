@@ -177,31 +177,28 @@ html{
    RANDONNÉE ALPINE
 ================================= */
 
-.rando-hero{
-    background:
-        linear-gradient(
-            rgba(19,35,61,0.75),
-            rgba(40,71,109,0.82)
-        );
-}
+/* =================================
+   IMAGE HERO RANDONNÉE ALPINE
+================================= */
 
-/* IMAGE HERO */
+.rando-hero .ecole-hero-image {
+    flex: 0 0 42%;
+    max-width: 42%;
 
-.rando-hero-image{
-    width: 45%;
-    max-width: 550px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.rando-hero-image img{
+.rando-hero .ecole-hero-image img {
     width: 100%;
     max-width: 550px;
     height: auto;
+
     display: block;
-    border-radius: 20px;
-    object-fit: cover;
+
+    border-radius: 0;
+    object-fit: contain;
 }
 
 /* SECTION TEXTE */
