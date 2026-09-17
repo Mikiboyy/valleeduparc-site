@@ -173,16 +173,35 @@ html{
    RANDONNÉE ALPINE
 ================================= */
 
+/* =================================
+   RANDONNÉE ALPINE
+================================= */
+
 .rando-hero{
     background:
         linear-gradient(
             rgba(19,35,61,0.75),
             rgba(40,71,109,0.82)
-        ),
-        url('/image/randonnee-alpine.webp');
+        );
+}
 
-    background-size: cover;
-    background-position: center;
+/* IMAGE HERO */
+
+.rando-hero-image{
+    width: 45%;
+    max-width: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rando-hero-image img{
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    object-fit: cover;
 }
 
 /* SECTION TEXTE */
@@ -393,6 +412,20 @@ html{
 
     .luge-price {
         font-size: 2.3rem;
+    }
+
+}
+
+@media(max-width: 768px){
+
+    .rando-hero-image{
+        width: 100%;
+        max-width: 450px;
+        margin-top: 30px;
+    }
+
+    .rando-hero-image img{
+        width: 100%;
     }
 
 }
