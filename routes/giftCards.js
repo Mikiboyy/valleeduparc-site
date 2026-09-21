@@ -59,30 +59,18 @@ router.get('/', (req, res) => {
 */
 
 router.post('/checkout', async (req, res) => {
-
     try {
-
         const montant = Number(req.body.montant);
         const quantite = Number(req.body.quantite) || 1;
 
+        const MONTANTS_AUTORISES = [25, 50, 75, 100, 250];
 
-        /*
-         * Minimum temporaire pour les tests :
-         * 0,01 $
-         *
-         * Remettre à 10 après les tests.
-         */
         if (
-            !Number.isFinite(montant) ||
-            montant < 0.01 ||
+            !MONTANTS_AUTORISES.includes(montant) ||
             !Number.isInteger(quantite) ||
             quantite < 1
         ) {
-
-            return res.redirect(
-                '/cartes-cadeaux?error=montant'
-            );
-
+            return res.redirect('/cartes-cadeaux?error=montant');
         }
 
 
