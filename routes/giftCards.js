@@ -6,8 +6,8 @@ const GiftCardOrder = require('../models/GiftCardOrder');
 
 function getMonerisUrl(isProd) {
     return isProd
-        ? 'https://gateway.moneris.com/chkt/request/request.php'
-        : 'https://gatewayt.moneris.com/chkt/request/request.php';
+        ? 'https://gateway.moneris.com/chktv2/request/request.php'
+        : 'https://gatewayt.moneris.com/chktv2/request/request.php';
 }
 
 function createTransporter() {

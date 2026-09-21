@@ -12,7 +12,10 @@
             </h2>
 
             <p>
-                Total à payer : <strong><%= order.total.toFixed(2) %> $</strong>
+                Total à payer :
+                <strong>
+                    <%= order.total.toFixed(2) %> $
+                </strong>
             </p>
         </div>
 
@@ -22,29 +25,117 @@
 
 </section>
 
+
+<!-- Moneris Checkout -->
 <script src="<%= monerisEnv === 'prod'
-    ? 'https://gateway.moneris.com/chkt/js/chkt_v1.00.js'
-    : 'https://gatewayt.moneris.com/chkt/js/chkt_v1.00.js' %>"></script>
+    ? 'https://gateway.moneris.com/chktv2/js/chkt_v3.00.js'
+    : 'https://gatewayt.moneris.com/chktv2/js/chkt_v3.00.js' %>"></script>
+
 
 <script>
+
     const myCheckout = new monerisCheckout();
 
+    /*
+     * Mode Moneris
+     * qa = environnement de test
+     * prod = production
+     */
     myCheckout.setMode("<%= monerisEnv %>");
+
+
+    /*
+     * Div dans laquelle Moneris sera affiché
+     */
     myCheckout.setCheckoutDiv("monerisCheckout");
 
-    myCheckout.setCallback("cancel_transaction", function(data) {
+
+    /*
+     * Client annule le paiement
+     */
+    myCheckout.setCallback("cancel_transaction", function (data) {
+
+        console.log("Paiement annulé :", data);
+
         window.location.href = "/cartes-cadeaux?error=cancel";
+
     });
 
-    myCheckout.setCallback("error_event", function(data) {
+
+    /*
+     * Erreur Moneris
+     */
+    myCheckout.setCallback("error_event", function (data) {
+
         console.error("Erreur Moneris :", data);
-        alert("Une erreur est survenue avec le paiement.");
+
+        alert(
+            "Une erreur est survenue avec le paiement. " +
+            "Veuillez réessayer."
+        );
+
     });
 
-    myCheckout.setCallback("payment_complete", function(data) {
-        const response = JSON.parse(data);
-        window.location.href = "/cartes-cadeaux/confirmation?ticket=" + encodeURIComponent(response.ticket);
+
+    /*
+     * Paiement terminé
+     *
+     * Moneris retourne un JSON sous forme de string.
+     */
+    myCheckout.setCallback("payment_complete", function (data) {
+
+        console.log("Payment complete :", data);
+
+        try {
+
+            const response =
+                typeof data === "string"
+                    ? JSON.parse(data)
+                    : data;
+
+            if (!response || !response.ticket) {
+
+                console.error(
+                    "Aucun ticket reçu de Moneris :",
+                    response
+                );
+
+                window.location.href =
+                    "/cartes-cadeaux?error=payment";
+
+                return;
+            }
+
+
+            /*
+             * On transmet le ticket à notre serveur.
+             *
+             * Le serveur va ensuite faire la Receipt Request
+             * auprès de Moneris pour confirmer le paiement.
+             */
+            window.location.href =
+                "/cartes-cadeaux/confirmation?ticket=" +
+                encodeURIComponent(response.ticket);
+
+        } catch (error) {
+
+            console.error(
+                "Impossible de lire la réponse Moneris :",
+                error,
+                data
+            );
+
+            window.location.href =
+                "/cartes-cadeaux?error=payment";
+        }
+
     });
 
+
+    /*
+     * Démarre le checkout avec le ticket obtenu
+     * lors du Preload Request.
+     */
     myCheckout.startCheckout("<%= ticket %>");
+
 </script>
