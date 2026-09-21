@@ -58,15 +58,14 @@
         <h2>Informations de la carte</h2>
 
         <label>Montant de la carte-cadeau</label>
-        <input
-        type="number"
-        name="montant"
-        id="montantCarte"
-        min="10"
-        step="5"
-        placeholder="Min : 10.00"
-        required
-        >
+        <select name="montant" id="montantCarte" required>
+            <option value="">Choisir un montant</option>
+            <option value="25">25,00 $</option>
+            <option value="50">50,00 $</option>
+            <option value="75">75,00 $</option>
+            <option value="100">100,00 $</option>
+            <option value="250">250,00 $</option>
+        </select>
 
         <label>Quantité</label>
         <input type="number" name="quantite" id="quantiteCarte" min="1" value="1" required>
@@ -110,7 +109,7 @@
         document.getElementById('giftCardTotal').textContent = total.toFixed(2);
     }
 
-    document.getElementById('montantCarte').addEventListener('input', updateGiftCardTotal);
+    document.getElementById('montantCarte').addEventListener('change', updateGiftCardTotal);
     document.getElementById('quantiteCarte').addEventListener('input', updateGiftCardTotal);
 
     updateGiftCardTotal();
