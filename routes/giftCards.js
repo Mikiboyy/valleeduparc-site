@@ -352,33 +352,22 @@ router.get('/confirmation', async (req, res) => {
          * Il faut vérifier la réponse de Moneris.
          */
 
-        const monerisResponse =
-            response.data?.response;
+        const monerisResponse = response.data?.response;
 
-
-        /*
-         * Pour le Hosted Checkout,
-         * response_code 001 correspond au succès du callback.
-         *
-         * On vérifie aussi que la réponse existe.
-         */
+        console.log('========== MONERIS RECEIPT ==========');
+        console.log(JSON.stringify(response.data, null, 2));
+        console.log('======================================');
 
         if (
             !monerisResponse ||
-            monerisResponse.response_code !== '001'
+            monerisResponse.success !== 'true' ||
+            monerisResponse.receipt?.result !== 'a'
         ) {
-
             await order.save();
 
-            console.error(
-                'Paiement Moneris non confirmé :',
-                response.data
-            );
+            console.error('Paiement Moneris non confirmé :', response.data);
 
-            return res.redirect(
-                '/cartes-cadeaux?error=payment'
-            );
-
+            return res.redirect('/cartes-cadeaux?error=payment');
         }
 
 
@@ -389,6 +378,10 @@ router.get('/confirmation', async (req, res) => {
         order.status = 'paid';
 
         await order.save();
+
+        console.log('✅ Paiement Moneris confirmé');
+        console.log('Commande:', order._id);
+        console.log('Montant:', order.total);
 
 
         /*
