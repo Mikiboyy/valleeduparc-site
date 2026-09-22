@@ -153,5 +153,60 @@
         });
     </script>
 
+    <div id="cookie-banner" class="cookie-banner" style="display: none;">
+    <div class="cookie-banner-content">
+        <h3>🍪 Utilisation des cookies</h3>
+
+        <p>
+            Nous utilisons des cookies nécessaires au fonctionnement du site
+            ainsi que, avec votre consentement, des cookies statistiques et
+            de personnalisation.
+        </p>
+
+        <div class="cookie-buttons">
+            <button id="cookie-accept" class="btn btn-primary">
+                Accepter
+            </button>
+
+            <button id="cookie-refuse" class="btn btn-secondary">
+                Refuser
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const banner = document.getElementById('cookie-banner');
+        const acceptButton = document.getElementById('cookie-accept');
+        const refuseButton = document.getElementById('cookie-refuse');
+
+        const cookieConsent = localStorage.getItem('cookieConsent');
+
+        if (!cookieConsent) {
+            banner.style.display = 'flex';
+        }
+
+        acceptButton.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            banner.style.display = 'none';
+
+            // Charger ici les cookies non essentiels
+            loadAnalytics();
+        });
+
+        refuseButton.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'refused');
+            banner.style.display = 'none';
+        });
+
+        function loadAnalytics() {
+            // Google Analytics sera chargé ici
+            console.log('Cookies statistiques acceptés');
+        }
+    });
+</script>
+
 </body>
 </html>
