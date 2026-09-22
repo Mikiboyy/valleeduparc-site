@@ -1158,43 +1158,73 @@ img {
 
 }
 
+/* =========================
+   BANNIÈRE COOKIES
+========================= */
+
 .cookie-banner {
     position: fixed;
-    bottom: 20px;
     left: 20px;
     right: 20px;
-    z-index: 999999;
+    bottom: 20px;
+
     display: flex;
     justify-content: center;
+
+    z-index: 999999;
 }
 
 .cookie-banner-content {
-    background: white;
-    max-width: 700px;
     width: 100%;
-    padding: 25px;
+    max-width: 700px;
+
+    background: #ffffff;
+
+    padding: 25px 30px;
+
     border-radius: 15px;
+
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.25);
+
+    text-align: left;
 }
 
 .cookie-banner-content h3 {
     margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.cookie-banner-content p {
+    margin-bottom: 20px;
+    line-height: 1.6;
 }
 
 .cookie-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
+}
+
+.cookie-buttons button {
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {
+
     .cookie-banner {
         left: 10px;
         right: 10px;
         bottom: 10px;
     }
 
+    .cookie-banner-content {
+        padding: 20px;
+    }
+
     .cookie-buttons {
         flex-direction: column;
+    }
+
+    .cookie-buttons button {
+        width: 100%;
     }
 }

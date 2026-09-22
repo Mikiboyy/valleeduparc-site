@@ -153,17 +153,23 @@
         });
     </script>
 
-    <div id="cookie-banner" class="cookie-banner" style="display: none;">
+<!-- =========================
+     CONSENTEMENT COOKIES
+========================= -->
+
+<div id="cookie-banner" class="cookie-banner" style="display: none;">
     <div class="cookie-banner-content">
+
         <h3>🍪 Utilisation des cookies</h3>
 
         <p>
             Nous utilisons des cookies nécessaires au fonctionnement du site
-            ainsi que, avec votre consentement, des cookies statistiques et
-            de personnalisation.
+            ainsi que des cookies statistiques et de personnalisation.
+            Vous pouvez accepter ou refuser les cookies non essentiels.
         </p>
 
         <div class="cookie-buttons">
+
             <button id="cookie-accept" class="btn btn-primary">
                 Accepter
             </button>
@@ -171,7 +177,9 @@
             <button id="cookie-refuse" class="btn btn-secondary">
                 Refuser
             </button>
+
         </div>
+
     </div>
 </div>
 
@@ -182,29 +190,55 @@
         const acceptButton = document.getElementById('cookie-accept');
         const refuseButton = document.getElementById('cookie-refuse');
 
+        if (!banner || !acceptButton || !refuseButton) {
+            return;
+        }
+
         const cookieConsent = localStorage.getItem('cookieConsent');
 
+        /*
+         * Aucun choix enregistré :
+         * afficher la bannière.
+         */
         if (!cookieConsent) {
             banner.style.display = 'flex';
         }
 
+        /*
+         * L'utilisateur accepte.
+         */
         acceptButton.addEventListener('click', () => {
+
             localStorage.setItem('cookieConsent', 'accepted');
+
             banner.style.display = 'none';
 
-            // Charger ici les cookies non essentiels
             loadAnalytics();
         });
 
+        /*
+         * L'utilisateur refuse.
+         */
         refuseButton.addEventListener('click', () => {
+
             localStorage.setItem('cookieConsent', 'refused');
+
             banner.style.display = 'none';
         });
 
+        /*
+         * Chargement des services statistiques
+         * uniquement après consentement.
+         */
         function loadAnalytics() {
-            // Google Analytics sera chargé ici
+
             console.log('Cookies statistiques acceptés');
+
+            // Google Analytics sera chargé ici.
+            // Meta Pixel sera chargé ici également si nécessaire.
+
         }
+
     });
 </script>
 
