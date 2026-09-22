@@ -5,7 +5,7 @@ const { rateLimit } = require('express-rate-limit');
 
 
 // =====================================================
-// ANTI-SPAM : maximum 5 messages par IP / 15 minutes
+// ANTI-SPAM : maximum 3 messages par IP / 15 minutes
 // =====================================================
 
 const contactLimiter = rateLimit({
@@ -47,6 +47,17 @@ router.post('/', contactLimiter, async (req, res) => {
             website
         } = req.body;
 
+        if (
+            typeof name !== 'string' ||
+            typeof email !== 'string' ||
+            typeof subject !== 'string' ||
+            typeof message !== 'string'
+        ) {
+            return res.redirect(
+                '/contact?error=Veuillez remplir tous les champs.'
+            );
+        }
+
 
         // =================================================
         // HONEYPOT
@@ -65,6 +76,53 @@ router.post('/', contactLimiter, async (req, res) => {
                 '/contact?success=Votre message a été envoyé avec succès.'
             );
         }
+
+        const contenu = `
+        ${name || ''}
+        ${subject || ''}
+        ${message || ''}
+        `;
+
+        const spamPatterns = [
+            /bit\.ly/i,
+            /tinyurl\.com/i,
+            /t\.co\//i,
+            /goo\.gl/i,
+            /ow\.ly/i,
+            /is\.gd/i,
+            /buff\.ly/i,
+
+            /telegram/i,
+            /whatsapp/i,
+            /crypto/i,
+            /casino/i,
+            /viagra/i,
+            /cool\s*hacker/i,
+
+            /<\s*script/i,
+            /<\s*a[\s>]/i,
+            /<\s*b[\s>]/i,
+            /<\s*iframe/i
+        ];
+
+        const isSpam = spamPatterns.some(pattern =>
+            pattern.test(contenu)
+        );
+
+        // Détecte les URLs dans le message
+            const urlMatches = contenu.match(
+                /https?:\/\/[^\s<>"']+/gi
+            ) || [];
+
+            // Plus de 2 URLs dans un message = probablement du spam
+                const tooManyLinks = urlMatches.length >= 3;
+
+                if (isSpam || tooManyLinks) {
+
+                    console.log('Spam détecté depuis :', req.ip);
+
+                    return res.redirect('/contact?success=1');
+                }
 
 
         // =================================================
