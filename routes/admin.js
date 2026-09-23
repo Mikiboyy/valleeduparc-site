@@ -1199,6 +1199,233 @@ router.post(
     }
 );
 
+/* =========================================================
+   AJOUT - ABONNEMENT
+========================================================= */
+
+router.post(
+    '/prices/abonnements/add',
+    requireRole('prix'),
+    async (req, res) => {
+
+        try {
+
+            const {
+                category,
+                ageGroup,
+                regularPrice,
+                fdcPrice,
+                order
+            } = req.body;
+
+
+            if (!category || !ageGroup) {
+
+                return res.redirect(
+                    '/admin-vdp/prices/abonnements?error=Veuillez remplir les champs obligatoires.'
+                );
+
+            }
+
+
+            const regular =
+                regularPrice === ''
+                    ? null
+                    : Number(regularPrice);
+
+
+            const fdc =
+                fdcPrice === ''
+                    ? null
+                    : Number(fdcPrice);
+
+
+            const displayOrder =
+                order === ''
+                    ? 0
+                    : Number(order);
+
+
+            if (
+                (regular !== null && (!Number.isFinite(regular) || regular < 0)) ||
+                (fdc !== null && (!Number.isFinite(fdc) || fdc < 0)) ||
+                !Number.isInteger(displayOrder)
+            ) {
+
+                return res.redirect(
+                    '/admin-vdp/prices/abonnements?error=Les valeurs entrées sont invalides.'
+                );
+
+            }
+
+
+            await SubscriptionPrice.create({
+
+                category: category.trim(),
+
+                ageGroup: ageGroup.trim(),
+
+                regularPrice: regular,
+
+                fdcPrice: fdc,
+
+                order: displayOrder,
+
+                isActive: true
+
+            });
+
+
+            res.redirect(
+                '/admin-vdp/prices/abonnements?success=Abonnement ajouté avec succès.'
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Erreur ajout abonnement :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors de l’ajout de l’abonnement.'
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AJOUT - BILLET
+========================================================= */
+
+router.post(
+    '/prices/billets/add',
+    requireRole('prix'),
+    async (req, res) => {
+
+        try {
+
+            const {
+                category,
+                ticketType,
+                ageGroup,
+                onlinePrice,
+                counterPrice,
+                categoryOrder,
+                ticketOrder,
+                ageOrder
+            } = req.body;
+
+
+            if (
+                !category ||
+                !ticketType ||
+                !ageGroup
+            ) {
+
+                return res.redirect(
+                    '/admin-vdp/prices/billets?error=Veuillez remplir les champs obligatoires.'
+                );
+
+            }
+
+
+            const online =
+                onlinePrice === ''
+                    ? null
+                    : Number(onlinePrice);
+
+
+            const counter =
+                counterPrice === ''
+                    ? null
+                    : Number(counterPrice);
+
+
+            const catOrder =
+                categoryOrder === ''
+                    ? 0
+                    : Number(categoryOrder);
+
+
+            const typeOrder =
+                ticketOrder === ''
+                    ? 0
+                    : Number(ticketOrder);
+
+
+            const ageOrderValue =
+                ageOrder === ''
+                    ? 0
+                    : Number(ageOrder);
+
+
+            if (
+                (online !== null && (!Number.isFinite(online) || online < 0)) ||
+                (counter !== null && (!Number.isFinite(counter) || counter < 0)) ||
+                !Number.isInteger(catOrder) ||
+                !Number.isInteger(typeOrder) ||
+                !Number.isInteger(ageOrderValue)
+            ) {
+
+                return res.redirect(
+                    '/admin-vdp/prices/billets?error=Les valeurs entrées sont invalides.'
+                );
+
+            }
+
+
+            await DailyTicketPrice.create({
+
+                category: category.trim(),
+
+                ticketType: ticketType.trim(),
+
+                ageGroup: ageGroup.trim(),
+
+                onlinePrice: online,
+
+                counterPrice: counter,
+
+                isFree:
+                    req.body.isFree === 'on',
+
+                categoryOrder: catOrder,
+
+                ticketOrder: typeOrder,
+
+                ageOrder: ageOrderValue,
+
+                isActive: true
+
+            });
+
+
+            res.redirect(
+                '/admin-vdp/prices/billets?success=Billet ajouté avec succès.'
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Erreur ajout billet :',
+                error
+            );
+
+            res.status(500).send(
+                'Erreur lors de l’ajout du billet.'
+            );
+
+        }
+
+    }
+);
+
 
 /* =========================================================
    PRIX - COURS

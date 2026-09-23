@@ -2,6 +2,190 @@
     <div class="course-form">
         <h2>Prix billets</h2>
 
+        <div class="price-admin-header">
+
+    <div>
+        <h1>Prix des billets</h1>
+        <p>Gérer les prix des billets de la station.</p>
+    </div>
+
+</div>
+
+
+<div class="price-add-box">
+
+    <h2>Ajouter un billet</h2>
+
+    <form
+        action="/admin-vdp/prices/billets/add"
+        method="POST"
+        class="price-form"
+    >
+
+        <div class="form-group">
+
+            <label for="category">
+                Catégorie
+            </label>
+
+            <input
+                type="text"
+                id="category"
+                name="category"
+                required
+                placeholder="Ex. Ski alpin"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="ticketType">
+                Type de billet
+            </label>
+
+            <input
+                type="text"
+                id="ticketType"
+                name="ticketType"
+                required
+                placeholder="Ex. Billet journée"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="ageGroup">
+                Groupe d'âge
+            </label>
+
+            <input
+                type="text"
+                id="ageGroup"
+                name="ageGroup"
+                required
+                placeholder="Ex. Adulte"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="onlinePrice">
+                Prix en ligne
+            </label>
+
+            <input
+                type="number"
+                id="onlinePrice"
+                name="onlinePrice"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="counterPrice">
+                Prix à la billetterie
+            </label>
+
+            <input
+                type="number"
+                id="counterPrice"
+                name="counterPrice"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                <input
+                    type="checkbox"
+                    name="isFree"
+                >
+
+                Billet gratuit
+
+            </label>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="categoryOrder">
+                Ordre catégorie
+            </label>
+
+            <input
+                type="number"
+                id="categoryOrder"
+                name="categoryOrder"
+                value="0"
+                step="1"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="ticketOrder">
+                Ordre type de billet
+            </label>
+
+            <input
+                type="number"
+                id="ticketOrder"
+                name="ticketOrder"
+                value="0"
+                step="1"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="ageOrder">
+                Ordre groupe d'âge
+            </label>
+
+            <input
+                type="number"
+                id="ageOrder"
+                name="ageOrder"
+                value="0"
+                step="1"
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="admin-btn admin-btn-primary"
+        >
+            + Ajouter le billet
+        </button>
+
+    </form>
+
+</div>
+
         <% prices.forEach(price => { %>
             <form action="/admin-vdp/prices/billets/<%= price._id %>" method="POST" class="admin-price-row">
                 <strong><%= price.category %> — <%= price.ticketType %> — <%= price.ageGroup %></strong>
