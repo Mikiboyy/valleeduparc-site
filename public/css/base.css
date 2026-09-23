@@ -1260,3 +1260,292 @@ img {
         width: 100%;
     }
 }
+
+/* =========================================================
+   GESTION DES PRIX
+========================================================= */
+
+.price-admin-header {
+    margin-bottom: 25px;
+}
+
+.price-admin-header h1 {
+    margin-bottom: 5px;
+}
+
+.price-admin-header p {
+    margin-top: 0;
+    color: #666;
+}
+
+
+/* =========================================================
+   FORMULAIRE D'AJOUT
+========================================================= */
+
+.price-add-box {
+    background: #ffffff;
+    border: 1px solid #dce5ec;
+    border-radius: 10px;
+    margin-bottom: 35px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.price-add-box h2 {
+    margin: 0;
+    padding: 12px 18px;
+
+    background: #08a6d5;
+    color: #092f52;
+
+    font-size: 26px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   FORMULAIRE
+========================================================= */
+
+.price-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 18px 25px;
+
+    padding: 25px;
+}
+
+.price-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-form .form-group label {
+    margin-bottom: 7px;
+
+    color: #163b5c;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.price-form input[type="text"],
+.price-form input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 11px 13px;
+
+    border: 1px solid #cfdbe5;
+    border-radius: 6px;
+
+    background: #f7fafc;
+
+    color: #1d3448;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.price-form input[type="text"]:focus,
+.price-form input[type="number"]:focus {
+    border-color: #08a6d5;
+
+    background: #ffffff;
+
+    box-shadow: 0 0 0 3px rgba(8, 166, 213, 0.12);
+}
+
+
+/* =========================================================
+   CHECKBOX
+========================================================= */
+
+.price-form .checkbox-group {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding-top: 25px;
+}
+
+.price-form input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+
+    cursor: pointer;
+}
+
+.price-form .checkbox-group label {
+    margin: 0;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   BOUTON AJOUTER
+========================================================= */
+
+.price-form button[type="submit"] {
+    grid-column: 1 / -1;
+
+    justify-self: start;
+
+    margin-top: 5px;
+
+    padding: 12px 22px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #08a6d5;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.price-form button[type="submit"]:hover {
+    background: #078fb8;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(8, 166, 213, 0.25);
+}
+
+
+/* =========================================================
+   LISTE DES PRIX EXISTANTS
+========================================================= */
+
+.price-list {
+    display: grid;
+
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(300px, 1fr)
+    );
+
+    gap: 18px;
+
+    margin-top: 20px;
+}
+
+
+/* =========================================================
+   CARTE DE PRIX
+========================================================= */
+
+.price-card {
+    background: #edf3f8;
+
+    border: 1px solid #d9e3eb;
+    border-radius: 8px;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+}
+
+.price-card h3 {
+    margin: 0 0 18px;
+
+    color: #173b5b;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.price-card .form-group {
+    margin-bottom: 14px;
+}
+
+.price-card label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #173b5b;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.price-card input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d3dee7;
+    border-radius: 5px;
+
+    background: #ffffff;
+
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   ACTIF
+========================================================= */
+
+.price-card .active-group {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.price-card .active-group label {
+    margin: 0;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .price-form {
+        grid-template-columns: 1fr;
+
+        padding: 20px;
+    }
+
+    .price-form button[type="submit"] {
+        grid-column: 1;
+        width: 100%;
+    }
+
+    .price-list {
+        grid-template-columns: 1fr;
+    }
+
+    .price-add-box h2 {
+        font-size: 22px;
+    }
+
+}
