@@ -2437,6 +2437,92 @@ router.get(
 
 
 /* =========================
+   AJOUTER UNE QUESTION
+========================= */
+
+router.post(
+    '/faq',
+    requireRole('faq'),
+    async (req, res) => {
+
+        try {
+
+            const {
+                category,
+                question,
+                answer,
+                order,
+                isActive
+            } = req.body;
+
+            // Vérifier les champs obligatoires
+            if (
+                !category ||
+                !question?.trim() ||
+                !answer?.trim()
+            ) {
+                return res.status(400).send(
+                    'Veuillez remplir tous les champs obligatoires.'
+                );
+            }
+
+            // Vérifier la catégorie
+            const validCategories = [
+                'abonnements',
+                'montagne',
+                'horaire'
+            ];
+
+            if (!validCategories.includes(category)) {
+                return res.status(400).send(
+                    'La catégorie sélectionnée est invalide.'
+                );
+            }
+
+            // Vérifier l'ordre d'affichage
+            const displayOrder =
+                order === '' || order === undefined
+                    ? 0
+                    : Number(order);
+
+            if (!Number.isInteger(displayOrder)) {
+                return res.status(400).send(
+                    'L’ordre d’affichage doit être un nombre entier.'
+                );
+            }
+
+            // Créer la question
+            await FAQ.create({
+                category,
+                question: question.trim(),
+                answer: answer.trim(),
+                order: displayOrder,
+                isActive: isActive === 'on'
+            });
+
+            // Retourner à la gestion du FAQ
+            return res.redirect(
+                '/admin-vdp/faq'
+            );
+
+        } catch (error) {
+
+            console.error(
+                'Erreur ajout FAQ :',
+                error
+            );
+
+            return res.status(500).send(
+                'Erreur lors de l’ajout de la question au FAQ.'
+            );
+
+        }
+    }
+);
+
+
+
+/* =========================
    MODIFIER UNE QUESTION
 ========================= */
 
