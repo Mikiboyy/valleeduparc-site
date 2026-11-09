@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 
 const express = require('express');
@@ -10,13 +11,13 @@ const path = require('path');
 
 const {
     adminLimiter,
-    loginLimiter
+    creditMaladieLimiter
 } = require('./middleware/rateLimiter');
 
 const adminRoutes = require('./routes/admin');
 const pagesRoutes = require('./routes/pages');
 const mailchimpRoutes = require('./routes/mailchimp');
-const { getSnowConditions} = require('./services/stationService');
+const { getSnowConditions } = require('./services/stationService');
 const inscriptionRoutes = require('./routes/inscription');
 const carrieresRoutes = require('./routes/carrieres');
 const locationRoutes = require('./routes/location');
@@ -28,6 +29,11 @@ const creditMaladieRoutes = require('./routes/creditMaladieRoutes');
 
 const app = express();
 
+// =========================
+// CONFIGURATION PROXY
+// =========================
+
+app.set('trust proxy', 1);
 
 // =========================
 // SÉCURITÉ
@@ -41,45 +47,36 @@ app.use(
     })
 );
 
-
-/* =========================
-   MONGODB
-========================= */
+// =========================
+// MONGODB
+// =========================
 
 if (!process.env.MONGODB_URI) {
-
     console.error("ERREUR : MONGODB_URI n'est pas définie.");
-
 } else {
-
     mongoose.connect(process.env.MONGODB_URI)
         .then(() => console.log('MongoDB Atlas connecté'))
         .catch(err => console.error('Erreur MongoDB:', err));
-
 }
 
-
-/* =========================
-   VIEW ENGINE
-========================= */
+// =========================
+// VIEW ENGINE
+// =========================
 
 app.set('view engine', 'ejs');
 app.set('layout', 'layout');
 
 app.use(expressLayouts);
 
+// =========================
+// STATIC FILES
+// =========================
 
-/* =========================
-   STATIC FILES
-========================= */
-
-/* Tous les fichiers dans /public */
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-/* =========================
-   BODY PARSER
-========================= */
+// =========================
+// BODY PARSER
+// =========================
 
 app.use(
     express.urlencoded({
@@ -94,49 +91,33 @@ app.use(
     })
 );
 
-
-/* =========================
-   SESSION
-========================= */
-
-app.set('trust proxy', 1);
+// =========================
+// SESSION
+// =========================
 
 app.use(session({
-
     secret: process.env.SESSION_SECRET,
-
     resave: false,
-
     saveUninitialized: false,
 
     store: MongoStore.create({
-
         mongoUrl: process.env.MONGODB_URI,
-
         collectionName: 'sessions',
-
         ttl: 14 * 24 * 60 * 60
-
     }),
 
     cookie: {
-
         httpOnly: true,
-
         secure: process.env.NODE_ENV === 'production',
-
         maxAge: 1000 * 60 * 60 * 24 * 14
-
     }
-
 }));
 
-/* =========================
-   GLOBAL VARIABLES
-========================= */
+// =========================
+// GLOBAL VARIABLES
+// =========================
 
 app.use((req, res, next) => {
-
     res.locals.title = "Vallée du Parc";
 
     res.locals.success = req.query.success;
@@ -146,54 +127,36 @@ app.use((req, res, next) => {
     res.locals.adminUser = req.session.admin || null;
 
     next();
-
 });
 
-
-/* =========================
-   SNOW CONDITIONS
-========================= */
+// =========================
+// SNOW CONDITIONS
+// =========================
 
 app.use(async (req, res, next) => {
-
     if (
-
         req.path.startsWith('/admin') ||
         req.path.startsWith('/css') ||
         req.path.startsWith('/image') ||
         req.path.startsWith('/uploads') ||
         req.path.startsWith('/icons')
-
     ) {
-
         return next();
-
     }
 
     try {
-
-        res.locals.conditions =
-            await getSnowConditions();
-
+        res.locals.conditions = await getSnowConditions();
     } catch (error) {
-
-        console.log(
-            "Erreur neige:",
-            error.message
-        );
-
+        console.log("Erreur neige:", error.message);
         res.locals.conditions = null;
-
     }
 
     next();
-
 });
 
-
-/* =========================
-   ROUTES
-========================= */
+// =========================
+// ROUTES
+// =========================
 
 app.use(
     '/admin-vdp',
@@ -211,6 +174,7 @@ app.use('/carrieres-form', carrieresRoutes);
 
 app.use('/cartes-cadeaux', giftCardRoutes);
 
+// Le limiteur propre à contact est dans sa route.
 app.use('/contact', contactRoutes);
 
 app.use('/', pagesRoutes);
@@ -219,33 +183,28 @@ app.use('/salle_form', salleFormRoutes);
 
 app.use('/corpo_form', corpoFormRoutes);
 
-app.use('/demande-credit-maladie',creditMaladieRoutes);
+app.use(
+    '/demande-credit-maladie',
+    creditMaladieLimiter,
+    creditMaladieRoutes
+);
 
-/* =========================
-   404
-========================= */
+// =========================
+// 404
+// =========================
 
 app.use((req, res) => {
-
     res.status(404).render('404', {
-
         title: "Page non trouvée"
-
     });
-
 });
 
-
-/* =========================
-   SERVER
-========================= */
+// =========================
+// SERVER
+// =========================
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-
-    console.log(
-        `Serveur démarré sur le port ${PORT}`
-    );
-
+    console.log(`Serveur démarré sur le port ${PORT}`);
 });
