@@ -1,15 +1,35 @@
 
 const express = require('express');
 const router = express.Router();
-const nodemailer = require('nodemailer');
+
 const multer = require('multer');
 const path = require('path');
+const { rateLimit } = require('express-rate-limit');
+const { sendMail } = require('../utils/mailer');
 
-// =========================
-// CONFIGURATION FICHIERS
-// =========================
+// ==========================================
+// LIMITATION DES SOUMISSIONS
+// ==========================================
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 Mo
+const creditMaladieLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 3,
+    standardHeaders: 'draft-8',
+    legacyHeaders: false,
+    message: {
+        error: 'Trop de demandes. Veuillez réessayer plus tard.'
+    },
+    handler: (req, res) => {
+        console.warn('Limite de soumissions crédit maladie atteinte.');
+        return res.redirect('/faq?credit-error=1');
+    }
+});
+
+// ==========================================
+// CONFIGURATION DES FICHIERS
+// ==========================================
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 const allowedFiles = {
     '.pdf': 'application/pdf',
@@ -33,20 +53,24 @@ const upload = multer({
         const expectedMime = allowedFiles[extension];
 
         if (!expectedMime || file.mimetype !== expectedMime) {
-            return callback(
-                new Error('Format de fichier non autorisé.')
-            );
+            return callback(new Error('Format de fichier non autorisé.'));
         }
 
         callback(null, true);
     }
 });
 
-// Gestion des erreurs Multer
+// ==========================================
+// GESTION DES ERREURS MULTER
+// ==========================================
+
 const handleUpload = (req, res, next) => {
     upload.single('preuveMedicale')(req, res, (error) => {
         if (error) {
-            console.warn('Téléversement refusé :', error.code || 'Erreur fichier');
+            console.warn(
+                'Téléversement crédit maladie refusé :',
+                error.code || 'Erreur fichier'
+            );
 
             return res.redirect('/faq?credit-error=1');
         }
@@ -55,30 +79,9 @@ const handleUpload = (req, res, next) => {
     });
 };
 
-// =========================
-// CONFIGURATION SMTP
-// MAILERSEND
-// =========================
-
-const transporter = nodemailer.createTransport({
-    host: 'smtp.mailersend.net',
-    port: 2525,
-    secure: false,
-    requireTLS: true,
-
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-    },
-
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 30000
-});
-
-// =========================
+// ==========================================
 // FONCTIONS DE VALIDATION
-// =========================
+// ==========================================
 
 function escapeHtml(value = '') {
     return String(value)
@@ -111,12 +114,15 @@ function sanitizeFilename(filename) {
     return `${basename || 'preuve_medicale'}${extension}`;
 }
 
-// Vérification réelle du contenu du fichier
+// ==========================================
+// VALIDATION DU CONTENU DU FICHIER
+// ==========================================
+
 function validateFileSignature(file) {
     const buffer = file.buffer;
     const extension = path.extname(file.originalname).toLowerCase();
 
-    if (!buffer || buffer.length < 4) {
+    if (!buffer || buffer.length < 8) {
         return false;
     }
 
@@ -145,32 +151,44 @@ function validateFileSignature(file) {
     }
 }
 
-// =========================
-// ENVOI DU FORMULAIRE
-// CRÉDIT MALADIE
-// =========================
+// ==========================================
+// FORMULAIRE CRÉDIT MALADIE
+// ==========================================
 
-router.post('/', handleUpload, async (req, res) => {
+router.post('/', creditMaladieLimiter, handleUpload, async (req, res) => {
+
+    let currentStage = 'validation';
 
     try {
 
-        // =========================
-        // VÉRIFICATION CONFIGURATION
-        // =========================
+        // ======================================
+        // ANTI-ROBOT : HONEYPOT
+        // ======================================
 
-        if (
-            !process.env.SMTP_USER ||
-            !process.env.SMTP_PASS ||
-            !process.env.FORM_RECEIVER_CREDIT_MALADIE
-        ) {
+        const body = req.body || {};
+
+        // Un robot qui remplit ce champ est rejeté
+        // sans déclencher l'envoi de courriels.
+        if (cleanValue(body.website, 200)) {
+            console.warn('Soumission automatisée détectée : crédit maladie.');
+            return res.redirect('/faq?credit-success=1');
+        }
+
+        // ======================================
+        // CONFIGURATION
+        // ======================================
+
+        if (!process.env.FORM_RECEIVER_CREDIT_MALADIE) {
+            throw new Error('Destinataire crédit maladie manquant.');
+        }
+
+        if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
             throw new Error('Configuration SMTP incomplète.');
         }
 
-        // =========================
+        // ======================================
         // RÉCUPÉRATION DES DONNÉES
-        // =========================
-
-        const body = req.body || {};
+        // ======================================
 
         const nom = cleanValue(body.nom, 100);
         const prenom = cleanValue(body.prenom, 100);
@@ -191,9 +209,9 @@ router.post('/', handleUpload, async (req, res) => {
 
         const commentaires = cleanValue(body.commentaires, 3000);
 
-        // =========================
-        // VALIDATION OBLIGATOIRE
-        // =========================
+        // ======================================
+        // VALIDATION DES CHAMPS OBLIGATOIRES
+        // ======================================
 
         if (
             !nom ||
@@ -214,9 +232,9 @@ router.post('/', handleUpload, async (req, res) => {
             throw new Error('Type de demande invalide.');
         }
 
-        // =========================
-        // VALIDATION PRODUITS
-        // =========================
+        // ======================================
+        // VALIDATION DES PRODUITS
+        // ======================================
 
         let produitsSelectionnes = [];
 
@@ -240,9 +258,9 @@ router.post('/', handleUpload, async (req, res) => {
             throw new Error('Sélection de produits invalide.');
         }
 
-        // =========================
-        // VALIDATION FICHIER
-        // =========================
+        // ======================================
+        // VALIDATION DU FICHIER
+        // ======================================
 
         if (!req.file) {
             throw new Error('Preuve médicale manquante.');
@@ -254,15 +272,16 @@ router.post('/', handleUpload, async (req, res) => {
 
         const filename = sanitizeFilename(req.file.originalname);
 
-        // =========================
-        // PRÉPARATION HTML SÉCURISÉ
-        // =========================
+        // ======================================
+        // PRÉPARATION DU CONTENU HTML
+        // ======================================
 
         const nomHtml = escapeHtml(nom);
         const prenomHtml = escapeHtml(prenom);
         const adresseHtml = escapeHtml(adresse);
 
         const telephoneHtml = escapeHtml(telephone);
+
         const telephoneCellulaireHtml =
             escapeHtml(telephoneCellulaire || 'Non précisé');
 
@@ -280,7 +299,8 @@ router.post('/', handleUpload, async (req, res) => {
         const numeroClientHtml =
             escapeHtml(numeroClient || 'Non précisé');
 
-        const produitsHtml = escapeHtml(produitsSelectionnes.join(', '));
+        const produitsHtml =
+            escapeHtml(produitsSelectionnes.join(', '));
 
         const commentairesHtml =
             escapeHtml(commentaires || 'Aucun commentaire')
@@ -293,13 +313,13 @@ router.post('/', handleUpload, async (req, res) => {
 
         const typeDemandeHtml = escapeHtml(typeDemande);
 
-        // =========================
+        // ======================================
         // COURRIEL À VALLÉE DU PARC
-        // =========================
+        // ======================================
 
-        await transporter.sendMail({
+        currentStage = 'notification_station';
 
-            from: `"Site Vallée du Parc" <${process.env.SMTP_USER}>`,
+        await sendMail({
 
             to: process.env.FORM_RECEIVER_CREDIT_MALADIE,
 
@@ -398,13 +418,13 @@ Preuve médicale jointe : ${filename}
             `
         });
 
-        // =========================
+        // ======================================
         // CONFIRMATION AU CLIENT
-        // =========================
+        // ======================================
 
-        await transporter.sendMail({
+        currentStage = 'confirmation_client';
 
-            from: `"Vallée du Parc" <${process.env.SMTP_USER}>`,
+        await sendMail({
 
             to: courriel,
 
@@ -454,23 +474,29 @@ L'équipe de Vallée du Parc
             `
         });
 
-        // =========================
-        // REDIRECTION SUCCÈS
-        // =========================
+        // ======================================
+        // SUCCÈS
+        // ======================================
+
+        console.info('Formulaire crédit maladie traité avec succès.');
 
         return res.redirect('/faq?credit-success=1');
 
     } catch (error) {
 
-        // Ne jamais enregistrer les renseignements personnels
-        console.error(
-            'Erreur formulaire crédit maladie :',
-            error.message
-        );
+        // ======================================
+        // JOURNALISATION SANS DONNÉES PERSONNELLES
+        // ======================================
+
+        console.error('Erreur formulaire crédit maladie :', {
+            stage: currentStage,
+            code: error.code || null,
+            responseCode: error.responseCode || null,
+            message: error.message
+        });
 
         return res.redirect('/faq?credit-error=1');
     }
-
 });
 
 module.exports = router;
