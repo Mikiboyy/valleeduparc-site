@@ -661,12 +661,12 @@
 
 
                     <form
-                        action="/demande-credit-maladie"
-                        method="POST"
-                        enctype="multipart/form-data"
-                        class="credit-form"
+                    action="/demande-credit-maladie"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="credit-form"
                     >
-
+                    
                     <!-- CHAMP ANTI-ROBOT (HONEYPOT) -->
                      <div class="form-website-field" aria-hidden="true">
                         <label for="website">Ne pas remplir ce champ</label>
@@ -678,6 +678,15 @@
                         autocomplete="off"
                         >
                     </div>
+
+                    <input type="hidden" name="formStartedAt" value="<%= Date.now() %>">
+
+                    <!-- HEURE DE DÉBUT DU FORMULAIRE -->
+                     <input
+                     type="hidden"
+                     name="formStartedAt"
+                     value="<%= Date.now() %>"
+                     >
 
 
                         <!-- NOM DU CLIENT PAYEUR -->
@@ -1053,6 +1062,14 @@
                         </div>
 
 
+                        <!-- PROTECTION CLOUDFLARE TURNSTILE -->
+                         <div
+                         class="cf-turnstile"
+                         data-sitekey="TON_SITE_KEY_CLOUDFLARE"
+                         ></div>
+
+                         <div class="cf-turnstile" data-sitekey="0x4AAAAAAF6IEFtYupE0Wja6"></div>
+
                         <!-- ENVOYER -->
                         <button
                             type="submit"
@@ -1160,3 +1177,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
+
+<script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+></script>
