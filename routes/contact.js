@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const nodemailer = require('nodemailer');
 const { rateLimit } = require('express-rate-limit');
+const { sendMail } = require('../utils/mailer');
 
-
-// =====================================================
-// ANTI-SPAM : maximum 3 messages par IP / 15 minutes
-// =====================================================
+/* =========================
+   ANTI-SPAM
+   3 messages / IP / 15 minutes
+========================= */
 
 const contactLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -16,10 +16,9 @@ const contactLimiter = rateLimit({
     message: 'Trop de messages envoyés. Veuillez réessayer plus tard.'
 });
 
-
-// =====================================================
-// ÉCHAPPER LE HTML
-// =====================================================
+/* =========================
+   OUTILS
+========================= */
 
 function escapeHtml(value) {
     return String(value)
@@ -30,58 +29,112 @@ function escapeHtml(value) {
         .replace(/'/g, '&#039;');
 }
 
+function cleanValue(value) {
+    return typeof value === 'string' ? value.trim() : '';
+}
 
-// =====================================================
-// FORMULAIRE CONTACT
-// =====================================================
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function redirectError(res, message) {
+    return res.redirect(
+        `/contact?error=${encodeURIComponent(message)}`
+    );
+}
+
+/* =========================
+   FORMULAIRE CONTACT
+========================= */
 
 router.post('/', contactLimiter, async (req, res) => {
-
     try {
+        const body = req.body || {};
 
-        const {
-            name,
-            email,
-            subject,
-            message,
-            website
-        } = req.body;
+        const name = cleanValue(body.name);
+        const email = cleanValue(body.email).toLowerCase();
+        const subject = cleanValue(body.subject);
+        const message = cleanValue(body.message);
+        const website = cleanValue(body.website);
 
-        if (
-            typeof name !== 'string' ||
-            typeof email !== 'string' ||
-            typeof subject !== 'string' ||
-            typeof message !== 'string'
-        ) {
-            return res.redirect(
-                '/contact?error=Veuillez remplir tous les champs.'
-            );
-        }
+        /* =========================
+           HONEYPOT
+        ========================= */
 
-
-        // =================================================
-        // HONEYPOT
-        // =================================================
-
-        // Un vrai visiteur ne voit pas ce champ.
-        // Les bots peuvent souvent le remplir.
+        // Un visiteur normal ne voit pas ce champ.
+        // Si un robot le remplit, on simule une réussite.
 
         if (website) {
-
-            console.log(
-                'Spam bloqué par honeypot'
-            );
+            console.log('Spam bloqué par le honeypot.');
 
             return res.redirect(
-                '/contact?success=Votre message a été envoyé avec succès.'
+                '/contact?success=Votre%20message%20a%20été%20envoyé%20avec%20succès.'
             );
         }
 
-        const contenu = `
-        ${name || ''}
-        ${subject || ''}
-        ${message || ''}
-        `;
+        /* =========================
+           VALIDATION DES TYPES
+        ========================= */
+
+        if (
+            typeof body.name !== 'string' ||
+            typeof body.email !== 'string' ||
+            typeof body.subject !== 'string' ||
+            typeof body.message !== 'string'
+        ) {
+            return redirectError(
+                res,
+                'Veuillez remplir tous les champs.'
+            );
+        }
+
+        /* =========================
+           CHAMPS OBLIGATOIRES
+        ========================= */
+
+        if (!name || !email || !subject || !message) {
+            return redirectError(
+                res,
+                'Veuillez remplir tous les champs.'
+            );
+        }
+
+        /* =========================
+           LIMITES DE LONGUEUR
+        ========================= */
+
+        if (name.length > 100) {
+            return redirectError(res, 'Le nom est trop long.');
+        }
+
+        if (email.length > 254) {
+            return redirectError(res, 'Le courriel est trop long.');
+        }
+
+        if (subject.length > 200) {
+            return redirectError(res, 'Le sujet est trop long.');
+        }
+
+        if (message.length > 5000) {
+            return redirectError(res, 'Le message est trop long.');
+        }
+
+        /* =========================
+           VALIDATION COURRIEL
+        ========================= */
+
+        if (!isValidEmail(email)) {
+            return redirectError(
+                res,
+                'Veuillez entrer une adresse courriel valide.'
+            );
+        }
+
+        /* =========================
+           DÉTECTION DE SPAM
+        ========================= */
+
+        const contenu = `${name}\n${subject}\n${message}`;
 
         const spamPatterns = [
             /bit\.ly/i,
@@ -109,129 +162,42 @@ router.post('/', contactLimiter, async (req, res) => {
             pattern.test(contenu)
         );
 
-        // Détecte les URLs dans le message
-            const urlMatches = contenu.match(
-                /https?:\/\/[^\s<>"']+/gi
-            ) || [];
+        const urlMatches = contenu.match(
+            /https?:\/\/[^\s<>"']+/gi
+        ) || [];
 
-            // Plus de 2 URLs dans un message = probablement du spam
-                const tooManyLinks = urlMatches.length >= 3;
+        const tooManyLinks = urlMatches.length >= 3;
 
-                if (isSpam || tooManyLinks) {
+        if (isSpam || tooManyLinks) {
+            console.log('Message de spam bloqué.');
 
-                    console.log('Spam détecté depuis :', req.ip);
-
-                    return res.redirect('/contact?success=1');
-                }
-
-
-        // =================================================
-        // VALIDATION
-        // =================================================
-
-        if (!name || !email || !subject || !message) {
-
-            return res.redirect(
-                '/contact?error=Veuillez remplir tous les champs.'
-            );
-
+            // Réponse volontairement identique à une réussite.
+            return res.redirect('/contact?success=1');
         }
 
+        /* =========================
+           VALIDATION DESTINATAIRE
+        ========================= */
 
-        // =================================================
-        // LIMITES
-        // =================================================
-
-        if (name.length > 100) {
-
-            return res.redirect(
-                '/contact?error=Le nom est trop long.'
-            );
-
+        if (!process.env.CONTACT_EMAIL) {
+            throw new Error('Variable CONTACT_EMAIL manquante.');
         }
 
-
-        if (email.length > 150) {
-
-            return res.redirect(
-                '/contact?error=Le courriel est trop long.'
-            );
-
-        }
-
-
-        if (subject.length > 200) {
-
-            return res.redirect(
-                '/contact?error=Le sujet est trop long.'
-            );
-
-        }
-
-
-        if (message.length > 5000) {
-
-            return res.redirect(
-                '/contact?error=Le message est trop long.'
-            );
-
-        }
-
-
-        // =================================================
-        // VALIDATION COURRIEL
-        // =================================================
-
-        const emailRegex =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailRegex.test(email)) {
-
-            return res.redirect(
-                '/contact?error=Veuillez entrer une adresse courriel valide.'
-            );
-
-        }
-
-
-        // =================================================
-        // SMTP
-        // =================================================
-
-        const transporter = nodemailer.createTransport({
-
-            host: 'smtp.mailersend.net',
-
-            port: 2525,
-
-            secure: false,
-
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            }
-
-        });
-
-
-        // =================================================
-        // PROTECTION HTML
-        // =================================================
+        /* =========================
+           PROTECTION HTML
+        ========================= */
 
         const safeName = escapeHtml(name);
         const safeEmail = escapeHtml(email);
         const safeSubject = escapeHtml(subject);
-        const safeMessage = escapeHtml(message);
+        const safeMessage = escapeHtml(message)
+            .replace(/\r\n|\r|\n/g, '<br>');
 
+        /* =========================
+           ENVOI DU COURRIEL
+        ========================= */
 
-        // =================================================
-        // ENVOI
-        // =================================================
-
-        await transporter.sendMail({
-
-            from: `"Site Vallée du Parc" <${process.env.MAIL_FROM}>`,
-
+        await sendMail({
             to: process.env.CONTACT_EMAIL,
 
             replyTo: email,
@@ -274,43 +240,33 @@ ${message}
 
                 <hr>
 
-                <p>
-                    <strong>Message :</strong>
-                </p>
+                <p><strong>Message :</strong></p>
 
-                <p>
-                    ${safeMessage.replace(/\n/g, '<br>')}
-                </p>
+                <p>${safeMessage}</p>
             `
-
         });
 
-
-        console.log(
-            `Message de contact reçu de : ${email}`
-        );
-
+        console.log('Un message du formulaire de contact a été envoyé.');
 
         return res.redirect(
-            '/contact?success=Votre message a été envoyé avec succès.'
+            '/contact?success=Votre%20message%20a%20été%20envoyé%20avec%20succès.'
         );
-
 
     } catch (error) {
-
         console.error(
-            'Erreur formulaire contact :',
-            error
+            'Erreur formulaire contact - code :',
+            error.code || 'N/A',
+            '- réponse :',
+            error.responseCode || 'N/A',
+            '- message :',
+            error.message
         );
 
-
-        return res.redirect(
-            '/contact?error=Une erreur est survenue lors de l’envoi du message.'
+        return redirectError(
+            res,
+            'Une erreur est survenue lors de l’envoi du message.'
         );
-
     }
-
 });
-
 
 module.exports = router;

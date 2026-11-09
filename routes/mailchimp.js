@@ -1,41 +1,76 @@
-
 const express = require('express');
 const router = express.Router();
 const mailchimp = require('@mailchimp/mailchimp_marketing');
 
-// Configuration Mailchimp
-mailchimp.setConfig({
-    apiKey: process.env.MAILCHIMP_API_KEY,
-    server: process.env.MAILCHIMP_SERVER
-});
+/* =========================
+   VALIDATION COURRIEL
+========================= */
+
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+/* =========================
+   INSCRIPTION NEWSLETTER
+========================= */
 
 router.post('/subscribe', async (req, res) => {
-
-    // Protection contre les requêtes sans body
-    const { email, firstName } = req.body || {};
-
-    // Vérification de l'adresse courriel
-    if (
-        typeof email !== 'string' ||
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
-    ) {
-        return res.redirect('/?error=missing_email');
-    }
-
-    // Vérification du prénom
-    const safeFirstName =
-        typeof firstName === 'string'
-            ? firstName.trim().slice(0, 50)
-            : '';
-
     try {
+        const body = req.body || {};
+
+        const email =
+            typeof body.email === 'string'
+                ? body.email.trim().toLowerCase()
+                : '';
+
+        const firstName =
+            typeof body.firstName === 'string'
+                ? body.firstName.trim().slice(0, 50)
+                : '';
+
+        /* =========================
+           VALIDATION COURRIEL
+        ========================= */
+
+        if (!email || !isValidEmail(email) || email.length > 254) {
+            return res.redirect('/?error=missing_email');
+        }
+
+        /* =========================
+           VALIDATION CONFIGURATION
+        ========================= */
+
+        const apiKey = process.env.MAILCHIMP_API_KEY;
+        const server = process.env.MAILCHIMP_SERVER;
+        const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
+
+        if (!apiKey || !server || !audienceId) {
+            throw new Error('Configuration Mailchimp incomplète.');
+        }
+
+        /* =========================
+           CONFIGURATION MAILCHIMP
+        ========================= */
+
+        mailchimp.setConfig({
+            apiKey,
+            server
+        });
+
+        /* =========================
+           AJOUT DU MEMBRE
+        ========================= */
+
         await mailchimp.lists.addListMember(
-            process.env.MAILCHIMP_AUDIENCE_ID,
+            audienceId,
             {
-                email_address: email.trim().toLowerCase(),
-                status: "pending",
+                email_address: email,
+
+                // Double opt-in conservé.
+                status: 'pending',
+
                 merge_fields: {
-                    FNAME: safeFirstName
+                    FNAME: firstName
                 }
             }
         );
@@ -43,22 +78,32 @@ router.post('/subscribe', async (req, res) => {
         return res.redirect('/?success=1');
 
     } catch (error) {
+        const mailchimpError = error.response?.body || {};
 
-        const mailchimpError = error.response?.body;
+        const errorTitle =
+            mailchimpError.title ||
+            error.response?.statusText ||
+            error.message ||
+            'Erreur inconnue';
 
-        // Déjà inscrit
-        if (mailchimpError?.title === "Member Exists") {
+        /* =========================
+           MEMBRE DÉJÀ INSCRIT
+        ========================= */
+
+        if (
+            errorTitle === 'Member Exists' ||
+            errorTitle === 'Member In Pending Status'
+        ) {
             return res.redirect('/?exists=1');
         }
 
-        // Adresse déjà en attente
-        if (mailchimpError?.title === "Member In Pending Status") {
-            return res.redirect('/?exists=1');
-        }
+        /* =========================
+           JOURNALISATION
+        ========================= */
 
         console.error(
-            "Mailchimp error:",
-            mailchimpError?.title || error.message
+            'Erreur Mailchimp :',
+            errorTitle
         );
 
         return res.redirect('/?error=1');
