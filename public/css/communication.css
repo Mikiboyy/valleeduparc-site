@@ -1402,12 +1402,13 @@
 }
 
 .faq-answer-text {
-    line-height: 1.8;
-    white-space: normal;
+    display: none;
+    padding: 0 26px 24px;
+    color: #4b5563;
+    line-height: 1.7;
+    font-size: 1rem;
 }
 
-.faq-answer-text br {
+.faq-item.open .faq-answer-text {
     display: block;
-    content: "";
-    margin-bottom: 8px;
 }
