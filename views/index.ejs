@@ -232,9 +232,9 @@
                 </h2>
 
 
-                <p>
-                    <%= popupAnnouncement.message %>
-                </p>
+                <div class="announcement-message">
+                    <%- popupAnnouncement.message.replace(/\n/g, '<br>') %>
+                </div>
 
 
                 <% if (

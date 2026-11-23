@@ -2717,7 +2717,9 @@ router.post(
             const {
                 title,
                 message,
-                isActive
+                isActive,
+                buttonText,
+                buttonLink
             } = req.body;
 
 
@@ -2748,13 +2750,19 @@ router.post(
             const data = {
 
                 title:
-                    title.trim(),
+                title.trim(),
 
                 message:
-                    message.trim(),
+                message.trim(),
+
+                buttonText:
+                buttonText?.trim() || '',
+
+                buttonLink:
+                buttonLink?.trim() || '',
 
                 isActive:
-                    isActive === 'on'
+                isActive === 'on'
 
             };
 

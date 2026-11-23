@@ -113,6 +113,49 @@
 
         </div>
 
+        <!-- TEXTE DU BOUTON -->
+
+        <div class="form-section">
+
+            <label for="buttonText">
+                Texte du bouton (facultatif)
+            </label>
+
+            <input
+            type="text"
+            id="buttonText"
+            name="buttonText"
+            value="<%= popupAnnouncement
+            ? popupAnnouncement.buttonText
+            : ''
+            %>"
+            placeholder="Ex: Voir l'événement"
+            >
+
+        </div>
+
+
+        <!-- LIEN DU BOUTON -->
+
+        <div class="form-section">
+
+
+            <label for="buttonLink">
+                Lien du bouton (facultatif)
+            </label>
+
+            <input
+            type="url"
+            id="buttonLink"
+            name="buttonLink"
+            value="<%= popupAnnouncement
+            ? popupAnnouncement.buttonLink
+            : ''
+            %>"
+            placeholder="https://..."
+            >
+
+        </div>
 
         <!-- IMAGE -->
 

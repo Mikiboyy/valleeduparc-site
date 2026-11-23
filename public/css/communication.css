@@ -1400,3 +1400,14 @@
     height: 1px !important;
     overflow: hidden !important;
 }
+
+.faq-answer-text {
+    line-height: 1.8;
+    white-space: normal;
+}
+
+.faq-answer-text br {
+    display: block;
+    content: "";
+    margin-bottom: 8px;
+}
