@@ -1022,9 +1022,13 @@ router.get(
 router.post(
     '/prices/abonnements/:id',
     requireRole('prix'),
-    async (req, res) => {
+    async (req, res, next) => {
 
         try {
+
+            if (req.params.id === 'add') {
+                return next();
+            }
 
             const regularPrice =
                 req.body.regularPrice === ''
@@ -1138,9 +1142,13 @@ router.get(
 router.post(
     '/prices/billets/:id',
     requireRole('prix'),
-    async (req, res) => {
+    async (req, res, next) => {
 
         try {
+
+            if (req.params.id === 'add') {
+                return next();
+            }
 
             const onlinePrice =
                 req.body.onlinePrice === ''
