@@ -1,5 +1,49 @@
 <section class="form-section">
 
+    <% if (success) { %>
+
+    <div class="registration-success">
+
+        <div class="registration-success-icon">
+            ✓
+        </div>
+
+        <div class="registration-success-content">
+
+            <h3>Inscription envoyée avec succès !</h3>
+
+            <p>
+                Nous avons bien reçu votre demande d'inscription
+                aux cours de groupe.
+            </p>
+
+            <p>
+                Vous recevrez une confirmation ou un suivi
+                de notre équipe prochainement.
+            </p>
+
+        </div>
+
+    </div>
+
+<% } %>
+
+
+<% if (error) { %>
+
+    <div class="registration-error">
+
+        <strong>Une erreur est survenue.</strong>
+
+        <p>
+            Votre inscription n'a pas pu être envoyée.
+            Veuillez réessayer.
+        </p>
+
+    </div>
+
+<% } %>
+
     <form action="/inscription" method="POST" class="course-form">
         <input type="hidden" name="returnUrl" value="<%= typeof returnUrl !== 'undefined' ? returnUrl : '/' %>">
 

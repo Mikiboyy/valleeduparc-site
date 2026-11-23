@@ -1,5 +1,50 @@
 <section class="form-section">
 
+    <% if (success) { %>
+
+    <div class="registration-success">
+
+        <div class="registration-success-icon">
+            ✓
+        </div>
+
+        <div class="registration-success-content">
+
+            <h3>Demande envoyée avec succès !</h3>
+
+            <p>
+                Nous avons bien reçu votre demande
+                d'inscription au cours privé.
+            </p>
+
+            <p>
+                Notre équipe communiquera avec vous afin de
+                confirmer la disponibilité du moniteur,
+                la date et l'heure de votre cours.
+            </p>
+
+        </div>
+
+    </div>
+
+<% } %>
+
+
+<% if (error) { %>
+
+    <div class="registration-error">
+
+        <strong>Une erreur est survenue.</strong>
+
+        <p>
+            Votre demande n'a pas pu être envoyée.
+            Veuillez réessayer.
+        </p>
+
+    </div>
+
+<% } %>
+
     <form
         action="/inscription/prive"
         method="POST"

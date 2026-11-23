@@ -181,7 +181,13 @@ router.get('/', (req, res) => {
                 'Inscription aux cours',
 
             returnUrl:
-                req.query.returnUrl || '/'
+                req.query.returnUrl || '/',
+
+            success:
+                req.query.success === '1',
+
+            error:
+                req.query.error === 'mail'
 
         }
     );
@@ -440,9 +446,8 @@ router.post('/', async (req, res) => {
         */
 
         return res.redirect(
-            `${redirectUrl}?success=1`
+            `/inscription?success=1&returnUrl=${encodeURIComponent(redirectUrl)}`
         );
-
 
     } catch (error) {
 
@@ -577,7 +582,13 @@ router.get('/prive', async (req, res) => {
 
                         '/cours-prive'
 
-                    )
+                    ),
+
+                success:
+                    req.query.success === '1',
+
+                error:
+                    req.query.error === 'mail',
 
             }
         );
@@ -1022,9 +1033,7 @@ router.post('/prive', async (req, res) => {
         */
 
         return res.redirect(
-
-            `${redirectUrl}?success=private-course`
-
+            `/inscription/prive?courseId=${encodeURIComponent(courseId)}&success=1&returnUrl=${encodeURIComponent(redirectUrl)}`
         );
 
 

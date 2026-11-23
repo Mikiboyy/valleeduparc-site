@@ -608,3 +608,131 @@
 
     font-weight: 800;
 }
+
+/* ================================
+   MESSAGE DE CONFIRMATION INSCRIPTION
+================================ */
+
+.registration-success {
+
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+
+    background: #e8f7ee;
+    border: 2px solid #28a745;
+    border-left: 7px solid #28a745;
+
+    padding: 25px;
+
+    margin-bottom: 30px;
+
+    border-radius: 12px;
+
+    color: #155724;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+}
+
+
+.registration-success-icon {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 45px;
+    height: 45px;
+
+    min-width: 45px;
+
+    background: #28a745;
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 26px;
+    font-weight: bold;
+
+}
+
+
+.registration-success-content h3 {
+
+    margin: 0 0 12px;
+
+    color: #155724;
+
+    font-size: 1.4rem;
+
+}
+
+
+.registration-success-content p {
+
+    margin: 8px 0;
+
+    line-height: 1.6;
+
+}
+
+
+.registration-error {
+
+    background: #fdeaea;
+
+    border: 2px solid #dc3545;
+
+    border-left: 7px solid #dc3545;
+
+    padding: 20px;
+
+    margin-bottom: 30px;
+
+    border-radius: 12px;
+
+    color: #721c24;
+
+}
+
+
+.registration-error p {
+
+    margin-bottom: 0;
+
+    line-height: 1.6;
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .registration-success {
+
+        padding: 18px;
+
+        gap: 12px;
+
+    }
+
+    .registration-success-icon {
+
+        width: 35px;
+        height: 35px;
+
+        min-width: 35px;
+
+        font-size: 20px;
+
+    }
+
+    .registration-success-content h3 {
+
+        font-size: 1.1rem;
+
+    }
+
+}
